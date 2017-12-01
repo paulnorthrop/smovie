@@ -100,7 +100,7 @@ wws <- function(loglik = NULL, theta_range = c(0.1, 0.7),
     print(temp)
     for_optim <- c(list(par = theta0, fn = obfn, lower = lower,
                         upper = upper), user_args)
-    temp <- do.call(optim, for_optim)
+    temp <- do.call(stats::optim, for_optim)
     print(temp)
     loglik_at_mle <- -temp$value
   } else {
@@ -279,7 +279,7 @@ wws_plot <- function(panel) {
       # Calculate the values of the test statistics
       if (is.null(alg_obs_info)) {
         for_optimHess <- c(list(fn = loglik, par = theta0), user_args)
-        obs_info_at_theta0 <- -do.call(optimHess, for_optimHess)
+        obs_info_at_theta0 <- -do.call(stats::optimHess, for_optimHess)
       } else {
         for_alg_obs_info <- c(list(theta0), user_args)
         obs_info_at_theta0 <- do.call(alg_obs_info, for_alg_obs_info)
