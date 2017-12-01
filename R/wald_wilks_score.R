@@ -2,8 +2,10 @@
 
 #' Wald, Wilks and Score test movie
 #'
-#' A movie to illustrate the nature of the Wald, Wilks and Score hypothesis
-#' tests
+#' A movie to illustrate the nature of the Wald, Wilks and score
+#' likelihood-based test statistics, for a model with a scalar unknown
+#' parameter.  The user can change the value of the parameter under a simple
+#' null hypothesis and observe the effect on the test statistics.
 #'
 #' @param loglik An R function, vectorised with respect to its first argument
 #'   that returns the value of the log-likelihood (up to an additive constant).
@@ -22,7 +24,7 @@
 #' @param alg_score A R function that returns score function, that is, the
 #'   derivative of \code{loglik} with respect to \eqn{\theta}.
 #' @param ... Additional arguments to be passed to \code{loglik}.
-#' @details The movie ...
+#' @details Add details.
 #' @return Nothing is returned, only the animation is produced.
 #' @examples
 #' # Load package rpanel
@@ -30,12 +32,14 @@
 #' library(rpanel)
 #'
 #' \dontrun{
+#' # Example 6.2 in the STAT3001 notes
+#' wws(theta0 = 0.5)
+#'
 #' # Log-likelihood for a binomial experiment (up to an additive constant)
 #' bin_loglik <- function(p, n_success, n_failure) {
 #'   return(n_success * log(p) + n_failure * log(1 - p))
 #' }
 #'
-#' # Example 6.2 in the STAT3001 notes
 #' wws(bin_loglik, theta0 = 0.5, theta_range = c(0.1, 0.7),
 #'     theta_mle = 7 / 20, n_success = 7, n_failure = 13)
 #'
@@ -50,11 +54,34 @@
 #'     alg_score = bin_alg_score, alg_obs_info = bin_alg_obs_info)
 #' }
 #' @export
-wws <- function(loglik, theta_range, theta0 = mean(theta_range), alpha = 0.05,
+wws <- function(loglik = NULL, theta_range = c(0.1, 0.7),
+                theta0 = mean(theta_range),
                 delta_theta0 = abs(diff(theta_range)) / 20,
                 theta_mle = NULL, alg_score = NULL, alg_obs_info = NULL,
                 ...) {
-  user_args <- list(...)
+  if (is.null(loglik)) {
+    # Use the default (binomial) example
+    loglik <- function(p, n_success, n_failure) {
+     return(n_success * log(p) + n_failure * log(1 - p))
+    }
+    alg_score <- function(p, n_success, n_failure) {
+      return(n_success / p - n_failure / (1 - p))
+    }
+    alg_obs_info <- function(p, n_success, n_failure) {
+      return(n_success / p ^ 2 + n_failure / (1 - p) ^ 2)
+    }
+    user_args <- list(...)
+    if (is.null(user_args$n_success)) {
+      user_args$n_success <- 7
+    }
+    if (is.null(user_args$n_failure)) {
+      user_args$n_failure <- 13
+    }
+    theta_mle <- user_args$n_success /
+      (user_args$n_success + user_args$n_failure)
+  } else {
+    user_args <- list(...)
+  }
   theta_range <- sort(theta_range)
   if (is.null(theta_mle)) {
     # Find the MLE, avoiding the printing of warning messages
@@ -70,15 +97,22 @@ wws <- function(loglik, theta_range, theta0 = mean(theta_range), alpha = 0.05,
     }
     temp <- suppressWarnings(stats::optim(theta0, obfn, lower = lower,
                                           upper = upper, ...))
-    theta_mle <- temp$par
+    print(temp)
+    for_optim <- c(list(par = theta0, fn = obfn, lower = lower,
+                        upper = upper), user_args)
+    temp <- do.call(optim, for_optim)
+    print(temp)
     loglik_at_mle <- -temp$value
   } else {
-    loglik_at_mle <- loglik(theta_mle, ...)
+    for_mle <- c(list(theta_mle), user_args)
+    loglik_at_mle <- do.call(loglik, for_mle)
   }
   if (is.null(alg_obs_info)) {
-    obs_info_at_mle <- -optimHess(theta_mle, loglik, ...)
+    for_optimHess <- c(list(par = theta_mle, fn = loglik), user_args)
+    obs_info_at_mle <- -do.call(stats::optimHess, for_optimHess)
   } else {
-    obs_info_at_mle <- alg_obs_info(theta_mle, ...)
+    for_alg_obs_info <- c(list(theta_mle), user_args)
+    obs_info_at_mle <- do.call(alg_obs_info, for_alg_obs_info)
   }
   # Create buttons for movie
   wws_panel <- rpanel::rp.control("Change theta0",

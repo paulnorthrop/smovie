@@ -4,7 +4,7 @@
 \alias{wws}
 \title{Wald, Wilks and Score test movie}
 \usage{
-wws(loglik, theta_range, theta0 = mean(theta_range), alpha = 0.05,
+wws(loglik = NULL, theta_range = c(0.1, 0.7), theta0 = mean(theta_range),
   delta_theta0 = abs(diff(theta_range))/20, theta_mle = NULL,
   alg_score = NULL, alg_obs_info = NULL, ...)
 }
@@ -37,11 +37,13 @@ derivative of \code{loglik} with respect to \eqn{\theta}.}
 Nothing is returned, only the animation is produced.
 }
 \description{
-A movie to illustrate the nature of the Wald, Wilks and Score hypothesis
-tests
+A movie to illustrate the nature of the Wald, Wilks and score
+likelihood-based test statistics, for a model with a scalar unknown
+parameter.  The user can change the value of the parameter under a simple
+null hypothesis and observe the effect on the test statistics.
 }
 \details{
-The movie ...
+Add details.
 }
 \examples{
 # Load package rpanel
@@ -49,12 +51,14 @@ The movie ...
 library(rpanel)
 
 \dontrun{
+# Example 6.2 in the STAT3001 notes
+wws(theta0 = 0.5)
+
 # Log-likelihood for a binomial experiment (up to an additive constant)
 bin_loglik <- function(p, n_success, n_failure) {
   return(n_success * log(p) + n_failure * log(1 - p))
 }
 
-# Example 6.2 in the STAT3001 notes
 wws(bin_loglik, theta0 = 0.5, theta_range = c(0.1, 0.7),
     theta_mle = 7 / 20, n_success = 7, n_failure = 13)
 
