@@ -1,0 +1,23 @@
+Package: smovie
+Type: Package
+Title: smovie: some movies to illustrate concepts in statistics
+Version: 0.0.0.9000
+Date: 2017-11-30
+Authors@R: person(c("Paul", "J."), "Northrop", email = "p.northrop@ucl.ac.uk",
+  role = c("aut", "cre", "cph"))
+Description: Provides movies to help students taking STAT3001 Statistical 
+  Inference at University College London to understand some concepts in 
+  statistical hypothesis testing.
+Depends: 
+    R (>= 3.3.3),
+    rpanel
+License: GPL (>= 2)
+Encoding: UTF-8
+LazyData: TRUE
+RoxygenNote: 6.0.1
+Imports: stats,
+    graphics,
+    methods
+Suggests: numDeriv,
+    tkrplot
+VignetteBuilder: knitr
