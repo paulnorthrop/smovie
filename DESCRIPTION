@@ -18,7 +18,8 @@ RoxygenNote: 6.0.1
 Imports: stats,
     graphics,
     methods
-Suggests: numDeriv,
+Suggests: knitr,
+    numDeriv,
     tkrplot
 VignetteBuilder: knitr
 URL: http://github.com/paulnorthrop/smovie
