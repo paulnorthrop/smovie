@@ -9,15 +9,15 @@ Description: Provides movies to help students taking STAT3001 Statistical
   Inference at University College London to understand some concepts in 
   statistical hypothesis testing.
 Depends: 
-    R (>= 3.3.3),
-    rpanel
+    R (>= 3.3.3)
 License: GPL (>= 2)
 Encoding: UTF-8
 LazyData: TRUE
 RoxygenNote: 6.0.1
-Imports: stats,
-    graphics,
-    methods
+Imports: graphics,
+    methods,
+    rpanel,
+    stats
 Suggests: knitr,
     numDeriv,
     tkrplot
