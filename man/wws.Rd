@@ -4,9 +4,10 @@
 \alias{wws}
 \title{Wald, Wilks and Score test movie}
 \usage{
-wws(loglik = NULL, theta_range = c(0.1, 0.7), theta0 = mean(theta_range),
-  delta_theta0 = abs(diff(theta_range))/20, theta_mle = NULL,
-  alg_score = NULL, alg_obs_info = NULL, ...)
+wws(model = c("norm", "binom"), loglik = NULL, theta_range = c(0.1, 0.7),
+  theta0 = mean(theta_range), delta_theta0 = abs(diff(theta_range))/20,
+  theta_mle = NULL, alg_score = NULL, alg_obs_info = NULL, digits = 3,
+  ...)
 }
 \arguments{
 \item{loglik}{An R function, vectorised with respect to its first argument
@@ -57,6 +58,18 @@ library(rpanel)
 \dontrun{
 # Example 6.2 in the STAT3001 notes
 wws(theta0 = 0.5)
+
+wws(theta0 = 0.5, model = "binom")
+
+wws(theta0 = 0.5, model = "binom", n_success = 1000, n_failure = 1000,
+    theta_range = c(0.4, 0.6))
+
+# data =
+# automatic choice of theta_range for binom and norm
+
+set.seed(47)
+x <- rnorm(10)
+wws(theta0 = 0.2, model = "norm", theta_range = c(-1, 1))
 
 # Log-likelihood for a binomial experiment (up to an additive constant)
 bin_loglik <- function(p, n_success, n_failure) {

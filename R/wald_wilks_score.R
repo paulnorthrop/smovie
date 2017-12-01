@@ -38,6 +38,19 @@
 #' # Example 6.2 in the STAT3001 notes
 #' wws(theta0 = 0.5)
 #'
+#' wws(theta0 = 0.5, model = "binom")
+#'
+#' wws(theta0 = 0.5, model = "binom", n_success = 1000, n_failure = 1000,
+#'     theta_range = c(0.4, 0.6))
+#'
+#' # data = vector of (n_success, n_failure) for binom
+#' #        vector of observations for norm
+#' # automatic choice of theta_range for binom and norm
+#'
+#' set.seed(47)
+#' x <- rnorm(10)
+#' wws(theta0 = 0.2, model = "norm", theta_range = c(-1, 1))
+#'
 #' # Log-likelihood for a binomial experiment (up to an additive constant)
 #' bin_loglik <- function(p, n_success, n_failure) {
 #'   return(n_success * log(p) + n_failure * log(1 - p))
@@ -57,31 +70,60 @@
 #'     alg_score = bin_alg_score, alg_obs_info = bin_alg_obs_info)
 #' }
 #' @export
-wws <- function(loglik = NULL, theta_range = c(0.1, 0.7),
+wws <- function(model = c("norm", "binom"), loglik = NULL,
+                theta_range = c(0.1, 0.7),
                 theta0 = mean(theta_range),
                 delta_theta0 = abs(diff(theta_range)) / 20,
                 theta_mle = NULL, alg_score = NULL, alg_obs_info = NULL,
-                ...) {
+                digits = 3, ...) {
+  model <- match.arg(model)
+  # If loglik is not supplied then use the log-likelihood implied by model
   if (is.null(loglik)) {
-    # Use the default (binomial) example
-    loglik <- function(p, n_success, n_failure) {
-     return(n_success * log(p) + n_failure * log(1 - p))
+    if (model == "binom") {
+      loglik <- function(p, n_success, n_failure) {
+        return(n_success * log(p) + n_failure * log(1 - p))
+      }
+      alg_score <- function(p, n_success, n_failure) {
+        return(n_success / p - n_failure / (1 - p))
+      }
+      alg_obs_info <- function(p, n_success, n_failure) {
+        return(n_success / p ^ 2 + n_failure / (1 - p) ^ 2)
+      }
+      user_args <- list(...)
+      if (is.null(user_args$n_success)) {
+        user_args$n_success <- 7
+      }
+      if (is.null(user_args$n_failure)) {
+        user_args$n_failure <- 13
+      }
+      theta_mle <- user_args$n_success /
+        (user_args$n_success + user_args$n_failure)
+    } else {
+      loglik <- function(mu, x, sigma, n) {
+        sx2 <- sum(x ^ 2)
+        sumx <- sum(x)
+        return(-(sx2 - 2 * sumx * mu + n * mu ^ 2) / sigma ^ 2 / 2)
+      }
+      alg_score <- function(mu, x, sigma, n) {
+        return(n * (mean(x) - mu) / sigma ^ 2)
+      }
+      alg_obs_info <- function(mu, x, sigma, n) {
+        return(n / sigma ^ 2)
+      }
+      user_args <- list(...)
+      if (is.null(user_args$sigma)) {
+        user_args$sigma <- 1
+      }
+      if (is.null(user_args$n)) {
+        user_args$n <- 10
+      }
+      if (is.null(user_args$x)) {
+        set.seed(47)
+        user_args$x <- stats::rnorm(user_args$n, mean = 0,
+                                    sd = user_args$sigma)
+      }
+      theta_mle <- mean(user_args$x)
     }
-    alg_score <- function(p, n_success, n_failure) {
-      return(n_success / p - n_failure / (1 - p))
-    }
-    alg_obs_info <- function(p, n_success, n_failure) {
-      return(n_success / p ^ 2 + n_failure / (1 - p) ^ 2)
-    }
-    user_args <- list(...)
-    if (is.null(user_args$n_success)) {
-      user_args$n_success <- 7
-    }
-    if (is.null(user_args$n_failure)) {
-      user_args$n_failure <- 13
-    }
-    theta_mle <- user_args$n_success /
-      (user_args$n_success + user_args$n_failure)
   } else {
     user_args <- list(...)
   }
@@ -98,13 +140,9 @@ wws <- function(loglik = NULL, theta_range = c(0.1, 0.7),
       }
       return(check)
     }
-    temp <- suppressWarnings(stats::optim(theta0, obfn, lower = lower,
-                                          upper = upper, ...))
-    print(temp)
     for_optim <- c(list(par = theta0, fn = obfn, lower = lower,
                         upper = upper), user_args)
-    temp <- do.call(stats::optim, for_optim)
-    print(temp)
+    temp <- suppressWarnings(do.call(stats::optim, for_optim))
     loglik_at_mle <- -temp$value
   } else {
     for_mle <- c(list(theta_mle), user_args)
@@ -128,7 +166,8 @@ wws <- function(loglik = NULL, theta_range = c(0.1, 0.7),
                                  loglik_at_mle = loglik_at_mle,
                                  alg_score = alg_score,
                                  alg_obs_info = alg_obs_info,
-                                 obs_info_at_mle = obs_info_at_mle)
+                                 obs_info_at_mle = obs_info_at_mle,
+                                 digits = digits)
   rpanel::rp.doublebutton(wws_panel, theta0, delta_theta0,
                           range = c(theta_range[1], theta_range[2]),
                           initval = theta0,
@@ -165,16 +204,22 @@ wws_plot <- function(panel) {
     yaxis_ticks <- pretty(loglik_vals)
     cond1 <- abs(yaxis_ticks - loglik_at_theta0) < (u[4] - u[3]) / 10
     cond2 <- abs(yaxis_ticks - loglik_at_mle) < (u[4] - u[3]) / 10
-    if (test_stat == "Wilks" || test_stat == "all" || test_stat == "none") {
-      yaxis_ticks <- yaxis_ticks[!cond1 & !cond2]
+    if (test_stat == "Wilks" || test_stat == "all") {
+      yaxis_labels <- pretty(loglik_vals)
+      yaxis_labels[cond1 | cond2] <- ""
+    } else if (test_stat == "none") {
+      yaxis_labels <- pretty(loglik_vals)
+      yaxis_labels[cond1] <- ""
+    } else {
+      yaxis_labels <- pretty(loglik_vals)
     }
     if (theta0 > theta_mle) {
-      graphics::axis(2, at = yaxis_ticks)
+      graphics::axis(2, at = pretty(loglik_vals), labels = yaxis_labels)
       graphics::axis(4, at = pretty(loglik_vals))
       graphics::axis(1, mgp = c(3, 1.25, 0))
     } else {
       graphics::axis(2, at = pretty(loglik_vals))
-      graphics::axis(4, at = yaxis_ticks)
+      graphics::axis(4, at = pretty(loglik_vals), labels = yaxis_labels)
       graphics::axis(1, mgp = c(3, 1.25, 0))
     }
     # Calculate score statistic
@@ -218,8 +263,8 @@ wws_plot <- function(panel) {
                      labels = expression(hat(theta)), mgp = c(3, 0.5, 0))
       low_val <- min(loglik_vals[is.finite(loglik_vals)])
       if (abs(theta_mle - theta0) > 1e-5) {
-        graphics::arrows(theta_mle, low_val, theta0, low_val, code = 3,
-                         lwd = 2, xpd = TRUE, angle = 60, length = 0.1)
+        graphics::segments(theta_mle, low_val, theta0, low_val, lwd = 2,
+                           xpd = TRUE)
       }
       graphics::text(mean(c(theta_mle, theta0)), low_val, "Wald", pos = 3)
     }
@@ -251,13 +296,11 @@ wws_plot <- function(panel) {
       }
       if (abs(loglik_at_mle - loglik_at_theta0) > 1e-5) {
         if (theta0 > theta_mle) {
-          graphics::arrows(theta_range[1], loglik_at_theta0, theta_range[1],
-                         loglik_at_mle, code = 3, lwd = 2, xpd = TRUE,
-                         angle = 60, length = 0.1)
+          graphics::segments(theta_range[1], loglik_at_theta0, theta_range[1],
+                             loglik_at_mle, lwd = 2, xpd = TRUE)
         } else {
-          graphics::arrows(theta_range[2], loglik_at_theta0, theta_range[2],
-                           loglik_at_mle, code = 3, lwd = 2, xpd = TRUE,
-                           angle = 60, length = 0.1)
+          graphics::segments(theta_range[2], loglik_at_theta0, theta_range[2],
+                             loglik_at_mle, lwd = 2, xpd = TRUE)
         }
       }
     }
@@ -298,8 +341,8 @@ wws_plot <- function(panel) {
       test_stats <- c(wald, wilks, score)
       p_values <- stats::pchisq(test_stats, 1, lower.tail = FALSE)
       leg1 <- c("", "Wald", "Wilks", "score")
-      leg2 <- c("statistic", signif(test_stats, 2))
-      leg3 <- c("p-value", signif(p_values, 2))
+      leg2 <- c("stat", signif(test_stats, digits))
+      leg3 <- c("p-value", signif(p_values, digits))
       if (theta0 > theta_mle) {
         graphics::legend("bottomleft", ncol = 3, legend = c(leg1, leg2, leg3))
       } else {
