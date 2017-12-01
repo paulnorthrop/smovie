@@ -28,8 +28,12 @@ Otherwise, \code{\link[stats]{optim}} is used to search for the MLE,
 using \code{theta0} as the initial value and \code{theta_range} as
 bounds within which to search.}
 
-\item{alg_score}{A R function that returns score function, that is, the
-derivative of \code{loglik} with respect to \eqn{\theta}.}
+\item{alg_score}{A R function that returns the score function, that is,
+the derivative of \code{loglik} with respect to \eqn{\theta}.}
+
+\item{alg_obs_info}{A R function that returns the observed information
+that is, the negated second derivative of \code{loglik} with respect
+to \eqn{\theta}.}
 
 \item{...}{Additional arguments to be passed to \code{loglik}.}
 }

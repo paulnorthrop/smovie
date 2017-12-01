@@ -21,8 +21,11 @@
 #'   Otherwise, \code{\link[stats]{optim}} is used to search for the MLE,
 #'   using \code{theta0} as the initial value and \code{theta_range} as
 #'   bounds within which to search.
-#' @param alg_score A R function that returns score function, that is, the
-#'   derivative of \code{loglik} with respect to \eqn{\theta}.
+#' @param alg_score A R function that returns the score function, that is,
+#'   the derivative of \code{loglik} with respect to \eqn{\theta}.
+#' @param alg_obs_info A R function that returns the observed information
+#'   that is, the negated second derivative of \code{loglik} with respect
+#'   to \eqn{\theta}.
 #' @param ... Additional arguments to be passed to \code{loglik}.
 #' @details Add details.
 #' @return Nothing is returned, only the animation is produced.
@@ -114,6 +117,8 @@ wws <- function(loglik = NULL, theta_range = c(0.1, 0.7),
     for_alg_obs_info <- c(list(theta_mle), user_args)
     obs_info_at_mle <- do.call(alg_obs_info, for_alg_obs_info)
   }
+  test_stat <- "none"
+  perform_tests <- "no"
   # Create buttons for movie
   wws_panel <- rpanel::rp.control("Change theta0",
                                  loglik = loglik, theta_range = theta_range,
