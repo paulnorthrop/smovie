@@ -33,7 +33,9 @@
 #'       from a normal distribution with mean \code{mu} and standard deviation
 #'       \code{sigma}.}
 #'     \item{\code{model = "binom"}: }{\code{data = c(7, 13)}, that is,
-#'       7 successes and 13 failures observed in 20 trials.}
+#'       7 successes and 13 failures observed in 20 trials.  For the purposes
+#'       of this movie there must be at least one success and at least one
+#'       failure.}
 #'   }
 #' @param loglik An R function, vectorised with respect to its first argument
 #'   that returns the value of the log-likelihood (up to an additive constant).
@@ -85,6 +87,7 @@
 #' # for theta0 distant from theta_mle
 #' wws(theta0 = 0.9, model = "binom", data = c(19, 1))
 #'
+#' wws(theta0 = 0.9, model = "binom", data = c(20, 0))
 #'
 #' # binomial(2000, theta) example, test statistics very similar
 #' wws(theta0 = 0.5, model = "binom", data = c(1000, 1000))
@@ -139,6 +142,9 @@ wws <- function(model = c("norm", "binom"),
         user_args$n_success <- 7
         user_args$n_failure <- 13
       } else {
+        if (min(user_args$data) == 0) {
+          stop("min(data) must be positive for this movie to work")
+        }
         user_args$n_success <- user_args$data[1]
         user_args$n_failure <- user_args$data[2]
         # Remove data from user_args because it isn't an argument of loglik
@@ -215,6 +221,9 @@ wws <- function(model = c("norm", "binom"),
   } else {
     for_alg_obs_info <- c(list(theta_mle), user_args)
     obs_info_at_mle <- do.call(alg_obs_info, for_alg_obs_info)
+  }
+  if (is.na(obs_info_at_mle) | is.infinite(obs_info_at_mle)) {
+    stop("The observed information is not finite at the MLE")
   }
   test_stat <- "none"
   perform_tests <- "no"

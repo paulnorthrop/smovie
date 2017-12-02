@@ -34,7 +34,9 @@ wws(model = c("norm", "binom"), theta_range = NULL, theta0 = if
       from a normal distribution with mean \code{mu} and standard deviation
       \code{sigma}.}
     \item{\code{model = "binom"}: }{\code{data = c(7, 13)}, that is,
-      7 successes and 13 failures observed in 20 trials.}
+      7 successes and 13 failures observed in 20 trials.  For the purposes
+      of this movie there must be at least one success and at least one
+      failure.}
   }}
 
 \item{theta_range}{A numeric vector of length 2.  The range of values of
@@ -110,6 +112,7 @@ wws(theta0 = 0.5, model = "binom")
 # for theta0 distant from theta_mle
 wws(theta0 = 0.9, model = "binom", data = c(19, 1))
 
+wws(theta0 = 0.9, model = "binom", data = c(20, 0))
 
 # binomial(2000, theta) example, test statistics very similar
 wws(theta0 = 0.5, model = "binom", data = c(1000, 1000))
