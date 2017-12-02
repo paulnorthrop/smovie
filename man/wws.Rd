@@ -99,22 +99,16 @@ specify their own loglikelihood or use one of two in-built examples.
 Add details.
 }
 \examples{
-# Load package rpanel
-# [Use install.packages("rpanel") if necessary]
-library(rpanel)
-
 \dontrun{
 # N(theta, 1) example, test statistics equivalent
-wws(theta0 = 1)
+wws(theta0 = 0.8)
 
 # binomial(20, theta) example, test statistics similar
 wws(theta0 = 0.5, model = "binom")
 
 # binomial(20, theta) example, test statistic rather different
 # for theta0 distant from theta_mle
-wws(theta0 = 0.9, model = "binom", data = c(19, 1))
-
-wws(theta0 = 0.9, model = "binom", data = c(20, 0))
+wws(theta0 = 0.9, model = "binom", data = c(19, 1), theta_range = c(0.1, 0.99))
 
 # binomial(2000, theta) example, test statistics very similar
 wws(theta0 = 0.5, model = "binom", data = c(1000, 1000))

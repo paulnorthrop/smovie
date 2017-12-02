@@ -74,22 +74,16 @@
 #' @details Add details.
 #' @return Nothing is returned, only the animation is produced.
 #' @examples
-#' # Load package rpanel
-#' # [Use install.packages("rpanel") if necessary]
-#' library(rpanel)
-#'
 #' \dontrun{
 #' # N(theta, 1) example, test statistics equivalent
-#' wws(theta0 = 1)
+#' wws(theta0 = 0.8)
 #'
 #' # binomial(20, theta) example, test statistics similar
 #' wws(theta0 = 0.5, model = "binom")
 #'
 #' # binomial(20, theta) example, test statistic rather different
 #' # for theta0 distant from theta_mle
-#' wws(theta0 = 0.9, model = "binom", data = c(19, 1))
-#'
-#' wws(theta0 = 0.9, model = "binom", data = c(20, 0))
+#' wws(theta0 = 0.9, model = "binom", data = c(19, 1), theta_range = c(0.1, 0.99))
 #'
 #' # binomial(2000, theta) example, test statistics very similar
 #' wws(theta0 = 0.5, model = "binom", data = c(1000, 1000))
@@ -154,12 +148,13 @@ wws <- function(model = c("norm", "binom"),
       }
       n <- user_args$n_success + user_args$n_failure
       theta_mle <- user_args$n_success / n
+      eps <- 1e-6
       if (is.null(theta_range)) {
         se_theta <- sqrt(theta_mle * (1 - theta_mle) / n)
         theta_range <- theta_mle + c(-1, 1) * mult * se_theta
-        theta_range[2] <- min(1, theta_range[2])
-        theta_range[1] <- max(0, theta_range[1])
       }
+      theta_range[2] <- min(1  - eps, theta_range[2])
+      theta_range[1] <- max(eps, theta_range[1])
     } else if (model == "norm") {
       loglik <- function(mu, data, sigma, n) {
         sx2 <- sum(data ^ 2)
@@ -197,6 +192,11 @@ wws <- function(model = c("norm", "binom"),
     }
   }
   theta_range <- sort(theta_range)
+  # Make sure that theta0 is included on the initial plot
+  if (!is.null(theta0)) {
+    theta_range[2] <- max(theta0, theta_range[2])
+    theta_range[1] <- min(theta0, theta_range[1])
+  }
   if (is.null(theta_mle)) {
     # Find the MLE, avoiding the printing of warning messages
     lower <- theta_range[1]
@@ -385,16 +385,14 @@ wws_plot <- function(panel) {
                          lwd = 2)
       graphics::axis(1, at = theta0, tick = FALSE,
                      labels = expression(theta[0]), mgp = c(3, 0.5, 0))
-      if (abs(theta0 - theta_mle) < 1e-6) {
-        graphics::text(theta0, loglik_at_theta0, "score", pos = 3, offset = 0.5,
-                       xpd = TRUE)
-      } else if (theta0 > theta_mle) {
-        graphics::text(theta0, loglik_at_theta0, "score", pos = 4, offset = 1,
-                       xpd = TRUE)
-      } else if (theta0 < theta_mle) {
-        graphics::text(theta0, loglik_at_theta0, "score", pos = 2, offset = 1,
-                       xpd = TRUE)
+      getCurrentAspect <- function() {
+        uy <- diff(graphics::grconvertY(1:2, "user", "inches"))
+        ux <- diff(graphics::grconvertX(1:2, "user", "inches"))
+        return(uy/ux)
       }
+      asp <- getCurrentAspect()
+      graphics::text(theta0, loglik_at_theta0, "score", pos = 3, offset = 1,
+                     srt = 180 / pi * atan(grad_at_theta0 * asp), xpd = TRUE)
     }
     if (perform_tests == "yes") {
       # Calculate the values of the test statistics
