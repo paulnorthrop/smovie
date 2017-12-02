@@ -37,8 +37,10 @@
 #'       of this movie there must be at least one success and at least one
 #'       failure.}
 #'   }
-#' @param loglik An R function, vectorised with respect to its first argument
+#' @param loglik An R function, vectorised with respect to its first argument,
 #'   that returns the value of the log-likelihood (up to an additive constant).
+#'   The movie will not work if the observed information is not finite at the
+#'   maximum likelihood estimate.
 #' @param theta_range A numeric vector of length 2.  The range of values of
 #'   \eqn{\theta} over which to plot the log-likelihood.
 #'   If \code{theta_range} is not supplied then the argument \code{mult}

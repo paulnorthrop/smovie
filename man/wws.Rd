@@ -57,8 +57,10 @@ Otherwise, \code{\link[stats]{optim}} is used to search for the MLE,
 using \code{theta0} as the initial value and \code{theta_range} as
 bounds within which to search.}
 
-\item{loglik}{An R function, vectorised with respect to its first argument
-that returns the value of the log-likelihood (up to an additive constant).}
+\item{loglik}{An R function, vectorised with respect to its first argument,
+that returns the value of the log-likelihood (up to an additive constant).
+The movie will not work if the observed information is not finite at the
+maximum likelihood estimate.}
 
 \item{alg_score}{A R function that returns the score function, that is,
 the derivative of \code{loglik} with respect to \eqn{\theta}.}
