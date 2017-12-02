@@ -125,13 +125,13 @@ wws <- function(model = c("norm", "binom"),
   # If loglik is not supplied then use the log-likelihood implied by model
   if (is.null(loglik)) {
     if (model == "binom") {
-      loglik <- function(p, n_success, n_failure) {
+      binom_loglik <- function(p, n_success, n_failure) {
         return(n_success * log(p) + n_failure * log(1 - p))
       }
-      alg_score <- function(p, n_success, n_failure) {
+      binom_alg_score <- function(p, n_success, n_failure) {
         return(n_success / p - n_failure / (1 - p))
       }
-      alg_obs_info <- function(p, n_success, n_failure) {
+      binom_alg_obs_info <- function(p, n_success, n_failure) {
         return(n_success / p ^ 2 + n_failure / (1 - p) ^ 2)
       }
       if (is.null(user_args$data)) {
@@ -156,15 +156,15 @@ wws <- function(model = c("norm", "binom"),
       theta_range[2] <- min(1  - eps, theta_range[2])
       theta_range[1] <- max(eps, theta_range[1])
     } else if (model == "norm") {
-      loglik <- function(mu, data, sigma, n) {
+      norm_loglik <- function(mu, data, sigma, n) {
         sx2 <- sum(data ^ 2)
         sumx <- sum(data)
         return(-(sx2 - 2 * sumx * mu + n * mu ^ 2) / sigma ^ 2 / 2)
       }
-      alg_score <- function(mu, data, sigma, n) {
+      norm_alg_score <- function(mu, data, sigma, n) {
         return(n * (mean(data) - mu) / sigma ^ 2)
       }
-      alg_obs_info <- function(mu, data, sigma, n) {
+      norm_alg_obs_info <- function(mu, data, sigma, n) {
         return(n / sigma ^ 2)
       }
       if (is.null(user_args$mu)) {
@@ -190,6 +190,15 @@ wws <- function(model = c("norm", "binom"),
         theta_range <- theta_mle + c(-1, 1) * mult * se_theta
       }
     }
+    loglik <- switch(model,
+                     binom = binom_loglik,
+                     norm = norm_loglik)
+    alg_score <- switch(model,
+                        binom = binom_alg_score,
+                        norm = norm_alg_score)
+    alg_obs_info <- switch(model,
+                           binom = binom_alg_obs_info,
+                           norm = norm_alg_obs_info)
   }
   theta_range <- sort(theta_range)
   # Make sure that theta0 is included on the initial plot
