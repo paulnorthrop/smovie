@@ -39,7 +39,8 @@
 #'   that returns the value of the log-likelihood (up to an additive constant).
 #' @param theta_range A numeric vector of length 2.  The range of values of
 #'   \eqn{\theta} over which to plot the log-likelihood.
-#'   If \code{theta_range} is not supplied then
+#'   If \code{theta_range} is not supplied then the argument \code{mult}
+#'   detailed below is used to set the range automatically.
 #' @param theta0 A numeric scalar.  The value of \eqn{\theta} under the null
 #'   hypothesis to use at the start of the movie.
 #' @param delta_theta0 A numeric scalar.  The amount by which the value of
@@ -60,7 +61,8 @@
 #'   p-values.  See \code{\link{signif}}.
 #' @param mult A positive numeric scalar.  If \code{theta_range} is not
 #'   supplied then an interval of width 2\code{mult} standard errors centred
-#'   on \code{theta_mle} is used.
+#'   on \code{theta_mle} is used.  If \code{model = "binom"} then
+#'   \code{theta_range} is truncated to (0,1) if necessary.
 #' @param ... Additional arguments to be passed to \code{loglik},
 #'   \code{alg_score} and \code{alg_obs_info} if \code{loglik} is supplied,
 #'   or to functions functions relating to the in-built examples otherwise.
@@ -73,12 +75,19 @@
 #' library(rpanel)
 #'
 #' \dontrun{
-#' wws(theta0 = 0.5)
+#' # N(theta, 1) example, test statistics equivalent
+#' wws(theta0 = 1)
 #'
+#' # binomial(20, theta) example, test statistics similar
 #' wws(theta0 = 0.5, model = "binom")
 #'
-#' wws(theta0 = 0.5, model = "binom", n_success = 1000, n_failure = 1000,
-#'     theta_range = c(0.4, 0.6))
+#' # binomial(20, theta) example, test statistic rather different
+#' # for theta0 distant from theta_mle
+#' wws(theta0 = 0.9, model = "binom", data = c(19, 1))
+#'
+#'
+#' # binomial(2000, theta) example, test statistics very similar
+#' wws(theta0 = 0.5, model = "binom", data = c(1000, 1000))
 #'
 #' set.seed(47)
 #' x <- rnorm(10)
@@ -140,6 +149,8 @@ wws <- function(model = c("norm", "binom"),
       if (is.null(theta_range)) {
         se_theta <- sqrt(theta_mle * (1 - theta_mle) / n)
         theta_range <- theta_mle + c(-1, 1) * mult * se_theta
+        theta_range[2] <- min(1, theta_range[2])
+        theta_range[1] <- max(0, theta_range[1])
       }
     } else if (model == "norm") {
       loglik <- function(mu, data, sigma, n) {

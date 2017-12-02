@@ -39,7 +39,8 @@ wws(model = c("norm", "binom"), theta_range = NULL, theta0 = if
 
 \item{theta_range}{A numeric vector of length 2.  The range of values of
 \eqn{\theta} over which to plot the log-likelihood.
-If \code{theta_range} is not supplied then}
+If \code{theta_range} is not supplied then the argument \code{mult}
+detailed below is used to set the range automatically.}
 
 \item{theta0}{A numeric scalar.  The value of \eqn{\theta} under the null
 hypothesis to use at the start of the movie.}
@@ -70,7 +71,8 @@ p-values.  See \code{\link{signif}}.}
 
 \item{mult}{A positive numeric scalar.  If \code{theta_range} is not
 supplied then an interval of width 2\code{mult} standard errors centred
-on \code{theta_mle} is used.}
+on \code{theta_mle} is used.  If \code{model = "binom"} then
+\code{theta_range} is truncated to (0,1) if necessary.}
 
 \item{...}{Additional arguments to be passed to \code{loglik},
 \code{alg_score} and \code{alg_obs_info} if \code{loglik} is supplied,
@@ -98,12 +100,19 @@ Add details.
 library(rpanel)
 
 \dontrun{
-wws(theta0 = 0.5)
+# N(theta, 1) example, test statistics equivalent
+wws(theta0 = 1)
 
+# binomial(20, theta) example, test statistics similar
 wws(theta0 = 0.5, model = "binom")
 
-wws(theta0 = 0.5, model = "binom", n_success = 1000, n_failure = 1000,
-    theta_range = c(0.4, 0.6))
+# binomial(20, theta) example, test statistic rather different
+# for theta0 distant from theta_mle
+wws(theta0 = 0.9, model = "binom", data = c(19, 1))
+
+
+# binomial(2000, theta) example, test statistics very similar
+wws(theta0 = 0.5, model = "binom", data = c(1000, 1000))
 
 set.seed(47)
 x <- rnorm(10)
