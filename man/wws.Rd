@@ -4,17 +4,42 @@
 \alias{wws}
 \title{Wald, Wilks and Score test movie}
 \usage{
-wws(model = c("norm", "binom"), loglik = NULL, theta_range = c(0.1, 0.7),
-  theta0 = mean(theta_range), delta_theta0 = abs(diff(theta_range))/20,
-  theta_mle = NULL, alg_score = NULL, alg_obs_info = NULL, digits = 3,
-  ...)
+wws(model = c("norm", "binom"), theta_range = NULL, theta0 = if
+  (!is.null(theta_range)) mean(theta_range) else NULL, delta_theta0 = if
+  (!is.null(theta_range)) abs(diff(theta_range))/20 else NULL,
+  theta_mle = NULL, loglik = NULL, alg_score = NULL,
+  alg_obs_info = NULL, digits = 3, mult = 3, ...)
 }
 \arguments{
-\item{loglik}{An R function, vectorised with respect to its first argument
-that returns the value of the log-likelihood (up to an additive constant).}
+\item{model}{A character scalar.  Name of the the distribution on which
+  one of two in-built examples are based.
+
+  If \code{model = "normal"} then the setting is a random sample of
+  size \code{n} from a normal distribution with unknown mean
+  \code{mu} = \eqn{\theta} and known standard deviation \code{sigma}.
+
+  If \code{model = "normal"} then the setting is a random sample from a
+  Bernoulli distribution with unknown success probability
+  \eqn{\theta}.
+
+  The behaviour of these examples can be controlled using arguments
+  supplied via \code{...}.  In particular, the data can be supplied
+  using \code{data}.  If \code{model = "norm"} then \code{n}, \code{mu},
+  and \code{sigma} can also be chosen.
+  The default cases for these examples are:
+  \itemize{
+    \item{\code{model = "norm"}: }{\code{n} = 10, \code{mu} = 0,
+      \code{sigma} = 1 and \code{data} contains a sample of
+      a sample of size \code{n} simulated, using \code{\link[stats]{rnorm}},
+      from a normal distribution with mean \code{mu} and standard deviation
+      \code{sigma}.}
+    \item{\code{model = "binom"}: }{\code{data = c(7, 13)}, that is,
+      7 successes and 13 failures observed in 20 trials.}
+  }}
 
 \item{theta_range}{A numeric vector of length 2.  The range of values of
-\eqn{\theta} over which to plot the log-likelihood.}
+\eqn{\theta} over which to plot the log-likelihood.
+If \code{theta_range} is not supplied then}
 
 \item{theta0}{A numeric scalar.  The value of \eqn{\theta} under the null
 hypothesis to use at the start of the movie.}
@@ -29,6 +54,9 @@ Otherwise, \code{\link[stats]{optim}} is used to search for the MLE,
 using \code{theta0} as the initial value and \code{theta_range} as
 bounds within which to search.}
 
+\item{loglik}{An R function, vectorised with respect to its first argument
+that returns the value of the log-likelihood (up to an additive constant).}
+
 \item{alg_score}{A R function that returns the score function, that is,
 the derivative of \code{loglik} with respect to \eqn{\theta}.}
 
@@ -36,7 +64,18 @@ the derivative of \code{loglik} with respect to \eqn{\theta}.}
 that is, the negated second derivative of \code{loglik} with respect
 to \eqn{\theta}.}
 
-\item{...}{Additional arguments to be passed to \code{loglik}.}
+\item{digits}{An integer indicating the number of significant digits to
+be used in the displayed values of the test statistics and
+p-values.  See \code{\link{signif}}.}
+
+\item{mult}{A positive numeric scalar.  If \code{theta_range} is not
+supplied then an interval of width 2\code{mult} standard errors centred
+on \code{theta_mle} is used.}
+
+\item{...}{Additional arguments to be passed to \code{loglik},
+\code{alg_score} and \code{alg_obs_info} if \code{loglik} is supplied,
+or to functions functions relating to the in-built examples otherwise.
+See the description of \code{model} above for details.}
 }
 \value{
 Nothing is returned, only the animation is produced.
@@ -44,8 +83,11 @@ Nothing is returned, only the animation is produced.
 \description{
 A movie to illustrate the nature of the Wald, Wilks and score
 likelihood-based test statistics, for a model with a scalar unknown
-parameter.  The user can change the value of the parameter under a simple
-null hypothesis and observe the effect on the test statistics.
+parameter \eqn{\theta}.  The user can change the value of the parameter
+under a simple null hypothesis and observe the effect on the test
+statistics and (approximate) p-values associated with the tests of
+this hypothesis against the general alternative.  The user can
+specify their own loglikelihood or use one of two in-built examples.
 }
 \details{
 Add details.
@@ -56,16 +98,12 @@ Add details.
 library(rpanel)
 
 \dontrun{
-# Example 6.2 in the STAT3001 notes
 wws(theta0 = 0.5)
 
 wws(theta0 = 0.5, model = "binom")
 
 wws(theta0 = 0.5, model = "binom", n_success = 1000, n_failure = 1000,
     theta_range = c(0.4, 0.6))
-
-# data =
-# automatic choice of theta_range for binom and norm
 
 set.seed(47)
 x <- rnorm(10)

@@ -4,13 +4,42 @@
 #'
 #' A movie to illustrate the nature of the Wald, Wilks and score
 #' likelihood-based test statistics, for a model with a scalar unknown
-#' parameter.  The user can change the value of the parameter under a simple
-#' null hypothesis and observe the effect on the test statistics.
+#' parameter \eqn{\theta}.  The user can change the value of the parameter
+#' under a simple null hypothesis and observe the effect on the test
+#' statistics and (approximate) p-values associated with the tests of
+#' this hypothesis against the general alternative.  The user can
+#' specify their own loglikelihood or use one of two in-built examples.
 #'
+#' @param model A character scalar.  Name of the the distribution on which
+#'   one of two in-built examples are based.
+#'
+#'   If \code{model = "normal"} then the setting is a random sample of
+#'   size \code{n} from a normal distribution with unknown mean
+#'   \code{mu} = \eqn{\theta} and known standard deviation \code{sigma}.
+#'
+#'   If \code{model = "normal"} then the setting is a random sample from a
+#'   Bernoulli distribution with unknown success probability
+#'   \eqn{\theta}.
+#'
+#'   The behaviour of these examples can be controlled using arguments
+#'   supplied via \code{...}.  In particular, the data can be supplied
+#'   using \code{data}.  If \code{model = "norm"} then \code{n}, \code{mu},
+#'   and \code{sigma} can also be chosen.
+#'   The default cases for these examples are:
+#'   \itemize{
+#'     \item{\code{model = "norm"}: }{\code{n} = 10, \code{mu} = 0,
+#'       \code{sigma} = 1 and \code{data} contains a sample of
+#'       a sample of size \code{n} simulated, using \code{\link[stats]{rnorm}},
+#'       from a normal distribution with mean \code{mu} and standard deviation
+#'       \code{sigma}.}
+#'     \item{\code{model = "binom"}: }{\code{data = c(7, 13)}, that is,
+#'       7 successes and 13 failures observed in 20 trials.}
+#'   }
 #' @param loglik An R function, vectorised with respect to its first argument
 #'   that returns the value of the log-likelihood (up to an additive constant).
 #' @param theta_range A numeric vector of length 2.  The range of values of
 #'   \eqn{\theta} over which to plot the log-likelihood.
+#'   If \code{theta_range} is not supplied then
 #' @param theta0 A numeric scalar.  The value of \eqn{\theta} under the null
 #'   hypothesis to use at the start of the movie.
 #' @param delta_theta0 A numeric scalar.  The amount by which the value of
@@ -26,7 +55,16 @@
 #' @param alg_obs_info A R function that returns the observed information
 #'   that is, the negated second derivative of \code{loglik} with respect
 #'   to \eqn{\theta}.
-#' @param ... Additional arguments to be passed to \code{loglik}.
+#' @param digits An integer indicating the number of significant digits to
+#'   be used in the displayed values of the test statistics and
+#'   p-values.  See \code{\link{signif}}.
+#' @param mult A positive numeric scalar.  If \code{theta_range} is not
+#'   supplied then an interval of width 2\code{mult} standard errors centred
+#'   on \code{theta_mle} is used.
+#' @param ... Additional arguments to be passed to \code{loglik},
+#'   \code{alg_score} and \code{alg_obs_info} if \code{loglik} is supplied,
+#'   or to functions functions relating to the in-built examples otherwise.
+#'   See the description of \code{model} above for details.
 #' @details Add details.
 #' @return Nothing is returned, only the animation is produced.
 #' @examples
@@ -35,17 +73,12 @@
 #' library(rpanel)
 #'
 #' \dontrun{
-#' # Example 6.2 in the STAT3001 notes
 #' wws(theta0 = 0.5)
 #'
 #' wws(theta0 = 0.5, model = "binom")
 #'
 #' wws(theta0 = 0.5, model = "binom", n_success = 1000, n_failure = 1000,
 #'     theta_range = c(0.4, 0.6))
-#'
-#' # data = vector of (n_success, n_failure) for binom
-#' #        vector of observations for norm
-#' # automatic choice of theta_range for binom and norm
 #'
 #' set.seed(47)
 #' x <- rnorm(10)
@@ -70,13 +103,17 @@
 #'     alg_score = bin_alg_score, alg_obs_info = bin_alg_obs_info)
 #' }
 #' @export
-wws <- function(model = c("norm", "binom"), loglik = NULL,
-                theta_range = c(0.1, 0.7),
-                theta0 = mean(theta_range),
-                delta_theta0 = abs(diff(theta_range)) / 20,
-                theta_mle = NULL, alg_score = NULL, alg_obs_info = NULL,
-                digits = 3, ...) {
+wws <- function(model = c("norm", "binom"),
+                theta_range = NULL,
+                theta0 = if (!is.null(theta_range))
+                  mean(theta_range) else NULL,
+                delta_theta0 = if (!is.null(theta_range))
+                  abs(diff(theta_range)) / 20 else NULL,
+                theta_mle = NULL,
+                loglik = NULL, alg_score = NULL, alg_obs_info = NULL,
+                digits = 3, mult = 3, ...) {
   model <- match.arg(model)
+  user_args <- list(...)
   # If loglik is not supplied then use the log-likelihood implied by model
   if (is.null(loglik)) {
     if (model == "binom") {
@@ -89,43 +126,56 @@ wws <- function(model = c("norm", "binom"), loglik = NULL,
       alg_obs_info <- function(p, n_success, n_failure) {
         return(n_success / p ^ 2 + n_failure / (1 - p) ^ 2)
       }
-      user_args <- list(...)
-      if (is.null(user_args$n_success)) {
+      if (is.null(user_args$data)) {
         user_args$n_success <- 7
-      }
-      if (is.null(user_args$n_failure)) {
         user_args$n_failure <- 13
+      } else {
+        user_args$n_success <- user_args$data[1]
+        user_args$n_failure <- user_args$data[2]
+        # Remove data from user_args because it isn't an argument of loglik
+        user_args$data <- NULL
       }
-      theta_mle <- user_args$n_success /
-        (user_args$n_success + user_args$n_failure)
-    } else {
-      loglik <- function(mu, x, sigma, n) {
-        sx2 <- sum(x ^ 2)
-        sumx <- sum(x)
+      n <- user_args$n_success + user_args$n_failure
+      theta_mle <- user_args$n_success / n
+      if (is.null(theta_range)) {
+        se_theta <- sqrt(theta_mle * (1 - theta_mle) / n)
+        theta_range <- theta_mle + c(-1, 1) * mult * se_theta
+      }
+    } else if (model == "norm") {
+      loglik <- function(mu, data, sigma, n) {
+        sx2 <- sum(data ^ 2)
+        sumx <- sum(data)
         return(-(sx2 - 2 * sumx * mu + n * mu ^ 2) / sigma ^ 2 / 2)
       }
-      alg_score <- function(mu, x, sigma, n) {
-        return(n * (mean(x) - mu) / sigma ^ 2)
+      alg_score <- function(mu, data, sigma, n) {
+        return(n * (mean(data) - mu) / sigma ^ 2)
       }
-      alg_obs_info <- function(mu, x, sigma, n) {
+      alg_obs_info <- function(mu, data, sigma, n) {
         return(n / sigma ^ 2)
       }
-      user_args <- list(...)
+      if (is.null(user_args$mu)) {
+        sim_mu <- 0
+      } else {
+        sim_mu <- user_args$mu
+        # Remove mu from user_args because mu is an argument of loglik
+        user_args$mu <- NULL
+      }
       if (is.null(user_args$sigma)) {
         user_args$sigma <- 1
       }
       if (is.null(user_args$n)) {
         user_args$n <- 10
       }
-      if (is.null(user_args$x)) {
-        set.seed(47)
-        user_args$x <- stats::rnorm(user_args$n, mean = 0,
-                                    sd = user_args$sigma)
+      if (is.null(user_args$data)) {
+        user_args$data <- stats::rnorm(user_args$n, mean = sim_mu,
+                                       sd = user_args$sigma)
       }
-      theta_mle <- mean(user_args$x)
+      theta_mle <- mean(user_args$data)
+      if (is.null(theta_range)) {
+        se_theta <- user_args$sigma / sqrt(user_args$n)
+        theta_range <- theta_mle + c(-1, 1) * mult * se_theta
+      }
     }
-  } else {
-    user_args <- list(...)
   }
   theta_range <- sort(theta_range)
   if (is.null(theta_mle)) {
@@ -222,6 +272,7 @@ wws_plot <- function(panel) {
       graphics::axis(4, at = pretty(loglik_vals), labels = yaxis_labels)
       graphics::axis(1, mgp = c(3, 1.25, 0))
     }
+    graphics::box(bty = "u")
     # Calculate score statistic
     if (is.null(alg_score)) {
       for_grad <- c(list(func = loglik, x = theta0), user_args)
