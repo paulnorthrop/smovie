@@ -2,3 +2,5 @@
 
 export(shypo)
 export(wws)
+import(methods)
+importFrom(rpanel,rp.control)
