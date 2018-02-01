@@ -19,12 +19,7 @@
 #'   \code{round(observed_value)} is used.
 #' @details Add details.
 #' @return Nothing is returned, only the animation is produced.
-#' @seealso \code{\link{movies}}: general information about STAT1004 movies.
 #' @examples
-#' # Load package rpanel
-#' # [Use install.packages("rpanel") if necessary]
-#' library(rpanel)
-#'
 #' \dontrun{
 #' binomial_pmf_movie()
 #'
