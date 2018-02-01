@@ -19,4 +19,5 @@ r:
 addons:
   apt:
     packages:
+    - tk-dev
     - bwidget
