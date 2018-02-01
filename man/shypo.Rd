@@ -80,10 +80,6 @@ The movie is based on two plots.
   }
 }
 \examples{
-# Load package rpanel
-# [Use install.packages("rpanel") if necessary]
-library(rpanel)
-
 \dontrun{
 # Start with the plot just after slide 10 of the STAT3001 notes
 # See the effect of increasing a
