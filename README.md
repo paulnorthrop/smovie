@@ -3,6 +3,8 @@
 smovie
 ======
 
+[![Travis-CI Build Status](https://travis-ci.org/paulnorthrop/smovie.svg?branch=master)](https://travis-ci.org/paulnorthrop/smovie) [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/paulnorthrop/smovie?branch=master&svg=true)](https://ci.appveyor.com/project/paulnorthrop/smovie)
+
 ### Some movies to teach statistical concepts
 
 ### What smovie do?
