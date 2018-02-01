@@ -12,6 +12,6 @@ os:
 #  - osx
 
 r:
-#  - release
-  - devel
+  - release
+#  - devel
 #  - oldrel
