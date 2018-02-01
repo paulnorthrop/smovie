@@ -36,10 +36,6 @@ binomial (n, p) random variable depends on n and p.
 Add details.
 }
 \examples{
-# Load package rpanel
-# [Use install.packages("rpanel") if necessary]
-library(rpanel)
-
 \dontrun{
 binomial_pmf_movie()
 
@@ -54,7 +50,4 @@ binomial_pmf_movie(starting_n = 44, starting_p = 0.1, delta_p = 0.1,
 binomial_pmf_movie(starting_n = 44, starting_p = 0.591, delta_p = 0.01,
                    observed_value = 26)
 }
-}
-\seealso{
-\code{\link{movies}}: general information about STAT1004 movies.
 }
