@@ -6,7 +6,10 @@
 #' @details When one of these functions is called R opens up a small
 #' \emph{parameter window} containing clickable buttons that can be
 #' used to change parameters underlying the plot. For the effects of
-#' these buttons see the documentation of the individual functions below.
+#' these buttons see the documentation of the individual functions.
+#'
+#' When a button (produced using \code{\link[rpanel]{rp.button}} or
+#' \code{\link[rpanel]{rp.doublebutton}}) ...
 #'
 #' The parameter window does not close automatically after the movie:
 #' the user needs to close it manually.
