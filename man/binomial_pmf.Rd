@@ -42,13 +42,9 @@ binomial_pmf()
 # Increase n and see what happens
 binomial_pmf(delta_n = 10)
 
-# Sample size of the Aussie births data (26 boys, 18 girls)
+# Highlight observed value of 26 successes in 44 trials
 binomial_pmf(starting_n = 44, starting_p = 0.1, delta_p = 0.1,
-                   observed_value = 26)
-
-# Start at p = 0.591 (approximately 26/44)
-binomial_pmf(starting_n = 44, starting_p = 0.591, delta_p = 0.01,
-                   observed_value = 26)
+             observed_value = 26)
 }
 }
 \seealso{
