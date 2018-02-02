@@ -12,8 +12,8 @@ os:
 #  - osx
 
 r:
-#  - release
-  - devel
+  - release
+#  - devel
 #  - oldrel
 
 # Nicked from https://github.com/spatstat/spatstat/blob/master/.travis.yml
