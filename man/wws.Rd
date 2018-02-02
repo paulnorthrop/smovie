@@ -136,3 +136,6 @@ wws(bin_loglik, theta0 = 0.5, theta_range = c(0.1, 0.7),
     alg_score = bin_alg_score, alg_obs_info = bin_alg_obs_info)
 }
 }
+\seealso{
+\code{\link{smovie}}: general information about smovie.
+}

@@ -60,6 +60,7 @@
 #'   }
 #'
 #' @return Nothing is returned, only the animation is produced.
+#' @seealso \code{\link{smovie}}: general information about smovie.
 #' @examples
 #' \dontrun{
 #' # Start with the plot just after slide 10 of the STAT3001 notes

@@ -73,6 +73,7 @@
 #'   See the description of \code{model} above for details.
 #' @details Add details.
 #' @return Nothing is returned, only the animation is produced.
+#' @seealso \code{\link{smovie}}: general information about smovie.
 #' @examples
 #' \dontrun{
 #' # N(theta, 1) example, test statistics equivalent

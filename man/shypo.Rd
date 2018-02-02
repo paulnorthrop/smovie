@@ -95,3 +95,6 @@ shypo(mu0 = 0, eff = 5, n = 16, delta_a = 0.01)
 shypo(mu0 = 0, eff = 5, n = 12.3, a = 2.75, delta_a = 0.01, delta_n = 0.01)
 }
 }
+\seealso{
+\code{\link{smovie}}: general information about smovie.
+}
