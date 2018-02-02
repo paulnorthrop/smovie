@@ -3,6 +3,8 @@
 export(binomial_pmf)
 export(clt_exp)
 export(clt_norm)
+export(corr_sim)
+export(lev_inf)
 export(shypo)
 export(wws)
 import(methods)
