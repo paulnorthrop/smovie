@@ -18,14 +18,32 @@ these buttons see the documentation of the individual functions below.
 The parameter window does not close automatically after the movie:
 the user needs to close it manually.
 }
+\section{{Probability distributions}}{
+
+\itemize{
+  \item {\link[=binomial_pmf]{Binomial p.m.f.}}
+}
+}
+
+\section{{Sampling distributions}}{
+
+\itemize{
+  \item {\link[=clt_norm]{Central Limit Theorem: normal data}}
+  \item {\link[=clt_exp]{Central Limit Theorem: exponential data}}
+}
+}
+
+\section{{Hypothesis testing}}{
+
+\itemize{
+  \item {\link[=wws]{Wald, Wilks and Score test movie}}
+  \item {\link[=shypo]{Testing simple hypotheses}}
+}
+}
+
 \references{
 Bowman, A., Crawford, E., Alexander, G. and Bowman, R. W.
  (2007). rpanel: Simple Interactive Controls for R Functions Using the
  tcltk Package.  \emph{Journal of Statistical Software}, \strong{17(9)},
  1-18. \url{http://www.jstatsoft.org/v17/i09/}.
-}
-\seealso{
-\code{\link{wws}}: Wald, Wilks and Score test movie.
-
-\code{\link{shypo}}: Testing simple hypotheses movie.
 }
