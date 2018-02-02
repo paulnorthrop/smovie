@@ -46,7 +46,7 @@
 #'   Each time this button is clicked a new sample is simulated and its sample
 #'   mean added to the bottom histogram.
 #'
-#'   Another movie (\code{\link{clt_normal_movie}}) considers the special case
+#'   Another movie (\code{\link{clt_norm}}) considers the special case
 #'   where the original variables are normally distributed.
 #' @return Nothing is returned, only the animation is produced.
 #' @seealso \code{\link{smovie}}: general information about smovie.
