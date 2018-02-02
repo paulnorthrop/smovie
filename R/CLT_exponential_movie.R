@@ -1,4 +1,4 @@
-# =========================== clt_exponential_movie ===========================
+# ================================= clt_exp ===================================
 
 #' Central Limit Theorem movie: exponential data
 #'
@@ -54,16 +54,12 @@
 #'   simulated from a normal distribution.
 #' @examples
 #' \dontrun{
-#' clt_exponential_movie(44, 1.84, "time since last birth (hours)")
-#'
-#' # ... and with some smaller sample sizes
-#' clt_exponential_movie(10, 1.84, "time since last birth (hours)")
-#'
-#' clt_exponential_movie(3, 1.84, "time since last birth (hours)")
+#' clt_exp()
+#' clt_exp(n = 10)
 #' }
 #' @export
-clt_exponential_movie <- function(n = 10, lambda = 1, xlab = "x", pos = 1,
-                                  envir = as.environment(pos)) {
+clt_exp <- function(n = 30, lambda = 1, xlab = "x", pos = 1,
+                    envir = as.environment(pos)) {
   # Assign variables to an environment so that they can be accessed inside
   # clt_exponential_movie_plot()
   old_n <- 0

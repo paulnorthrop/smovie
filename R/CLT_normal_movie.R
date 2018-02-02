@@ -1,4 +1,4 @@
-# ============================== clt_normal_movie =============================
+# ================================== clt_norm =================================
 
 #' Central Limit Theorem movie: normal data
 #'
@@ -55,11 +55,11 @@
 #'   simulated from an exponential distribution.
 #' @examples
 #' \dontrun{
-#' clt_normal_movie(44, 7.22, sqrt(1.36), "weight (pounds)")
+#' clt_norm()
 #' }
 #' @export
-clt_normal_movie <- function(n = 30, mu = 0, sigma = 1, xlab = "x", pos = 1,
-                             envir = as.environment(pos)) {
+clt_norm <- function(n = 30, mu = 0, sigma = 1, xlab = "x", pos = 1,
+                     envir = as.environment(pos)) {
   # Assign variables to an environment so that they can be accessed inside
   # clt_normal_movie_plot()
   old_n <- 0

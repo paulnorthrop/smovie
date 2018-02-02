@@ -1,4 +1,4 @@
-# ============================ binomial_pmf_movie =============================
+# =============================== binomial_pmf ================================
 
 #' Binomial p.m.f. movie
 #'
@@ -22,21 +22,21 @@
 #' @seealso \code{\link{smovie}}: general information about smovie.
 #' @examples
 #' \dontrun{
-#' binomial_pmf_movie()
+#' binomial_pmf()
 #'
 #' # Increase n and see what happens
-#' binomial_pmf_movie(delta_n = 10)
+#' binomial_pmf(delta_n = 10)
 #'
 #' # Sample size of the Aussie births data (26 boys, 18 girls)
-#' binomial_pmf_movie(starting_n = 44, starting_p = 0.1, delta_p = 0.1,
+#' binomial_pmf(starting_n = 44, starting_p = 0.1, delta_p = 0.1,
 #'                    observed_value = 26)
 #'
 #' # Start at p = 0.591 (approximately 26/44)
-#' binomial_pmf_movie(starting_n = 44, starting_p = 0.591, delta_p = 0.01,
+#' binomial_pmf(starting_n = 44, starting_p = 0.591, delta_p = 0.01,
 #'                    observed_value = 26)
 #' }
 #' @export
-binomial_pmf_movie <- function(starting_n = 1, starting_p = 1 /2, delta_n = 1,
+binomial_pmf <- function(starting_n = 1, starting_p = 1 /2, delta_n = 1,
                                delta_p = 0.05, observed_value = NA) {
   if (!is.na(observed_value) && observed_value < 0) {
     stop("observed_value cannot be negative")

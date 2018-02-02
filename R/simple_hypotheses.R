@@ -117,7 +117,7 @@ shypo <- function(mu0 = 0, sd = 6, eff = sd, n = 30,
   return(invisible())
 }
 
-# Function to be called by clt_normal_movie().
+# Function to be called by shypo().
 
 sh_plot <- function(panel) {
   with(panel, {
