@@ -57,5 +57,5 @@ lev_inf(association = "none")
 }
 }
 \seealso{
-\code{\link{movies}}: general information about STAT1004 movies.
+\code{\link{smovie}}: general information about smovie.
 }

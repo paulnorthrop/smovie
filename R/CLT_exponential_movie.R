@@ -50,8 +50,8 @@
 #'   where the original variables are normally distributed.
 #' @return Nothing is returned, only the animation is produced.
 #' @seealso \code{\link{smovie}}: general information about smovie.
-#' @seealso \code{\link{clt_normal_movie}}: a similar movie using data
-#'   simulated from a normal distribution.
+#' @seealso \code{\link{clt_norm}}: a similar movie using data simulated from a
+#'   normal distribution.
 #' @examples
 #' \dontrun{
 #' clt_exp()

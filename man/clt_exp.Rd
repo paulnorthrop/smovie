@@ -74,6 +74,6 @@ clt_exp(n = 10)
 \seealso{
 \code{\link{smovie}}: general information about smovie.
 
-\code{\link{clt_normal_movie}}: a similar movie using data
-  simulated from a normal distribution.
+\code{\link{clt_norm}}: a similar movie using data simulated from a
+  normal distribution.
 }

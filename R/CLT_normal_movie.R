@@ -51,8 +51,8 @@
 #'   in the case where the original variables are exponentially distributed.
 #' @return Nothing is returned, only the animation is produced.
 #' @seealso \code{\link{smovie}}: general information about smovie.
-#' @seealso \code{\link{clt_exponential_movie}}: a similar movie using data
-#'   simulated from an exponential distribution.
+#' @seealso \code{\link{clt_exp}}: a similar movie using data simulated from an
+#'   exponential distribution.
 #' @examples
 #' \dontrun{
 #' clt_norm()

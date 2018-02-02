@@ -74,6 +74,6 @@ clt_norm()
 \seealso{
 \code{\link{smovie}}: general information about smovie.
 
-\code{\link{clt_exponential_movie}}: a similar movie using data
-  simulated from an exponential distribution.
+\code{\link{clt_exp}}: a similar movie using data simulated from an
+  exponential distribution.
 }

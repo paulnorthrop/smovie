@@ -37,7 +37,7 @@
 #'   falls very close to the regression line fitted to the other observations
 #'   then its influence will be low.
 #' @return Nothing is returned, only the animation is produced.
-#' @seealso \code{\link{movies}}: general information about STAT1004 movies.
+#' @seealso \code{\link{smovie}}: general information about smovie.
 #' @examples
 #' \dontrun{
 #' lev_inf()
