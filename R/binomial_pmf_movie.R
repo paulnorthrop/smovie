@@ -19,6 +19,7 @@
 #'   \code{round(observed_value)} is used.
 #' @details Add details.
 #' @return Nothing is returned, only the animation is produced.
+#' @seealso \code{\link{smovie}}: general information about smovie.
 #' @examples
 #' \dontrun{
 #' binomial_pmf_movie()
