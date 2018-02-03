@@ -12,6 +12,9 @@
 #' @param mu,sigma Numeric scalars.  The respective mean and standard
 #'   deviation of the normal distribution from which data are to be
 #'   simulated using \code{\link{rnorm}}.
+#' @param delta_n A numeric scalar.  The amount by which n is increased
+#'   (or decreased) after one click of the + (or -) button in the parameter
+#'   window.
 #' @param xlab A character scalar.  A name to use to label the horizontal
 #'   axis of the plots.
 #' @param pos A numeric integer.  Used in calls to \code{\link{assign}}
@@ -19,6 +22,11 @@
 #'   By default, uses the current environment.
 #' @param envir An alternative way (to \code{pos}) of specifying the
 #'   environment. See \code{\link{environment}}.
+#' @param ... Additional arguments to be passed to
+#'   \code{\link[rpanel]{rp.button}} and
+#'   \code{\link[rpanel]{rp.doublebutton}}, not including \code{panel},
+#'   \code{variable}, \code{title}, \code{step}, \code{action}, \code{initval},
+#'   \code{range}.
 #' @details Loosely speaking, a consequence of the
 #'   \href{https://en.wikipedia.org/wiki/Central_limit_theorem}{Central Limit Theorem (CLT)}
 #'   is that, in many situations, the mean of a \strong{large number} of
@@ -58,8 +66,8 @@
 #' clt_norm()
 #' }
 #' @export
-clt_norm <- function(n = 30, mu = 0, sigma = 1, xlab = "x", pos = 1,
-                     envir = as.environment(pos)) {
+clt_norm <- function(n = 30, mu = 0, sigma = 1, delta_n = 1, xlab = "x",
+                     pos = 1, envir = as.environment(pos), ...) {
   # Assign variables to an environment so that they can be accessed inside
   # clt_normal_movie_plot()
   old_n <- 0
@@ -70,13 +78,12 @@ clt_norm <- function(n = 30, mu = 0, sigma = 1, xlab = "x", pos = 1,
   # Create buttons for movie
   clt_norm_panel <- rpanel::rp.control("sample size", n = n, mu = mu,
                                        sigma = sigma, envir = envir)
-  rpanel::rp.doublebutton(clt_norm_panel, n, 1, range=c(1, 1000),
-                          repeatinterval = 20, initval = n,
+  rpanel::rp.doublebutton(panel = clt_norm_panel, variable = n, step = delta_n,
                           title = "sample size, n",
-                          action = clt_normal_movie_plot)
-  rpanel::rp.button(clt_norm_panel, repeatinterval = 20,
-            title = "simulate another sample of size n",
-            action = clt_normal_movie_plot)
+                          action = clt_normal_movie_plot, initval = n,
+                          range = c(1, NA), ...)
+  rpanel::rp.button(panel = clt_norm_panel, action = clt_normal_movie_plot,
+                    title = "simulate another sample of size n", ...)
   rpanel::rp.do(clt_norm_panel, clt_normal_movie_plot)
   return(invisible())
 }

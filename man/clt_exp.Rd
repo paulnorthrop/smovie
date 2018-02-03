@@ -4,8 +4,8 @@
 \alias{clt_exp}
 \title{Central Limit Theorem movie: exponential data}
 \usage{
-clt_exp(n = 30, lambda = 1, xlab = "x", pos = 1,
-  envir = as.environment(pos))
+clt_exp(n = 30, lambda = 1, delta_n = 1, xlab = "x", pos = 1,
+  envir = as.environment(pos), ...)
 }
 \arguments{
 \item{n}{An integer scalar.  The size of the samples drawn from a
@@ -13,6 +13,10 @@ normal distribution.}
 
 \item{lambda}{A numeric scalar.  The rate parameter of the exponential
 distribution from which data are to be simulated using \code{\link{rexp}}.}
+
+\item{delta_n}{A numeric scalar.  The amount by which n is increased
+(or decreased) after one click of the + (or -) button in the parameter
+window.}
 
 \item{xlab}{A character scalar.  A name to use to label the horizontal
 axis of the plots.}
@@ -23,6 +27,12 @@ By default, uses the current environment.}
 
 \item{envir}{An alternative way (to \code{pos}) of specifying the
 environment. See \code{\link{environment}}.}
+
+\item{...}{Additional arguments to be passed to
+\code{\link[rpanel]{rp.button}} and
+\code{\link[rpanel]{rp.doublebutton}}, not including \code{panel},
+\code{variable}, \code{title}, \code{step}, \code{action}, \code{initval},
+\code{range}.}
 }
 \value{
 Nothing is returned, only the animation is produced.
