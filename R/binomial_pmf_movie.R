@@ -21,7 +21,11 @@
 #'   \code{\link[rpanel]{rp.doublebutton}}, not including \code{panel},
 #'   \code{variable}, \code{title}, \code{step}, \code{action}, \code{initval},
 #'   \code{range}.
-#' @details Add details.
+#' @details The probability mass function of a binomial random variable with
+#'   parameters \eqn{n} (the number of Bernoulli trials performed) and
+#'   \eqn{p} (the probabilities of success on a each trial) is plotted.
+#'   The values of \eqn{n} and \eqn{p} can be changed by clicking on the
+#'   relevant buttons.
 #' @return Nothing is returned, only the animation is produced.
 #' @seealso \code{\link{smovie}}: general information about smovie.
 #' @examples
