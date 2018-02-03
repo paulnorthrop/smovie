@@ -17,6 +17,8 @@
 #'   supplied then the corresponding line in the plot of the p.m.f. is coloured
 #'   in red.  If \code{observed_value} is not an integer then
 #'   \code{round(observed_value)} is used.
+#' @param ... Additional arguments to be passed to
+#'   \code{\link[rpanel]{rp.doublebutton}}.
 #' @details Add details.
 #' @return Nothing is returned, only the animation is produced.
 #' @seealso \code{\link{smovie}}: general information about smovie.
@@ -33,7 +35,7 @@
 #' }
 #' @export
 binom_pmf <- function(starting_n = 1, starting_p = 1 /2, delta_n = 1,
-                      delta_p = 0.05, observed_value = NA) {
+                      delta_p = 0.05, observed_value = NA, ...) {
   if (!is.na(observed_value) && observed_value < 0) {
     stop("observed_value cannot be negative")
   }
@@ -46,13 +48,13 @@ binom_pmf <- function(starting_n = 1, starting_p = 1 /2, delta_n = 1,
   plot_binomial_pmf(list(n = starting_n, prob = starting_p,
                          observed_value = observed_value))
   rpanel::rp.doublebutton(panel = binomial_panel, variable = prob,
-                          step = delta_p, range = c(0, 1), repeatinterval = 20,
-                          initval = starting_p, title = "P(success), p:",
-                          action = plot_binomial_pmf)
+                          title = "P(success), p:", step = delta_p,
+                          action = plot_binomial_pmf, initval = starting_p,
+                          range = c(0, 1), ...)
   rpanel::rp.doublebutton(panel = binomial_panel, variable = n, step = delta_n,
-                          range=c(1, 1000000), repeatinterval = 20,
-                          initval = starting_n, title = "number of trials, n:",
-                          action = plot_binomial_pmf)
+                          title = "number of trials, n:",
+                          action = plot_binomial_pmf, initval = starting_n,
+                          range = c(1, NA), ...)
   invisible()
 }
 

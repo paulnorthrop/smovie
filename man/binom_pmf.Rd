@@ -5,7 +5,7 @@
 \title{Binomial p.m.f. movie}
 \usage{
 binom_pmf(starting_n = 1, starting_p = 1/2, delta_n = 1, delta_p = 0.05,
-  observed_value = NA)
+  observed_value = NA, ...)
 }
 \arguments{
 \item{starting_n}{A numeric scalar.  The value of n for the first graph.}
@@ -24,6 +24,9 @@ window.}
 supplied then the corresponding line in the plot of the p.m.f. is coloured
 in red.  If \code{observed_value} is not an integer then
 \code{round(observed_value)} is used.}
+
+\item{...}{Additional arguments to be passed to
+\code{\link[rpanel]{rp.doublebutton}}.}
 }
 \value{
 Nothing is returned, only the animation is produced.
