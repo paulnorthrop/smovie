@@ -20,7 +20,7 @@
 #'
 #' @section {Probability distributions}:
 #' \itemize{
-#'   \item {\link[=binomial_pmf]{Binomial p.m.f.}}
+#'   \item {\link[=binom_pmf]{Binomial p.m.f.}}
 #' }
 #'
 #' @section {Sampling distributions}:
