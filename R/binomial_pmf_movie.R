@@ -18,7 +18,9 @@
 #'   in red.  If \code{observed_value} is not an integer then
 #'   \code{round(observed_value)} is used.
 #' @param ... Additional arguments to be passed to
-#'   \code{\link[rpanel]{rp.doublebutton}}.
+#'   \code{\link[rpanel]{rp.doublebutton}}, not including \code{panel},
+#'   \code{variable}, \code{title}, \code{step}, \code{action}, \code{initval},
+#'   \code{range}.
 #' @details Add details.
 #' @return Nothing is returned, only the animation is produced.
 #' @seealso \code{\link{smovie}}: general information about smovie.
