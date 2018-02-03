@@ -1,4 +1,4 @@
-# =============================== binomial_pmf ================================
+# ================================ binom_pmf ==================================
 
 #' Binomial p.m.f. movie
 #'
@@ -22,18 +22,18 @@
 #' @seealso \code{\link{smovie}}: general information about smovie.
 #' @examples
 #' \dontrun{
-#' binomial_pmf()
+#' binom_pmf()
 #'
 #' # Increase n and see what happens
-#' binomial_pmf(delta_n = 10)
+#' binom_pmf(delta_n = 10)
 #'
 #' # Highlight observed value of 26 successes in 44 trials
-#' binomial_pmf(starting_n = 44, starting_p = 0.1, delta_p = 0.1,
-#'              observed_value = 26)
+#' binom_pmf(starting_n = 44, starting_p = 0.1, delta_p = 0.1,
+#'           observed_value = 26)
 #' }
 #' @export
-binomial_pmf <- function(starting_n = 1, starting_p = 1 /2, delta_n = 1,
-                               delta_p = 0.05, observed_value = NA) {
+binom_pmf <- function(starting_n = 1, starting_p = 1 /2, delta_n = 1,
+                      delta_p = 0.05, observed_value = NA) {
   if (!is.na(observed_value) && observed_value < 0) {
     stop("observed_value cannot be negative")
   }
