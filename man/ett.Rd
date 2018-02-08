@@ -75,6 +75,7 @@ Loosely speaking, a consequence of the
 \examples{
 \dontrun{
 ett()
+ett(repeatdelay = 100, repeatinterval = 100)
 }
 }
 \seealso{

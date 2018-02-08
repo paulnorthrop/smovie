@@ -57,6 +57,7 @@
 #' @examples
 #' \dontrun{
 #' ett()
+#' ett(repeatdelay = 100, repeatinterval = 100)
 #' }
 #' @export
 ett <- function(n = 30, distn = c("exponential", "gamma", "normal", "uniform"),
@@ -66,10 +67,6 @@ ett <- function(n = 30, distn = c("exponential", "gamma", "normal", "uniform"),
   #
   distn <- match.arg(distn)
   distn <- tolower(distn)
-  # Set the relevant GEV parameters
-  gev_pars <-
-    switch(distn,
-           "exponential" = list(loc = log(n), scale  = 1, shape = 0))
   # Set the density and quantile functions and simulation function
   rfun <-
     switch(distn,
@@ -114,7 +111,7 @@ ett <- function(n = 30, distn = c("exponential", "gamma", "normal", "uniform"),
   # Create buttons for movie
   ett_panel <- rpanel::rp.control("sample size", n = n, dfun = dfun,
                                   qfun = qfun, rfun = rfun,
-                                  fun_args = fun_args, gev_pars = gev_pars,
+                                  fun_args = fun_args, distn = distn,
                                   top_range = top_range,
                                   bottom_range = bottom_range,
                                   envir = envir)
@@ -163,11 +160,11 @@ ett_movie_plot <- function(panel) {
     graphics::hist(y, col = 8, probability = TRUE, axes = FALSE,
                    xlab = xlab, ylab = "density", main = "",
                    xlim = my_xlim, ylim = c(0, ytop))
+    graphics::lines(x, ydens, xpd = TRUE, lwd = 2, lty = 2)
     graphics::axis(2, at = pretty(c(y, top_range[2])))
     graphics::axis(1, line = 0.5)
     graphics::rug(y, line = 0.5, ticksize = 0.05)
     graphics::title(paste("sample size, n = ",n))
-    graphics::lines(x, ydens, xpd = TRUE, lwd = 2, lty = 2)
     #
     u_t <- par("usr")
     graphics::segments(max_y, u_t[3], max_y, -10, col = "red", xpd = TRUE,
@@ -179,6 +176,10 @@ ett_movie_plot <- function(panel) {
     #
     # Bottom plot --------
     #
+    # Set the relevant GEV parameters
+    gev_pars <-
+      switch(distn,
+             "exponential" = list(loc = log(n), scale  = 1, shape = 0))
     # Set range for x-axis
     x <- seq(bottom_range[1], bottom_range[2], len = 101)
     # Calcuate the density over this range
@@ -195,10 +196,10 @@ ett_movie_plot <- function(panel) {
     graphics::hist(y, col = 8, probability = TRUE, las = 1, axes = FALSE,
          xlab = my_xlab, ylab = "density", main = "",
          xpd = TRUE, xlim = my_xlim, ylim = c(0, ytop))
+    graphics::lines(x, ydens, xpd = TRUE, lwd = 2, lty = 2)
     graphics::axis(2)
     graphics::axis(1, line = 0.5)
     graphics::rug(y, line = 0.5, ticksize = 0.05, col = "red")
-    graphics::lines(x, ydens, xpd = TRUE, lwd = 2, lty = 2)
     u_b <- my_xlim
     my_leg_2 <- paste("GEV(", round(gev_pars$loc, 2), ",",
                       round(gev_pars$scale, 2), ",",
