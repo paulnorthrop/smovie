@@ -4,8 +4,8 @@
 \alias{ett}
 \title{Extremal Types Theorem}
 \usage{
-ett(n = 30, distn = c("exponential", "gamma", "normal", "uniform"),
-  params = list(), delta_n = 1, xlab = "x", pos = 1,
+ett(n = 30, distn = c("exponential", "uniform", "gp"), params = list(),
+  n_add = 1, delta_n = 1, xlab = "x", pos = 1,
   envir = as.environment(pos), ...)
 }
 \arguments{
@@ -14,11 +14,14 @@ distribution chosen using \code{distn}.}
 
 \item{distn}{A character scalar specifying the distribution from which
 observations are sampled..   Distributions \code{"exponential"},
-\code{"gamma"}, \code{"normal"}, \code{"uniform"} are recognised,
+\code{"uniform"} and \code{"gp"} are recognised,
 case being ignored.}
 
 \item{params}{A named list of additional arguments to be passed to the
 density function associated with distribution \code{distn}.}
+
+\item{n_add}{An integer scalar.  The number of simulated datasets to add at
+to each new frame of the movie.}
 
 \item{delta_n}{A numeric scalar.  The amount by which n is increased
 (or decreased) after one click of the + (or -) button in the parameter
@@ -68,9 +71,10 @@ Loosely speaking, a consequence of the
   Once it starts, two aspects of this movie are controlled by the user.
   Firstly, there are buttons to increase (+) or decrease (-) the sample
   size, that is, the number of values over which a mean is calculated.
-  Then there is a button labelled "simulate another sample of size n".
-  Each time this button is clicked a new sample is simulated and its sample
-  mean added to the bottom histogram.
+  Then there is a button labelled
+  "simulate another \code{n_add} samples of size n".
+  Each time this button is clicked \code{n_add} new samples are simulated
+  and their sample maxima are added to the bottom histogram.
 }
 \examples{
 \dontrun{
