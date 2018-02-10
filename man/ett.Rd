@@ -80,6 +80,8 @@ Loosely speaking, a consequence of the
 \dontrun{
 ett()
 ett(repeatdelay = 100, repeatinterval = 100)
+ett(distn = "uniform")
+ett(distn = "gp", params = list(shape = 0.5))
 }
 }
 \seealso{
