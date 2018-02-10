@@ -94,8 +94,16 @@ set_top_range <- function(distn, p_vec, fun_args, qfun) {
     return(top_range)
   }
   if (distn == "beta") {
-    top_range[1] <- 0
-    top_range[2] <- 1
+    if (fun_args$shape1 < 1) {
+      top_range[1] <- 0.01
+    } else {
+      top_range[1] <- 0
+    }
+    if (fun_args$shape2 < 1) {
+      top_range[2] <- 0.99
+    } else {
+      top_range[2] <- 1
+    }
     return(top_range)
   }
 }
