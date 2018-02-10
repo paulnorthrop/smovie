@@ -159,7 +159,7 @@ ett <- function(n = 30, distn = c("exponential", "uniform", "gp"),
                                   envir = envir)
   #
   panel_redraw <- function(panel) {
-    rpanel::rp.tkrreplot(panel, plt)
+    rpanel::rp.tkrreplot(panel, redraw_plot)
     return(panel)
   }
   if (panel_plot & !requireNamespace("tkrplot", quietly = TRUE)) {
@@ -168,7 +168,7 @@ ett <- function(n = 30, distn = c("exponential", "uniform", "gp"),
   }
   #
   if (panel_plot) {
-    rpanel::rp.tkrplot(ett_panel, plt, ett_movie_plot, pos = "right",
+    rpanel::rp.tkrplot(ett_panel, redraw_plot, ett_movie_plot, pos = "right",
                        hscale = hscale, vscale = vscale, background = "white")
     action <- panel_redraw
   } else {
