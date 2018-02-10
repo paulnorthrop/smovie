@@ -253,22 +253,12 @@ ett_movie_plot <- function(panel) {
     # Bottom plot --------
     #
     # Set the relevant GEV parameters
-    if (distn == "gp") {
-      bn <- do.call(qfun, c(list(p = 1 - 1 / n), fun_args))
-      print("bn")
-      print(bn)
-      an <- (1 / n) / do.call(dfun, c(list(x = bn), fun_args))
-      print(an)
-    }
+    bn <- do.call(qfun, c(list(p = 1 - 1 / n), fun_args))
+    an <- (1 / n) / do.call(dfun, c(list(x = bn), fun_args))
     gev_pars <-
       switch(distn,
-             "exponential" = list(loc = log(n) / fun_args$rate,
-                                  scale  = 1 / fun_args$rate,
-                                  shape = 0),
-             "uniform" = list(loc = fun_args$min +
-                                (fun_args$max - fun_args$min) * (1 - 1 / n),
-                              scale  = (fun_args$max - fun_args$min) / n,
-                              shape = -1),
+             "exponential" = list(loc = bn, scale = an, shape = 0),
+             "uniform" = list(loc = bn, scale = an, shape = -1),
              "gp" = list(loc = bn, scale = an, shape = fun_args$shape)
              )
     # Set range for x-axis
