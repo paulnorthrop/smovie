@@ -10,8 +10,13 @@
 #'   distribution chosen using \code{distn}.
 #' @param distn A character scalar specifying the distribution from which
 #'   observations are sampled..   Distributions \code{"exponential"},
-#'   \code{"uniform"} and \code{"gp"} are recognised,
-#'   case being ignored.
+#'   \code{"uniform"}, \code{"gp"}, \code{"normal"} and \code{"beta"} are
+#'   recognised, case being ignored.
+#'   The \code{"gp"} case uses the distributional functions
+#'   \code{\link[revdbayes]{gp}} in the
+#'   \code{\link[revdbayes]{revdbayes-package}}.  The other cases
+#'   use the distributional functions in the
+#'   \code{\link[stats]{stats-package}}.
 #' @param params A named list of additional arguments to be passed to the
 #'   density function associated with distribution \code{distn}.
 #' @param panel_plot A logical parameter that determines whether the plot
@@ -72,7 +77,8 @@
 #' ett(distn = "gp", params = list(shape = 0.5))
 #' }
 #' @export
-ett <- function(n = 30, distn = c("exponential", "uniform", "gp"),
+ett <- function(n = 30, distn = c("exponential", "uniform", "gp", "normal",
+                                  "beta"),
                 params = list(), panel_plot = TRUE, hscale = NA,
                 vscale = hscale, n_add = 1, delta_n = 1, xlab = "x", pos = 1,
                 envir = as.environment(pos), ...) {
@@ -89,22 +95,26 @@ ett <- function(n = 30, distn = c("exponential", "uniform", "gp"),
     switch(distn,
            "exponential" = stats::rexp,
            "uniform" = stats::runif,
-           "gp" = revdbayes::rgp)
+           "gp" = revdbayes::rgp,
+           "normal" = stats::rnorm)
   dfun <-
     switch(distn,
            "exponential" = stats::dexp,
            "uniform" = stats::dunif,
-           "gp" = revdbayes::dgp)
+           "gp" = revdbayes::dgp,
+           "normal" = stats::dnorm)
   qfun <-
     switch(distn,
            "exponential" = stats::qexp,
            "uniform" = stats::qunif,
-           "gp" = revdbayes::qgp)
+           "gp" = revdbayes::qgp,
+           "normal" = stats::qnorm)
   pfun <-
     switch(distn,
            "exponential" = stats::pexp,
            "uniform" = stats::punif,
-           "gp" = revdbayes::pgp)
+           "gp" = revdbayes::pgp,
+           "normal" = stats::pnorm)
   # Get the names of the parameters
   par_names <- names(formals(dfun))
   to_remove <- which(is.element(par_names, c("x", "log")))
@@ -147,6 +157,24 @@ ett <- function(n = 30, distn = c("exponential", "uniform", "gp"),
     if (fun_args$shape < 0) {
       top_range[2] <- fun_args$loc - fun_args$scale / fun_args$shape
     }
+  }
+  if (distn == "normal") {
+    if (is.null(fun_args$mean)) {
+      fun_args$mean <- 0
+    }
+    if (is.null(fun_args$sd)) {
+      fun_args$sd <- 1
+    }
+  }
+  if (distn == "beta") {
+    if (is.null(fun_args$shape1)) {
+      fun_args$shape1 <- 2
+    }
+    if (is.null(fun_args$shape2)) {
+      fun_args$shape2 <- 2
+    }
+    top_range[1] <- 0
+    top_range[2] <- 1
   }
   # Assign variables to an environment so that they can be accessed inside
   # clt_exponential_movie_plot()
@@ -271,8 +299,10 @@ ett_movie_plot <- function(panel) {
       switch(distn,
              "exponential" = list(loc = bn, scale = an, shape = 0),
              "uniform" = list(loc = bn, scale = an, shape = -1),
-             "gp" = list(loc = bn, scale = an, shape = fun_args$shape)
-             )
+             "gp" = list(loc = bn, scale = an, shape = fun_args$shape),
+             "normal" = list(loc = bn, scale = an, shape = 0),
+             "beta" = list(loc = bn, scale = an, shape = 0)
+      )
     # Set range for x-axis
     x <- seq(bottom_range[1], bottom_range[2], len = 101)
     # Calcuate the density over this range
