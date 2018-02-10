@@ -4,8 +4,8 @@
 \alias{ett}
 \title{Extremal Types Theorem}
 \usage{
-ett(n = 30, distn = c("exponential", "uniform", "gp"), panel.plot = TRUE,
-  hscale = NA, vscale = hscale, params = list(), n_add = 1,
+ett(n = 30, distn = c("exponential", "uniform", "gp"), params = list(),
+  panel_plot = TRUE, hscale = NA, vscale = hscale, n_add = 1,
   delta_n = 1, xlab = "x", pos = 1, envir = as.environment(pos), ...)
 }
 \arguments{
@@ -17,13 +17,17 @@ observations are sampled..   Distributions \code{"exponential"},
 \code{"uniform"} and \code{"gp"} are recognised,
 case being ignored.}
 
-\item{panel.plot}{A logical parameter that determines whether the plot
+\item{params}{A named list of additional arguments to be passed to the
+density function associated with distribution \code{distn}.}
+
+\item{panel_plot}{A logical parameter that determines whether the plot
 is placed inside the panel (\code{TRUE}) or in the standard graphics
 window (\code{FALSE}).  If the plot is to be placed inside the panel
 then the tkrplot library is required.}
 
-\item{params}{A named list of additional arguments to be passed to the
-density function associated with distribution \code{distn}.}
+\item{hscale, vscale}{Numeric scalars.  Scaling parameters for the size
+of the plot when \code{panel_plot = TRUE}. The default values are 1.4 on
+Unix platforms and 2 on Windows platforms.}
 
 \item{n_add}{An integer scalar.  The number of simulated datasets to add at
 to each new frame of the movie.}

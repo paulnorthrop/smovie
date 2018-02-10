@@ -14,10 +14,13 @@
 #'   case being ignored.
 #' @param params A named list of additional arguments to be passed to the
 #'   density function associated with distribution \code{distn}.
-#' @param panel.plot A logical parameter that determines whether the plot
+#' @param panel_plot A logical parameter that determines whether the plot
 #'   is placed inside the panel (\code{TRUE}) or in the standard graphics
 #'   window (\code{FALSE}).  If the plot is to be placed inside the panel
 #'   then the tkrplot library is required.
+#' @param hscale,vscale Numeric scalars.  Scaling parameters for the size
+#'   of the plot when \code{panel_plot = TRUE}. The default values are 1.4 on
+#'   Unix platforms and 2 on Windows platforms.
 #' @param n_add An integer scalar.  The number of simulated datasets to add at
 #'   to each new frame of the movie.
 #' @param delta_n A numeric scalar.  The amount by which n is increased
@@ -70,19 +73,13 @@
 #' }
 #' @export
 ett <- function(n = 30, distn = c("exponential", "uniform", "gp"),
-                panel.plot = TRUE, hscale = NA, vscale = hscale,
-                params = list(), n_add = 1, delta_n = 1, xlab = "x", pos = 1,
+                params = list(), panel_plot = TRUE, hscale = NA,
+                vscale = hscale, n_add = 1, delta_n = 1, xlab = "x", pos = 1,
                 envir = as.environment(pos), ...) {
-  if (is.na(hscale)) {
-    if (.Platform$OS.type == "unix") {
-      hscale <- 2
-    } else {
-      hscale <- 2.4
-    }
-  }
-  if (is.na(vscale)) {
-    vscale <- hscale
-  }
+  temp <- set_scales(hscale, vscale)
+  hscale <- temp$hscale
+  vscale <- temp$vscale
+  #
   p_vec <- c(0.001, 0.999)
   #
   distn <- match.arg(distn)
@@ -165,13 +162,12 @@ ett <- function(n = 30, distn = c("exponential", "uniform", "gp"),
     rpanel::rp.tkrreplot(panel, plot)
     return(panel)
   }
-  if (panel.plot & !requireNamespace("tkrplot", quietly = TRUE)) {
-    warning("tkrplot is not available so panel.plot has been set to FALSE.")
-    panel.plot <- FALSE
+  if (panel_plot & !requireNamespace("tkrplot", quietly = TRUE)) {
+    warning("tkrplot is not available so panel_plot has been set to FALSE.")
+    panel_plot <- FALSE
   }
   #
-  hscale <- vscale <- 2
-  if (panel.plot) {
+  if (panel_plot) {
     rpanel::rp.tkrplot(ett_panel, plot, ett_movie_plot, pos = "right",
                        hscale = hscale, vscale = vscale, background = "white")
     action <- panel_redraw
@@ -184,12 +180,19 @@ ett <- function(n = 30, distn = c("exponential", "uniform", "gp"),
                           action = action, initval = n,
                           range = c(1, NA), ...)
   if (n_add == 1) {
-    rpanel::rp.button(panel = ett_panel, action = action,
-                      title = paste("simulate another sample of size n"), ...)
+    my_title <- paste("simulate another sample of size n")
   } else {
-    rpanel::rp.button(panel = ett_panel, action = action,
-                      title = paste("simulate another", n_add,
-                                    "samples of size n"), ...)
+    my_title <- title = paste("simulate another", n_add, "samples of size n")
+  }
+  dlist <- list(...)
+  # If the user hasn't set either repeatdelay or repeatinterval then set them
+  # to the default values in rp.doublebutton (100 milliseconds)
+  if (is.null(dlist$repeatdelay) & is.null(dlist$repeatinterval)) {
+      rpanel::rp.button(panel = ett_panel, action = action, title = my_title,
+                        repeatdelay = 100, repeatinterval = 100, ...)
+  } else {
+    rpanel::rp.button(panel = ett_panel, action = action, title = my_title,
+                      ...)
   }
   rpanel::rp.do(ett_panel, action)
   return(invisible())
