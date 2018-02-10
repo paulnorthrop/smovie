@@ -248,7 +248,7 @@ ett_movie_plot <- function(panel) {
              "uniform" = list(loc = bn, scale = an, shape = -1),
              "gp" = list(loc = bn, scale = an, shape = fun_args$shape),
              "normal" = list(loc = bn, scale = an, shape = 0),
-             "beta" = list(loc = bn, scale = an, shape = -1)
+             "beta" = list(loc = bn, scale = an, shape = -1 / fun_args$shape2)
       )
     # Set range for x-axis
     x <- seq(bottom_range[1], bottom_range[2], len = 101)
