@@ -133,8 +133,7 @@ ett <- function(n = 30, distn = c("exponential", "uniform", "gp", "normal",
                                   dfun = dfun, qfun = qfun, rfun = rfun,
                                   pfun = pfun, fun_args = fun_args,
                                   distn = distn, top_range = top_range,
-                                  p_vec = p_vec,
-                                  envir = envir)
+                                  p_vec = p_vec, envir = envir)
   #
   panel_redraw <- function(panel) {
     rpanel::rp.tkrreplot(panel, redraw_plot)
@@ -226,10 +225,18 @@ ett_movie_plot <- function(panel) {
     graphics::axis(2)
     graphics::axis(1, line = 0.5)
     graphics::rug(y, line = 0.5, ticksize = 0.05)
-    graphics::title(paste("sample size, n = ",n))
+    the_distn <-
+      switch(distn,
+        "exponential" = paste(distn, "(", fun_args$rate, ")"),
+        "uniform" = paste(distn, "(", fun_args$min, ",", fun_args$max, ")"),
+        "gp" = paste(distn, "(", fun_args$loc, ",", fun_args$scale, ",",
+                     fun_args$shape, ")"),
+        "normal" = paste(distn, "(", fun_args$mean, ",", fun_args$sd, ")"),
+        "beta" = paste(distn, "(", fun_args$shape1, ",", fun_args$shape2, ")")
+      )
+    graphics::title(paste(the_distn, ",  n = ", n))
     graphics::legend("topleft", legend = expression(f(x)),
                      col = 1, lwd = 2, lty = 2, box.lty = 0)
-    #
     u_t <- par("usr")
     graphics::segments(last_y, u_t[3], last_y, -10, col = "red", xpd = TRUE,
                        lwd = 2, lty = 2)
