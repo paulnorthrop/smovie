@@ -96,86 +96,33 @@ ett <- function(n = 30, distn = c("exponential", "uniform", "gp", "normal",
            "exponential" = stats::rexp,
            "uniform" = stats::runif,
            "gp" = revdbayes::rgp,
-           "normal" = stats::rnorm)
+           "normal" = stats::rnorm,
+           "beta" = stats::rbeta)
   dfun <-
     switch(distn,
            "exponential" = stats::dexp,
            "uniform" = stats::dunif,
            "gp" = revdbayes::dgp,
-           "normal" = stats::dnorm)
+           "normal" = stats::dnorm,
+           "beta" = stats::dbeta)
   qfun <-
     switch(distn,
            "exponential" = stats::qexp,
            "uniform" = stats::qunif,
            "gp" = revdbayes::qgp,
-           "normal" = stats::qnorm)
+           "normal" = stats::qnorm,
+           "beta" = stats::qbeta)
   pfun <-
     switch(distn,
            "exponential" = stats::pexp,
            "uniform" = stats::punif,
            "gp" = revdbayes::pgp,
-           "normal" = stats::pnorm)
-  # Get the names of the parameters
-  par_names <- names(formals(dfun))
-  to_remove <- which(is.element(par_names, c("x", "log")))
-  par_names <- par_names[-to_remove]
-  # Set any parameters of dfun and qfun specified in params
-  params_names <- names(params)
-  is_par_name <- is.element(params_names, par_names)
-  fun_args <- params[is_par_name]
-  # Set the (minimum) ranges for the plots
-  for_qfun <- c(list(p = p_vec), fun_args)
-  top_range <- do.call(qfun, for_qfun)
-  # Make adjustments for certain distributions
-  if (distn == "exponential") {
-    if (is.null(fun_args$rate)) {
-      fun_args$rate <- 1
-    }
-    top_range[1] <- 0
-  }
-  if (distn == "uniform") {
-    if (is.null(fun_args$min)) {
-      fun_args$min <- 0
-    }
-    if (is.null(fun_args$max)) {
-      fun_args$max <- 1
-    }
-    top_range[1] <- fun_args$min
-    top_range[2] <- fun_args$max
-  }
-  if (distn == "gp") {
-    if (is.null(fun_args$loc)) {
-      fun_args$loc <- 0
-    }
-    if (is.null(fun_args$scale)) {
-      fun_args$scale <- 1
-    }
-    if (is.null(fun_args$shape)) {
-      fun_args$shape <- 0.1
-    }
-    top_range[1] <- fun_args$loc
-    if (fun_args$shape < 0) {
-      top_range[2] <- fun_args$loc - fun_args$scale / fun_args$shape
-    }
-  }
-  if (distn == "normal") {
-    if (is.null(fun_args$mean)) {
-      fun_args$mean <- 0
-    }
-    if (is.null(fun_args$sd)) {
-      fun_args$sd <- 1
-    }
-  }
-  if (distn == "beta") {
-    if (is.null(fun_args$shape1)) {
-      fun_args$shape1 <- 2
-    }
-    if (is.null(fun_args$shape2)) {
-      fun_args$shape2 <- 2
-    }
-    top_range[1] <- 0
-    top_range[2] <- 1
-  }
+           "normal" = stats::pnorm,
+           "beta" = stats::pbeta)
+  # Set the arguments to the distributional functions
+  fun_args <- set_fun_args(distn, dfun, fun_args, params)
+  # Set the range for the top plot
+  top_range <- set_top_range(distn, p_vec, fun_args, qfun)
   # Assign variables to an environment so that they can be accessed inside
   # clt_exponential_movie_plot()
   old_n <- 0
@@ -301,7 +248,7 @@ ett_movie_plot <- function(panel) {
              "uniform" = list(loc = bn, scale = an, shape = -1),
              "gp" = list(loc = bn, scale = an, shape = fun_args$shape),
              "normal" = list(loc = bn, scale = an, shape = 0),
-             "beta" = list(loc = bn, scale = an, shape = 0)
+             "beta" = list(loc = bn, scale = an, shape = -1)
       )
     # Set range for x-axis
     x <- seq(bottom_range[1], bottom_range[2], len = 101)
