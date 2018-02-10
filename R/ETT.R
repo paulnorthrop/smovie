@@ -160,7 +160,7 @@ ett <- function(n = 30, distn = c("exponential", "uniform", "gp", "normal",
   rpanel::rp.doublebutton(panel = ett_panel, variable = n, step = delta_n,
                           title = "sample size, n",
                           action = action, initval = n,
-                          range = c(1, NA), ...)
+                          range = c(2, NA), ...)
   if (n_add == 1) {
     my_title <- paste("simulate another sample of size n")
   } else {
@@ -203,10 +203,11 @@ ett_movie_plot <- function(panel) {
     }
     assign("sample_maxima", sample_maxima, envir = envir)
     #
+    n_x_axis <- 501
     # Top plot --------
     #
     # Set range for x-axis
-    x <- seq(top_range[1], top_range[2], len = 101)
+    x <- seq(top_range[1], top_range[2], len = n_x_axis)
     # Calcuate the density over this range
     dens_list <- c(list(x = x), fun_args)
     ydens <- do.call(dfun, dens_list)
@@ -222,7 +223,7 @@ ett_movie_plot <- function(panel) {
                    xlab = xlab, ylab = "density", main = "",
                    xlim = my_xlim, ylim = c(0, ytop))
     graphics::lines(x, ydens, xpd = TRUE, lwd = 2, lty = 2)
-    graphics::axis(2, at = pretty(c(y, top_range[2])))
+    graphics::axis(2)
     graphics::axis(1, line = 0.5)
     graphics::rug(y, line = 0.5, ticksize = 0.05)
     graphics::title(paste("sample size, n = ",n))
@@ -251,7 +252,7 @@ ett_movie_plot <- function(panel) {
              "beta" = list(loc = bn, scale = an, shape = -1 / fun_args$shape2)
       )
     # Set range for x-axis
-    x <- seq(bottom_range[1], bottom_range[2], len = 101)
+    x <- seq(bottom_range[1], bottom_range[2], len = n_x_axis)
     # Calcuate the density over this range
     dens_list <- c(list(x = x), gev_pars)
     ygev <- do.call(revdbayes::dgev, dens_list)
