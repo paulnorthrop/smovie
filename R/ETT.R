@@ -116,8 +116,6 @@ ett <- function(n = 30, distn = c("exponential", "uniform", "gp"),
   # Set the (minimum) ranges for the plots
   for_qfun <- c(list(p = p_vec), fun_args)
   top_range <- do.call(qfun, for_qfun)
-  for_qfun <- c(list(p = p_vec ^ (1 / n)), fun_args)
-  bottom_range <- do.call(qfun, for_qfun)
   # Make adjustments for certain distributions
   if (distn == "exponential") {
     if (is.null(fun_args$rate)) {
@@ -160,7 +158,7 @@ ett <- function(n = 30, distn = c("exponential", "uniform", "gp"),
                                   dfun = dfun, qfun = qfun, rfun = rfun,
                                   pfun = pfun, fun_args = fun_args,
                                   distn = distn, top_range = top_range,
-                                  bottom_range = bottom_range,
+                                  p_vec = p_vec,
                                   envir = envir)
   #
   panel_redraw <- function(panel) {
@@ -171,11 +169,15 @@ ett <- function(n = 30, distn = c("exponential", "uniform", "gp"),
     warning("tkrplot is not available so panel_plot has been set to FALSE.")
     panel_plot <- FALSE
   }
-  #
   if (panel_plot) {
+    # Set a seed and then reset it before the panel is redrawn so that only
+    # one arrow and sample maximum appears in the first plot
+    my_seed <- round(runif(1, 0, 1000))
+    set.seed(my_seed)
     rpanel::rp.tkrplot(ett_panel, redraw_plot, ett_movie_plot, pos = "right",
                        hscale = hscale, vscale = vscale, background = "white")
     action <- panel_redraw
+    set.seed(my_seed)
   } else {
     action <- ett_movie_plot
   }
@@ -211,8 +213,11 @@ ett_movie_plot <- function(panel) {
     par(mfrow = c(2, 1), oma = c(0, 0, 0, 0), mar = c(4, 4, 2, 2) + 0.1)
     assign("xlab", xlab, envir = envir)
     sim_list <- c(list(n = n), fun_args)
-    temp <- replicate(n_add, do.call(rfun, sim_list))
+    temp <- as.matrix(replicate(n_add, do.call(rfun, sim_list)))
     max_y <- apply(temp, 2, max)
+    # Set the range of values for the x-axis of the bottom plot
+    for_qfun <- c(list(p = p_vec ^ (1 / n)), fun_args)
+    bottom_range <- do.call(qfun, for_qfun)
     # Extract the last dataset and the last maximum (for drawing the arrow)
     y <- temp[, n_add]
     last_y <- max_y[n_add]
@@ -246,6 +251,8 @@ ett_movie_plot <- function(panel) {
     graphics::axis(1, line = 0.5)
     graphics::rug(y, line = 0.5, ticksize = 0.05)
     graphics::title(paste("sample size, n = ",n))
+    graphics::legend("topleft", legend = expression(f(x)),
+                     col = 1, lwd = 2, lty = 2, box.lty = 0)
     #
     u_t <- par("usr")
     graphics::segments(last_y, u_t[3], last_y, -10, col = "red", xpd = TRUE,
