@@ -100,6 +100,11 @@ ett <- function(n = 30, distn = c("exponential", "uniform", "gp"),
            "exponential" = stats::qexp,
            "uniform" = stats::qunif,
            "gp" = revdbayes::qgp)
+  pfun <-
+    switch(distn,
+           "exponential" = stats::pexp,
+           "uniform" = stats::punif,
+           "gp" = revdbayes::pgp)
   # Get the names of the parameters
   par_names <- names(formals(dfun))
   to_remove <- which(is.element(par_names, c("x", "log")))
@@ -153,8 +158,8 @@ ett <- function(n = 30, distn = c("exponential", "uniform", "gp"),
   # Create buttons for movie
   ett_panel <- rpanel::rp.control("sample size", n = n, n_add = n_add,
                                   dfun = dfun, qfun = qfun, rfun = rfun,
-                                  fun_args = fun_args, distn = distn,
-                                  top_range = top_range,
+                                  pfun = pfun, fun_args = fun_args,
+                                  distn = distn, top_range = top_range,
                                   bottom_range = bottom_range,
                                   envir = envir)
   #
@@ -265,11 +270,14 @@ ett_movie_plot <- function(panel) {
     x <- seq(bottom_range[1], bottom_range[2], len = 101)
     # Calcuate the density over this range
     dens_list <- c(list(x = x), gev_pars)
-    ydens <- do.call(revdbayes::dgev, dens_list)
+    ygev <- do.call(revdbayes::dgev, dens_list)
+    p_list <- c(list(q = x), fun_args)
+    d_list <- c(list(x = x), fun_args)
+    ytrue <- n * do.call(pfun, p_list) ^ (n - 1) * do.call(dfun, d_list)
     # Calculate the densities to be plotted in the histogram
     temp <- graphics::hist(y, plot = FALSE)
     # Set the top of the y-axis
-    ytop <- max(ydens) * 1.5
+    ytop <- max(ygev) * 1.5
     # Histogram with rug
     y <- sample_maxima
     my_xlim <- pretty(c(y, bottom_range))
@@ -277,7 +285,8 @@ ett_movie_plot <- function(panel) {
     graphics::hist(y, col = 8, probability = TRUE, las = 1, axes = FALSE,
          xlab = my_xlab, ylab = "density", main = "",
          xpd = TRUE, xlim = my_xlim, ylim = c(0, ytop))
-    graphics::lines(x, ydens, xpd = TRUE, lwd = 2, lty = 2)
+    graphics::lines(x, ygev, xpd = TRUE, lwd = 2, lty = 2)
+    graphics::lines(x, ytrue, xpd = TRUE, lwd = 2, lty = 2, col = "red")
     graphics::axis(2)
     graphics::axis(1, line = 0.5)
     graphics::rug(y, line = 0.5, ticksize = 0.05, col = "red")
@@ -285,7 +294,9 @@ ett_movie_plot <- function(panel) {
     my_leg_2 <- paste("GEV(", round(gev_pars$loc, 2), ",",
                       round(gev_pars$scale, 2), ",",
                       round(gev_pars$shape, 2), ")" )
-    graphics::legend("topleft", legend = my_leg_2, lwd = 2, lty = 2)
+    my_leg_true <- expression(n * F ^ {n-1} * f)
+    graphics::legend("topleft", legend = c(my_leg_2, my_leg_true),
+                     col = 1:2, lwd = 2, lty = 2, box.lty = 0)
     top_ratio <- (last_y - u_t[1]) / (u_t[2] - u_t[1])
     top_loc <- u_b[1] + (u_b[2] - u_b[1]) * top_ratio
     graphics::segments(top_loc, ytop * 2, top_loc, ytop, col = "red",
