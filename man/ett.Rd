@@ -4,9 +4,9 @@
 \alias{ett}
 \title{Extremal Types Theorem}
 \usage{
-ett(n = 30, distn = c("exponential", "uniform", "gp"), params = list(),
-  n_add = 1, delta_n = 1, xlab = "x", pos = 1,
-  envir = as.environment(pos), ...)
+ett(n = 30, distn = c("exponential", "uniform", "gp"), panel.plot = TRUE,
+  hscale = NA, vscale = hscale, params = list(), n_add = 1,
+  delta_n = 1, xlab = "x", pos = 1, envir = as.environment(pos), ...)
 }
 \arguments{
 \item{n}{An integer scalar.  The size of the samples drawn from the
@@ -16,6 +16,11 @@ distribution chosen using \code{distn}.}
 observations are sampled..   Distributions \code{"exponential"},
 \code{"uniform"} and \code{"gp"} are recognised,
 case being ignored.}
+
+\item{panel.plot}{A logical parameter that determines whether the plot
+is placed inside the panel (\code{TRUE}) or in the standard graphics
+window (\code{FALSE}).  If the plot is to be placed inside the panel
+then the tkrplot library is required.}
 
 \item{params}{A named list of additional arguments to be passed to the
 density function associated with distribution \code{distn}.}

@@ -21,7 +21,8 @@ Imports: graphics,
     rust,
     stats
 Suggests: knitr,
-    numDeriv
+    numDeriv,
+    tkrplot
 VignetteBuilder: knitr
 URL: http://github.com/paulnorthrop/smovie
 BugReports: http://github.com/paulnorthrop/smovie/issues
