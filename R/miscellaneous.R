@@ -107,3 +107,55 @@ set_top_range <- function(distn, p_vec, fun_args, qfun) {
     return(top_range)
   }
 }
+
+set_leg_pos <- function(distn, fun_args) {
+  if (distn == "gp") {
+    if (fun_args$shape == -1) {
+      distn <- "uniform"
+    } else if (fun_args$shape < -1) {
+      distn <- "gp_neg_1"
+    } else if (fun_args$shape < 0) {
+      distn <- "gp_neg"
+    } else {
+      distn <- "gp_non_neg"
+    }
+  }
+  if (distn == "beta") {
+    if (fun_args$shape2 > fun_args$shape1) {
+      distn <- "beta_topright"
+    } else if (fun_args$shape2 < fun_args$shape1) {
+      distn <- "beta_topleft"
+    } else {
+      if (fun_args$shape1 >= 1) {
+        distn <- "beta_topleft"
+      } else {
+        distn <- "beta_top"
+      }
+    }
+  }
+  top_leg_pos <-
+    switch(distn,
+           "exponential" = "right",
+           "uniform" = "topleft",
+           "gp_neg_1" = "topleft",
+           "gp_neg" = "topright",
+           "gp_non_neg" = "right",
+           "normal" = "right",
+           "beta_topleft" = "topleft",
+           "beta_topright" = "topright",
+           "beta_top" = "top"
+    )
+  bottom_leg_pos <-
+    switch(distn,
+           "exponential" = "right",
+           "uniform" = "left",
+           "gp_neg_1" = "left",
+           "gp_neg" = "left",
+           "gp_non_neg" = "right",
+           "normal" = "right",
+           "beta_topleft" = "topleft",
+           "beta_topright" = "topleft",
+           "beta_top" = "topleft"
+    )
+  return(list(top_leg_pos = top_leg_pos, bottom_leg_pos = bottom_leg_pos))
+}

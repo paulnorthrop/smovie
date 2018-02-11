@@ -123,6 +123,10 @@ ett <- function(n = 20, distn = c("exponential", "uniform", "gp", "normal",
   fun_args <- set_fun_args(distn, dfun, fun_args, params)
   # Set the range for the top plot
   top_range <- set_top_range(distn, p_vec, fun_args, qfun)
+  # Set the legend position
+  leg_pos <- set_leg_pos(distn, fun_args)
+  top_leg_pos <- leg_pos$top_leg_pos
+  bottom_leg_pos <- leg_pos$bottom_leg_pos
   # Assign variables to an environment so that they can be accessed inside
   # clt_exponential_movie_plot()
   old_n <- 0
@@ -134,6 +138,8 @@ ett <- function(n = 20, distn = c("exponential", "uniform", "gp", "normal",
                                   pfun = pfun, fun_args = fun_args,
                                   distn = distn, top_range = top_range,
                                   p_vec = p_vec, show_dens_only = FALSE,
+                                  top_leg_pos = top_leg_pos,
+                                  bottom_leg_pos = bottom_leg_pos,
                                   envir = envir)
   #
   panel_redraw <- function(panel) {
@@ -176,9 +182,9 @@ ett <- function(n = 20, distn = c("exponential", "uniform", "gp", "normal",
     rpanel::rp.button(panel = ett_panel, action = action, title = my_title,
                       ...)
   }
-  rpanel::rp.do(panel = ett_panel, action = action)
   rp.checkbox(panel = ett_panel, show_dens_only,
               labels = "show only true and GEV densities", action = action)
+  rpanel::rp.do(panel = ett_panel, action = action)
   return(invisible())
 }
 
@@ -217,6 +223,10 @@ ett_movie_plot <- function(panel) {
     # Calcuate the density over this range
     dens_list <- c(list(x = x), fun_args)
     ydens <- do.call(dfun, dens_list)
+    # Remove any infinite values
+    finite_vals <- is.finite(ydens)
+    ydens <- ydens[finite_vals]
+    x <- x[finite_vals]
     # Calculate the densities to be plotted in the histogram
     temp <- graphics::hist(y, plot = FALSE)
     # Set the top of the y-axis
@@ -243,7 +253,7 @@ ett_movie_plot <- function(panel) {
       graphics::axis(1, line = 0.5)
       graphics::rug(y, line = 0.5, ticksize = 0.05)
       graphics::title(paste(the_distn, ",  n = ", n))
-      graphics::legend("topleft", legend = expression(f(x)),
+      graphics::legend(top_leg_pos, legend = expression(f(x)),
                        col = 1, lwd = 2, lty = 2, box.lty = 0)
       u_t <- par("usr")
       graphics::segments(last_y, u_t[3], last_y, -10, col = "red", xpd = TRUE,
@@ -312,7 +322,7 @@ ett_movie_plot <- function(panel) {
                       round(gev_pars$scale, 2), ",",
                       round(gev_pars$shape, 2), ")" )
     my_leg_true <- expression(n * F ^ {n-1} * f)
-    graphics::legend("topleft", legend = c(my_leg_2, my_leg_true),
+    graphics::legend(bottom_leg_pos, legend = c(my_leg_2, my_leg_true),
                      col = 1:2, lwd = 2, lty = 2, box.lty = 0)
     if (!show_dens_only) {
       top_ratio <- (last_y - u_t[1]) / (u_t[2] - u_t[1])
