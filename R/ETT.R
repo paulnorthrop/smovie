@@ -133,7 +133,8 @@ ett <- function(n = 20, distn = c("exponential", "uniform", "gp", "normal",
                                   dfun = dfun, qfun = qfun, rfun = rfun,
                                   pfun = pfun, fun_args = fun_args,
                                   distn = distn, top_range = top_range,
-                                  p_vec = p_vec, envir = envir)
+                                  p_vec = p_vec, show_dens_only = FALSE,
+                                  envir = envir)
   #
   panel_redraw <- function(panel) {
     rpanel::rp.tkrreplot(panel, redraw_plot)
@@ -175,7 +176,9 @@ ett <- function(n = 20, distn = c("exponential", "uniform", "gp", "normal",
     rpanel::rp.button(panel = ett_panel, action = action, title = my_title,
                       ...)
   }
-  rpanel::rp.do(ett_panel, action)
+  rpanel::rp.do(panel = ett_panel, action = action)
+  rp.checkbox(panel = ett_panel, show_dens_only,
+              labels = "show only true and GEV densities", action = action)
   return(invisible())
 }
 
@@ -184,7 +187,11 @@ ett <- function(n = 20, distn = c("exponential", "uniform", "gp", "normal",
 ett_movie_plot <- function(panel) {
   with(panel, {
     old_par <- graphics::par(no.readonly = TRUE)
-    par(mfrow = c(2, 1), oma = c(0, 0, 0, 0), mar = c(4, 4, 2, 2) + 0.1)
+    if (show_dens_only) {
+      par(mfrow = c(1, 1), oma = c(0, 0, 0, 0), mar = c(4, 4, 2, 2) + 0.1)
+    } else {
+      par(mfrow = c(2, 1), oma = c(0, 0, 0, 0), mar = c(4, 4, 2, 2) + 0.1)
+    }
     assign("xlab", xlab, envir = envir)
     sim_list <- c(list(n = n), fun_args)
     temp <- as.matrix(replicate(n_add, do.call(rfun, sim_list)))
@@ -214,42 +221,44 @@ ett_movie_plot <- function(panel) {
     temp <- graphics::hist(y, plot = FALSE)
     # Set the top of the y-axis
     ytop <- max(ydens) * 1.2
-    #
-    # Histogram with rug
-    my_xlim <- pretty(c(y, top_range))
-    my_xlim <- my_xlim[c(1, length(my_xlim))]
-    graphics::hist(y, col = 8, probability = TRUE, axes = FALSE,
-                   xlab = xlab, ylab = "density", main = "",
-                   xlim = my_xlim, ylim = c(0, ytop))
-    graphics::lines(x, ydens, xpd = TRUE, lwd = 2, lty = 2)
-    graphics::axis(2)
-    graphics::axis(1, line = 0.5)
-    graphics::rug(y, line = 0.5, ticksize = 0.05)
+    # Extract the distribution name and parameters
     the_distn <-
       switch(distn,
-        "exponential" = paste(distn, "(", fun_args$rate, ")"),
-        "uniform" = paste(distn, "(", fun_args$min, ",", fun_args$max, ")"),
-        "gp" = paste(distn, "(", fun_args$loc, ",", fun_args$scale, ",",
-                     fun_args$shape, ")"),
-        "normal" = paste(distn, "(", fun_args$mean, ",", fun_args$sd, ")"),
-        "beta" = paste(distn, "(", fun_args$shape1, ",", fun_args$shape2, ")")
+             "exponential" = paste(distn, "(", fun_args$rate, ")"),
+             "uniform" = paste(distn, "(", fun_args$min, ",", fun_args$max, ")"),
+             "gp" = paste(distn, "(", fun_args$loc, ",", fun_args$scale, ",",
+                          fun_args$shape, ")"),
+             "normal" = paste(distn, "(", fun_args$mean, ",", fun_args$sd, ")"),
+             "beta" = paste(distn, "(", fun_args$shape1, ",", fun_args$shape2, ")")
       )
-    graphics::title(paste(the_distn, ",  n = ", n))
-    graphics::legend("topleft", legend = expression(f(x)),
-                     col = 1, lwd = 2, lty = 2, box.lty = 0)
-    u_t <- par("usr")
-    graphics::segments(last_y, u_t[3], last_y, -10, col = "red", xpd = TRUE,
-                       lwd = 2, lty = 2)
+    my_xlim <- pretty(c(y, top_range))
+    my_xlim <- my_xlim[c(1, length(my_xlim))]
+    if (!show_dens_only) {
+      # Histogram with rug
+      graphics::hist(y, col = 8, probability = TRUE, axes = FALSE,
+                     xlab = xlab, ylab = "density", main = "",
+                     xlim = my_xlim, ylim = c(0, ytop))
+      graphics::lines(x, ydens, xpd = TRUE, lwd = 2, lty = 2)
+      graphics::axis(2)
+      graphics::axis(1, line = 0.5)
+      graphics::rug(y, line = 0.5, ticksize = 0.05)
+      graphics::title(paste(the_distn, ",  n = ", n))
+      graphics::legend("topleft", legend = expression(f(x)),
+                       col = 1, lwd = 2, lty = 2, box.lty = 0)
+      u_t <- par("usr")
+      graphics::segments(last_y, u_t[3], last_y, -10, col = "red", xpd = TRUE,
+                         lwd = 2, lty = 2)
+      graphics::rug(y, line = 0.5, ticksize = 0.05)
+      graphics::rug(last_y, line = 0.5, ticksize = 0.05, col = "red", lwd = 2)
+    }
     u_t <- my_xlim
-    graphics::rug(y, line = 0.5, ticksize = 0.05)
-    graphics::rug(last_y, line = 0.5, ticksize = 0.05, col = "red", lwd = 2)
-    my_xlab <- paste("sample maxima of", xlab)
     #
     # Bottom plot --------
     #
-    # Set the relevant GEV parameters
+    my_xlab <- paste("sample maxima of", xlab)
     bn <- do.call(qfun, c(list(p = 1 - 1 / n), fun_args))
     an <- (1 / n) / do.call(dfun, c(list(x = bn), fun_args))
+    # Set the limiting GEV parameters
     gev_pars <-
       switch(distn,
              "exponential" = list(loc = bn, scale = an, shape = 0),
@@ -258,6 +267,9 @@ ett_movie_plot <- function(panel) {
              "normal" = list(loc = bn, scale = an, shape = 0),
              "beta" = list(loc = bn, scale = an, shape = -1 / fun_args$shape2)
       )
+    for_qgev <- c(list(p = p_vec ^ (1 / n)), gev_pars)
+    gev_bottom_range <- do.call(revdbayes::qgev, for_qgev)
+    bottom_range <- range(c(bottom_range, gev_bottom_range))
     # Set range for x-axis
     x <- seq(bottom_range[1], bottom_range[2], len = n_x_axis)
     # Calcuate the density over this range
@@ -274,14 +286,27 @@ ett_movie_plot <- function(panel) {
     y <- sample_maxima
     my_xlim <- pretty(c(y, bottom_range))
     my_xlim <- my_xlim[c(1, length(my_xlim))]
-    graphics::hist(y, col = 8, probability = TRUE, las = 1, axes = FALSE,
+    if (show_dens_only) {
+      my_col <- 0
+      my_border <- 0
+    } else {
+      my_col <- 8
+      my_border <- 1
+    }
+    graphics::hist(y, col = my_col, probability = TRUE, las = 1, axes = FALSE,
          xlab = my_xlab, ylab = "density", main = "",
-         xpd = TRUE, xlim = my_xlim, ylim = c(0, ytop))
+         xpd = TRUE, xlim = my_xlim, ylim = c(0, ytop),
+         border = my_border)
     graphics::lines(x, ygev, xpd = TRUE, lwd = 2, lty = 2)
     graphics::lines(x, ytrue, xpd = TRUE, lwd = 2, lty = 2, col = "red")
     graphics::axis(2)
     graphics::axis(1, line = 0.5)
-    graphics::rug(y, line = 0.5, ticksize = 0.05, col = "red")
+    if (show_dens_only) {
+      graphics::title(paste(the_distn, ",  n = ", n))
+    }
+    if (!show_dens_only) {
+      graphics::rug(y, line = 0.5, ticksize = 0.05, col = "red")
+    }
     u_b <- my_xlim
     my_leg_2 <- paste("GEV(", round(gev_pars$loc, 2), ",",
                       round(gev_pars$scale, 2), ",",
@@ -289,12 +314,14 @@ ett_movie_plot <- function(panel) {
     my_leg_true <- expression(n * F ^ {n-1} * f)
     graphics::legend("topleft", legend = c(my_leg_2, my_leg_true),
                      col = 1:2, lwd = 2, lty = 2, box.lty = 0)
-    top_ratio <- (last_y - u_t[1]) / (u_t[2] - u_t[1])
-    top_loc <- u_b[1] + (u_b[2] - u_b[1]) * top_ratio
-    graphics::segments(top_loc, ytop * 2, top_loc, ytop, col = "red",
-                       xpd = TRUE, lwd = 2, lty = 2)
-    graphics::arrows(top_loc, ytop, last_y, 0, col = "red", lwd = 2, lty = 2,
-                     xpd = TRUE, code = 2)
+    if (!show_dens_only) {
+      top_ratio <- (last_y - u_t[1]) / (u_t[2] - u_t[1])
+      top_loc <- u_b[1] + (u_b[2] - u_b[1]) * top_ratio
+      graphics::segments(top_loc, ytop * 2, top_loc, ytop, col = "red",
+                         xpd = TRUE, lwd = 2, lty = 2)
+      graphics::arrows(top_loc, ytop, last_y, 0, col = "red", lwd = 2, lty = 2,
+                       xpd = TRUE, code = 2)
+    }
     old_n <- n
     assign("old_n", old_n, envir = envir)
     graphics::par(old_par)
