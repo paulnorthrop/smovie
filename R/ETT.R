@@ -299,7 +299,6 @@ ett_movie_plot <- function(panel) {
              "beta" = list(loc = bn, scale = an, shape = -1 / fun_args$shape2),
              "t" = list(loc = bn, scale = an, shape = 1 / fun_args$df)
       )
-#    for_qgev <- c(list(p = p_vec ^ (1 / n)), gev_pars)
     for_qgev <- c(list(p = bottom_p_vec), gev_pars)
     gev_bottom_range <- do.call(revdbayes::qgev, for_qgev)
     bottom_range <- range(c(bottom_range, gev_bottom_range))
@@ -326,12 +325,20 @@ ett_movie_plot <- function(panel) {
       my_col <- 8
       my_border <- 1
     }
-    graphics::hist(y, col = my_col, probability = TRUE, las = 1, axes = FALSE,
+    if (!show_dens_only) {
+      graphics::hist(y, col = my_col, probability = TRUE, las = 1, axes = FALSE,
          xlab = my_xlab, ylab = "density", main = "",
          xpd = TRUE, xlim = my_xlim, ylim = c(0, ytop),
          border = my_border)
-    graphics::lines(x, ygev, xpd = TRUE, lwd = 2, lty = 2)
-    graphics::lines(x, ytrue, xpd = TRUE, lwd = 2, lty = 2, col = "red")
+      graphics::lines(x, ygev, xpd = TRUE, lwd = 2, lty = 2)
+      graphics::lines(x, ytrue, xpd = TRUE, lwd = 2, lty = 2, col = "red")
+    } else {
+      my_xlim <- pretty(bottom_range)
+      my_xlim <- my_xlim[c(1, length(my_xlim))]
+      matplot(x, cbind(ygev, ytrue), col = c("black", "red"), lwd = 2, lty = 2,
+              ylab = "density", las = 1, xlab = my_xlab, xlim = my_xlim,
+              ylim = c(0, ytop), axes = FALSE, type = "l")
+    }
     graphics::axis(2)
     graphics::axis(1, line = 0.5)
     if (show_dens_only) {
