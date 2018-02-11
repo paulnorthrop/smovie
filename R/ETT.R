@@ -241,21 +241,24 @@ ett_movie_plot <- function(panel) {
     } else {
       par(mfrow = c(2, 1), oma = c(0, 0, 0, 0), mar = c(4, 4, 2, 2) + 0.1)
     }
-    sim_list <- c(list(n = n), fun_args)
-    temp <- as.matrix(replicate(n_add, do.call(rfun, sim_list)))
-    max_y <- apply(temp, 2, max)
     # Set the range of values for the x-axis of the bottom plot
     for_qfun <- c(list(p = top_p_vec ^ (1 / n)), fun_args)
     bottom_range <- do.call(qfun, for_qfun)
-    # Extract the last dataset and the last maximum (for drawing the arrow)
-    y <- temp[, n_add]
-    last_y <- max_y[n_add]
-    if (n != old_n) {
-      sample_maxima <- max_y
-    } else {
-      sample_maxima <- c(sample_maxima, max_y)
+    # Do the simulation (if required)
+    if (!show_dens_only) {
+      sim_list <- c(list(n = n), fun_args)
+      temp <- as.matrix(replicate(n_add, do.call(rfun, sim_list)))
+      max_y <- apply(temp, 2, max)
+      # Extract the last dataset and the last maximum (for drawing the arrow)
+      y <- temp[, n_add]
+      last_y <- max_y[n_add]
+      if (n != old_n) {
+        sample_maxima <- max_y
+      } else {
+        sample_maxima <- c(sample_maxima, max_y)
+      }
+      assign("sample_maxima", sample_maxima, envir = envir)
     }
-    assign("sample_maxima", sample_maxima, envir = envir)
     #
     n_x_axis <- 501
     # Top plot --------
@@ -269,8 +272,6 @@ ett_movie_plot <- function(panel) {
     finite_vals <- is.finite(ydens)
     ydens <- ydens[finite_vals]
     x <- x[finite_vals]
-    # Calculate the densities to be plotted in the histogram
-    temp <- graphics::hist(y, plot = FALSE)
     # Set the top of the y-axis
     ytop <- max(ydens) * 1.2
     # Extract the distribution name and parameters
@@ -287,9 +288,9 @@ ett_movie_plot <- function(panel) {
         "lognormal" = paste(distn, "(", fun_args$meanlog, ",", fun_args$sdlog,
                             ")")
       )
-    my_xlim <- pretty(c(y, top_range))
-    my_xlim <- my_xlim[c(1, length(my_xlim))]
     if (!show_dens_only) {
+      my_xlim <- pretty(c(y, top_range))
+      my_xlim <- my_xlim[c(1, length(my_xlim))]
       # Histogram with rug
       graphics::hist(y, col = 8, probability = TRUE, axes = FALSE,
                      xlab = xlab, ylab = "density", main = "",
@@ -306,8 +307,8 @@ ett_movie_plot <- function(panel) {
                          lwd = 2, lty = 2)
       graphics::rug(y, line = 0.5, ticksize = 0.05)
       graphics::rug(last_y, line = 0.5, ticksize = 0.05, col = "red", lwd = 2)
+      u_t <- my_xlim
     }
-    u_t <- my_xlim
     #
     # Bottom plot --------
     #
@@ -337,8 +338,6 @@ ett_movie_plot <- function(panel) {
     p_list <- c(list(q = x), fun_args)
     d_list <- c(list(x = x), fun_args)
     ytrue <- n * do.call(pfun, p_list) ^ (n - 1) * do.call(dfun, d_list)
-    # Calculate the densities to be plotted in the histogram
-    temp <- graphics::hist(y, plot = FALSE)
     # Set the top of the y-axis
     ytop <- max(ygev) * 1.5
     # Histogram with rug
