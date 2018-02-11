@@ -135,6 +135,14 @@ ett <- function(n = 20, distn = c("exponential", "uniform", "gp", "normal",
       top_p_vec <- c(0.001, 0.999)
       bottom_p_vec <- c(0.001, 0.999)
     }
+  } else if (distn == "gp") {
+    if (fun_args$shape > 0.3) {
+      top_p_vec <- c(0.001, 0.95)
+      bottom_p_vec <- c(0.001, 0.7)
+    } else {
+      top_p_vec <- c(0.001, 0.999)
+      bottom_p_vec <- c(0.001, 0.999)
+    }
   } else {
     top_p_vec <- c(0.001, 0.999)
     bottom_p_vec <- c(0.001, 0.999)
