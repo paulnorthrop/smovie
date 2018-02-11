@@ -4,9 +4,8 @@
 \alias{ett}
 \title{Extremal Types Theorem}
 \usage{
-ett(n = 20, distn = c("exponential", "uniform", "gp", "normal", "beta", "t",
-  "gamma", "lognormal", "log-normal"), params = list(), panel_plot = TRUE,
-  hscale = NA, vscale = hscale, n_add = 1, delta_n = 1, pos = 1,
+ett(n = 20, distn, params = list(), panel_plot = TRUE, hscale = NA,
+  vscale = hscale, n_add = 1, delta_n = 1, pos = 1,
   envir = as.environment(pos), ...)
 }
 \arguments{
@@ -14,17 +13,29 @@ ett(n = 20, distn = c("exponential", "uniform", "gp", "normal", "beta", "t",
 distribution chosen using \code{distn}.}
 
 \item{distn}{A character scalar specifying the distribution from which
-observations are sampled..   Distributions \code{"exponential"},
-\code{"uniform"}, \code{"gp"}, \code{"normal"}, \code{"beta"}
-and \code{"t"} are recognised, case being ignored.
-The \code{"gp"} case uses the distributional functions
-\code{\link[revdbayes]{gp}} in the
-\code{\link[revdbayes]{revdbayes-package}}.  The other cases
-use the distributional functions in the
-\code{\link[stats]{stats-package}}.}
+  observations are sampled..   Distributions \code{"exponential"},
+  \code{"uniform"}, \code{"gp"}, \code{"normal"}, \code{"beta"},
+  \code{"t"}, \code{"gamma"}, \code{lognormal} and \code{log-normal}
+  are recognised, case being ignored.
+
+  If \code{distn} is not supplied then \code{distn = "exponential"}
+  is used.
+
+  The \code{"gp"} case uses the distributional functions
+  \code{\link[revdbayes]{gp}} in the
+  \code{\link[revdbayes]{revdbayes-package}}.  The other cases
+  use the distributional functions in the
+  \code{\link[stats]{stats-package}}.}
 
 \item{params}{A named list of additional arguments to be passed to the
-density function associated with distribution \code{distn}.}
+  density function associated with distribution \code{distn}.
+
+  If a parameter value is not supplied then the default values in the
+  relevant distributional function are used, except for
+  \code{distn = "gp"} (\code{shape = 0.1}),
+  \code{distn = "beta"} (\code{shape1 = 2, shape2 = 2}),
+  \code{distn = "t"} (\code{df = 4}) and
+  \code{distn = "gamma"} (\code{shape = 2}).}
 
 \item{panel_plot}{A logical parameter that determines whether the plot
 is placed inside the panel (\code{TRUE}) or in the standard graphics
