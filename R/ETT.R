@@ -76,7 +76,8 @@
 #' }
 #' @export
 ett <- function(n = 20, distn = c("exponential", "uniform", "gp", "normal",
-                                  "beta", "t", "gamma"),
+                                  "beta", "t", "gamma","lognormal",
+                                  "log-normal"),
                 params = list(), panel_plot = TRUE, hscale = NA,
                 vscale = hscale, n_add = 1, delta_n = 1, pos = 1,
                 envir = as.environment(pos), ...) {
@@ -92,6 +93,9 @@ ett <- function(n = 20, distn = c("exponential", "uniform", "gp", "normal",
   #
   distn <- match.arg(distn)
   distn <- tolower(distn)
+  if (distn == "log-normal") {
+    distn <- "lognormal"
+  }
   # Set the density and quantile functions and simulation function
   rfun <-
     switch(distn,
@@ -101,8 +105,9 @@ ett <- function(n = 20, distn = c("exponential", "uniform", "gp", "normal",
            "normal" = stats::rnorm,
            "beta" = stats::rbeta,
            "t" = stats::rt,
-           "gamma" = stats::rgamma)
-  dfun <-
+           "gamma" = stats::rgamma,
+           "lognormal" = stats::rlnorm)
+dfun <-
     switch(distn,
            "exponential" = stats::dexp,
            "uniform" = stats::dunif,
@@ -110,8 +115,9 @@ ett <- function(n = 20, distn = c("exponential", "uniform", "gp", "normal",
            "normal" = stats::dnorm,
            "beta" = stats::dbeta,
            "t" = stats::dt,
-           "gamma" = stats::dgamma)
-  qfun <-
+           "gamma" = stats::dgamma,
+           "lognormal" = stats::dlnorm)
+qfun <-
     switch(distn,
            "exponential" = stats::qexp,
            "uniform" = stats::qunif,
@@ -119,8 +125,9 @@ ett <- function(n = 20, distn = c("exponential", "uniform", "gp", "normal",
            "normal" = stats::qnorm,
            "beta" = stats::qbeta,
            "t" = stats::qt,
-           "gamma" = stats::qgamma)
-  pfun <-
+           "gamma" = stats::qgamma,
+           "lognormal" = stats::qlnorm)
+pfun <-
     switch(distn,
            "exponential" = stats::pexp,
            "uniform" = stats::punif,
@@ -128,8 +135,9 @@ ett <- function(n = 20, distn = c("exponential", "uniform", "gp", "normal",
            "normal" = stats::pnorm,
            "beta" = stats::pbeta,
            "t" = stats::pt,
-           "gamma" = stats::pgamma)
-  # Set the arguments to the distributional functions
+           "gamma" = stats::pgamma,
+           "lognormal" = stats::plnorm)
+# Set the arguments to the distributional functions
   fun_args <- set_fun_args(distn, dfun, fun_args, params)
   # Set sensible scales for the plots
   if (distn == "t") {
@@ -275,7 +283,9 @@ ett_movie_plot <- function(panel) {
         "normal" = paste(distn, "(", fun_args$mean, ",", fun_args$sd, ")"),
         "beta" = paste(distn, "(", fun_args$shape1, ",", fun_args$shape2, ")"),
         "t" = paste(distn, "(", fun_args$df, ")"),
-        "gamma" = paste(distn, "(", fun_args$shape, ",", fun_args$rate, ")")
+        "gamma" = paste(distn, "(", fun_args$shape, ",", fun_args$rate, ")"),
+        "lognormal" = paste(distn, "(", fun_args$meanlog, ",", fun_args$sdlog,
+                            ")")
       )
     my_xlim <- pretty(c(y, top_range))
     my_xlim <- my_xlim[c(1, length(my_xlim))]
@@ -313,7 +323,8 @@ ett_movie_plot <- function(panel) {
              "normal" = list(loc = bn, scale = an, shape = 0),
              "beta" = list(loc = bn, scale = an, shape = -1 / fun_args$shape2),
              "t" = list(loc = bn, scale = an, shape = 1 / fun_args$df),
-             "gamma" = list(loc = bn, scale = an, shape = 0)
+             "gamma" = list(loc = bn, scale = an, shape = 0),
+             "lognormal" = list(loc = bn, scale = an, shape = 0)
       )
     for_qgev <- c(list(p = bottom_p_vec), gev_pars)
     gev_bottom_range <- do.call(revdbayes::qgev, for_qgev)
