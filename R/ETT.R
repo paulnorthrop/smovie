@@ -10,8 +10,8 @@
 #'   distribution chosen using \code{distn}.
 #' @param distn A character scalar specifying the distribution from which
 #'   observations are sampled..   Distributions \code{"exponential"},
-#'   \code{"uniform"}, \code{"gp"}, \code{"normal"} and \code{"beta"} are
-#'   recognised, case being ignored.
+#'   \code{"uniform"}, \code{"gp"}, \code{"normal"}, \code{"beta"}
+#'   and \code{"t"} are recognised, case being ignored.
 #'   The \code{"gp"} case uses the distributional functions
 #'   \code{\link[revdbayes]{gp}} in the
 #'   \code{\link[revdbayes]{revdbayes-package}}.  The other cases
@@ -78,15 +78,13 @@
 #' }
 #' @export
 ett <- function(n = 20, distn = c("exponential", "uniform", "gp", "normal",
-                                  "beta"),
+                                  "beta", "t"),
                 params = list(), panel_plot = TRUE, hscale = NA,
                 vscale = hscale, n_add = 1, delta_n = 1, xlab = "x", pos = 1,
                 envir = as.environment(pos), ...) {
   temp <- set_scales(hscale, vscale)
   hscale <- temp$hscale
   vscale <- temp$vscale
-  #
-  p_vec <- c(0.001, 0.999)
   #
   distn <- match.arg(distn)
   distn <- tolower(distn)
@@ -97,32 +95,52 @@ ett <- function(n = 20, distn = c("exponential", "uniform", "gp", "normal",
            "uniform" = stats::runif,
            "gp" = revdbayes::rgp,
            "normal" = stats::rnorm,
-           "beta" = stats::rbeta)
+           "beta" = stats::rbeta,
+           "t" = stats::rt)
   dfun <-
     switch(distn,
            "exponential" = stats::dexp,
            "uniform" = stats::dunif,
            "gp" = revdbayes::dgp,
            "normal" = stats::dnorm,
-           "beta" = stats::dbeta)
+           "beta" = stats::dbeta,
+           "t" = stats::dt)
   qfun <-
     switch(distn,
            "exponential" = stats::qexp,
            "uniform" = stats::qunif,
            "gp" = revdbayes::qgp,
            "normal" = stats::qnorm,
-           "beta" = stats::qbeta)
+           "beta" = stats::qbeta,
+           "t" = stats::qt)
   pfun <-
     switch(distn,
            "exponential" = stats::pexp,
            "uniform" = stats::punif,
            "gp" = revdbayes::pgp,
            "normal" = stats::pnorm,
-           "beta" = stats::pbeta)
+           "beta" = stats::pbeta,
+           "t" = stats::pt)
   # Set the arguments to the distributional functions
   fun_args <- set_fun_args(distn, dfun, fun_args, params)
+  # Set sensible scales for the plots
+  if (distn == "t") {
+    if (fun_args$df < 2) {
+      top_p_vec <- c(0.05, 0.95)
+      bottom_p_vec <- c(0.01, 0.7)
+    } else if (fun_args$df < 3) {
+      top_p_vec <- c(0.01, 0.99)
+      bottom_p_vec <- c(0.01, 0.9)
+    } else {
+      top_p_vec <- c(0.001, 0.999)
+      bottom_p_vec <- c(0.001, 0.999)
+    }
+  } else {
+    top_p_vec <- c(0.001, 0.999)
+    bottom_p_vec <- c(0.001, 0.999)
+  }
   # Set the range for the top plot
-  top_range <- set_top_range(distn, p_vec, fun_args, qfun)
+  top_range <- set_top_range(distn, p_vec = top_p_vec, fun_args, qfun)
   # Set the legend position
   leg_pos <- set_leg_pos(distn, fun_args)
   top_leg_pos <- leg_pos$top_leg_pos
@@ -137,7 +155,9 @@ ett <- function(n = 20, distn = c("exponential", "uniform", "gp", "normal",
                                   dfun = dfun, qfun = qfun, rfun = rfun,
                                   pfun = pfun, fun_args = fun_args,
                                   distn = distn, top_range = top_range,
-                                  p_vec = p_vec, show_dens_only = FALSE,
+                                  top_p_vec = top_p_vec,
+                                  bottom_p_vec = bottom_p_vec,
+                                  show_dens_only = FALSE,
                                   top_leg_pos = top_leg_pos,
                                   bottom_leg_pos = bottom_leg_pos,
                                   envir = envir)
@@ -203,7 +223,7 @@ ett_movie_plot <- function(panel) {
     temp <- as.matrix(replicate(n_add, do.call(rfun, sim_list)))
     max_y <- apply(temp, 2, max)
     # Set the range of values for the x-axis of the bottom plot
-    for_qfun <- c(list(p = p_vec ^ (1 / n)), fun_args)
+    for_qfun <- c(list(p = top_p_vec ^ (1 / n)), fun_args)
     bottom_range <- do.call(qfun, for_qfun)
     # Extract the last dataset and the last maximum (for drawing the arrow)
     y <- temp[, n_add]
@@ -220,7 +240,7 @@ ett_movie_plot <- function(panel) {
     #
     # Set range for x-axis
     x <- seq(top_range[1], top_range[2], len = n_x_axis)
-    # Calcuate the density over this range
+    # Calculate the density over this range
     dens_list <- c(list(x = x), fun_args)
     ydens <- do.call(dfun, dens_list)
     # Remove any infinite values
@@ -234,12 +254,13 @@ ett_movie_plot <- function(panel) {
     # Extract the distribution name and parameters
     the_distn <-
       switch(distn,
-             "exponential" = paste(distn, "(", fun_args$rate, ")"),
-             "uniform" = paste(distn, "(", fun_args$min, ",", fun_args$max, ")"),
-             "gp" = paste(distn, "(", fun_args$loc, ",", fun_args$scale, ",",
-                          fun_args$shape, ")"),
-             "normal" = paste(distn, "(", fun_args$mean, ",", fun_args$sd, ")"),
-             "beta" = paste(distn, "(", fun_args$shape1, ",", fun_args$shape2, ")")
+        "exponential" = paste(distn, "(", fun_args$rate, ")"),
+        "uniform" = paste(distn, "(", fun_args$min, ",", fun_args$max, ")"),
+        "gp" = paste(distn, "(", fun_args$loc, ",", fun_args$scale, ",",
+                     fun_args$shape, ")"),
+        "normal" = paste(distn, "(", fun_args$mean, ",", fun_args$sd, ")"),
+        "beta" = paste(distn, "(", fun_args$shape1, ",", fun_args$shape2, ")"),
+        "t" = paste(distn, "(", fun_args$df, ")")
       )
     my_xlim <- pretty(c(y, top_range))
     my_xlim <- my_xlim[c(1, length(my_xlim))]
@@ -275,9 +296,11 @@ ett_movie_plot <- function(panel) {
              "uniform" = list(loc = bn, scale = an, shape = -1),
              "gp" = list(loc = bn, scale = an, shape = fun_args$shape),
              "normal" = list(loc = bn, scale = an, shape = 0),
-             "beta" = list(loc = bn, scale = an, shape = -1 / fun_args$shape2)
+             "beta" = list(loc = bn, scale = an, shape = -1 / fun_args$shape2),
+             "t" = list(loc = bn, scale = an, shape = 1 / fun_args$df)
       )
-    for_qgev <- c(list(p = p_vec ^ (1 / n)), gev_pars)
+#    for_qgev <- c(list(p = p_vec ^ (1 / n)), gev_pars)
+    for_qgev <- c(list(p = bottom_p_vec), gev_pars)
     gev_bottom_range <- do.call(revdbayes::qgev, for_qgev)
     bottom_range <- range(c(bottom_range, gev_bottom_range))
     # Set range for x-axis

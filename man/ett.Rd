@@ -4,9 +4,9 @@
 \alias{ett}
 \title{Extremal Types Theorem}
 \usage{
-ett(n = 20, distn = c("exponential", "uniform", "gp", "normal", "beta"),
-  params = list(), panel_plot = TRUE, hscale = NA, vscale = hscale,
-  n_add = 1, delta_n = 1, xlab = "x", pos = 1,
+ett(n = 20, distn = c("exponential", "uniform", "gp", "normal", "beta",
+  "t"), params = list(), panel_plot = TRUE, hscale = NA,
+  vscale = hscale, n_add = 1, delta_n = 1, xlab = "x", pos = 1,
   envir = as.environment(pos), ...)
 }
 \arguments{
@@ -15,8 +15,8 @@ distribution chosen using \code{distn}.}
 
 \item{distn}{A character scalar specifying the distribution from which
 observations are sampled..   Distributions \code{"exponential"},
-\code{"uniform"}, \code{"gp"}, \code{"normal"} and \code{"beta"} are
-recognised, case being ignored.
+\code{"uniform"}, \code{"gp"}, \code{"normal"}, \code{"beta"}
+and \code{"t"} are recognised, case being ignored.
 The \code{"gp"} case uses the distributional functions
 \code{\link[revdbayes]{gp}} in the
 \code{\link[revdbayes]{revdbayes-package}}.  The other cases

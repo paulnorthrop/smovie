@@ -69,6 +69,12 @@ set_fun_args <- function(distn, dfun, fun_args, params) {
     }
     return(fun_args)
   }
+  if (distn == "t") {
+    if (is.null(fun_args$df)) {
+      fun_args$df <- 1
+    }
+    return(fun_args)
+  }
 }
 
 set_top_range <- function(distn, p_vec, fun_args, qfun) {
@@ -104,6 +110,9 @@ set_top_range <- function(distn, p_vec, fun_args, qfun) {
     } else {
       top_range[2] <- 1
     }
+    return(top_range)
+  }
+  if (distn == "t") {
     return(top_range)
   }
 }
@@ -143,7 +152,8 @@ set_leg_pos <- function(distn, fun_args) {
            "normal" = "right",
            "beta_topleft" = "topleft",
            "beta_topright" = "topright",
-           "beta_top" = "top"
+           "beta_top" = "top",
+           "t" = "right"
     )
   bottom_leg_pos <-
     switch(distn,
@@ -155,7 +165,8 @@ set_leg_pos <- function(distn, fun_args) {
            "normal" = "right",
            "beta_topleft" = "topleft",
            "beta_topright" = "topleft",
-           "beta_top" = "topleft"
+           "beta_top" = "topleft",
+           "t" = "right"
     )
   return(list(top_leg_pos = top_leg_pos, bottom_leg_pos = bottom_leg_pos))
 }
