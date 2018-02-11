@@ -77,7 +77,7 @@
 #' ett(distn = "gp", params = list(shape = 0.5))
 #' }
 #' @export
-ett <- function(n = 30, distn = c("exponential", "uniform", "gp", "normal",
+ett <- function(n = 20, distn = c("exponential", "uniform", "gp", "normal",
                                   "beta"),
                 params = list(), panel_plot = TRUE, hscale = NA,
                 vscale = hscale, n_add = 1, delta_n = 1, xlab = "x", pos = 1,
