@@ -35,6 +35,8 @@ the user needs to close it manually.
   \item {\link[=clt_exp]{Central Limit Theorem: exponential data}}
   \item {\link[=corr_sim]{Sampling distribution of the correlation
     coefficient}}
+  \item {\link[=ett]{Extremal Types Theorem: sampling distribution
+    of a sample maximum}}
 }
 }
 
@@ -53,6 +55,14 @@ the user needs to close it manually.
 \itemize{
   \item {\link[=wws]{Wald, Wilks and Score test movie}}
   \item {\link[=shypo]{Testing simple hypotheses}}
+}
+}
+
+\section{{Extreme Value Theory}}{
+
+\itemize{
+  \item {\link[=ett]{Extremal Types Theorem: sampling distribution
+    of a sample maximum}}
 }
 }
 

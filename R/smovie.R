@@ -29,6 +29,8 @@
 #'   \item {\link[=clt_exp]{Central Limit Theorem: exponential data}}
 #'   \item {\link[=corr_sim]{Sampling distribution of the correlation
 #'     coefficient}}
+#'   \item {\link[=ett]{Extremal Types Theorem: sampling distribution
+#'     of a sample maximum}}
 #' }
 #'
 #' @section {Regression and correlation}:
@@ -45,6 +47,11 @@
 #'   \item {\link[=shypo]{Testing simple hypotheses}}
 #' }
 #'
+#' @section {Extreme Value Theory}:
+#' \itemize{
+#'   \item {\link[=ett]{Extremal Types Theorem: sampling distribution
+#'     of a sample maximum}}
+#' }
 #' @docType package
 #' @name smovie
 #' @import methods
