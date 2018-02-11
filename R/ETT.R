@@ -78,10 +78,15 @@
 #' }
 #' @export
 ett <- function(n = 20, distn = c("exponential", "uniform", "gp", "normal",
-                                  "beta", "t"),
+                                  "beta", "t", "gamma"),
                 params = list(), panel_plot = TRUE, hscale = NA,
                 vscale = hscale, n_add = 1, delta_n = 1, xlab = "x", pos = 1,
                 envir = as.environment(pos), ...) {
+  # To add another distribution
+  # 1. add "name" to distn = c() argument
+  # 2. misc.R: add code to set_fun_args(), set_top_range(), set_leg_pos()
+  # 3. add lines to rfun, dfun, qfun, pfun
+  # 4. ett_movie_plot(): add to the_distn and gev_pars.
   temp <- set_scales(hscale, vscale)
   hscale <- temp$hscale
   vscale <- temp$vscale
@@ -96,7 +101,8 @@ ett <- function(n = 20, distn = c("exponential", "uniform", "gp", "normal",
            "gp" = revdbayes::rgp,
            "normal" = stats::rnorm,
            "beta" = stats::rbeta,
-           "t" = stats::rt)
+           "t" = stats::rt,
+           "gamma" = stats::rgamma)
   dfun <-
     switch(distn,
            "exponential" = stats::dexp,
@@ -104,7 +110,8 @@ ett <- function(n = 20, distn = c("exponential", "uniform", "gp", "normal",
            "gp" = revdbayes::dgp,
            "normal" = stats::dnorm,
            "beta" = stats::dbeta,
-           "t" = stats::dt)
+           "t" = stats::dt,
+           "gamma" = stats::dgamma)
   qfun <-
     switch(distn,
            "exponential" = stats::qexp,
@@ -112,7 +119,8 @@ ett <- function(n = 20, distn = c("exponential", "uniform", "gp", "normal",
            "gp" = revdbayes::qgp,
            "normal" = stats::qnorm,
            "beta" = stats::qbeta,
-           "t" = stats::qt)
+           "t" = stats::qt,
+           "gamma" = stats::qgamma)
   pfun <-
     switch(distn,
            "exponential" = stats::pexp,
@@ -120,7 +128,8 @@ ett <- function(n = 20, distn = c("exponential", "uniform", "gp", "normal",
            "gp" = revdbayes::pgp,
            "normal" = stats::pnorm,
            "beta" = stats::pbeta,
-           "t" = stats::pt)
+           "t" = stats::pt,
+           "gamma" = stats::pgamma)
   # Set the arguments to the distributional functions
   fun_args <- set_fun_args(distn, dfun, fun_args, params)
   # Set sensible scales for the plots
@@ -268,7 +277,8 @@ ett_movie_plot <- function(panel) {
                      fun_args$shape, ")"),
         "normal" = paste(distn, "(", fun_args$mean, ",", fun_args$sd, ")"),
         "beta" = paste(distn, "(", fun_args$shape1, ",", fun_args$shape2, ")"),
-        "t" = paste(distn, "(", fun_args$df, ")")
+        "t" = paste(distn, "(", fun_args$df, ")"),
+        "gamma" = paste(distn, "(", fun_args$shape, ",", fun_args$rate, ")")
       )
     my_xlim <- pretty(c(y, top_range))
     my_xlim <- my_xlim[c(1, length(my_xlim))]
@@ -305,7 +315,8 @@ ett_movie_plot <- function(panel) {
              "gp" = list(loc = bn, scale = an, shape = fun_args$shape),
              "normal" = list(loc = bn, scale = an, shape = 0),
              "beta" = list(loc = bn, scale = an, shape = -1 / fun_args$shape2),
-             "t" = list(loc = bn, scale = an, shape = 1 / fun_args$df)
+             "t" = list(loc = bn, scale = an, shape = 1 / fun_args$df),
+             "gamma" = list(loc = bn, scale = an, shape = 0)
       )
     for_qgev <- c(list(p = bottom_p_vec), gev_pars)
     gev_bottom_range <- do.call(revdbayes::qgev, for_qgev)

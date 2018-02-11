@@ -75,9 +75,13 @@ set_fun_args <- function(distn, dfun, fun_args, params) {
     }
     return(fun_args)
   }
-  if (distn == "exponential") {
+  if (distn == "gamma") {
     if (is.null(fun_args$shape)) {
       fun_args$shape <- 2
+    }
+    if (!is.null(fun_args$scale)) {
+      fun_args$rate <- 1 / fun_args$scale
+      fun_args$scale <- NULL
     }
     if (is.null(fun_args$rate) & is.null(fun_args$scale)) {
       fun_args$rate <- 1

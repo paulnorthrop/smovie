@@ -4,8 +4,8 @@
 \alias{ett}
 \title{Extremal Types Theorem}
 \usage{
-ett(n = 20, distn = c("exponential", "uniform", "gp", "normal", "beta",
-  "t"), params = list(), panel_plot = TRUE, hscale = NA,
+ett(n = 20, distn = c("exponential", "uniform", "gp", "normal", "beta", "t",
+  "gamma"), params = list(), panel_plot = TRUE, hscale = NA,
   vscale = hscale, n_add = 1, delta_n = 1, xlab = "x", pos = 1,
   envir = as.environment(pos), ...)
 }
