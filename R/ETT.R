@@ -64,10 +64,15 @@
 #'   that appears at the top of the movie screen.  For each sample the maximum
 #'   of these \code{n} values is calculated, stored and added to another
 #'   histogram plotted below the first histogram.
+#'
 #'   The probability density function (p.d.f.) of the original
 #'   variables is superimposed on the top histogram.  On the bottom histogram
-#'   is superimposed the approximate (large \code{n}) GEV p.d.f. implied by
-#'   the ETT.
+#'   is superimposed a approximate (large \code{n}) GEV p.d.f. implied by
+#'   the ETT.  The GEV shape parameter \eqn{\xi} that applies in the limiting
+#'   (infinite \eqn{n}) case is used.  The GEV location \eqn{\mu} is set at the
+#'   100(1-1/\eqn{n})\% quantile of the distribution \code{distn}
+#'   and the GEV scale at (1 / \eqn{n}) / \eqn{f(\mu)}, where \eqn{f} is the
+#'   density function of the distribution \code{distn}.
 #'
 #'   Once it starts, two aspects of this movie are controlled by the user.
 #'   Firstly, there are buttons to increase (+) or decrease (-) the sample
@@ -81,10 +86,12 @@
 #' @seealso \code{\link{smovie}}: general information about smovie.
 #' @examples
 #' \dontrun{
+#' # Exponential data: xi = 0
 #' ett()
-#' ett(repeatdelay = 100, repeatinterval = 100)
+#' # Uniform data: xi =-1
 #' ett(distn = "uniform")
-#' ett(distn = "gp", params = list(shape = 0.5))
+#' # Student t data: xi = 1 / df
+#' ett(distn = "t", params = list(df = 5))
 #' }
 #' @export
 ett <- function(n = 20, distn, params = list(), panel_plot = TRUE, hscale = NA,
