@@ -31,8 +31,6 @@
 #' @param delta_n A numeric scalar.  The amount by which n is increased
 #'   (or decreased) after one click of the + (or -) button in the parameter
 #'   window.
-#' @param xlab A character scalar.  A name to use to label the horizontal
-#'   axis of the plots.
 #' @param pos A numeric integer.  Used in calls to \code{\link{assign}}
 #'   to make information available across successive frames of a movie.
 #'   By default, uses the current environment.
@@ -80,13 +78,14 @@
 ett <- function(n = 20, distn = c("exponential", "uniform", "gp", "normal",
                                   "beta", "t", "gamma"),
                 params = list(), panel_plot = TRUE, hscale = NA,
-                vscale = hscale, n_add = 1, delta_n = 1, xlab = "x", pos = 1,
+                vscale = hscale, n_add = 1, delta_n = 1, pos = 1,
                 envir = as.environment(pos), ...) {
+  xlab <- "x"
   # To add another distribution
   # 1. add "name" to distn = c() argument
   # 2. misc.R: add code to set_fun_args(), set_top_range(), set_leg_pos()
   # 3. add lines to rfun, dfun, qfun, pfun
-  # 4. ett_movie_plot(): add to the_distn and gev_pars.
+  # 4. ett_movie_plot(): add to the_distn and gev_pars
   temp <- set_scales(hscale, vscale)
   hscale <- temp$hscale
   vscale <- temp$vscale
@@ -166,7 +165,6 @@ ett <- function(n = 20, distn = c("exponential", "uniform", "gp", "normal",
   # clt_exponential_movie_plot()
   old_n <- 0
   assign("old_n", old_n, envir = envir)
-  assign("xlab", xlab, envir = envir)
   # Create buttons for movie
   ett_panel <- rpanel::rp.control("sample size", n = n, n_add = n_add,
                                   dfun = dfun, qfun = qfun, rfun = rfun,
@@ -177,7 +175,7 @@ ett <- function(n = 20, distn = c("exponential", "uniform", "gp", "normal",
                                   show_dens_only = FALSE,
                                   top_leg_pos = top_leg_pos,
                                   bottom_leg_pos = bottom_leg_pos,
-                                  envir = envir)
+                                  xlab = xlab, envir = envir)
   #
   panel_redraw <- function(panel) {
     rpanel::rp.tkrreplot(panel, redraw_plot)
@@ -235,7 +233,6 @@ ett_movie_plot <- function(panel) {
     } else {
       par(mfrow = c(2, 1), oma = c(0, 0, 0, 0), mar = c(4, 4, 2, 2) + 0.1)
     }
-    assign("xlab", xlab, envir = envir)
     sim_list <- c(list(n = n), fun_args)
     temp <- as.matrix(replicate(n_add, do.call(rfun, sim_list)))
     max_y <- apply(temp, 2, max)
@@ -304,7 +301,7 @@ ett_movie_plot <- function(panel) {
     #
     # Bottom plot --------
     #
-    my_xlab <- paste("sample maxima of", xlab)
+    my_xlab <- paste("sample maximum of", n, "values")
     bn <- do.call(qfun, c(list(p = 1 - 1 / n), fun_args))
     an <- (1 / n) / do.call(dfun, c(list(x = bn), fun_args))
     # Set the limiting GEV parameters

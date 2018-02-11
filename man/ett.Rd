@@ -6,7 +6,7 @@
 \usage{
 ett(n = 20, distn = c("exponential", "uniform", "gp", "normal", "beta", "t",
   "gamma"), params = list(), panel_plot = TRUE, hscale = NA,
-  vscale = hscale, n_add = 1, delta_n = 1, xlab = "x", pos = 1,
+  vscale = hscale, n_add = 1, delta_n = 1, pos = 1,
   envir = as.environment(pos), ...)
 }
 \arguments{
@@ -41,9 +41,6 @@ to each new frame of the movie.}
 \item{delta_n}{A numeric scalar.  The amount by which n is increased
 (or decreased) after one click of the + (or -) button in the parameter
 window.}
-
-\item{xlab}{A character scalar.  A name to use to label the horizontal
-axis of the plots.}
 
 \item{pos}{A numeric integer.  Used in calls to \code{\link{assign}}
 to make information available across successive frames of a movie.
