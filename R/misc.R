@@ -71,7 +71,7 @@ set_fun_args <- function(distn, dfun, fun_args, params) {
   }
   if (distn == "t") {
     if (is.null(fun_args$df)) {
-      fun_args$df <- 1
+      fun_args$df <- 4
     }
     return(fun_args)
   }
