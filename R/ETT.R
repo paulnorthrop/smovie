@@ -199,6 +199,7 @@ pfun <-
                                   top_p_vec = top_p_vec,
                                   bottom_p_vec = bottom_p_vec,
                                   show_dens_only = FALSE,
+                                  pdf_or_cdf = "pdf",
                                   top_leg_pos = top_leg_pos,
                                   bottom_leg_pos = bottom_leg_pos,
                                   xlab = xlab, envir = envir)
@@ -243,8 +244,12 @@ pfun <-
     rpanel::rp.button(panel = ett_panel, action = action, title = my_title,
                       ...)
   }
-  rp.checkbox(panel = ett_panel, show_dens_only,
-              labels = "show only true and GEV densities", action = action)
+  rpanel::rp.radiogroup(panel= ett_panel, pdf_or_cdf, c("pdf", "cdf"),
+                        title = "pdf or cdf in bottom plot",
+                        action = action)
+  rpanel::rp.checkbox(panel = ett_panel, show_dens_only,
+                      labels = "show only true and GEV pdf/cdf",
+                      action = action)
   rpanel::rp.do(panel = ett_panel, action = action)
   return(invisible())
 }
@@ -351,36 +356,48 @@ ett_movie_plot <- function(panel) {
     # Set range for x-axis
     x <- seq(bottom_range[1], bottom_range[2], len = n_x_axis)
     # Calcuate the density over this range
-    dens_list <- c(list(x = x), gev_pars)
-    ygev <- do.call(revdbayes::dgev, dens_list)
-    p_list <- c(list(q = x), fun_args)
+    if (pdf_or_cdf == "pdf") {
+      dens_list <- c(list(x = x), gev_pars)
+      ygev <- do.call(revdbayes::dgev, dens_list)
+    } else {
+      dens_list <- c(list(q = x), gev_pars)
+      ygev <- do.call(revdbayes::pgev, dens_list)
+    }
+    p_list <- c(list(q = x), fun_args, list(log = TRUE))
     d_list <- c(list(x = x), fun_args)
-    ytrue <- n * do.call(pfun, p_list) ^ (n - 1) * do.call(dfun, d_list)
-    # Set the top of the y-axis
-    ytop <- max(ygev) * 1.5
+    if (pdf_or_cdf == "pdf") {
+      temp <- exp((n - 1) * do.call(pfun, p_list))
+      ytrue <- n * temp * do.call(dfun, d_list)
+      my_ylab <- "pdf"
+      # Set the top of the y-axis
+      ytop <- max(ygev) * 1.5
+    } else{
+      ytrue <- exp(n * do.call(pfun, p_list))
+      my_ylab <- "cdf"
+      # Set the top of the y-axis
+      ytop <- 1
+    }
     # Histogram with rug
     y <- sample_maxima
     my_xlim <- pretty(c(y, bottom_range))
     my_xlim <- my_xlim[c(1, length(my_xlim))]
-    if (show_dens_only) {
-      my_col <- 0
-      my_border <- 0
-    } else {
-      my_col <- 8
-      my_border <- 1
-    }
+    my_col <- 8
     if (!show_dens_only) {
-      graphics::hist(y, col = my_col, probability = TRUE, las = 1, axes = FALSE,
-         xlab = my_xlab, ylab = "density", main = "",
-         xpd = TRUE, xlim = my_xlim, ylim = c(0, ytop),
-         border = my_border)
+      if (pdf_or_cdf == "pdf") {
+        graphics::hist(y, col = my_col, probability = TRUE, las = 1,
+                       axes = FALSE, xlab = my_xlab, ylab = my_ylab, main = "",
+                       xpd = TRUE, xlim = my_xlim, ylim = c(0, ytop))
+      } else {
+        ecdfy <- stats::ecdf(y)
+        graphics::plot(ecdfy, col = my_col, las = 1, main = "",
+                       axes = FALSE, xlab = my_xlab, ylab = my_ylab,
+                       xpd = TRUE, xlim = my_xlim, ylim = c(0, ytop))
+      }
       graphics::lines(x, ygev, xpd = TRUE, lwd = 2, lty = 2)
       graphics::lines(x, ytrue, xpd = TRUE, lwd = 2, lty = 2, col = "red")
     } else {
-      my_xlim <- pretty(bottom_range)
-      my_xlim <- my_xlim[c(1, length(my_xlim))]
       matplot(x, cbind(ygev, ytrue), col = c("black", "red"), lwd = 2, lty = 2,
-              ylab = "density", las = 1, xlab = my_xlab, xlim = my_xlim,
+              ylab = my_ylab, las = 1, xlab = my_xlab, xlim = my_xlim,
               ylim = c(0, ytop), axes = FALSE, type = "l")
     }
     graphics::axis(2)
@@ -395,9 +412,23 @@ ett_movie_plot <- function(panel) {
     my_leg_2 <- paste("GEV(", round(gev_pars$loc, 2), ",",
                       round(gev_pars$scale, 2), ",",
                       round(gev_pars$shape, 2), ")" )
-    my_leg_true <- expression(n * F ^ {n-1} * f)
-    graphics::legend(bottom_leg_pos, legend = c(my_leg_2, my_leg_true),
-                     col = 1:2, lwd = 2, lty = 2, box.lty = 0)
+    if (pdf_or_cdf == "pdf") {
+      my_leg_true <- expression(n * F ^ {n-1} * f)
+      graphics::legend(bottom_leg_pos, legend = c(my_leg_2, my_leg_true),
+                       col = 1:2, lwd = 2, lty = 2, box.lty = 0)
+    } else {
+      my_leg_true <- expression(F ^ n)
+      if (!show_dens_only) {
+        graphics::legend(bottom_leg_pos,
+                       legend = c(my_leg_2, my_leg_true, "empirical cdf"),
+                       col = c(1:2, 8), lwd = 2, lty = c(2, 2, -1),
+                       pch = c(-1, -1, 16), box.lty = 0)
+      } else {
+        graphics::legend(bottom_leg_pos,
+                         legend = c(my_leg_2, my_leg_true),
+                         col = 1:2, lwd = 2, lty = 2, box.lty = 0)
+      }
+    }
     if (!show_dens_only) {
       top_ratio <- (last_y - u_t[1]) / (u_t[2] - u_t[1])
       top_loc <- u_b[1] + (u_b[2] - u_b[1]) * top_ratio
