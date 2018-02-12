@@ -259,8 +259,7 @@ wws <- function(model = c("norm", "binom"),
                         c("none", "Wald", "Wilks", "score", "all"),
                         action = wws_plot,
                         title = "Choose the type of test statistic")
-  rpanel::rp.radiogroup(wws_panel, perform_tests,
-                        c("no", "yes"),
+  rpanel::rp.radiogroup(wws_panel, perform_tests, c("no", "yes"),
                         action = wws_plot,
                         title = "Calculate approximate p-values?")
   rpanel::rp.do(wws_panel, wws_plot)
