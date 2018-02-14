@@ -363,7 +363,7 @@ ett_movie_plot <- function(panel) {
       dens_list <- c(list(q = x), gev_pars)
       ygev <- do.call(revdbayes::pgev, dens_list)
     }
-    p_list <- c(list(q = x), fun_args, list(log = TRUE))
+    p_list <- c(list(q = x), fun_args, list(log.p = TRUE))
     d_list <- c(list(x = x), fun_args)
     if (pdf_or_cdf == "pdf") {
       temp <- exp((n - 1) * do.call(pfun, p_list))
