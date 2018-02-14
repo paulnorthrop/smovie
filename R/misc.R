@@ -97,6 +97,15 @@ set_fun_args <- function(distn, dfun, fun_args, params) {
     }
     return(fun_args)
   }
+  if (distn == "cauchy") {
+    if (is.null(fun_args$mean)) {
+      fun_args$location <- 0
+    }
+    if (is.null(fun_args$sd)) {
+      fun_args$scale <- 1
+    }
+    return(fun_args)
+  }
 }
 
 set_top_range <- function(distn, p_vec, fun_args, qfun) {
@@ -135,6 +144,9 @@ set_top_range <- function(distn, p_vec, fun_args, qfun) {
     return(top_range)
   }
   if (distn == "t") {
+    return(top_range)
+  }
+  if (distn == "cauchy") {
     return(top_range)
   }
   if (distn == "gamma") {
@@ -185,7 +197,8 @@ set_leg_pos <- function(distn, fun_args) {
            "beta_top" = "top",
            "t" = "right",
            "gamma" = "right",
-           "lognormal" = "right"
+           "lognormal" = "right",
+           "cauchy" = "right"
     )
   bottom_leg_pos <-
     switch(distn,
@@ -200,7 +213,8 @@ set_leg_pos <- function(distn, fun_args) {
            "beta_top" = "topleft",
            "t" = "right",
            "gamma" = "right",
-           "lognormal" = "right"
+           "lognormal" = "right",
+           "cauchy" = "right"
     )
   return(list(top_leg_pos = top_leg_pos, bottom_leg_pos = bottom_leg_pos))
 }

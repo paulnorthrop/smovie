@@ -102,10 +102,9 @@ ett <- function(n = 20, distn, params = list(), panel_plot = TRUE, hscale = NA,
   }
   xlab <- "x"
   # To add another distribution
-  # 1. add "name" to distn = c() argument
-  # 2. misc.R: add code to set_fun_args(), set_top_range(), set_leg_pos()
-  # 3. add lines to rfun, dfun, qfun, pfun
-  # 4. ett_movie_plot(): add to the_distn and gev_pars
+  # 1. misc.R: add code to set_fun_args(), set_top_range(), set_leg_pos()
+  # 2. add lines to rfun, dfun, qfun, pfun
+  # 3. ett_movie_plot(): add to the_distn and gev_pars
   temp <- set_scales(hscale, vscale)
   hscale <- temp$hscale
   vscale <- temp$vscale
@@ -124,8 +123,13 @@ ett <- function(n = 20, distn, params = list(), panel_plot = TRUE, hscale = NA,
            "beta" = stats::rbeta,
            "t" = stats::rt,
            "gamma" = stats::rgamma,
-           "lognormal" = stats::rlnorm)
-dfun <-
+           "lognormal" = stats::rlnorm,
+           "cauchy" = stats::rcauchy,
+           NULL)
+  if (is.null(rfun)) {
+    stop("unsupported distribution")
+  }
+  dfun <-
     switch(distn,
            "exponential" = stats::dexp,
            "uniform" = stats::dunif,
@@ -134,8 +138,9 @@ dfun <-
            "beta" = stats::dbeta,
            "t" = stats::dt,
            "gamma" = stats::dgamma,
-           "lognormal" = stats::dlnorm)
-qfun <-
+           "lognormal" = stats::dlnorm,
+           "cauchy" = stats::dcauchy)
+  qfun <-
     switch(distn,
            "exponential" = stats::qexp,
            "uniform" = stats::qunif,
@@ -144,8 +149,9 @@ qfun <-
            "beta" = stats::qbeta,
            "t" = stats::qt,
            "gamma" = stats::qgamma,
-           "lognormal" = stats::qlnorm)
-pfun <-
+           "lognormal" = stats::qlnorm,
+           "cauchy" = stats::qcauchy)
+  pfun <-
     switch(distn,
            "exponential" = stats::pexp,
            "uniform" = stats::punif,
@@ -154,8 +160,9 @@ pfun <-
            "beta" = stats::pbeta,
            "t" = stats::pt,
            "gamma" = stats::pgamma,
-           "lognormal" = stats::plnorm)
-# Set the arguments to the distributional functions
+           "lognormal" = stats::plnorm,
+           "cauchy" = stats::pcauchy)
+  # Set the arguments to the distributional functions
   fun_args <- set_fun_args(distn, dfun, fun_args, params)
   # Set sensible scales for the plots
   if (distn == "t") {
@@ -169,6 +176,9 @@ pfun <-
       top_p_vec <- c(0.001, 0.999)
       bottom_p_vec <- c(0.001, 0.999)
     }
+  } else if (distn == "cauchy"){
+    top_p_vec <- c(0.05, 0.95)
+    bottom_p_vec <- c(0.01, 0.7)
   } else if (distn == "gp") {
     if (fun_args$shape > 0.3) {
       top_p_vec <- c(0.001, 0.95)
@@ -309,7 +319,9 @@ ett_movie_plot <- function(panel) {
         "t" = paste(distn, "(", fun_args$df, ")"),
         "gamma" = paste(distn, "(", fun_args$shape, ",", fun_args$rate, ")"),
         "lognormal" = paste(distn, "(", fun_args$meanlog, ",", fun_args$sdlog,
-                            ")")
+                            ")"),
+        "cauchy" = paste(distn, "(", fun_args$location, ",", fun_args$scale,
+                         ")")
       )
     if (!show_dens_only) {
       my_xlim <- pretty(c(y, top_range))
@@ -348,7 +360,8 @@ ett_movie_plot <- function(panel) {
              "beta" = list(loc = bn, scale = an, shape = -1 / fun_args$shape2),
              "t" = list(loc = bn, scale = an, shape = 1 / fun_args$df),
              "gamma" = list(loc = bn, scale = an, shape = 0),
-             "lognormal" = list(loc = bn, scale = an, shape = 0)
+             "lognormal" = list(loc = bn, scale = an, shape = 0),
+             "cauchy" = list(loc = bn, scale = an, shape = 1)
       )
     for_qgev <- c(list(p = bottom_p_vec), gev_pars)
     gev_bottom_range <- do.call(revdbayes::qgev, for_qgev)
