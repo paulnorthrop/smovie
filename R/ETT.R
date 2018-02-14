@@ -11,7 +11,8 @@
 #' @param distn A character scalar specifying the distribution from which
 #'   observations are sampled..   Distributions \code{"exponential"},
 #'   \code{"uniform"}, \code{"gp"}, \code{"normal"}, \code{"beta"},
-#'   \code{"t"}, \code{"gamma"}, \code{lognormal} and \code{log-normal}
+#'   \code{"t"}, \code{"gamma"}, \code{lognormal} and \code{log-normal},
+#'   \code{"cauchy"}, \code{chisq} and \code{"chi-squared"}
 #'   are recognised, case being ignored.
 #'
 #'   If \code{distn} is not supplied then \code{distn = "exponential"}
@@ -29,8 +30,9 @@
 #'   relevant distributional function are used, except for
 #'   \code{distn = "gp"} (\code{shape = 0.1}),
 #'   \code{distn = "beta"} (\code{shape1 = 2, shape2 = 2}),
-#'   \code{distn = "t"} (\code{df = 4}) and
-#'   \code{distn = "gamma"} (\code{shape = 2}).
+#'   \code{distn = "t"} (\code{df = 4}),
+#'   \code{distn = "gamma"} (\code{shape = 2} and
+#'   \code{distn = "chisq"} (\code{df = 4}).
 #' @param panel_plot A logical parameter that determines whether the plot
 #'   is placed inside the panel (\code{TRUE}) or in the standard graphics
 #'   window (\code{FALSE}).  If the plot is to be placed inside the panel
@@ -113,6 +115,9 @@ ett <- function(n = 20, distn, params = list(), panel_plot = TRUE, hscale = NA,
   if (distn == "log-normal") {
     distn <- "lognormal"
   }
+  if (distn == "chisq") {
+    distn <- "chi-squared"
+  }
   # Set the density and quantile functions and simulation function
   rfun <-
     switch(distn,
@@ -125,6 +130,7 @@ ett <- function(n = 20, distn, params = list(), panel_plot = TRUE, hscale = NA,
            "gamma" = stats::rgamma,
            "lognormal" = stats::rlnorm,
            "cauchy" = stats::rcauchy,
+           "chi-squared" = stats::rchisq,
            NULL)
   if (is.null(rfun)) {
     stop("unsupported distribution")
@@ -139,7 +145,8 @@ ett <- function(n = 20, distn, params = list(), panel_plot = TRUE, hscale = NA,
            "t" = stats::dt,
            "gamma" = stats::dgamma,
            "lognormal" = stats::dlnorm,
-           "cauchy" = stats::dcauchy)
+           "cauchy" = stats::dcauchy,
+           "chi-squared" = stats::dchisq)
   qfun <-
     switch(distn,
            "exponential" = stats::qexp,
@@ -150,7 +157,8 @@ ett <- function(n = 20, distn, params = list(), panel_plot = TRUE, hscale = NA,
            "t" = stats::qt,
            "gamma" = stats::qgamma,
            "lognormal" = stats::qlnorm,
-           "cauchy" = stats::qcauchy)
+           "cauchy" = stats::qcauchy,
+           "chi-squared" = stats::qchisq)
   pfun <-
     switch(distn,
            "exponential" = stats::pexp,
@@ -161,7 +169,8 @@ ett <- function(n = 20, distn, params = list(), panel_plot = TRUE, hscale = NA,
            "t" = stats::pt,
            "gamma" = stats::pgamma,
            "lognormal" = stats::plnorm,
-           "cauchy" = stats::pcauchy)
+           "cauchy" = stats::pcauchy,
+           "chi-squared" = stats::pchisq)
   # Set the arguments to the distributional functions
   fun_args <- set_fun_args(distn, dfun, fun_args, params)
   # Set sensible scales for the plots
@@ -321,7 +330,8 @@ ett_movie_plot <- function(panel) {
         "lognormal" = paste(distn, "(", fun_args$meanlog, ",", fun_args$sdlog,
                             ")"),
         "cauchy" = paste(distn, "(", fun_args$location, ",", fun_args$scale,
-                         ")")
+                         ")"),
+        "chi-squared" = paste(distn, "(", fun_args$df, ")")
       )
     if (!show_dens_only) {
       my_xlim <- pretty(c(y, top_range))
@@ -361,7 +371,8 @@ ett_movie_plot <- function(panel) {
              "t" = list(loc = bn, scale = an, shape = 1 / fun_args$df),
              "gamma" = list(loc = bn, scale = an, shape = 0),
              "lognormal" = list(loc = bn, scale = an, shape = 0),
-             "cauchy" = list(loc = bn, scale = an, shape = 1)
+             "cauchy" = list(loc = bn, scale = an, shape = 1),
+             "chi-squared" = list(loc = bn, scale = an, shape = 0)
       )
     for_qgev <- c(list(p = bottom_p_vec), gev_pars)
     gev_bottom_range <- do.call(revdbayes::qgev, for_qgev)

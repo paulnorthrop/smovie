@@ -15,7 +15,8 @@ distribution chosen using \code{distn}.}
 \item{distn}{A character scalar specifying the distribution from which
   observations are sampled..   Distributions \code{"exponential"},
   \code{"uniform"}, \code{"gp"}, \code{"normal"}, \code{"beta"},
-  \code{"t"}, \code{"gamma"}, \code{lognormal} and \code{log-normal}
+  \code{"t"}, \code{"gamma"}, \code{lognormal} and \code{log-normal},
+  \code{"cauchy"}, \code{chisq} and \code{"chi-squared"}
   are recognised, case being ignored.
 
   If \code{distn} is not supplied then \code{distn = "exponential"}
@@ -34,8 +35,9 @@ distribution chosen using \code{distn}.}
   relevant distributional function are used, except for
   \code{distn = "gp"} (\code{shape = 0.1}),
   \code{distn = "beta"} (\code{shape1 = 2, shape2 = 2}),
-  \code{distn = "t"} (\code{df = 4}) and
-  \code{distn = "gamma"} (\code{shape = 2}).}
+  \code{distn = "t"} (\code{df = 4}),
+  \code{distn = "gamma"} (\code{shape = 2} and
+  \code{distn = "chisq"} (\code{df = 4}).}
 
 \item{panel_plot}{A logical parameter that determines whether the plot
 is placed inside the panel (\code{TRUE}) or in the standard graphics

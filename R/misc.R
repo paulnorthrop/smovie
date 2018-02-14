@@ -106,12 +106,19 @@ set_fun_args <- function(distn, dfun, fun_args, params) {
     }
     return(fun_args)
   }
+  if (distn == "chi-squared") {
+    if (is.null(fun_args$df)) {
+      fun_args$df <- 4
+    }
+    return(fun_args)
+  }
 }
 
 set_top_range <- function(distn, p_vec, fun_args, qfun) {
   for_qfun <- c(list(p = p_vec), fun_args)
   top_range <- do.call(qfun, for_qfun)
-  if (distn == "exponential") {
+  if (is.element(distn , c("exponential", "gamma", "chi-squared",
+                           "lognormal"))) {
     top_range[1] <- 0
     return(top_range)
   }
@@ -127,7 +134,7 @@ set_top_range <- function(distn, p_vec, fun_args, qfun) {
     }
     return(top_range)
   }
-  if (distn == "normal") {
+  if (is.element(distn , c("normal", "t", "cauchy"))) {
     return(top_range)
   }
   if (distn == "beta") {
@@ -141,20 +148,6 @@ set_top_range <- function(distn, p_vec, fun_args, qfun) {
     } else {
       top_range[2] <- 1
     }
-    return(top_range)
-  }
-  if (distn == "t") {
-    return(top_range)
-  }
-  if (distn == "cauchy") {
-    return(top_range)
-  }
-  if (distn == "gamma") {
-    top_range[1] <- 0
-    return(top_range)
-  }
-  if (distn == "lognormal") {
-    top_range[1] <- 0
     return(top_range)
   }
 }
@@ -197,6 +190,7 @@ set_leg_pos <- function(distn, fun_args) {
            "beta_top" = "top",
            "t" = "right",
            "gamma" = "right",
+           "chi-squared" = "right",
            "lognormal" = "right",
            "cauchy" = "right"
     )
@@ -213,6 +207,7 @@ set_leg_pos <- function(distn, fun_args) {
            "beta_top" = "topleft",
            "t" = "right",
            "gamma" = "right",
+           "chi-squared" = "right",
            "lognormal" = "right",
            "cauchy" = "right"
     )
