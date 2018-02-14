@@ -365,7 +365,7 @@ ett_movie_plot <- function(panel) {
       )
     for_qgev <- c(list(p = bottom_p_vec), gev_pars)
     gev_bottom_range <- do.call(revdbayes::qgev, for_qgev)
-    bottom_range <- range(c(bottom_range, gev_bottom_range))
+    bottom_range <- range(c(bottom_range, gev_bottom_range), sample_maxima)
     # Set range for x-axis
     x <- seq(bottom_range[1], bottom_range[2], len = n_x_axis)
     # Calcuate the density over this range
