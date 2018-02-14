@@ -130,6 +130,14 @@ set_fun_args <- function(distn, dfun, fun_args, params) {
     }
     return(fun_args)
   }
+  if (distn == "ngev") {
+    if (is.null(fun_args$shape)) {
+      fun_args$shape <- 0.2
+    }
+    fun_args$loc <- 1 / fun_args$shape
+    fun_args$scale <- 1
+    return(fun_args)
+  }
 }
 
 set_top_range <- function(distn, p_vec, fun_args, qfun) {
@@ -166,6 +174,10 @@ set_top_range <- function(distn, p_vec, fun_args, qfun) {
     } else {
       top_range[2] <- 1
     }
+    return(top_range)
+  }
+  if (distn == "ngev") {
+    top_range[2] <- 0
     return(top_range)
   }
 }
@@ -212,7 +224,8 @@ set_leg_pos <- function(distn, fun_args) {
            "lognormal" = "right",
            "cauchy" = "right",
            "f" = "right",
-           "weibull" = "right"
+           "weibull" = "right",
+           "ngev" = "topleft"
     )
   bottom_leg_pos <-
     switch(distn,
@@ -231,7 +244,32 @@ set_leg_pos <- function(distn, fun_args) {
            "lognormal" = "right",
            "cauchy" = "right",
            "f" = "right",
-           "weibull" = "right"
+           "weibull" = "right",
+           "ngev" = "topleft"
     )
   return(list(top_leg_pos = top_leg_pos, bottom_leg_pos = bottom_leg_pos))
 }
+
+# Negated GEV distributions
+
+dngev <- function(x, loc = 0, scale = 1, shape = 0, log = FALSE){
+  return(revdbayes::dgev(-x, loc = loc, scale = scale, shape = shape,
+                         log = log))
+}
+
+pngev <- function(q, loc = 0, scale = 1, shape = 0, lower.tail = TRUE,
+                  log.p = FALSE){
+  return(revdbayes::pgev(-q, loc = loc, scale = scale, shape = shape,
+              lower.tail = !lower.tail, log.p = log.p))
+}
+
+qngev <- function(p, loc = 0, scale = 1, shape = 0, lower.tail = TRUE,
+                  log.p = FALSE){
+  return(-revdbayes::qgev(p, loc = loc, scale = scale, shape = shape,
+               lower.tail = !lower.tail, log.p = log.p))
+}
+
+rngev <- function(n, loc = 0, scale = 1, shape = 0){
+  return(-revdbayes::rgev(n, loc = loc, scale = scale, shape = shape))
+}
+

@@ -16,16 +16,22 @@ distribution chosen using \code{distn}.}
   observations are sampled..   Distributions \code{"exponential"},
   \code{"uniform"}, \code{"gp"}, \code{"normal"}, \code{"beta"},
   \code{"t"}, \code{"gamma"}, \code{lognormal} and \code{log-normal},
-  \code{"cauchy"}, \code{chisq}, \code{"chi-squared"}, \code{"f"}
-  and \code{"weibull"} are recognised, case being ignored.
+  \code{"cauchy"}, \code{chisq}, \code{"chi-squared"}, \code{"f"},
+  \code{"weibull"} and \code{"ngev"} are recognised, case being ignored.
 
   If \code{distn} is not supplied then \code{distn = "exponential"}
   is used.
 
   The \code{"gp"} case uses the distributional functions
   \code{\link[revdbayes]{gp}} in the
-  \code{\link[revdbayes]{revdbayes-package}}.  The other cases
-  use the distributional functions in the
+  \code{\link[revdbayes]{revdbayes-package}}.
+
+  The \code{"ngev"} case is a negated GEV(1 / \eqn{\xi}, 1, \eqn{\xi})
+  distribution, for \eqn{\xi} > 0, and uses the distributional functions
+  \code{\link[revdbayes]{gev}} in the
+  \code{\link[revdbayes]{revdbayes-package}}.
+
+  The other cases use the distributional functions in the
   \code{\link[stats]{stats-package}}.}
 
 \item{params}{A named list of additional arguments to be passed to the
@@ -38,8 +44,9 @@ distribution chosen using \code{distn}.}
   \code{distn = "t"} (\code{df = 4}),
   \code{distn = "gamma"} (\code{shape = 2},
   \code{distn = "chisq"} (\code{df = 4}),
-  \code{distn = "f"} (\code{df1 = 4, df2 = 8}) and
-  \code{distn = "weibull"} (\code{shape = 2}).}
+  \code{distn = "f"} (\code{df1 = 4, df2 = 8}),
+  \code{distn = "weibull"} (\code{shape = 2}) and
+  \code{distn = "ngev"} (\code{shape = 0.2}).}
 
 \item{panel_plot}{A logical parameter that determines whether the plot
 is placed inside the panel (\code{TRUE}) or in the standard graphics

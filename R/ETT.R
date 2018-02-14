@@ -12,16 +12,22 @@
 #'   observations are sampled..   Distributions \code{"exponential"},
 #'   \code{"uniform"}, \code{"gp"}, \code{"normal"}, \code{"beta"},
 #'   \code{"t"}, \code{"gamma"}, \code{lognormal} and \code{log-normal},
-#'   \code{"cauchy"}, \code{chisq}, \code{"chi-squared"}, \code{"f"}
-#'   and \code{"weibull"} are recognised, case being ignored.
+#'   \code{"cauchy"}, \code{chisq}, \code{"chi-squared"}, \code{"f"},
+#'   \code{"weibull"} and \code{"ngev"} are recognised, case being ignored.
 #'
 #'   If \code{distn} is not supplied then \code{distn = "exponential"}
 #'   is used.
 #'
 #'   The \code{"gp"} case uses the distributional functions
 #'   \code{\link[revdbayes]{gp}} in the
-#'   \code{\link[revdbayes]{revdbayes-package}}.  The other cases
-#'   use the distributional functions in the
+#'   \code{\link[revdbayes]{revdbayes-package}}.
+#'
+#'   The \code{"ngev"} case is a negated GEV(1 / \eqn{\xi}, 1, \eqn{\xi})
+#'   distribution, for \eqn{\xi} > 0, and uses the distributional functions
+#'   \code{\link[revdbayes]{gev}} in the
+#'   \code{\link[revdbayes]{revdbayes-package}}.
+#'
+#'   The other cases use the distributional functions in the
 #'   \code{\link[stats]{stats-package}}.
 #' @param params A named list of additional arguments to be passed to the
 #'   density function associated with distribution \code{distn}.
@@ -33,8 +39,9 @@
 #'   \code{distn = "t"} (\code{df = 4}),
 #'   \code{distn = "gamma"} (\code{shape = 2},
 #'   \code{distn = "chisq"} (\code{df = 4}),
-#'   \code{distn = "f"} (\code{df1 = 4, df2 = 8}) and
-#'   \code{distn = "weibull"} (\code{shape = 2}).
+#'   \code{distn = "f"} (\code{df1 = 4, df2 = 8}),
+#'   \code{distn = "weibull"} (\code{shape = 2}) and
+#'   \code{distn = "ngev"} (\code{shape = 0.2}).
 #' @param panel_plot A logical parameter that determines whether the plot
 #'   is placed inside the panel (\code{TRUE}) or in the standard graphics
 #'   window (\code{FALSE}).  If the plot is to be placed inside the panel
@@ -104,6 +111,16 @@ ett <- function(n = 20, distn, params = list(), panel_plot = TRUE, hscale = NA,
   if (missing(distn)) {
     distn <- "exponential"
   }
+  if (distn == "ngev") {
+    if (!is.null(params$loc) | !is.null(params$scale)) {
+      warning("In the negated GEV case you cannot set loc or scale")
+    }
+    if (!is.null(params$shape)){
+      if (params$shape <= 0) {
+        stop("the shape parameter must be positive in the negated GEV case")
+      }
+    }
+  }
   xlab <- "x"
   # To add another distribution
   # 1. misc.R: add code to set_fun_args(), set_top_range(), set_leg_pos()
@@ -121,6 +138,9 @@ ett <- function(n = 20, distn, params = list(), panel_plot = TRUE, hscale = NA,
     distn <- "chi-squared"
   }
   # Set the density and quantile functions and simulation function
+  # "neg-frechet" is included because it is an example that is in the domain of
+  # attraction of the Gumbel case but the upper endpoint is finite.
+  #
   rfun <-
     switch(distn,
            "exponential" = stats::rexp,
@@ -135,9 +155,10 @@ ett <- function(n = 20, distn, params = list(), panel_plot = TRUE, hscale = NA,
            "chi-squared" = stats::rchisq,
            "f" = stats::rf,
            "weibull" = stats::rweibull,
+           "ngev" = rngev,
            NULL)
   if (is.null(rfun)) {
-    stop("unsupported distribution")
+    stop("Unsupported distribution")
   }
   dfun <-
     switch(distn,
@@ -152,7 +173,8 @@ ett <- function(n = 20, distn, params = list(), panel_plot = TRUE, hscale = NA,
            "cauchy" = stats::dcauchy,
            "chi-squared" = stats::dchisq,
            "f" = stats::df,
-           "weibull" = stats::dweibull)
+           "weibull" = stats::dweibull,
+           "ngev" = dngev)
   qfun <-
     switch(distn,
            "exponential" = stats::qexp,
@@ -166,7 +188,8 @@ ett <- function(n = 20, distn, params = list(), panel_plot = TRUE, hscale = NA,
            "cauchy" = stats::qcauchy,
            "chi-squared" = stats::qchisq,
            "f" = stats::qf,
-           "weibull" = stats::qweibull)
+           "weibull" = stats::qweibull,
+           "ngev" = qngev)
   pfun <-
     switch(distn,
            "exponential" = stats::pexp,
@@ -180,7 +203,8 @@ ett <- function(n = 20, distn, params = list(), panel_plot = TRUE, hscale = NA,
            "cauchy" = stats::pcauchy,
            "chi-squared" = stats::pchisq,
            "f" = stats::pf,
-           "weibull" = stats::pweibull)
+           "weibull" = stats::pweibull,
+           "ngev" = pngev)
   # Set the arguments to the distributional functions
   fun_args <- set_fun_args(distn, dfun, fun_args, params)
   # Set sensible scales for the plots
@@ -343,7 +367,9 @@ ett_movie_plot <- function(panel) {
                          ")"),
         "chi-squared" = paste(distn, "(", fun_args$df, ")"),
         "f" = paste(distn, "(", fun_args$df1, ",", fun_args$df2, ")"),
-        "weibull" = paste(distn, "(", fun_args$shape, ",", fun_args$scale, ")")
+        "weibull" = paste(distn, "(", fun_args$shape, ",", fun_args$scale, ")"),
+        "ngev" = paste("negated GEV", "(", fun_args$loc, ",", fun_args$scale,
+                       ",", fun_args$shape, ")")
       )
     if (!show_dens_only) {
       my_xlim <- pretty(c(y, top_range))
@@ -386,7 +412,8 @@ ett_movie_plot <- function(panel) {
              "cauchy" = list(loc = bn, scale = an, shape = 1),
              "chi-squared" = list(loc = bn, scale = an, shape = 0),
              "f" = list(loc = bn, scale = an, shape = 2 / fun_args$df2),
-             "weibull" = list(loc = bn, scale = an, shape = 0)
+             "weibull" = list(loc = bn, scale = an, shape = 0),
+             "ngev" = list(loc = bn, scale = an, shape = 0)
       )
     for_qgev <- c(list(p = bottom_p_vec), gev_pars)
     gev_bottom_range <- do.call(revdbayes::qgev, for_qgev)
@@ -408,7 +435,7 @@ ett_movie_plot <- function(panel) {
       ytrue <- n * temp * do.call(dfun, d_list)
       my_ylab <- "pdf"
       # Set the top of the y-axis
-      ytop <- max(ygev) * 1.5
+      ytop <- max(ygev, ytrue) * 1.5
     } else{
       ytrue <- exp(n * do.call(pfun, p_list))
       my_ylab <- "cdf"
@@ -429,7 +456,8 @@ ett_movie_plot <- function(panel) {
         ecdfy <- stats::ecdf(y)
         graphics::plot(ecdfy, col = my_col, las = 1, main = "",
                        axes = FALSE, xlab = my_xlab, ylab = my_ylab,
-                       xpd = TRUE, xlim = my_xlim, ylim = c(0, ytop))
+                       xpd = TRUE, xlim = my_xlim, ylim = c(0, ytop),
+                       col.01line = 0)
       }
       graphics::lines(x, ygev, xpd = TRUE, lwd = 2, lty = 2)
       graphics::lines(x, ytrue, xpd = TRUE, lwd = 2, lty = 2, col = "red")
