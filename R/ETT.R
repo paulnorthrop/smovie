@@ -12,7 +12,7 @@
 #'   observations are sampled..   Distributions \code{"exponential"},
 #'   \code{"uniform"}, \code{"gp"}, \code{"normal"}, \code{"beta"},
 #'   \code{"t"}, \code{"gamma"}, \code{lognormal} and \code{log-normal},
-#'   \code{"cauchy"}, \code{chisq} and \code{"chi-squared"}
+#'   \code{"cauchy"}, \code{chisq}, \code{"chi-squared"} and \code{"f"}
 #'   are recognised, case being ignored.
 #'
 #'   If \code{distn} is not supplied then \code{distn = "exponential"}
@@ -31,8 +31,9 @@
 #'   \code{distn = "gp"} (\code{shape = 0.1}),
 #'   \code{distn = "beta"} (\code{shape1 = 2, shape2 = 2}),
 #'   \code{distn = "t"} (\code{df = 4}),
-#'   \code{distn = "gamma"} (\code{shape = 2} and
-#'   \code{distn = "chisq"} (\code{df = 4}).
+#'   \code{distn = "gamma"} (\code{shape = 2},
+#'   \code{distn = "chisq"} (\code{df = 4}) and
+#'   \code{distn = "f"} (\code{df1 = 4, df2 = 8}).
 #' @param panel_plot A logical parameter that determines whether the plot
 #'   is placed inside the panel (\code{TRUE}) or in the standard graphics
 #'   window (\code{FALSE}).  If the plot is to be placed inside the panel
@@ -131,6 +132,7 @@ ett <- function(n = 20, distn, params = list(), panel_plot = TRUE, hscale = NA,
            "lognormal" = stats::rlnorm,
            "cauchy" = stats::rcauchy,
            "chi-squared" = stats::rchisq,
+           "f" = stats::rf,
            NULL)
   if (is.null(rfun)) {
     stop("unsupported distribution")
@@ -146,7 +148,8 @@ ett <- function(n = 20, distn, params = list(), panel_plot = TRUE, hscale = NA,
            "gamma" = stats::dgamma,
            "lognormal" = stats::dlnorm,
            "cauchy" = stats::dcauchy,
-           "chi-squared" = stats::dchisq)
+           "chi-squared" = stats::dchisq,
+           "f" = stats::df)
   qfun <-
     switch(distn,
            "exponential" = stats::qexp,
@@ -158,7 +161,8 @@ ett <- function(n = 20, distn, params = list(), panel_plot = TRUE, hscale = NA,
            "gamma" = stats::qgamma,
            "lognormal" = stats::qlnorm,
            "cauchy" = stats::qcauchy,
-           "chi-squared" = stats::qchisq)
+           "chi-squared" = stats::qchisq,
+           "f" = stats::qf)
   pfun <-
     switch(distn,
            "exponential" = stats::pexp,
@@ -170,7 +174,8 @@ ett <- function(n = 20, distn, params = list(), panel_plot = TRUE, hscale = NA,
            "gamma" = stats::pgamma,
            "lognormal" = stats::plnorm,
            "cauchy" = stats::pcauchy,
-           "chi-squared" = stats::pchisq)
+           "chi-squared" = stats::pchisq,
+           "f" = stats::pf)
   # Set the arguments to the distributional functions
   fun_args <- set_fun_args(distn, dfun, fun_args, params)
   # Set sensible scales for the plots
@@ -331,7 +336,8 @@ ett_movie_plot <- function(panel) {
                             ")"),
         "cauchy" = paste(distn, "(", fun_args$location, ",", fun_args$scale,
                          ")"),
-        "chi-squared" = paste(distn, "(", fun_args$df, ")")
+        "chi-squared" = paste(distn, "(", fun_args$df, ")"),
+        "f" = paste(distn, "(", fun_args$df1, ",", fun_args$df2, ")")
       )
     if (!show_dens_only) {
       my_xlim <- pretty(c(y, top_range))
@@ -372,7 +378,8 @@ ett_movie_plot <- function(panel) {
              "gamma" = list(loc = bn, scale = an, shape = 0),
              "lognormal" = list(loc = bn, scale = an, shape = 0),
              "cauchy" = list(loc = bn, scale = an, shape = 1),
-             "chi-squared" = list(loc = bn, scale = an, shape = 0)
+             "chi-squared" = list(loc = bn, scale = an, shape = 0),
+             "f" = list(loc = bn, scale = an, shape = 2 / fun_args$df2)
       )
     for_qgev <- c(list(p = bottom_p_vec), gev_pars)
     gev_bottom_range <- do.call(revdbayes::qgev, for_qgev)

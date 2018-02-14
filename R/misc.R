@@ -112,13 +112,22 @@ set_fun_args <- function(distn, dfun, fun_args, params) {
     }
     return(fun_args)
   }
+  if (distn == "f") {
+    if (is.null(fun_args$df1)) {
+      fun_args$df1 <- 4
+    }
+    if (is.null(fun_args$df2)) {
+      fun_args$df2 <- 8
+    }
+    return(fun_args)
+  }
 }
 
 set_top_range <- function(distn, p_vec, fun_args, qfun) {
   for_qfun <- c(list(p = p_vec), fun_args)
   top_range <- do.call(qfun, for_qfun)
   if (is.element(distn , c("exponential", "gamma", "chi-squared",
-                           "lognormal"))) {
+                           "lognormal", "f"))) {
     top_range[1] <- 0
     return(top_range)
   }
@@ -192,7 +201,8 @@ set_leg_pos <- function(distn, fun_args) {
            "gamma" = "right",
            "chi-squared" = "right",
            "lognormal" = "right",
-           "cauchy" = "right"
+           "cauchy" = "right",
+           "f" = "right"
     )
   bottom_leg_pos <-
     switch(distn,
@@ -209,7 +219,8 @@ set_leg_pos <- function(distn, fun_args) {
            "gamma" = "right",
            "chi-squared" = "right",
            "lognormal" = "right",
-           "cauchy" = "right"
+           "cauchy" = "right",
+           "f" = "right"
     )
   return(list(top_leg_pos = top_leg_pos, bottom_leg_pos = bottom_leg_pos))
 }
