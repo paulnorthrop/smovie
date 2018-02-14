@@ -16,8 +16,8 @@ distribution chosen using \code{distn}.}
   observations are sampled..   Distributions \code{"exponential"},
   \code{"uniform"}, \code{"gp"}, \code{"normal"}, \code{"beta"},
   \code{"t"}, \code{"gamma"}, \code{lognormal} and \code{log-normal},
-  \code{"cauchy"}, \code{chisq}, \code{"chi-squared"} and \code{"f"}
-  are recognised, case being ignored.
+  \code{"cauchy"}, \code{chisq}, \code{"chi-squared"}, \code{"f"}
+  and \code{"weibull"} are recognised, case being ignored.
 
   If \code{distn} is not supplied then \code{distn = "exponential"}
   is used.
@@ -37,8 +37,9 @@ distribution chosen using \code{distn}.}
   \code{distn = "beta"} (\code{shape1 = 2, shape2 = 2}),
   \code{distn = "t"} (\code{df = 4}),
   \code{distn = "gamma"} (\code{shape = 2},
-  \code{distn = "chisq"} (\code{df = 4}) and
-  \code{distn = "f"} (\code{df1 = 4, df2 = 8}).}
+  \code{distn = "chisq"} (\code{df = 4}),
+  \code{distn = "f"} (\code{df1 = 4, df2 = 8}) and
+  \code{distn = "weibull"} (\code{shape = 2}).}
 
 \item{panel_plot}{A logical parameter that determines whether the plot
 is placed inside the panel (\code{TRUE}) or in the standard graphics

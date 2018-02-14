@@ -121,13 +121,22 @@ set_fun_args <- function(distn, dfun, fun_args, params) {
     }
     return(fun_args)
   }
+  if (distn == "weibull") {
+    if (is.null(fun_args$shape)) {
+      fun_args$shape <- 2
+    }
+    if (is.null(fun_args$scale)) {
+      fun_args$scale <- 1
+    }
+    return(fun_args)
+  }
 }
 
 set_top_range <- function(distn, p_vec, fun_args, qfun) {
   for_qfun <- c(list(p = p_vec), fun_args)
   top_range <- do.call(qfun, for_qfun)
   if (is.element(distn , c("exponential", "gamma", "chi-squared",
-                           "lognormal", "f"))) {
+                           "lognormal", "f", "weibull"))) {
     top_range[1] <- 0
     return(top_range)
   }
@@ -202,7 +211,8 @@ set_leg_pos <- function(distn, fun_args) {
            "chi-squared" = "right",
            "lognormal" = "right",
            "cauchy" = "right",
-           "f" = "right"
+           "f" = "right",
+           "weibull" = "right"
     )
   bottom_leg_pos <-
     switch(distn,
@@ -220,7 +230,8 @@ set_leg_pos <- function(distn, fun_args) {
            "chi-squared" = "right",
            "lognormal" = "right",
            "cauchy" = "right",
-           "f" = "right"
+           "f" = "right",
+           "weibull" = "right"
     )
   return(list(top_leg_pos = top_leg_pos, bottom_leg_pos = bottom_leg_pos))
 }
