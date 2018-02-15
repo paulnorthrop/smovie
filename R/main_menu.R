@@ -17,11 +17,12 @@ smovie_menu <- function(hscale = 1) {
     else if (menu.panel$demo == "Testing simple hypotheses") {
       shypo(mu0 = 0, eff = 5, n = 1)
     }
-    menu.panel
+    return(menu.panel)
   }
 
-  menu.panel <- rp.control("Cartoons", homer = FALSE, number.list = list(),
-                           ss = list(), trans = list(), theta = list())
+  menu.panel <- rpanel::rp.control("Movies", homer = FALSE,
+                                   number.list = list(),
+                                   ss = list(), trans = list(), theta = list())
   menu.list  <-  list(list("Distributions",
                            "Binomial p.m.f."
   ),
@@ -32,10 +33,9 @@ smovie_menu <- function(hscale = 1) {
   )
 
   if (!require(sm)) menu.list <- menu.list[-4]
-  rp.menu(menu.panel, demo, menu.list, action = panel.launch)
+  rpanel::rp.menu(menu.panel, demo, menu.list, action = panel.launch)
   image.file <- file.path(system.file(package = "rpanel"), "images",
                           "cartoons.gif")
-  rp.image(menu.panel, image.file)
-
-  invisible()
+  rpanel::rp.image(menu.panel, image.file)
+  return(invisible())
 }
