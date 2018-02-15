@@ -100,20 +100,28 @@ Loosely speaking, a consequence of the
 
   The probability density function (p.d.f.) of the original
   variables is superimposed on the top histogram.  On the bottom histogram
-  is superimposed a approximate (large \code{n}) GEV p.d.f. implied by
+  is superimposed the exact p.d.f. of the sample maximaand an
+  approximate (large \code{n}) GEV p.d.f. implied by
   the ETT.  The GEV shape parameter \eqn{\xi} that applies in the limiting
   (infinite \eqn{n}) case is used.  The GEV location \eqn{\mu} is set at the
   100(1-1/\eqn{n})\% quantile of the distribution \code{distn}
   and the GEV scale at (1 / \eqn{n}) / \eqn{f(\mu)}, where \eqn{f} is the
   density function of the distribution \code{distn}.
 
-  Once it starts, two aspects of this movie are controlled by the user.
-  Firstly, there are buttons to increase (+) or decrease (-) the sample
-  size, that is, the number of values over which a mean is calculated.
-  Then there is a button labelled
-  "simulate another \code{n_add} samples of size n".
-  Each time this button is clicked \code{n_add} new samples are simulated
-  and their sample maxima are added to the bottom histogram.
+  Once it starts, four aspects of this movie are controlled by the user.
+  \itemize{
+    \item{}{There are buttons to increase (+) or decrease (-) the sample
+      size, that is, the number of values over which a mean is calculated.}
+    \item{}{Each time the button labelled "simulate another \code{n_add}
+      samples of size n" is clicked \code{n_add} new samples are simulated
+      and their sample maxima are added to the bottom histogram.}
+    \item{}{There is a button to switch the bottom plot from displaying
+      a histogram of the simulated data and exact and GEV p.d.f.s to the
+      empirical c.d.f. of the simulated data and exact and GEV c.d.f.s.}
+    \item{}{There is a box that can be used to display only the bottom
+      plot.  This option is selected automatically if the sample size
+      \eqn{n} exceeds 1000.}
+  }
 }
 \examples{
 \dontrun{

@@ -78,20 +78,28 @@
 #'
 #'   The probability density function (p.d.f.) of the original
 #'   variables is superimposed on the top histogram.  On the bottom histogram
-#'   is superimposed a approximate (large \code{n}) GEV p.d.f. implied by
+#'   is superimposed the exact p.d.f. of the sample maximaand an
+#'   approximate (large \code{n}) GEV p.d.f. implied by
 #'   the ETT.  The GEV shape parameter \eqn{\xi} that applies in the limiting
 #'   (infinite \eqn{n}) case is used.  The GEV location \eqn{\mu} is set at the
 #'   100(1-1/\eqn{n})\% quantile of the distribution \code{distn}
 #'   and the GEV scale at (1 / \eqn{n}) / \eqn{f(\mu)}, where \eqn{f} is the
 #'   density function of the distribution \code{distn}.
 #'
-#'   Once it starts, two aspects of this movie are controlled by the user.
-#'   Firstly, there are buttons to increase (+) or decrease (-) the sample
-#'   size, that is, the number of values over which a mean is calculated.
-#'   Then there is a button labelled
-#'   "simulate another \code{n_add} samples of size n".
-#'   Each time this button is clicked \code{n_add} new samples are simulated
-#'   and their sample maxima are added to the bottom histogram.
+#'   Once it starts, four aspects of this movie are controlled by the user.
+#'   \itemize{
+#'     \item{}{There are buttons to increase (+) or decrease (-) the sample
+#'       size, that is, the number of values over which a mean is calculated.}
+#'     \item{}{Each time the button labelled "simulate another \code{n_add}
+#'       samples of size n" is clicked \code{n_add} new samples are simulated
+#'       and their sample maxima are added to the bottom histogram.}
+#'     \item{}{There is a button to switch the bottom plot from displaying
+#'       a histogram of the simulated data and exact and GEV p.d.f.s to the
+#'       empirical c.d.f. of the simulated data and exact and GEV c.d.f.s.}
+#'     \item{}{There is a box that can be used to display only the bottom
+#'       plot.  This option is selected automatically if the sample size
+#'       \eqn{n} exceeds 1000.}
+#'   }
 #'
 #' @return Nothing is returned, only the animation is produced.
 #' @seealso \code{\link{smovie}}: general information about smovie.
@@ -312,13 +320,17 @@ ett <- function(n = 20, distn, params = list(), panel_plot = TRUE, hscale = NA,
 ett_movie_plot <- function(panel) {
   with(panel, {
     old_par <- graphics::par(no.readonly = TRUE)
+    # Don't simulate very large samples (only show pdfs or cdfs)
+    if (n > 1000) {
+      show_dens_only <- TRUE
+    }
     if (show_dens_only) {
       par(mfrow = c(1, 1), oma = c(0, 0, 0, 0), mar = c(4, 4, 2, 2) + 0.1)
     } else {
       par(mfrow = c(2, 1), oma = c(0, 0, 0, 0), mar = c(4, 4, 2, 2) + 0.1)
     }
     # Set the range of values for the x-axis of the bottom plot
-    for_qfun <- c(list(p = top_p_vec ^ (1 / n)), fun_args)
+    for_qfun <- c(list(p = bottom_p_vec ^ (1 / n)), fun_args)
     bottom_range <- do.call(qfun, for_qfun)
     # Do the simulation (if required)
     if (!show_dens_only) {
@@ -327,6 +339,7 @@ ett_movie_plot <- function(panel) {
       max_y <- apply(temp, 2, max)
       # Extract the last dataset and the last maximum (for drawing the arrow)
       y <- temp[, n_add]
+      rm(temp)
       last_y <- max_y[n_add]
       if (n != old_n) {
         sample_maxima <- max_y
@@ -417,7 +430,11 @@ ett_movie_plot <- function(panel) {
       )
     for_qgev <- c(list(p = bottom_p_vec), gev_pars)
     gev_bottom_range <- do.call(revdbayes::qgev, for_qgev)
-    bottom_range <- range(c(bottom_range, gev_bottom_range), sample_maxima)
+    if (!show_dens_only) {
+      bottom_range <- range(c(bottom_range, gev_bottom_range), sample_maxima)
+    } else {
+      bottom_range <- range(c(bottom_range, gev_bottom_range))
+    }
     # Set range for x-axis
     x <- seq(bottom_range[1], bottom_range[2], len = n_x_axis)
     # Calcuate the density over this range
@@ -444,7 +461,11 @@ ett_movie_plot <- function(panel) {
     }
     # Histogram with rug
     y <- sample_maxima
-    my_xlim <- pretty(c(y, bottom_range))
+    if (!show_dens_only) {
+      my_xlim <- pretty(c(y, bottom_range))
+    } else {
+      my_xlim <- pretty(bottom_range)
+    }
     my_xlim <- my_xlim[c(1, length(my_xlim))]
     my_col <- 8
     if (!show_dens_only) {

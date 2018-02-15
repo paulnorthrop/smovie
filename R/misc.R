@@ -272,4 +272,3 @@ qngev <- function(p, loc = 0, scale = 1, shape = 0, lower.tail = TRUE,
 rngev <- function(n, loc = 0, scale = 1, shape = 0){
   return(-revdbayes::rgev(n, loc = loc, scale = scale, shape = shape))
 }
-
