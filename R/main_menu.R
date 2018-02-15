@@ -17,6 +17,45 @@ smovie_menu <- function(hscale = 1) {
     else if (menu.panel$demo == "Testing simple hypotheses") {
       shypo(mu0 = 0, eff = 5, n = 1)
     }
+    else if (menu.panel$demo == "ETT: beta") {
+      ett(distn = "beta")
+    }
+    else if (menu.panel$demo == "ETT: Cauchy") {
+      ett(distn = "cauchy")
+    }
+    else if (menu.panel$demo == "ETT: chi-squared") {
+      ett(distn = "chi-squared")
+    }
+    else if (menu.panel$demo == "ETT: exponential") {
+      ett(distn = "exponential")
+    }
+    else if (menu.panel$demo == "ETT: F") {
+      ett(distn = "f")
+    }
+    else if (menu.panel$demo == "ETT: gamma") {
+      ett(distn = "gamma")
+    }
+    else if (menu.panel$demo == "ETT: generalized Pareto") {
+      ett(distn = "gp")
+    }
+    else if (menu.panel$demo == "ETT: log-normal") {
+      ett(distn = "log-normal")
+    }
+    else if (menu.panel$demo == "ETT: negated GEV") {
+      ett(distn = "ngev")
+    }
+    else if (menu.panel$demo == "ETT: normal") {
+      ett(distn = "normal")
+    }
+    else if (menu.panel$demo == "ETT: Student t") {
+      ett(distn = "t")
+    }
+    else if (menu.panel$demo == "ETT: uniform") {
+      ett(distn = "uniform")
+    }
+    else if (menu.panel$demo == "ETT: Weibull") {
+      ett(distn = "weibull")
+    }
     return(menu.panel)
   }
 
@@ -29,6 +68,21 @@ smovie_menu <- function(hscale = 1) {
   list("Hypothesis testing",
        "Wald, Wilks and Score tests",
        "Testing simple hypotheses"
+       ),
+  list("Extreme value theory",
+       "ETT: beta",
+       "ETT: Cauchy",
+       "ETT: chi-squared",
+       "ETT: exponential",
+       "ETT: F",
+       "ETT: gamma",
+       "ETT: generalized Pareto",
+       "ETT: log-normal",
+       "ETT: negated GEV",
+       "ETT: normal",
+       "ETT: Student t",
+       "ETT: uniform",
+       "ETT: Weibull"
        )
   )
 

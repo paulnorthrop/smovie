@@ -17,9 +17,6 @@ these buttons see the documentation of the individual functions.
 
 When a button (produced using \code{\link[rpanel]{rp.button}} or
 \code{\link[rpanel]{rp.doublebutton}}) ...
-
-The parameter window does not close automatically after the movie:
-the user needs to close it manually.
 }
 \section{{Probability distributions}}{
 
