@@ -1,3 +1,7 @@
+is.wholenumber <-  function(x, tol = .Machine$double.eps^0.5) {
+  return(abs(x - round(x)) < tol)
+}
+
 set_scales <- function(hscale, vscale) {
   if (is.na(hscale)) {
     if (.Platform$OS.type == "unix") {

@@ -10,26 +10,29 @@ ett(n = 20, distn, params = list(), panel_plot = TRUE, hscale = NA,
 }
 \arguments{
 \item{n}{An integer scalar.  The size of the samples drawn from the
-distribution chosen using \code{distn}.}
+distribution chosen using \code{distn}.  \code{n} must be no smaller
+than 2.}
 
 \item{distn}{A character scalar specifying the distribution from which
-  observations are sampled..   Distributions \code{"exponential"},
-  \code{"uniform"}, \code{"gp"}, \code{"normal"}, \code{"beta"},
-  \code{"t"}, \code{"gamma"}, \code{lognormal} and \code{log-normal},
-  \code{"cauchy"}, \code{chisq}, \code{"chi-squared"}, \code{"f"},
-  \code{"weibull"} and \code{"ngev"} are recognised, case being ignored.
+  observations are sampled..   Distributions \code{"beta"},
+  \code{"cauchy"}, \code{chisq}, \code{"chi-squared"}, \code{"exponential"},
+  \code{"f"}, \code{"gamma"}, \code{"gp"}, \code{lognormal},
+  \code{log-normal},  \code{"ngev"}, \code{"normal"}, \code{"t"},
+  \code{"uniform"} and \code{"weibull"} are recognised, case being ignored.
 
   If \code{distn} is not supplied then \code{distn = "exponential"}
   is used.
 
-  The \code{"gp"} case uses the distributional functions
-  \code{\link[revdbayes]{gp}} in the
+  The \code{"gp"} case uses the \code{\link[revdbayes]{gp}}
+  distributional functions in the
   \code{\link[revdbayes]{revdbayes-package}}.
 
   The \code{"ngev"} case is a negated GEV(1 / \eqn{\xi}, 1, \eqn{\xi})
-  distribution, for \eqn{\xi} > 0, and uses the distributional functions
-  \code{\link[revdbayes]{gev}} in the
+  distribution, for \eqn{\xi} > 0, and uses the \code{\link[revdbayes]{gev}}
+  distributional functions in the
   \code{\link[revdbayes]{revdbayes-package}}.
+  If \eqn{\xi} = 1 then this coincides with Example 1.7.5 in Leadbetter,
+  Lindgren and Rootzen (1983).
 
   The other cases use the distributional functions in the
   \code{\link[stats]{stats-package}}.}
@@ -38,15 +41,16 @@ distribution chosen using \code{distn}.}
   density function associated with distribution \code{distn}.
 
   If a parameter value is not supplied then the default values in the
-  relevant distributional function are used, except for
-  \code{distn = "gp"} (\code{shape = 0.1}),
-  \code{distn = "beta"} (\code{shape1 = 2, shape2 = 2}),
-  \code{distn = "t"} (\code{df = 4}),
-  \code{distn = "gamma"} (\code{shape = 2},
-  \code{distn = "chisq"} (\code{df = 4}),
-  \code{distn = "f"} (\code{df1 = 4, df2 = 8}),
-  \code{distn = "weibull"} (\code{shape = 2}) and
-  \code{distn = "ngev"} (\code{shape = 0.2}).}
+  relevant distributional function set using \code{distn} are used,
+  except for
+  \code{"beta"} (\code{shape1 = 2, shape2 = 2}),
+  \code{"chisq"} (\code{df = 4}),
+  \code{"f"} (\code{df1 = 4, df2 = 8}),
+  \code{"ngev"} (\code{shape = 0.2}).
+  \code{"gamma"} (\code{shape = 2},
+  \code{"gp"} (\code{shape = 0.1}),
+  \code{"t"} (\code{df = 4}) and
+  \code{"weibull"} (\code{shape = 2}).}
 
 \item{panel_plot}{A logical parameter that determines whether the plot
 is placed inside the panel (\code{TRUE}) or in the standard graphics
@@ -57,7 +61,7 @@ then the tkrplot library is required.}
 of the plot when \code{panel_plot = TRUE}. The default values are 1.4 on
 Unix platforms and 2 on Windows platforms.}
 
-\item{n_add}{An integer scalar.  The number of simulated datasets to add at
+\item{n_add}{An integer scalar.  The number of simulated datasets to add
 to each new frame of the movie.}
 
 \item{delta_n}{A numeric scalar.  The amount by which n is increased
@@ -82,8 +86,12 @@ Nothing is returned, only the animation is produced.
 }
 \description{
 A movie to illustrate the extremal types theorem, that is, convergence
-of the distribution of maxima of random samples from certain distributions
-to a member of the Generalized Extreme Value (GEV) family.
+of the distribution of the maximum of a random sample of size \eqn{n}
+from certain distributions to a member of the Generalized Extreme Value
+(GEV) family, as \eqn{n} tends to infinity.
+Samples of size \eqn{n} are simulated repeatedly from the chosen
+distribution.  The distributions (simulated empirical and true) of the
+sample maxima are compared to the relevant GEV limit.
 }
 \details{
 Loosely speaking, a consequence of the
@@ -132,6 +140,16 @@ ett(distn = "uniform")
 # Student t data: xi = 1 / df
 ett(distn = "t", params = list(df = 5))
 }
+}
+\references{
+Coles, S. G. (2001) \emph{An Introduction to Statistical
+  Modeling of Extreme Values}, Springer-Verlag, London.
+  \url{http://dx.doi.org/10.1007/978-1-4471-3675-0_3}
+
+Leadbetter, M., Lindgren, G. and Rootzen, H. (1983)
+  \emph{Extremes and Related Properties of Random Sequences and Processes.}
+  Springer-Verlag, New York.
+  \url{http://dx.doi.org/10.1007/978-1-4612-5449-2}
 }
 \seealso{
 \code{\link{smovie}}: general information about smovie.
