@@ -332,7 +332,7 @@ ett <- function(n = 20, distn, params = list(), panel_plot = TRUE, hscale = NA,
   if (panel_plot) {
     # Set a seed and then reset it before the panel is redrawn so that only
     # one arrow and sample maximum appears in the first plot
-    my_seed <- round(runif(1, 0, 1000))
+    my_seed <- round(stats::runif(1, 0, 1000))
     set.seed(my_seed)
     rpanel::rp.tkrplot(ett_panel, redraw_plot, ett_movie_plot, pos = "right",
                        hscale = hscale, vscale = vscale, background = "white")

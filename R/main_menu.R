@@ -32,7 +32,6 @@ smovie_menu <- function(hscale = 1) {
        )
   )
 
-  if (!require(sm)) menu.list <- menu.list[-4]
   rpanel::rp.menu(menu.panel, demo, menu.list, action = panel.launch)
   image.file <- file.path(system.file(package = "rpanel"), "images",
                           "cartoons.gif")
