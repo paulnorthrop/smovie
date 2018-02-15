@@ -1,3 +1,10 @@
+#' Main menu for smovie movies
+#'
+#' Uses the template \code{\link[rpanel]{rp.cartoons}} function to produce
+#' a menu panel from which any of the movies in
+#' \code{\link[smovie]{smovie-package}} can be launched.
+#' @param hscale Add description.
+#' @export
 smovie_menu <- function(hscale = 1) {
 
   panel.launch <- function(menu.panel) {
