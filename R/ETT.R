@@ -293,7 +293,7 @@ ett <- function(n = 20, distn, params = list(), panel_plot = TRUE, hscale = NA,
   if (n_add == 1) {
     my_title <- paste("simulate another sample of size n")
   } else {
-    my_title <- title = paste("simulate another", n_add, "samples of size n")
+    my_title <- paste("simulate another", n_add, "samples of size n")
   }
   dlist <- list(...)
   # If the user hasn't set either repeatdelay or repeatinterval then set them
@@ -321,8 +321,14 @@ ett_movie_plot <- function(panel) {
   with(panel, {
     old_par <- graphics::par(no.readonly = TRUE)
     # Don't simulate very large samples (only show pdfs or cdfs)
-    if (n > 1000) {
+    if (n > 100000) {
       show_dens_only <- TRUE
+    }
+    # Don't add the rug in the top plot if n is large
+    if (n > 1000) {
+      show_rug <- FALSE
+    } else {
+      show_rug <- TRUE
     }
     if (show_dens_only) {
       par(mfrow = c(1, 1), oma = c(0, 0, 0, 0), mar = c(4, 4, 2, 2) + 0.1)
@@ -394,14 +400,15 @@ ett_movie_plot <- function(panel) {
       graphics::lines(x, ydens, xpd = TRUE, lwd = 2, lty = 2)
       graphics::axis(2)
       graphics::axis(1, line = 0.5)
-      graphics::rug(y, line = 0.5, ticksize = 0.05)
       graphics::title(paste(the_distn, ",  n = ", n))
       graphics::legend(top_leg_pos, legend = expression(f(x)),
                        col = 1, lwd = 2, lty = 2, box.lty = 0)
       u_t <- par("usr")
       graphics::segments(last_y, u_t[3], last_y, -10, col = "red", xpd = TRUE,
                          lwd = 2, lty = 2)
-      graphics::rug(y, line = 0.5, ticksize = 0.05)
+      if (show_rug) {
+        graphics::rug(y, line = 0.5, ticksize = 0.05)
+      }
       graphics::rug(last_y, line = 0.5, ticksize = 0.05, col = "red", lwd = 2)
       u_t <- my_xlim
     }
@@ -461,6 +468,11 @@ ett_movie_plot <- function(panel) {
     }
     # Histogram with rug
     y <- sample_maxima
+    if (length(sample_maxima) > 1000) {
+      show_bottom_rug <- FALSE
+    } else {
+      show_bottom_rug <- TRUE
+    }
     if (!show_dens_only) {
       my_xlim <- pretty(c(y, bottom_range))
     } else {
@@ -493,7 +505,10 @@ ett_movie_plot <- function(panel) {
       graphics::title(paste(the_distn, ",  n = ", n))
     }
     if (!show_dens_only) {
-      graphics::rug(y, line = 0.5, ticksize = 0.05, col = "red")
+      if (show_bottom_rug) {
+        graphics::rug(y, line = 0.5, ticksize = 0.05)
+      }
+      graphics::rug(last_y, line = 0.5, ticksize = 0.05, col = "red", lwd = 2)
     }
     u_b <- my_xlim
     my_leg_2 <- paste("GEV(", round(gev_pars$loc, 2), ",",
