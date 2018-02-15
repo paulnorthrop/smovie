@@ -1,6 +1,6 @@
 # ================================== shypo ====================================
 
-#' Testing simple hypotheses movie
+#' Testing simple hypotheses
 #'
 #' A movie to illustrate statistical concepts involved in the testing
 #' of one simple hypothesis against another.  The example used is a

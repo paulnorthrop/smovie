@@ -43,7 +43,7 @@
 #'
 #' @section {Hypothesis testing}:
 #' \itemize{
-#'   \item {\link[=wws]{Wald, Wilks and Score test movie}}
+#'   \item {\link[=wws]{Wald, Wilks and Score tests}}
 #'   \item {\link[=shypo]{Testing simple hypotheses}}
 #' }
 #'

@@ -2,7 +2,7 @@
 % Please edit documentation in R/wald_wilks_score.R
 \name{wws}
 \alias{wws}
-\title{Wald, Wilks and Score test movie}
+\title{Wald, Wilks and Score tests}
 \usage{
 wws(model = c("norm", "binom"), theta_range = NULL, theta0 = if
   (!is.null(theta_range)) mean(theta_range) else NULL, delta_theta0 = if

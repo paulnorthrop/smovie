@@ -2,7 +2,7 @@
 % Please edit documentation in R/simple_hypotheses.R
 \name{shypo}
 \alias{shypo}
-\title{Testing simple hypotheses movie}
+\title{Testing simple hypotheses}
 \usage{
 shypo(mu0 = 0, sd = 6, eff = sd, n = 30, a = mu0 + eff/2,
   target_alpha = 0.05, target_beta = 0.1, delta_n = 1, delta_a = sd/(10

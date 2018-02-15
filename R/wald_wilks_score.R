@@ -1,6 +1,6 @@
 # =================================== wws =====================================
 
-#' Wald, Wilks and Score test movie
+#' Wald, Wilks and Score tests
 #'
 #' A movie to illustrate the nature of the Wald, Wilks and score
 #' likelihood-based test statistics, for a model with a scalar unknown
