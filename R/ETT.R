@@ -74,8 +74,18 @@
 #'   \code{range}.
 #' @details Loosely speaking, a consequence of the
 #'   \href{https://en.wikipedia.org/wiki/Extreme_value_theory#Univariate_theory}{Extremal Types Theorem}
-#'   is that, in many situations, the maximum of a \strong{large number} of
-#'   independent random variables has \strong{approximately} a GEV
+#'   is that, in many situations, the maximum of a \strong{large number}
+#'   \eqn{n} of independent random variables has \strong{approximately} a
+#'   GEV(\eqn{\mu, \sigma, \xi)}) distribution, where \eqn{\mu} is a location
+#'   parameter, \eqn{\scale} is a scale parameter and \eqn{\eqn} is a shape
+#'   parameter.  See Coles (2001) for an introductory account and
+#'   Leadbetter et al (1983) for greater detail and more examples.
+#'   The Extremal Types Theorem is an asymptotic result that considers the
+#'   possible limiting distribution of linearly normalised maxima
+#'   as \eqn{n} tends to infinity.
+#'   This movie considers examples where this limiting result holds and
+#'   illustrates graphically the closeness of the limiting approximation
+#'   provided by the relevant GEV limit to the true finite-\eqn{n}
 #'   distribution.
 #'
 #'   Samples of size \code{n} are repeatedly simulated from the distribution
@@ -86,29 +96,48 @@
 #'
 #'   The probability density function (p.d.f.) of the original
 #'   variables is superimposed on the top histogram.  On the bottom histogram
-#'   is superimposed the exact p.d.f. of the sample maximaand an
+#'   is superimposed the exact p.d.f. of the sample maxima and an
 #'   approximate (large \code{n}) GEV p.d.f. implied by
 #'   the ETT.  The GEV shape parameter \eqn{\xi} that applies in the limiting
-#'   (infinite \eqn{n}) case is used.  The GEV location \eqn{\mu} is set at the
-#'   100(1-1/\eqn{n})\% quantile of the distribution \code{distn}
-#'   and the GEV scale at (1 / \eqn{n}) / \eqn{f(\mu)}, where \eqn{f} is the
+#'   case is used.  The GEV location \eqn{\mu} and scale
+#'   \eqn{\sigma} are set based on constants used to normalise the maxima
+#'   to achieve the GEV limit.
+#'   Specifically, \eqn{\mu} is set at the 100(1-1/\eqn{n})\% quantile of the
+#'   distribution \code{distn} and \eqn{\sigma} at
+#'   (1 / \eqn{n}) / \eqn{f(\mu)}, where \eqn{f} is the
 #'   density function of the distribution \code{distn}.
 #'
 #'   Once it starts, four aspects of this movie are controlled by the user.
 #'   \itemize{
 #'     \item{}{There are buttons to increase (+) or decrease (-) the sample
-#'       size, that is, the number of values over which a mean is calculated.}
+#'       size, that is, the number of values over which a maximum is
+#'       calculated.}
 #'     \item{}{Each time the button labelled "simulate another \code{n_add}
 #'       samples of size n" is clicked \code{n_add} new samples are simulated
 #'       and their sample maxima are added to the bottom histogram.}
 #'     \item{}{There is a button to switch the bottom plot from displaying
-#'       a histogram of the simulated data and exact and GEV p.d.f.s to the
-#'       empirical c.d.f. of the simulated data and exact and GEV c.d.f.s.}
+#'       a histogram of the simulated data, the exact p.d.f. and the
+#'       limiting GEV p.d.f. to the empirical c.d.f. of the simulated data,
+#'       the exact c.d.f. and the limiting GEV c.d.f.}
 #'     \item{}{There is a box that can be used to display only the bottom
 #'       plot.  This option is selected automatically if the sample size
-#'       \eqn{n} exceeds 1000.}
+#'       \eqn{n} exceeds 100000.}
 #'   }
-#'
+#'   For further detail about the examples specified by \code{distn}
+#'   see Chapter 1 of Leadbetter et al. (1983) and Chapter 3 of
+#'   Coles (2001).  In many of these examples
+#'   (\code{"exponential", "normal", "gamma", "lognormal", "chi-squared",
+#'   "weibull", "ngev"}) the limiting GEV distribution has a shape
+#'   parameter that is equal to 0.  In the \code{"uniform"} case the limiting
+#'   shape parameter is -1 and in the \code{"beta"} case it is
+#'   -1 / \code{shape2}, where \code{shape2} is the
+#'   second parameter of the \code{\link[stats]{Beta}} distribution.
+#'   In the other cases the limiting shape parameter is positive,
+#'   with respective values \code{shape}
+#'   (\code{"gp"}, see \code{\link[revdbayes]{gp}}),
+#'   1 / \code{df} (\code{"t"}, see \code{\link[stats]{TDist}}),
+#'   1 (\code{"cauchy"}, see \code{\link[stats]{Cauchy}}),
+#'   2 / \code{df2} (\code{"f"}, see \code{\link[stats]{FDist}}).
 #' @return Nothing is returned, only the animation is produced.
 #' @references Coles, S. G. (2001) \emph{An Introduction to Statistical
 #'   Modeling of Extreme Values}, Springer-Verlag, London.
