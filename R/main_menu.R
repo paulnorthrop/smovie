@@ -6,10 +6,18 @@
 #' @param hscale Add description.
 #' @export
 smovie_menu <- function(hscale = 1) {
-
   panel.launch <- function(menu.panel) {
     if (menu.panel$demo =="Binomial p.m.f") {
       binom_pmf()
+    }
+    else if (menu.panel$demo == "Correlation coefficient") {
+      corr_sim(n = 10)
+    }
+    else if (menu.panel$demo == "Maximum") {
+      ett(distn = "exponential")
+    }
+    else if (menu.panel$demo == "Outliers: leverage and influence") {
+      lev_inf()
     }
     else if (menu.panel$demo == "Wald, Wilks and Score tests") {
       wws(theta0 = 0.8)
@@ -64,6 +72,13 @@ smovie_menu <- function(hscale = 1) {
                                    ss = list(), trans = list(), theta = list())
   menu.list  <-  list(list("Distributions",
                            "Binomial p.m.f."
+  ),
+  list("Sampling distributions",
+       "Correlation coefficient",
+       "Maximum"
+  ),
+  list("Regression",
+       "Outliers: leverage and influence"
   ),
   list("Hypothesis testing",
        "Wald, Wilks and Score tests",
