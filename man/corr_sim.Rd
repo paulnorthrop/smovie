@@ -4,7 +4,8 @@
 \alias{corr_sim}
 \title{Sampling distribution of the correlation coefficient movie}
 \usage{
-corr_sim(n = 30, rho = 0, delta_n = 1, delta_rho = 0.1, pos = 1,
+corr_sim(n = 30, rho = 0, panel_plot = TRUE, hscale = NA,
+  vscale = hscale, delta_n = 1, delta_rho = 0.1, pos = 1,
   envir = as.environment(pos))
 }
 \arguments{
@@ -13,6 +14,15 @@ Must not be less than 2.}
 
 \item{rho}{A numeric scalar.  The initial value of the true correlation
 \eqn{\rho}.  Must be in [-1, 1].}
+
+\item{panel_plot}{A logical parameter that determines whether the plot
+is placed inside the panel (\code{TRUE}) or in the standard graphics
+window (\code{FALSE}).  If the plot is to be placed inside the panel
+then the tkrplot library is required.}
+
+\item{hscale, vscale}{Numeric scalars.  Scaling parameters for the size
+of the plot when \code{panel_plot = TRUE}. The default values are 1.4 on
+Unix platforms and 2 on Windows platforms.}
 
 \item{delta_n}{An integer scalar.  The amount by which the value of the
 sample size is increased/decreased after one click of the +/- button.}

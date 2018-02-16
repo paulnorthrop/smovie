@@ -10,6 +10,13 @@
 #'   Must not be less than 2.
 #' @param rho A numeric scalar.  The initial value of the true correlation
 #'   \eqn{\rho}.  Must be in [-1, 1].
+#' @param panel_plot A logical parameter that determines whether the plot
+#'   is placed inside the panel (\code{TRUE}) or in the standard graphics
+#'   window (\code{FALSE}).  If the plot is to be placed inside the panel
+#'   then the tkrplot library is required.
+#' @param hscale,vscale Numeric scalars.  Scaling parameters for the size
+#'   of the plot when \code{panel_plot = TRUE}. The default values are 1.4 on
+#'   Unix platforms and 2 on Windows platforms.
 #' @param delta_n An integer scalar.  The amount by which the value of the
 #'   sample size is increased/decreased after one click of the +/- button.
 #' @param delta_rho A numeric scalar.  The amount by which the value of
@@ -51,8 +58,12 @@
 #' corr_sim(n = 10, delta_n = 10)
 #' }
 #' @export
-corr_sim <- function(n = 30, rho = 0, delta_n = 1, delta_rho = 0.1, pos = 1,
+corr_sim <- function(n = 30, rho = 0, panel_plot = TRUE, hscale = NA,
+                     vscale = hscale, delta_n = 1, delta_rho = 0.1, pos = 1,
                      envir = as.environment(pos)) {
+  temp <- set_scales(hscale, vscale)
+  hscale <- temp$hscale
+  vscale <- temp$vscale
   # Assign variables to an environment so that they can be accessed inside
   # corr_sim_movie_plot()
   if (n < 2) {
@@ -76,19 +87,39 @@ corr_sim <- function(n = 30, rho = 0, delta_n = 1, delta_rho = 0.1, pos = 1,
   corr_sim_panel <- rpanel::rp.control("correlation", nsim = nsim_init,
                                        rho = rho_init, nseed = nseed_init,
                                        envir = envir)
+  #
+  panel_redraw <- function(panel) {
+    rpanel::rp.tkrreplot(panel, redraw_plot)
+    return(panel)
+  }
+  if (panel_plot & !requireNamespace("tkrplot", quietly = TRUE)) {
+    warning("tkrplot is not available so panel_plot has been set to FALSE.")
+    panel_plot <- FALSE
+  }
+  if (panel_plot) {
+    # Set a seed and then reset it before the panel is redrawn so that only
+    # one arrow and sample maximum appears in the first plot
+    rpanel::rp.tkrplot(corr_sim_panel, redraw_plot, corr_sim_movie_plot,
+                       pos = "right", hscale = hscale, vscale = vscale,
+                       background = "white")
+    action <- panel_redraw
+  } else {
+    action <- corr_sim_movie_plot
+  }
+  #
   # Create buttons for movie
   rpanel::rp.doublebutton(corr_sim_panel, nseed, 1, range=c(1, 100000000),
                           repeatinterval = 20, initval = nseed_init,
                           title = "simulate another sample of size n:",
-                          action = corr_sim_movie_plot)
+                          action = action)
   rpanel::rp.doublebutton(corr_sim_panel, nsim, delta_n, range = c(2, 1000),
                           repeatinterval = 20, initval = n,
                           title = "sample size, n:",
-                          action = corr_sim_movie_plot)
-  rpanel::rp.doublebutton(corr_sim_panel, rho, delta_rho, range=c(-1, 1),
+                          action = action)
+  rpanel::rp.doublebutton(corr_sim_panel, rho, delta_rho, range = c(-1, 1),
                           repeatinterval = 20, initval = rho_init,
-                  title = "correlation, rho:", action = corr_sim_movie_plot)
-  rpanel::rp.do(corr_sim_panel, corr_sim_movie_plot)
+                          title = "correlation, rho:", action = action)
+  rpanel::rp.do(corr_sim_panel, action = action)
   return(invisible())
 }
 
