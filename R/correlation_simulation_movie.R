@@ -97,6 +97,7 @@ corr_sim <- function(n = 30, rho = 0, delta_n = 1, delta_rho = 0.1, pos = 1,
 corr_sim_movie_plot <- function(panel){
   with(panel, {
 
+    old_par <- graphics::par(no.readonly = TRUE)
     set.seed(nseed)
     graphics::par(mfrow = c(1, 1), bty = "l", las = 1, oma = c(0, 0, 0, 0))
     vals <- matrix(stats::rnorm(2 * nsim), ncol = 2, nrow = nsim, byrow = TRUE)
@@ -136,6 +137,7 @@ corr_sim_movie_plot <- function(panel){
     rval <- round(cor(sim_vals)[1, 2], 2)
     ttxt <- paste("rho =", rhoval,", r =", rval,",  n =", nsim)
     graphics::title(ttxt, font.main = 1)
+    graphics::par(old_par)
   })
   return(invisible(panel))
 }
