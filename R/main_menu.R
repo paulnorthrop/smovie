@@ -5,7 +5,7 @@
 #' \code{\link[smovie]{smovie-package}} can be launched.
 #' @param hscale Add description.
 #' @export
-smovie_menu <- function(hscale = 1) {
+movies <- function(hscale = 1) {
   panel.launch <- function(menu.panel) {
     if (menu.panel$demo =="Binomial p.m.f") {
       binom_pmf()
