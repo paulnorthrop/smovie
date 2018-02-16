@@ -90,7 +90,7 @@ binom_pmf <- function(starting_n = 1, starting_p = 1 /2, panel_plot = TRUE,
                           title = "number of trials, n:",
                           action = action, initval = starting_n,
                           range = c(1, NA), ...)
-  invisible()
+  return(invisible())
 }
 
 plot_binomial_pmf <- function(panel) {
