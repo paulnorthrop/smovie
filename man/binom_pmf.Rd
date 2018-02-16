@@ -4,13 +4,23 @@
 \alias{binom_pmf}
 \title{Binomial p.m.f. movie}
 \usage{
-binom_pmf(starting_n = 1, starting_p = 1/2, delta_n = 1, delta_p = 0.05,
+binom_pmf(starting_n = 1, starting_p = 1/2, panel_plot = TRUE,
+  hscale = NA, vscale = hscale, delta_n = 1, delta_p = 0.05,
   observed_value = NA, ...)
 }
 \arguments{
 \item{starting_n}{A numeric scalar.  The value of n for the first graph.}
 
 \item{starting_p}{A numeric scalar.  The value of p for the first graph.}
+
+\item{panel_plot}{A logical parameter that determines whether the plot
+is placed inside the panel (\code{TRUE}) or in the standard graphics
+window (\code{FALSE}).  If the plot is to be placed inside the panel
+then the tkrplot library is required.}
+
+\item{hscale, vscale}{Numeric scalars.  Scaling parameters for the size
+of the plot when \code{panel_plot = TRUE}. The default values are 1.4 on
+Unix platforms and 2 on Windows platforms.}
 
 \item{delta_n}{A numeric scalar.  The amount by which n is increased
 (or decreased) after one click of the + (or -) button in the parameter

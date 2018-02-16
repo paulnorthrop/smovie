@@ -7,6 +7,13 @@
 #'
 #' @param starting_n A numeric scalar.  The value of n for the first graph.
 #' @param starting_p A numeric scalar.  The value of p for the first graph.
+#' @param panel_plot A logical parameter that determines whether the plot
+#'   is placed inside the panel (\code{TRUE}) or in the standard graphics
+#'   window (\code{FALSE}).  If the plot is to be placed inside the panel
+#'   then the tkrplot library is required.
+#' @param hscale,vscale Numeric scalars.  Scaling parameters for the size
+#'   of the plot when \code{panel_plot = TRUE}. The default values are 1.4 on
+#'   Unix platforms and 2 on Windows platforms.
 #' @param delta_n A numeric scalar.  The amount by which n is increased
 #'   (or decreased) after one click of the + (or -) button in the parameter
 #'   window.
@@ -40,8 +47,12 @@
 #'           observed_value = 26)
 #' }
 #' @export
-binom_pmf <- function(starting_n = 1, starting_p = 1 /2, delta_n = 1,
+binom_pmf <- function(starting_n = 1, starting_p = 1 /2, panel_plot = TRUE,
+                      hscale = NA, vscale = hscale, delta_n = 1,
                       delta_p = 0.05, observed_value = NA, ...) {
+  temp <- set_scales(hscale, vscale)
+  hscale <- temp$hscale
+  vscale <- temp$vscale
   if (!is.na(observed_value) && observed_value < 0) {
     stop("observed_value cannot be negative")
   }
@@ -49,17 +60,35 @@ binom_pmf <- function(starting_n = 1, starting_p = 1 /2, delta_n = 1,
   binomial_panel <- rpanel::rp.control("binomial(n,p) probabilities",
                                        n = starting_n, prob = starting_p,
                                        observed_value = observed_value)
+  #
+  panel_redraw <- function(panel) {
+    rpanel::rp.tkrreplot(panel, redraw_plot)
+    return(panel)
+  }
+  if (panel_plot & !requireNamespace("tkrplot", quietly = TRUE)) {
+    warning("tkrplot is not available so panel_plot has been set to FALSE.")
+    panel_plot <- FALSE
+  }
+  if (panel_plot) {
+    rpanel::rp.tkrplot(binomial_panel, redraw_plot, plot_binomial_pmf,
+                       pos = "right", hscale = hscale, vscale = vscale,
+                       background = "white")
+    action <- panel_redraw
+  } else {
+    action <- plot_binomial_pmf
+  }
+  #
   prob <- starting_p
   n <- starting_n
   plot_binomial_pmf(list(n = starting_n, prob = starting_p,
                          observed_value = observed_value))
   rpanel::rp.doublebutton(panel = binomial_panel, variable = prob,
                           title = "P(success), p:", step = delta_p,
-                          action = plot_binomial_pmf, initval = starting_p,
+                          action = action, initval = starting_p,
                           range = c(0, 1), ...)
   rpanel::rp.doublebutton(panel = binomial_panel, variable = n, step = delta_n,
                           title = "number of trials, n:",
-                          action = plot_binomial_pmf, initval = starting_n,
+                          action = action, initval = starting_n,
                           range = c(1, NA), ...)
   invisible()
 }

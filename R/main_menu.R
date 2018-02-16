@@ -7,7 +7,7 @@
 #' @export
 movies <- function(hscale = 1) {
   panel.launch <- function(menu.panel) {
-    if (menu.panel$demo =="Binomial p.m.f") {
+    if (menu.panel$demo =="Binomial pmf") {
       binom_pmf()
     }
     else if (menu.panel$demo == "Correlation coefficient") {
@@ -71,7 +71,7 @@ movies <- function(hscale = 1) {
                                    number.list = list(),
                                    ss = list(), trans = list(), theta = list())
   menu.list  <-  list(list("Distributions",
-                           "Binomial p.m.f."
+                           "Binomial pmf"
   ),
   list("Sampling distributions",
        "Correlation coefficient",
