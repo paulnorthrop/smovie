@@ -99,7 +99,7 @@ Loosely speaking, a consequence of the
   is that, in many situations, the maximum of a \strong{large number}
   \eqn{n} of independent random variables has \strong{approximately} a
   GEV(\eqn{\mu, \sigma, \xi)}) distribution, where \eqn{\mu} is a location
-  parameter, \eqn{\scale} is a scale parameter and \eqn{\eqn} is a shape
+  parameter, \eqn{\scale} is a scale parameter and \eqn{\xi} is a shape
   parameter.  See Coles (2001) for an introductory account and
   Leadbetter et al (1983) for greater detail and more examples.
   The Extremal Types Theorem is an asymptotic result that considers the
