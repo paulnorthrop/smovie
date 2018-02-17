@@ -16,11 +16,11 @@ Encoding: UTF-8
 LazyData: TRUE
 RoxygenNote: 6.0.1
 Imports: graphics,
-    gsl,
     methods,
     revdbayes,
     rust,
-    stats
+    stats,
+    SuppDists
 Suggests: knitr,
     numDeriv,
     tkrplot

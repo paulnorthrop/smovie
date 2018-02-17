@@ -163,17 +163,18 @@ corr_sim_movie_plot <- function(panel){
     #
     # Add the density function, if required
     #
-    true_pdf <- function(rval, n, rho) {
-      tc <- (n - 2) * gamma(n - 1) * (1 - rho ^ 2) ^ ((n - 1) / 2) *
-        (1 - rval ^ 2) ^ ((n - 4) / 2)
-      bc <- sqrt(2 * pi) * gamma(n - 1 / 2) * (1 - rho * rval) ^ (n - 3 / 2)
-      temp <- gsl::hyperg_2F1(a = 1 / 2, b = 1 / 2, c = (2 * n - 1) / 2,
-                              x = (rho * rval + 1) / 2)
-      return(tc * temp / bc)
-    }
+#    true_pdf <- function(rval, n, rho) {
+#      tc <- (n - 2) * gamma(n - 1) * (1 - rho ^ 2) ^ ((n - 1) / 2) *
+#        (1 - rval ^ 2) ^ ((n - 4) / 2)
+#      bc <- sqrt(2 * pi) * gamma(n - 1 / 2) * (1 - rho * rval) ^ (n - 3 / 2)
+#      temp <- gsl::hyperg_2F1(a = 1 / 2, b = 1 / 2, c = (2 * n - 1) / 2,
+#                              x = (rho * rval + 1) / 2)
+#      return(tc * temp / bc)
+#    }
     if (add_true_pdf) {
       r_vec <- seq(from = -1, to = 1, len = 101)
-      true_pdf_vec <- true_pdf(rval = r_vec, n = nsim, rho = rho)
+#      true_pdf_vec <- true_pdf(rval = r_vec, n = nsim, rho = rho)
+      true_pdf_vec <- SuppDists::dPearson(x = r_vec, N = nsim, rho = rho)
       graphics::lines(r_vec, true_pdf_vec)
     }
     assign("nseed_old", nseed, envir = envir)
