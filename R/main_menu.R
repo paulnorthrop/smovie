@@ -25,43 +25,43 @@ movies <- function(hscale = 1) {
     else if (menu.panel$demo == "Testing simple hypotheses") {
       shypo(mu0 = 0, eff = 5, n = 1)
     }
-    else if (menu.panel$demo == "ETT: beta") {
+    else if (menu.panel$demo == "beta") {
       ett(distn = "beta")
     }
-    else if (menu.panel$demo == "ETT: Cauchy") {
+    else if (menu.panel$demo == "Cauchy") {
       ett(distn = "cauchy")
     }
-    else if (menu.panel$demo == "ETT: chi-squared") {
+    else if (menu.panel$demo == "chi-squared") {
       ett(distn = "chi-squared")
     }
-    else if (menu.panel$demo == "ETT: exponential") {
+    else if (menu.panel$demo == "exponential") {
       ett(distn = "exponential")
     }
-    else if (menu.panel$demo == "ETT: F") {
+    else if (menu.panel$demo == "F") {
       ett(distn = "f")
     }
-    else if (menu.panel$demo == "ETT: gamma") {
+    else if (menu.panel$demo == "gamma") {
       ett(distn = "gamma")
     }
-    else if (menu.panel$demo == "ETT: generalized Pareto") {
+    else if (menu.panel$demo == "generalized Pareto") {
       ett(distn = "gp")
     }
-    else if (menu.panel$demo == "ETT: log-normal") {
+    else if (menu.panel$demo == "log-normal") {
       ett(distn = "log-normal")
     }
-    else if (menu.panel$demo == "ETT: negated GEV") {
+    else if (menu.panel$demo == "negated GEV") {
       ett(distn = "ngev")
     }
-    else if (menu.panel$demo == "ETT: normal") {
+    else if (menu.panel$demo == "normal") {
       ett(distn = "normal")
     }
-    else if (menu.panel$demo == "ETT: Student t") {
+    else if (menu.panel$demo == "Student t") {
       ett(distn = "t")
     }
-    else if (menu.panel$demo == "ETT: uniform") {
+    else if (menu.panel$demo == "uniform") {
       ett(distn = "uniform")
     }
-    else if (menu.panel$demo == "ETT: Weibull") {
+    else if (menu.panel$demo == "Weibull") {
       ett(distn = "weibull")
     }
     return(menu.panel)
@@ -84,20 +84,20 @@ movies <- function(hscale = 1) {
        "Wald, Wilks and Score tests",
        "Testing simple hypotheses"
        ),
-  list("Extreme value theory",
-       "ETT: beta",
-       "ETT: Cauchy",
-       "ETT: chi-squared",
-       "ETT: exponential",
-       "ETT: F",
-       "ETT: gamma",
-       "ETT: generalized Pareto",
-       "ETT: log-normal",
-       "ETT: negated GEV",
-       "ETT: normal",
-       "ETT: Student t",
-       "ETT: uniform",
-       "ETT: Weibull"
+  list("Extremal types",
+       "beta",
+       "Cauchy",
+       "chi-squared",
+       "exponential",
+       "F",
+       "gamma",
+       "generalized Pareto",
+       "log-normal",
+       "negated GEV",
+       "normal",
+       "Student t",
+       "uniform",
+       "Weibull"
        )
   )
 
