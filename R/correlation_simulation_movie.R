@@ -86,7 +86,7 @@ corr_sim <- function(n = 30, rho = 0, panel_plot = TRUE, hscale = NA,
   #
   corr_sim_panel <- rpanel::rp.control("correlation", nsim = nsim_init,
                                        rho = rho_init, nseed = nseed_init,
-                                       envir = envir)
+                                       add_true_pdf = FALSE, envir = envir)
   #
   panel_redraw <- function(panel) {
     rpanel::rp.tkrreplot(panel, redraw_plot)
@@ -119,6 +119,9 @@ corr_sim <- function(n = 30, rho = 0, panel_plot = TRUE, hscale = NA,
   rpanel::rp.doublebutton(corr_sim_panel, rho, delta_rho, range = c(-1, 1),
                           repeatinterval = 20, initval = rho_init,
                           title = "correlation, rho:", action = action)
+  rpanel::rp.checkbox(panel = corr_sim_panel, add_true_pdf,
+                      labels = "add the true pdf",
+                      action = action)
   rpanel::rp.do(corr_sim_panel, action = action)
   return(invisible())
 }
@@ -138,7 +141,9 @@ corr_sim_movie_plot <- function(panel){
     sim_vals <- cbind(x1, y1)
     nf <- graphics::layout(matrix(c(2, 1), 2, 1, byrow = TRUE),
                            heights=c(3, 1), widths = c(3, 3), TRUE)
-    if (nseed != nseed_old & rho == rho_old & nsim==nsim_old){
+    if (nseed != nseed_old & rho == rho_old & nsim == nsim_old){
+      histplot <- TRUE
+    } else if (add_true_pdf) {
       histplot <- TRUE
     } else {
       histplot <- FALSE
@@ -158,6 +163,22 @@ corr_sim_movie_plot <- function(panel){
                      xlim = c(-1, 1), main = "", axes = FALSE)
     }
     graphics::axis(1)
+    #
+    # Add the density function, if required
+    #
+    true_pdf <- function(rval, n, rho) {
+      tc <- (n - 2) * gamma(n - 1) * (1 - rho ^ 2) ^ ((n - 1) / 2) *
+        (1 - rval ^ 2) ^ ((n - 4) / 2)
+      bc <- sqrt(2 * pi) * gamma(n - 1 / 2) * (1 - rho * rval) ^ (n - 3 / 2)
+      temp <- gsl::hyperg_2F1(a = 1 / 2, b = 1 / 2, c = (2 * n - 1) / 2,
+                              x = (rho * rval + 1) / 2)
+      return(tc * temp / bc)
+    }
+    if (add_true_pdf) {
+      r_vec <- seq(from = -1, to = 1, len = 101)
+      true_pdf_vec <- true_pdf(rval = r_vec, n = nsim, rho = rho)
+      graphics::lines(r_vec, true_pdf_vec)
+    }
     assign("nseed_old", nseed, envir = envir)
     assign("rho_old", rho, envir = envir)
     assign("nsim_old", nsim, envir = envir)
