@@ -10,6 +10,13 @@
 #'   association.
 #' @param n An integer scalar.  The size of the sample of (non-outlying)
 #'   observations.
+#' @param panel_plot A logical parameter that determines whether the plot
+#'   is placed inside the panel (\code{TRUE}) or in the standard graphics
+#'   window (\code{FALSE}).  If the plot is to be placed inside the panel
+#'   then the tkrplot library is required.
+#' @param hscale,vscale Numeric scalars.  Scaling parameters for the size
+#'   of the plot when \code{panel_plot = TRUE}. The default values are 1.4 on
+#'   Unix platforms and 2 on Windows platforms.
 #' @details \code{n} pairs of observations are simulated with the property
 #'   that the mean of response variable \eqn{y} is a linear function of the
 #'   values of the explanatory variable \eqn{x}.  These pairs of observations
@@ -44,7 +51,11 @@
 #' lev_inf(association = "none")
 #' }
 #' @export
-lev_inf <- function(association = c("positive", "negative", "none"), n = 25) {
+lev_inf <- function(association = c("positive", "negative", "none"), n = 25,
+                    panel_plot = TRUE, hscale = NA, vscale = hscale) {
+  temp <- set_scales(hscale, vscale)
+  hscale <- temp$hscale
+  vscale <- temp$vscale
   association <- match.arg(association)
   if (association == "positive") {
     set.seed(40)
@@ -68,13 +79,32 @@ lev_inf <- function(association = c("positive", "negative", "none"), n = 25) {
   # Create buttons for movie
   lev_inf_1_panel <- rpanel::rp.control("parameters", x = x, set1 = set1,
                                         outx = init.x, outy = init.y)
+  #
+  redraw_plot <- NULL
+  panel_redraw <- function(panel) {
+    rpanel::rp.tkrreplot(panel = panel, name = redraw_plot)
+    return(panel)
+  }
+  if (panel_plot & !requireNamespace("tkrplot", quietly = TRUE)) {
+    warning("tkrplot is not available so panel_plot has been set to FALSE.")
+    panel_plot <- FALSE
+  }
+  if (panel_plot) {
+    rpanel::rp.tkrplot(panel = lev_inf_1_panel, name = redraw_plot,
+                       plotfun  = lev_inf_1_plot, pos = "right",
+                       hscale = hscale, vscale = vscale, background = "white")
+    action <- panel_redraw
+  } else {
+    action <- lev_inf_1_plot
+  }
+  #
   rpanel::rp.doublebutton(lev_inf_1_panel, outx, 0.2, range = c(-0.8, 1.8),
                           repeatinterval = 20, initval = 1,
-                          title = "x coefficient:", action = lev_inf_1_plot)
+                          title = "x coefficient:", action = action)
   rpanel::rp.doublebutton(lev_inf_1_panel, outy, 0.2, range = c(-0.8,1.8),
                           repeatinterval = 20, initval = 0,
-                          title = "y coefficient:", action = lev_inf_1_plot)
-  rpanel::rp.do(lev_inf_1_panel, lev_inf_1_plot)
+                          title = "y coefficient:", action = action)
+  rpanel::rp.do(lev_inf_1_panel, action = action)
   return(invisible())
 }
 

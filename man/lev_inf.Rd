@@ -4,7 +4,8 @@
 \alias{lev_inf}
 \title{Leverage and influence in simple linear regression movie}
 \usage{
-lev_inf(association = c("positive", "negative", "none"), n = 25)
+lev_inf(association = c("positive", "negative", "none"), n = 25,
+  panel_plot = TRUE, hscale = NA, vscale = hscale)
 }
 \arguments{
 \item{association}{A character scalar.  Determines the type of association
@@ -14,6 +15,15 @@ association.}
 
 \item{n}{An integer scalar.  The size of the sample of (non-outlying)
 observations.}
+
+\item{panel_plot}{A logical parameter that determines whether the plot
+is placed inside the panel (\code{TRUE}) or in the standard graphics
+window (\code{FALSE}).  If the plot is to be placed inside the panel
+then the tkrplot library is required.}
+
+\item{hscale, vscale}{Numeric scalars.  Scaling parameters for the size
+of the plot when \code{panel_plot = TRUE}. The default values are 1.4 on
+Unix platforms and 2 on Windows platforms.}
 }
 \value{
 Nothing is returned, only the animation is produced.
