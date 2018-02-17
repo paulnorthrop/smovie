@@ -81,8 +81,6 @@ binom_pmf <- function(starting_n = 1, starting_p = 1 /2, panel_plot = TRUE,
   #
   prob <- starting_p
   n <- starting_n
-  plot_binomial_pmf(list(n = starting_n, prob = starting_p,
-                         observed_value = observed_value))
   rpanel::rp.doublebutton(panel = binomial_panel, variable = prob,
                           title = "P(success), p:", step = delta_p,
                           action = action, initval = starting_p,
@@ -91,6 +89,7 @@ binom_pmf <- function(starting_n = 1, starting_p = 1 /2, panel_plot = TRUE,
                           title = "number of trials, n:",
                           action = action, initval = starting_n,
                           range = c(1, NA), ...)
+  rpanel::rp.do(binomial_panel, action = action)
   return(invisible())
 }
 
