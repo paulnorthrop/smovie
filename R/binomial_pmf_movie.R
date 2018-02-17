@@ -62,7 +62,7 @@ binom_pmf <- function(starting_n = 1, starting_p = 1 /2, panel_plot = TRUE,
                                        observed_value = observed_value)
   #
   panel_redraw <- function(panel) {
-    rpanel::rp.tkrreplot(panel, redraw_plot)
+    rpanel::rp.tkrreplot(panel, name = redraw_plot)
     return(panel)
   }
   if (panel_plot & !requireNamespace("tkrplot", quietly = TRUE)) {
@@ -70,9 +70,9 @@ binom_pmf <- function(starting_n = 1, starting_p = 1 /2, panel_plot = TRUE,
     panel_plot <- FALSE
   }
   if (panel_plot) {
-    rpanel::rp.tkrplot(binomial_panel, redraw_plot, plot_binomial_pmf,
-                       pos = "right", hscale = hscale, vscale = vscale,
-                       background = "white")
+    rpanel::rp.tkrplot(binomial_panel, name = redraw_plot,
+                       plotfun  = plot_binomial_pmf, pos = "right",
+                       hscale = hscale, vscale = vscale, background = "white")
     action <- panel_redraw
   } else {
     action <- plot_binomial_pmf
