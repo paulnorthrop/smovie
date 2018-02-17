@@ -101,7 +101,7 @@ movies <- function(hscale = 1) {
        )
   )
 
-  rpanel::rp.menu(menu.panel, demo, menu.list, action = panel.launch)
+  rpanel::rp.menu(menu.panel, variable = demo, menu.list, action = panel.launch)
   image.file <- file.path(system.file(package = "rpanel"), "images",
                           "cartoons.gif")
   rpanel::rp.image(menu.panel, image.file)
