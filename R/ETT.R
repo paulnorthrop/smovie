@@ -202,7 +202,7 @@ ett <- function(n = 20, distn, params = list(), panel_plot = TRUE, hscale = NA,
     distn <- "chi-squared"
   }
   # Set the density and quantile functions and simulation function
-  # "neg-frechet" is included because it is an example that is in the domain of
+  # "rngev" is included because it is an example that is in the domain of
   # attraction of the Gumbel case but the upper endpoint is finite.
   #
   rfun <-
