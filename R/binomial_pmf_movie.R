@@ -61,6 +61,7 @@ binom_pmf <- function(starting_n = 1, starting_p = 1 /2, panel_plot = TRUE,
                                        n = starting_n, prob = starting_p,
                                        observed_value = observed_value)
   #
+  redraw_plot <- NULL
   panel_redraw <- function(panel) {
     rpanel::rp.tkrreplot(panel, name = redraw_plot)
     return(panel)

@@ -88,8 +88,9 @@ corr_sim <- function(n = 30, rho = 0, panel_plot = TRUE, hscale = NA,
                                        rho = rho_init, nseed = nseed_init,
                                        add_true_pdf = TRUE, envir = envir)
   #
+  redraw_plot <- NULL
   panel_redraw <- function(panel) {
-    rpanel::rp.tkrreplot(panel, redraw_plot)
+    rpanel::rp.tkrreplot(panel = panel, name = redraw_plot)
     return(panel)
   }
   if (panel_plot & !requireNamespace("tkrplot", quietly = TRUE)) {
@@ -99,9 +100,9 @@ corr_sim <- function(n = 30, rho = 0, panel_plot = TRUE, hscale = NA,
   if (panel_plot) {
     # Set a seed and then reset it before the panel is redrawn so that only
     # one arrow and sample maximum appears in the first plot
-    rpanel::rp.tkrplot(corr_sim_panel, redraw_plot, corr_sim_movie_plot,
-                       pos = "right", hscale = hscale, vscale = vscale,
-                       background = "white")
+    rpanel::rp.tkrplot(panel = corr_sim_panel, name = redraw_plot,
+                       plotfun = corr_sim_movie_plot, pos = "right",
+                       hscale = hscale, vscale = vscale, background = "white")
     action <- panel_redraw
   } else {
     action <- corr_sim_movie_plot
