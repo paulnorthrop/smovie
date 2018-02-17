@@ -86,7 +86,7 @@ corr_sim <- function(n = 30, rho = 0, panel_plot = TRUE, hscale = NA,
   #
   corr_sim_panel <- rpanel::rp.control("correlation", nsim = nsim_init,
                                        rho = rho_init, nseed = nseed_init,
-                                       add_true_pdf = FALSE, envir = envir)
+                                       add_true_pdf = TRUE, envir = envir)
   #
   panel_redraw <- function(panel) {
     rpanel::rp.tkrreplot(panel, redraw_plot)
@@ -119,9 +119,6 @@ corr_sim <- function(n = 30, rho = 0, panel_plot = TRUE, hscale = NA,
   rpanel::rp.doublebutton(corr_sim_panel, rho, delta_rho, range = c(-1, 1),
                           repeatinterval = 20, initval = rho_init,
                           title = "correlation, rho:", action = action)
-  rpanel::rp.checkbox(panel = corr_sim_panel, add_true_pdf,
-                      labels = "add the true pdf",
-                      action = action)
   rpanel::rp.do(corr_sim_panel, action = action)
   return(invisible())
 }
