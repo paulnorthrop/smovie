@@ -77,7 +77,7 @@
 #'   is that, in many situations, the maximum of a \strong{large number}
 #'   \eqn{n} of independent random variables has \strong{approximately} a
 #'   GEV(\eqn{\mu, \sigma, \xi)}) distribution, where \eqn{\mu} is a location
-#'   parameter, \eqn{\scale} is a scale parameter and \eqn{\xi} is a shape
+#'   parameter, \eqn{\sigma} is a scale parameter and \eqn{\xi} is a shape
 #'   parameter.  See Coles (2001) for an introductory account and
 #'   Leadbetter et al (1983) for greater detail and more examples.
 #'   The Extremal Types Theorem is an asymptotic result that considers the
@@ -309,6 +309,8 @@ ett <- function(n = 20, distn, params = list(), panel_plot = TRUE, hscale = NA,
   old_n <- 0
   assign("old_n", old_n, envir = envir)
   # Create buttons for movie
+  show_dens_only <- FALSE
+  pdf_or_cdf <- "pdf"
   ett_panel <- rpanel::rp.control("sample size", n = n, n_add = n_add,
                                   dfun = dfun, qfun = qfun, rfun = rfun,
                                   pfun = pfun, fun_args = fun_args,
@@ -321,8 +323,9 @@ ett <- function(n = 20, distn, params = list(), panel_plot = TRUE, hscale = NA,
                                   bottom_leg_pos = bottom_leg_pos,
                                   xlab = xlab, envir = envir)
   #
+  redraw_plot <- NULL
   panel_redraw <- function(panel) {
-    rpanel::rp.tkrreplot(panel, redraw_plot)
+    rpanel::rp.tkrreplot(panel = panel, name = redraw_plot)
     return(panel)
   }
   if (panel_plot & !requireNamespace("tkrplot", quietly = TRUE)) {
@@ -334,7 +337,8 @@ ett <- function(n = 20, distn, params = list(), panel_plot = TRUE, hscale = NA,
     # one arrow and sample maximum appears in the first plot
     my_seed <- round(stats::runif(1, 0, 1000))
     set.seed(my_seed)
-    rpanel::rp.tkrplot(ett_panel, redraw_plot, ett_movie_plot, pos = "right",
+    rpanel::rp.tkrplot(panel = ett_panel, name = redraw_plot,
+                       plotfun = ett_movie_plot, pos = "right",
                        hscale = hscale, vscale = vscale, background = "white")
     action <- panel_redraw
     set.seed(my_seed)
