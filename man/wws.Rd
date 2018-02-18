@@ -4,11 +4,12 @@
 \alias{wws}
 \title{Wald, Wilks and Score tests}
 \usage{
-wws(model = c("norm", "binom"), theta_range = NULL, theta0 = if
-  (!is.null(theta_range)) mean(theta_range) else NULL, delta_theta0 = if
-  (!is.null(theta_range)) abs(diff(theta_range))/20 else NULL,
-  theta_mle = NULL, loglik = NULL, alg_score = NULL,
-  alg_obs_info = NULL, digits = 3, mult = 3, ...)
+wws(model = c("norm", "binom"), theta_range = NULL, mult = 3,
+  theta0 = if (!is.null(theta_range)) sum(c(0.25, 0.75) * theta_range) else
+  NULL, panel_plot = TRUE, hscale = NA, vscale = hscale,
+  delta_theta0 = if (!is.null(theta_range)) abs(diff(theta_range))/20 else
+  NULL, theta_mle = NULL, loglik = NULL, alg_score = NULL,
+  alg_obs_info = NULL, digits = 3, ...)
 }
 \arguments{
 \item{model}{A character scalar.  Name of the the distribution on which
@@ -42,17 +43,31 @@ wws(model = c("norm", "binom"), theta_range = NULL, theta0 = if
 \item{theta_range}{A numeric vector of length 2.  The range of values of
 \eqn{\theta} over which to plot the log-likelihood.
 If \code{theta_range} is not supplied then the argument \code{mult}
-detailed below is used to set the range automatically.}
+is used to set the range automatically.}
+
+\item{mult}{A positive numeric scalar.  If \code{theta_range} is not
+supplied then an interval of width 2 x \code{mult} standard errors centred
+on \code{theta_mle} is used.  If \code{model = "binom"} then
+\code{theta_range} is truncated to (0,1) if necessary.}
 
 \item{theta0}{A numeric scalar.  The value of \eqn{\theta} under the null
 hypothesis to use at the start of the movie.}
+
+\item{panel_plot}{A logical parameter that determines whether the plot
+is placed inside the panel (\code{TRUE}) or in the standard graphics
+window (\code{FALSE}).  If the plot is to be placed inside the panel
+then the tkrplot library is required.}
+
+\item{hscale, vscale}{Numeric scalars.  Scaling parameters for the size
+of the plot when \code{panel_plot = TRUE}. The default values are 1.4 on
+Unix platforms and 2 on Windows platforms.}
 
 \item{delta_theta0}{A numeric scalar.  The amount by which the value of
 \code{theta0} is increased (or decreased) after one click of the + (or -)
 button in the parameter window.}
 
 \item{theta_mle}{A numeric scalar.  The user may use this to supply the
-value of the maximum likelihood estimate (MLE) of \eqn{theta}.
+value of the maximum likelihood estimate (MLE) of \eqn{\theta}.
 Otherwise, \code{\link[stats]{optim}} is used to search for the MLE,
 using \code{theta0} as the initial value and \code{theta_range} as
 bounds within which to search.}
@@ -72,11 +87,6 @@ to \eqn{\theta}.}
 \item{digits}{An integer indicating the number of significant digits to
 be used in the displayed values of the test statistics and
 p-values.  See \code{\link{signif}}.}
-
-\item{mult}{A positive numeric scalar.  If \code{theta_range} is not
-supplied then an interval of width 2\code{mult} standard errors centred
-on \code{theta_mle} is used.  If \code{model = "binom"} then
-\code{theta_range} is truncated to (0,1) if necessary.}
 
 \item{...}{Additional arguments to be passed to \code{loglik},
 \code{alg_score} and \code{alg_obs_info} if \code{loglik} is supplied,

@@ -44,14 +44,25 @@
 #' @param theta_range A numeric vector of length 2.  The range of values of
 #'   \eqn{\theta} over which to plot the log-likelihood.
 #'   If \code{theta_range} is not supplied then the argument \code{mult}
-#'   detailed below is used to set the range automatically.
+#'   is used to set the range automatically.
+#' @param mult A positive numeric scalar.  If \code{theta_range} is not
+#'   supplied then an interval of width 2 x \code{mult} standard errors centred
+#'   on \code{theta_mle} is used.  If \code{model = "binom"} then
+#'   \code{theta_range} is truncated to (0,1) if necessary.
 #' @param theta0 A numeric scalar.  The value of \eqn{\theta} under the null
 #'   hypothesis to use at the start of the movie.
+#' @param panel_plot A logical parameter that determines whether the plot
+#'   is placed inside the panel (\code{TRUE}) or in the standard graphics
+#'   window (\code{FALSE}).  If the plot is to be placed inside the panel
+#'   then the tkrplot library is required.
+#' @param hscale,vscale Numeric scalars.  Scaling parameters for the size
+#'   of the plot when \code{panel_plot = TRUE}. The default values are 1.4 on
+#'   Unix platforms and 2 on Windows platforms.
 #' @param delta_theta0 A numeric scalar.  The amount by which the value of
 #'   \code{theta0} is increased (or decreased) after one click of the + (or -)
 #'   button in the parameter window.
 #' @param theta_mle A numeric scalar.  The user may use this to supply the
-#'   value of the maximum likelihood estimate (MLE) of \eqn{theta}.
+#'   value of the maximum likelihood estimate (MLE) of \eqn{\theta}.
 #'   Otherwise, \code{\link[stats]{optim}} is used to search for the MLE,
 #'   using \code{theta0} as the initial value and \code{theta_range} as
 #'   bounds within which to search.
@@ -63,10 +74,6 @@
 #' @param digits An integer indicating the number of significant digits to
 #'   be used in the displayed values of the test statistics and
 #'   p-values.  See \code{\link{signif}}.
-#' @param mult A positive numeric scalar.  If \code{theta_range} is not
-#'   supplied then an interval of width 2\code{mult} standard errors centred
-#'   on \code{theta_mle} is used.  If \code{model = "binom"} then
-#'   \code{theta_range} is truncated to (0,1) if necessary.
 #' @param ... Additional arguments to be passed to \code{loglik},
 #'   \code{alg_score} and \code{alg_obs_info} if \code{loglik} is supplied,
 #'   or to functions functions relating to the in-built examples otherwise.
@@ -112,15 +119,18 @@
 #'     alg_score = bin_alg_score, alg_obs_info = bin_alg_obs_info)
 #' }
 #' @export
-wws <- function(model = c("norm", "binom"),
-                theta_range = NULL,
+wws <- function(model = c("norm", "binom"), theta_range = NULL, mult = 3,
                 theta0 = if (!is.null(theta_range))
-                  mean(theta_range) else NULL,
+                  sum(c(0.25, 0.75) * theta_range) else NULL,
+                panel_plot = TRUE, hscale = NA, vscale = hscale,
                 delta_theta0 = if (!is.null(theta_range))
                   abs(diff(theta_range)) / 20 else NULL,
                 theta_mle = NULL,
                 loglik = NULL, alg_score = NULL, alg_obs_info = NULL,
-                digits = 3, mult = 3, ...) {
+                digits = 3, ...) {
+  temp <- set_scales(hscale, vscale)
+  hscale <- temp$hscale
+  vscale <- temp$vscale
   model <- match.arg(model)
   user_args <- list(...)
   # If loglik is not supplied then use the log-likelihood implied by model
@@ -250,19 +260,38 @@ wws <- function(model = c("norm", "binom"),
                                  alg_obs_info = alg_obs_info,
                                  obs_info_at_mle = obs_info_at_mle,
                                  digits = digits)
+  #
+  redraw_plot <- NULL
+  panel_redraw <- function(panel) {
+    rpanel::rp.tkrreplot(panel = panel, name = redraw_plot)
+    return(panel)
+  }
+  if (panel_plot & !requireNamespace("tkrplot", quietly = TRUE)) {
+    warning("tkrplot is not available so panel_plot has been set to FALSE.")
+    panel_plot <- FALSE
+  }
+  if (panel_plot) {
+    rpanel::rp.tkrplot(panel = wws_panel, name = redraw_plot,
+                       plotfun  = wws_plot, pos = "right",
+                       hscale = hscale, vscale = vscale, background = "white")
+    action <- panel_redraw
+  } else {
+    action <- wws_plot
+  }
+  #
   rpanel::rp.doublebutton(wws_panel, theta0, delta_theta0,
                           range = c(theta_range[1], theta_range[2]),
                           initval = theta0,
                           title = "null value theta0 or theta",
-                          action = wws_plot)
+                          action = action)
   rpanel::rp.radiogroup(wws_panel, test_stat,
                         c("none", "Wald", "Wilks", "score", "all"),
-                        action = wws_plot,
+                        action = action,
                         title = "Choose the type of test statistic")
   rpanel::rp.radiogroup(wws_panel, perform_tests, c("no", "yes"),
-                        action = wws_plot,
+                        action = action,
                         title = "Calculate approximate p-values?")
-  rpanel::rp.do(wws_panel, wws_plot)
+  rpanel::rp.do(wws_panel, action = action)
   return(invisible())
 }
 
