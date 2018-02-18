@@ -109,7 +109,7 @@ corr_sim <- function(n = 30, rho = 0, panel_plot = TRUE, hscale = NA,
   }
   #
   # Create buttons for movie
-  rpanel::rp.doublebutton(corr_sim_panel, nseed, 1, range=c(1, 100000000),
+  rpanel::rp.doublebutton(corr_sim_panel, nseed, 1, range=c(1, 1e10),
                           repeatinterval = 20, initval = nseed_init,
                           title = "simulate another sample:",
                           action = action)

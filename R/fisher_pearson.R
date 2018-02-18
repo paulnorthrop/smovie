@@ -8,9 +8,8 @@
 #'
 #' @param x,q Numeric vectors of quantiles.
 #' @param p A numeric vector of probabilities in [0,1].
-#' @param loc,scale,shape Numeric vectors.
-#'   Location, scale and shape parameters.
-#'   All elements of \code{scale} must be positive.
+#' @param N Numeric vector.  Number of observations, (N > 3).
+#' @param rho Numeric vector.  Population correlations, (-1 < rho < 1).
 #' @param n Numeric scalar.  The number of observations to be simulated.
 #'   If \code{length(n) > 1} then \code{length(n)} is taken to be the number
 #'   required.
@@ -24,10 +23,16 @@
 #' @seealso \code{\link[SuppDists]{Pearson}} for dpqr functions for the
 #'   untransformed Pearson produce moment correlation coefficient.
 #' @examples
-#' dFPearson(x = 0, N = 10)
+#' dFPearson(x = -1:1, N = 10)
+#' dFPearson(x = 0, N = 11:20)
+#'
+#' pFPearson(q = 0.5, N = 10)
+#' pFPearson(q = 0.5, N = 10, rho = c(0, 0.3))
 #' @name FPearson
 NULL
 ## NULL
+
+# ------------------------------- dFPearson -----------------------------------
 
 #' @rdname FPearson
 #' @export
@@ -35,7 +40,7 @@ dFPearson <- function (x, N, rho = 0.0, log = FALSE) {
   if (any(rho <= -1) | any(rho >= 1)) {
     stop("invalid rho: rho must be in (-1, 1)")
   }
-  if (N < 4) {
+  if (any(N < 4)) {
     stop("invalid N: N must be at least 4")
   }
   max_len <- max(length(x), length(N), length(rho))
@@ -49,4 +54,67 @@ dFPearson <- function (x, N, rho = 0.0, log = FALSE) {
     d <- log(d)
   }
   return(d)
+}
+
+# ------------------------------- pFPearson -----------------------------------
+
+#' @rdname FPearson
+#' @export
+pFPearson <- function(q, N, rho = 0.0, lower.tail = TRUE, log.p = FALSE) {
+  if (any(rho <= -1) | any(rho >= 1)) {
+    stop("invalid rho: rho must be in (-1, 1)")
+  }
+  if (any(N < 4)) {
+      stop("invalid N: N must be at least 4")
+  }
+  max_len <- max(length(q), length(N), length(rho))
+  q <- rep_len(q, max_len)
+  N <- rep_len(N, max_len)
+  rho <- rep_len(rho, max_len)
+  r <- exp(2 * q)
+  r <- (r - 1) / (r + 1)
+  p <- SuppDists::pPearson(q = r, N = N, rho = rho, lower.tail = lower.tail,
+                           log.p = log.p)
+  return(p)
+}
+
+# ------------------------------- qFPearson -----------------------------------
+
+#' @rdname FPearson
+#' @export
+qFPearson <- function(p, N, rho = 0.0, lower.tail = TRUE, log.p = FALSE) {
+  if (any(rho <= -1) | any(rho >= 1)) {
+    stop("invalid rho: rho must be in (-1, 1)")
+  }
+  if (any(N < 4)) {
+      stop("invalid N: N must be at least 4")
+  }
+  max_len <- max(length(q), length(N), length(rho))
+  q <- rep_len(q, max_len)
+  N <- rep_len(N, max_len)
+  rho <- rep_len(rho, max_len)
+  r <- SuppDists::qPearson(p = p, N = N, rho = rho, lower.tail = lower.tail,
+                           log.p = log.p)
+  x <- (log(1 + r) - log(1 - r)) / 2
+  return(x)
+}
+
+# ------------------------------- rFPearson -----------------------------------
+
+#' @rdname FPearson
+#' @export
+rFPearson <- function(n, N, rho = 0.0, lower.tail = TRUE, log.p = FALSE) {
+  if (any(rho <= -1) | any(rho >= 1)) {
+    stop("invalid rho: rho must be in (-1, 1)")
+  }
+  if (any(N < 4)) {
+    stop("invalid N: N must be at least 4")
+  }
+  max_len <- max(length(q), length(N), length(rho))
+  q <- rep_len(q, max_len)
+  N <- rep_len(N, max_len)
+  rho <- rep_len(rho, max_len)
+  r <- SuppDists::rPearson(n = n, N = N, rho = rho)
+  x <- (log(1 + r) - log(1 - r)) / 2
+  return(x)
 }

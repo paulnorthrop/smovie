@@ -3,29 +3,38 @@
 \name{FPearson}
 \alias{FPearson}
 \alias{dFPearson}
+\alias{pFPearson}
+\alias{qFPearson}
+\alias{rFPearson}
 \title{Fisher's transformation of the Pearson produce moment correlation
 coefficient}
 \usage{
 dFPearson(x, N, rho = 0, log = FALSE)
+
+pFPearson(q, N, rho = 0, lower.tail = TRUE, log.p = FALSE)
+
+qFPearson(p, N, rho = 0, lower.tail = TRUE, log.p = FALSE)
+
+rFPearson(n, N, rho = 0, lower.tail = TRUE, log.p = FALSE)
 }
 \arguments{
 \item{x, q}{Numeric vectors of quantiles.}
 
+\item{N}{Numeric vector.  Number of observations, (N > 3).}
+
+\item{rho}{Numeric vector.  Population correlations, (-1 < rho < 1).}
+
 \item{log, log.p}{A logical scalar; if TRUE, probabilities p are given as
 log(p).}
 
-\item{p}{A numeric vector of probabilities in [0,1].}
+\item{lower.tail}{A logical scalar.  If TRUE (default), probabilities
+are P[X <= x], otherwise, P[X > x].}
 
-\item{loc, scale, shape}{Numeric vectors.
-Location, scale and shape parameters.
-All elements of \code{scale} must be positive.}
+\item{p}{A numeric vector of probabilities in [0,1].}
 
 \item{n}{Numeric scalar.  The number of observations to be simulated.
 If \code{length(n) > 1} then \code{length(n)} is taken to be the number
 required.}
-
-\item{lower.tail}{A logical scalar.  If TRUE (default), probabilities
-are P[X <= x], otherwise, P[X > x].}
 
 \item{m}{A numeric scalar.  The distribution is reparameterised by working
 with the GEV(\code{loc, scale, shape}) distribution function raised to the
@@ -38,7 +47,11 @@ moment correlation, based on a random sample from a bivariate normal
 distribution
 }
 \examples{
-dFPearson(x = 0, N = 10)
+dFPearson(x = -1:1, N = 10)
+dFPearson(x = 0, N = 11:20)
+
+pFPearson(q = 0.5, N = 10)
+pFPearson(x = 0, N = 11:20)
 }
 \seealso{
 \code{\link[SuppDists]{Pearson}} for dpqr functions for the
