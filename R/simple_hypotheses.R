@@ -28,6 +28,13 @@
 #' @param target_beta A numeric scalar in (0,1).  The target value of the
 #'   type II error to be achieved by setting \code{a} and/or \code{n}
 #'   if the user asks for this using a radio button.
+#' @param panel_plot A logical parameter that determines whether the plot
+#'   is placed inside the panel (\code{TRUE}) or in the standard graphics
+#'   window (\code{FALSE}).  If the plot is to be placed inside the panel
+#'   then the tkrplot library is required.
+#' @param hscale,vscale Numeric scalars.  Scaling parameters for the size
+#'   of the plot when \code{panel_plot = TRUE}. The default values are 1.4 on
+#'   Unix platforms and 2 on Windows platforms.
 #' @param delta_mu0,delta_eff,delta_a,delta_n Numeric scalars.  The
 #'   respective amounts by which the values of \code{mu0, eff, a} and
 #'   \code{n} are increased (or decreased) after one click of the + (or -)
@@ -77,12 +84,14 @@
 #' shypo(mu0 = 0, eff = 5, n = 12.3, a = 2.75, delta_a = 0.01, delta_n = 0.01)
 #' }
 #' @export
-shypo <- function(mu0 = 0, sd = 6, eff = sd, n = 30,
-                                    a = mu0 + eff / 2,
-                                    target_alpha = 0.05, target_beta = 0.1,
-                                    delta_n = 1,
-                                    delta_a = sd / (10 * sqrt(n)),
-                                    delta_eff = sd, delta_mu0 = 1) {
+shypo <- function(mu0 = 0, sd = 6, eff = sd, n = 30, a = mu0 + eff / 2,
+                  target_alpha = 0.05, target_beta = 0.1, panel_plot = TRUE,
+                  hscale = NA, vscale = hscale, delta_n = 1,
+                  delta_a = sd / (10 * sqrt(n)), delta_eff = sd,
+                  delta_mu0 = 1) {
+  temp <- set_scales(hscale, vscale)
+  hscale <- temp$hscale
+  vscale <- temp$vscale
   if (n < 1) {
     stop("n must be no smaller than 1")
   }
@@ -98,22 +107,42 @@ shypo <- function(mu0 = 0, sd = 6, eff = sd, n = 30,
                                  n = n, a = a, mu0 = mu0, eff = eff,
                                  sd = sd, target_alpha = target_alpha,
                                  target_beta = target_beta, set_values = "no")
+  #
+  redraw_plot <- NULL
+  panel_redraw <- function(panel) {
+    rpanel::rp.tkrreplot(panel = panel, name = redraw_plot)
+    return(panel)
+  }
+  if (panel_plot & !requireNamespace("tkrplot", quietly = TRUE)) {
+    warning("tkrplot is not available so panel_plot has been set to FALSE.")
+    panel_plot <- FALSE
+  }
+  if (panel_plot) {
+    rpanel::rp.tkrplot(panel = sh_panel, name = redraw_plot,
+                       plotfun  = sh_plot, pos = "right",
+                       hscale = hscale, vscale = vscale, background = "white")
+    action <- panel_redraw
+  } else {
+    action <- sh_plot
+  }
+  #
   rpanel::rp.doublebutton(sh_panel, n, delta_n, range = c(1, NA), initval = n,
-                          title = "sample size, n", action = sh_plot)
+                          title = "sample size, n", action = action)
   rpanel::rp.doublebutton(sh_panel, a, delta_a, range = c(NA, NA), initval = a,
-                          title = "critical value, a", action = sh_plot)
+                          title = "critical value, a", action = action)
   rpanel::rp.doublebutton(sh_panel, mu0, delta_mu0, range = c(NA, NA),
                           initval = mu0, title = "mu under H0, mu0",
-                          action = sh_plot)
+                          action = action)
   rpanel::rp.doublebutton(sh_panel, eff, delta_eff, range = c(0, NA),
                           initval = eff,
                           title = "eff size, eff = mu1 - mu0",
-                          action = sh_plot)
+                          action = action)
   rpanel::rp.radiogroup(sh_panel, set_values,
                         c("no", "set a to achieve target alpha",
                           "set a and n to achieve target alpha and beta"),
-                        action = sh_plot, title = "Set a and/or n automatically?")
-  rpanel::rp.do(sh_panel, sh_plot)
+                        action = action,
+                        title = "Set a and/or n automatically?")
+  rpanel::rp.do(sh_panel, action = action)
   return(invisible())
 }
 

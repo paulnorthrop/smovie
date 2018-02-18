@@ -5,8 +5,9 @@
 \title{Testing simple hypotheses}
 \usage{
 shypo(mu0 = 0, sd = 6, eff = sd, n = 30, a = mu0 + eff/2,
-  target_alpha = 0.05, target_beta = 0.1, delta_n = 1, delta_a = sd/(10
-  * sqrt(n)), delta_eff = sd, delta_mu0 = 1)
+  target_alpha = 0.05, target_beta = 0.1, panel_plot = TRUE,
+  hscale = NA, vscale = hscale, delta_n = 1, delta_a = sd/(10 *
+  sqrt(n)), delta_eff = sd, delta_mu0 = 1)
 }
 \arguments{
 \item{mu0}{A numeric scalar.  The value of \eqn{\mu} under the null
@@ -36,6 +37,15 @@ if the user asks for this using a radio button.}
 \item{target_beta}{A numeric scalar in (0,1).  The target value of the
 type II error to be achieved by setting \code{a} and/or \code{n}
 if the user asks for this using a radio button.}
+
+\item{panel_plot}{A logical parameter that determines whether the plot
+is placed inside the panel (\code{TRUE}) or in the standard graphics
+window (\code{FALSE}).  If the plot is to be placed inside the panel
+then the tkrplot library is required.}
+
+\item{hscale, vscale}{Numeric scalars.  Scaling parameters for the size
+of the plot when \code{panel_plot = TRUE}. The default values are 1.4 on
+Unix platforms and 2 on Windows platforms.}
 
 \item{delta_mu0, delta_eff, delta_a, delta_n}{Numeric scalars.  The
 respective amounts by which the values of \code{mu0, eff, a} and
