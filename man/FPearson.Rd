@@ -43,13 +43,30 @@ moment correlation, based on a random sample from a bivariate normal
 distribution
 }
 \examples{
-dFPearson(x = -1:1, N = 10)
-dFPearson(x = 0, N = 11:20)
+dFPearson(-1:1, N = 10)
+dFPearson(0, N = 11:20)
 
-pFPearson(q = 0.5, N = 10)
-pFPearson(q = 0.5, N = 10, rho = c(0, 0.3))
+pFPearson(0.5, N = 10)
+pFPearson(0.5, N = 10, rho = c(0, 0.3))
+
+qFPearson((1:9)/10, N = 10, rho = 0.2)
+qFPearson(0.5, N = c(10, 20), rho = c(0, 0.3))
+
+rFPearson(6, N = 10, rho = 0.6)
+}
+\references{
+Fisher, R. A. (1915). Frequency distribution of the values of
+  the correlation coefficient in samples of an indefinitely large
+  population. \emph{Biometrika}, \strong{10}(4), 507-521.
+  \url{http://dx.doi.org/10.2307/2331838}
+
+Fisher, R. A. (1921). On the "probable error" of a coefficient
+  of correlation deduced from a small sample. \emph{Metron}, \strong{1},
+  3-32.
+  \url{https://digital.library.adelaide.edu.au/dspace/bitstream/2440/15169/1/14.pdf}
 }
 \seealso{
-\code{\link[SuppDists]{Pearson}} for dpqr functions for the
-  untransformed Pearson produce moment correlation coefficient.
+\code{\link[SuppDists]{Pearson}} in the SuppDists package for
+  dpqr functions for the untransformed Pearson produce moment correlation
+  coefficient.
 }
