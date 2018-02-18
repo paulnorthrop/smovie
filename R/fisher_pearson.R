@@ -44,8 +44,7 @@ dFPearson <- function (x, N, rho = 0.0, log = FALSE) {
   x <- rep_len(x, max_len)
   N <- rep_len(N, max_len)
   rho <- rep_len(rho, max_len)
-  r <- exp(2 * x)
-  r <- (r - 1) / (r + 1)
+  r <- tanh(x)
   d <- SuppDists::dPearson(x = r, N = N, rho = rho) * (1 - r ^ 2)
   if (log) {
     d <- log(d)
@@ -68,8 +67,7 @@ pFPearson <- function(q, N, rho = 0.0, lower.tail = TRUE, log.p = FALSE) {
   q <- rep_len(q, max_len)
   N <- rep_len(N, max_len)
   rho <- rep_len(rho, max_len)
-  r <- exp(2 * q)
-  r <- (r - 1) / (r + 1)
+  r <- tanh(q)
   p <- SuppDists::pPearson(q = r, N = N, rho = rho, lower.tail = lower.tail,
                            log.p = log.p)
   return(p)
@@ -92,7 +90,7 @@ qFPearson <- function(p, N, rho = 0.0, lower.tail = TRUE, log.p = FALSE) {
   rho <- rep_len(rho, max_len)
   r <- SuppDists::qPearson(p = p, N = N, rho = rho, lower.tail = lower.tail,
                            log.p = log.p)
-  x <- (log(1 + r) - log(1 - r)) / 2
+  x <- atanh(r)
   return(x)
 }
 
@@ -112,6 +110,6 @@ rFPearson <- function(n, N, rho = 0.0, lower.tail = TRUE, log.p = FALSE) {
   N <- rep_len(N, max_len)
   rho <- rep_len(rho, max_len)
   r <- SuppDists::rPearson(n = n, N = N, rho = rho)
-  x <- (log(1 + r) - log(1 - r)) / 2
+  x <- atanh(r)
   return(x)
 }
