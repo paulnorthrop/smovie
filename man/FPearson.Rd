@@ -35,10 +35,6 @@ are P[X <= x], otherwise, P[X > x].}
 \item{n}{Numeric scalar.  The number of observations to be simulated.
 If \code{length(n) > 1} then \code{length(n)} is taken to be the number
 required.}
-
-\item{m}{A numeric scalar.  The distribution is reparameterised by working
-with the GEV(\code{loc, scale, shape}) distribution function raised to the
-power \code{m}.  See \strong{Details}.}
 }
 \description{
 Density, distribution function, quantile function and random generator
@@ -51,7 +47,7 @@ dFPearson(x = -1:1, N = 10)
 dFPearson(x = 0, N = 11:20)
 
 pFPearson(q = 0.5, N = 10)
-pFPearson(x = 0, N = 11:20)
+pFPearson(q = 0.5, N = 10, rho = c(0, 0.3))
 }
 \seealso{
 \code{\link[SuppDists]{Pearson}} for dpqr functions for the

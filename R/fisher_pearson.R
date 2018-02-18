@@ -17,9 +17,6 @@
 #'   log(p).
 #' @param lower.tail A logical scalar.  If TRUE (default), probabilities
 #'   are P[X <= x], otherwise, P[X > x].
-#' @param m A numeric scalar.  The distribution is reparameterised by working
-#'  with the GEV(\code{loc, scale, shape}) distribution function raised to the
-#'  power \code{m}.  See \strong{Details}.
 #' @seealso \code{\link[SuppDists]{Pearson}} for dpqr functions for the
 #'   untransformed Pearson produce moment correlation coefficient.
 #' @examples
