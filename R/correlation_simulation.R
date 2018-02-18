@@ -86,7 +86,7 @@ corr_sim <- function(n = 30, rho = 0, panel_plot = TRUE, hscale = NA,
   #
   corr_sim_panel <- rpanel::rp.control("correlation", nsim = nsim_init,
                                        rho = rho_init, nseed = nseed_init,
-                                       add_true_pdf = TRUE, envir = envir)
+                                       envir = envir)
   #
   redraw_plot <- NULL
   panel_redraw <- function(panel) {
@@ -141,8 +141,6 @@ corr_sim_movie_plot <- function(panel){
                                 1, 1, 1, 1), nrow = 2, byrow = TRUE))
     if (nseed != nseed_old & rho == rho_old & nsim == nsim_old){
       histplot <- TRUE
-    } else if (add_true_pdf) {
-      histplot <- TRUE
     } else {
       histplot <- FALSE
       rvals <- NULL
@@ -150,7 +148,7 @@ corr_sim_movie_plot <- function(panel){
     new_rval <- stats::cor(sim_vals)[1, 2]
     rvals <- c(rvals, new_rval)
     assign("rvals", rvals, envir = envir)
-    graphics::par(mar = c(3, 3, 1, 1))
+    graphics::par(mar = c(4, 3, 1, 1))
     bins <- 0.05 - 0.025 * abs(rho)
     br <- seq(from = -1, to = 1, length = 2 / bins)
     # Calculate the true density (under sampling from a BV normal)
@@ -163,15 +161,19 @@ corr_sim_movie_plot <- function(panel){
     }
     graphics::hist(rvals, freq = FALSE, col = 8, breaks = br,
                      xlim = c(-1, 1), main = "", axes = FALSE,
-                     ylim = my_ylim)
+                     ylim = my_ylim, xlab = "r", cex.lab = 1.5)
     graphics::rug(rvals, line = 0.5, ticksize = 0.05)
     graphics::rug(new_rval, line = 0.5, ticksize = 0.05, col = "red", lwd = 2)
     # Add the true density function, but only if |rho| is not equal to 1
     if (abs(rho) < 1) {
-      graphics::lines(r_vec, true_pdf_vec)
+      graphics::lines(r_vec, true_pdf_vec, lwd = 2, col = "black")
     }
     #
+    graphics::abline(v = rho, lty = 2, lwd = 2, col = "blue")
     graphics::axis(1, line = 0.5)
+    leg_pos <- ifelse(rho > 0, "topleft", "topright")
+    graphics::legend(leg_pos, legend = c("exact density", "true rho"),
+                     col = c("black", "blue"), lty = c(1, 2), lwd = 2)
     assign("nseed_old", nseed, envir = envir)
     assign("rho_old", rho, envir = envir)
     assign("nsim_old", nsim, envir = envir)
