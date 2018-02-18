@@ -37,7 +37,7 @@
 #'   simulated sample, illustrating the stength of the association between
 #'   the simulated values of the variables.
 #'   A new sample is produced by clicking the + button next to
-#'   "simulate another sample of size n:". [Ignore the - button.]
+#'   "simulate another sample:". [Ignore the - button.]
 #'   For each simulated sample the sample correlation coefficient \eqn{r} is
 #'   calculated and displayed in the title of the top plot.
 #'   The values of these sample correlation coefficients are stored and
@@ -111,7 +111,7 @@ corr_sim <- function(n = 30, rho = 0, panel_plot = TRUE, hscale = NA,
   # Create buttons for movie
   rpanel::rp.doublebutton(corr_sim_panel, nseed, 1, range=c(1, 100000000),
                           repeatinterval = 20, initval = nseed_init,
-                          title = "simulate another sample of size n:",
+                          title = "simulate another sample:",
                           action = action)
   rpanel::rp.doublebutton(corr_sim_panel, nsim, delta_n, range = c(2, 1000),
                           repeatinterval = 20, initval = n,
@@ -137,8 +137,12 @@ corr_sim_movie_plot <- function(panel){
     x2 <- vals[, 2]
     y1 <- rho * x1 + sqrt(1 - rho ^ 2) * x2
     sim_vals <- cbind(x1, y1)
-    nf <- graphics::layout(matrix(c(2, 1), 2, 1, byrow = TRUE),
-                           heights=c(3, 1), widths = c(3, 3), TRUE)
+#    nf <- graphics::layout(matrix(c(2, 1), 2, 1, byrow = TRUE),
+#                           heights=c(3, 1), widths = c(3, 3), respect = TRUE)
+#    nf <- graphics::layout(matrix(c(2, 1), 2, 1, byrow = TRUE),
+#                           heights=c(2, 2), widths = c(2, 1), respect = TRUE)
+    nf <- layout(mat = matrix(c(0, 2, 2, 0,
+                                1, 1, 1, 1), nrow = 2, byrow = TRUE))
     if (nseed != nseed_old & rho == rho_old & nsim == nsim_old){
       histplot <- TRUE
     } else if (add_true_pdf) {
@@ -147,37 +151,32 @@ corr_sim_movie_plot <- function(panel){
       histplot <- FALSE
       rvals <- NULL
     }
-    rvals <- c(rvals, stats::cor(sim_vals)[1, 2])
+    new_rval <- stats::cor(sim_vals)[1, 2]
+    rvals <- c(rvals, new_rval)
     assign("rvals", rvals, envir = envir)
-    graphics::par(mar = c(2, 3, 1, 1))
+    graphics::par(mar = c(3, 3, 1, 1))
     bins <- 0.05 - 0.025 * abs(rho)
     br <- seq(from = -1, to = 1, length = 2 / bins)
-    if (histplot) {
-      graphics::hist(rvals, freq = FALSE, col = 8, breaks = br, axes = FALSE,
-                     main = "")
-      graphics::title(main = "sampling distribution of r", font.main = 1)
-    } else {
-      graphics::hist(rvals, freq = FALSE, col = 8, breaks = br,
-                     xlim = c(-1, 1), main = "", axes = FALSE)
-    }
-    graphics::axis(1)
-    #
-    # Add the density function, if required
-    #
-#    true_pdf <- function(rval, n, rho) {
-#      tc <- (n - 2) * gamma(n - 1) * (1 - rho ^ 2) ^ ((n - 1) / 2) *
-#        (1 - rval ^ 2) ^ ((n - 4) / 2)
-#      bc <- sqrt(2 * pi) * gamma(n - 1 / 2) * (1 - rho * rval) ^ (n - 3 / 2)
-#      temp <- gsl::hyperg_2F1(a = 1 / 2, b = 1 / 2, c = (2 * n - 1) / 2,
-#                              x = (rho * rval + 1) / 2)
-#      return(tc * temp / bc)
-#    }
-    if (add_true_pdf) {
-      r_vec <- seq(from = -1, to = 1, len = 101)
-#      true_pdf_vec <- true_pdf(rval = r_vec, n = nsim, rho = rho)
+    # Calculate the true density (under sampling from a BV normal)
+    r_vec <- seq(from = -1, to = 1, len = 1001)
+    if (abs(rho) < 1) {
       true_pdf_vec <- SuppDists::dPearson(x = r_vec, N = nsim, rho = rho)
+      my_ylim = c(0, max(true_pdf_vec) * 1.2)
+    } else {
+      my_ylim = NULL
+    }
+    graphics::hist(rvals, freq = FALSE, col = 8, breaks = br,
+                     xlim = c(-1, 1), main = "", axes = FALSE,
+                     ylim = my_ylim)
+    graphics::rug(rvals, line = 0.5, ticksize = 0.05)
+    graphics::rug(new_rval, line = 0.5, ticksize = 0.05, col = "red", lwd = 2)
+    # Add the true density function, but only if |rho| is not equal to 1
+    if (abs(rho) < 1) {
       graphics::lines(r_vec, true_pdf_vec)
     }
+    #
+    graphics::axis(1, line = 0.5)
+#    graphics::axis(1)
     assign("nseed_old", nseed, envir = envir)
     assign("rho_old", rho, envir = envir)
     assign("nsim_old", nsim, envir = envir)

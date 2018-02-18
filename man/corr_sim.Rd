@@ -57,7 +57,7 @@ Random samples of size \eqn{n} are simulated from a bivariate
   simulated sample, illustrating the stength of the association between
   the simulated values of the variables.
   A new sample is produced by clicking the + button next to
-  "simulate another sample of size n:". [Ignore the - button.]
+  "simulate another sample:". [Ignore the - button.]
   For each simulated sample the sample correlation coefficient \eqn{r} is
   calculated and displayed in the title of the top plot.
   The values of these sample correlation coefficients are stored and
