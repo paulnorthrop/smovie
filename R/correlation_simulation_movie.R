@@ -137,10 +137,6 @@ corr_sim_movie_plot <- function(panel){
     x2 <- vals[, 2]
     y1 <- rho * x1 + sqrt(1 - rho ^ 2) * x2
     sim_vals <- cbind(x1, y1)
-#    nf <- graphics::layout(matrix(c(2, 1), 2, 1, byrow = TRUE),
-#                           heights=c(3, 1), widths = c(3, 3), respect = TRUE)
-#    nf <- graphics::layout(matrix(c(2, 1), 2, 1, byrow = TRUE),
-#                           heights=c(2, 2), widths = c(2, 1), respect = TRUE)
     nf <- layout(mat = matrix(c(0, 2, 2, 0,
                                 1, 1, 1, 1), nrow = 2, byrow = TRUE))
     if (nseed != nseed_old & rho == rho_old & nsim == nsim_old){
@@ -176,7 +172,6 @@ corr_sim_movie_plot <- function(panel){
     }
     #
     graphics::axis(1, line = 0.5)
-#    graphics::axis(1)
     assign("nseed_old", nseed, envir = envir)
     assign("rho_old", rho, envir = envir)
     assign("nsim_old", nsim, envir = envir)
