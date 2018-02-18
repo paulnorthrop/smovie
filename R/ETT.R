@@ -62,6 +62,9 @@
 #' @param delta_n A numeric scalar.  The amount by which n is increased
 #'   (or decreased) after one click of the + (or -) button in the parameter
 #'   window.
+#' @param arrow  A logical scalar.  Should an arrow be included to show the
+#'   simulated sample maximum from the top plot being placed into the
+#'   bottom plot?
 #' @param pos A numeric integer.  Used in calls to \code{\link{assign}}
 #'   to make information available across successive frames of a movie.
 #'   By default, uses the current environment.
@@ -158,8 +161,8 @@
 #' }
 #' @export
 ett <- function(n = 20, distn, params = list(), panel_plot = TRUE, hscale = NA,
-                vscale = hscale, n_add = 1, delta_n = 1, pos = 1,
-                envir = as.environment(pos), ...) {
+                vscale = hscale, n_add = 1, delta_n = 1, arrow = TRUE,
+                pos = 1, envir = as.environment(pos), ...) {
   if (!is.wholenumber(n) | n < 2) {
     stop("n must be an integer that is no smaller than 2")
   }
@@ -321,7 +324,7 @@ ett <- function(n = 20, distn, params = list(), panel_plot = TRUE, hscale = NA,
                                   pdf_or_cdf = "pdf",
                                   top_leg_pos = top_leg_pos,
                                   bottom_leg_pos = bottom_leg_pos,
-                                  xlab = xlab, envir = envir)
+                                  xlab = xlab, arrow = arrow, envir = envir)
   #
   redraw_plot <- NULL
   panel_redraw <- function(panel) {
@@ -464,8 +467,10 @@ ett_movie_plot <- function(panel) {
       graphics::legend(top_leg_pos, legend = expression(f(x)),
                        col = 1, lwd = 2, lty = 2, box.lty = 0)
       u_t <- par("usr")
-      graphics::segments(last_y, u_t[3], last_y, -10, col = "red", xpd = TRUE,
-                         lwd = 2, lty = 2)
+      if (arrow) {
+        graphics::segments(last_y, u_t[3], last_y, -10, col = "red", xpd = TRUE,
+                           lwd = 2, lty = 2)
+      }
       if (show_rug) {
         graphics::rug(y, line = 0.5, ticksize = 0.05)
       }
@@ -594,10 +599,12 @@ ett_movie_plot <- function(panel) {
     if (!show_dens_only) {
       top_ratio <- (last_y - u_t[1]) / (u_t[2] - u_t[1])
       top_loc <- u_b[1] + (u_b[2] - u_b[1]) * top_ratio
-      graphics::segments(top_loc, ytop * 2, top_loc, ytop, col = "red",
+      if (arrow) {
+        graphics::segments(top_loc, ytop * 2, top_loc, ytop, col = "red",
                          xpd = TRUE, lwd = 2, lty = 2)
-      graphics::arrows(top_loc, ytop, last_y, 0, col = "red", lwd = 2, lty = 2,
-                       xpd = TRUE, code = 2)
+        graphics::arrows(top_loc, ytop, last_y, 0, col = "red", lwd = 2, lty = 2,
+                         xpd = TRUE, code = 2)
+      }
     }
     old_n <- n
     assign("old_n", old_n, envir = envir)

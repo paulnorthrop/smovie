@@ -5,7 +5,7 @@
 \title{Extremal Types Theorem}
 \usage{
 ett(n = 20, distn, params = list(), panel_plot = TRUE, hscale = NA,
-  vscale = hscale, n_add = 1, delta_n = 1, pos = 1,
+  vscale = hscale, n_add = 1, delta_n = 1, arrow = TRUE, pos = 1,
   envir = as.environment(pos), ...)
 }
 \arguments{
@@ -67,6 +67,10 @@ to each new frame of the movie.}
 \item{delta_n}{A numeric scalar.  The amount by which n is increased
 (or decreased) after one click of the + (or -) button in the parameter
 window.}
+
+\item{arrow}{A logical scalar.  Should an arrow be included to show the
+simulated sample maximum from the top plot being placed into the
+bottom plot?}
 
 \item{pos}{A numeric integer.  Used in calls to \code{\link{assign}}
 to make information available across successive frames of a movie.
