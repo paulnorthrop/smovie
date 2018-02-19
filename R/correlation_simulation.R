@@ -26,6 +26,11 @@
 #'   By default, uses the current environment.
 #' @param envir An alternative way (to \code{pos}) of specifying the
 #'   environment. See \code{\link{environment}}.
+#' @param ... Additional arguments to the rpanel functions
+#'   \code{\link[rpanel]{rp.button}} and
+#'   \code{\link[rpanel]{rp.doublebutton}}, not including \code{panel},
+#'   \code{variable}, \code{title}, \code{step}, \code{action}, \code{initval},
+#'   \code{range}.
 #' @details Random samples of size \eqn{n} are simulated from a bivariate
 #'   distribution with the property that the correlation between the two
 #'   variables is equal to the value of chosen by the user.
@@ -60,7 +65,7 @@
 #' @export
 corr_sim <- function(n = 30, rho = 0, panel_plot = TRUE, hscale = NA,
                      vscale = hscale, delta_n = 1, delta_rho = 0.1, pos = 1,
-                     envir = as.environment(pos)) {
+                     envir = as.environment(pos), ...) {
   temp <- set_scales(hscale, vscale)
   hscale <- temp$hscale
   vscale <- temp$vscale
@@ -109,17 +114,25 @@ corr_sim <- function(n = 30, rho = 0, panel_plot = TRUE, hscale = NA,
   }
   #
   # Create buttons for movie
-  rpanel::rp.doublebutton(corr_sim_panel, nseed, 1, range=c(1, 1e10),
-                          repeatinterval = 20, initval = nseed_init,
-                          title = "simulate another sample:",
-                          action = action)
+  dlist <- list(...)
+  # If the user hasn't set either repeatdelay or repeatinterval then set them
+  # to the default values in rp.doublebutton (100 milliseconds)
+  if (is.null(dlist$repeatdelay) & is.null(dlist$repeatinterval)) {
+    rpanel::rp.button(panel = corr_sim_panel, action = action,
+                      title = "simulate another sample",
+                      repeatdelay = 100, repeatinterval = 100, ...)
+  } else {
+    rpanel::rp.button(panel = corr_sim_panel, action = action,
+                      title = "simulate another sample",
+                      ...)
+  }
   rpanel::rp.doublebutton(corr_sim_panel, nsim, delta_n, range = c(2, 1000),
                           repeatinterval = 20, initval = n,
-                          title = "sample size, n:",
-                          action = action)
+                          title = "sample size, n",
+                          action = action, ...)
   rpanel::rp.doublebutton(corr_sim_panel, rho, delta_rho, range = c(-1, 1),
                           repeatinterval = 20, initval = rho_init,
-                          title = "correlation, rho:", action = action)
+                          title = "correlation, rho", action = action, ...)
   rpanel::rp.do(corr_sim_panel, action = action)
   return(invisible())
 }
@@ -130,21 +143,20 @@ corr_sim_movie_plot <- function(panel){
   with(panel, {
 
     old_par <- graphics::par(no.readonly = TRUE)
-    set.seed(nseed)
     graphics::par(mfrow = c(1, 1), bty = "l", las = 1, oma = c(0, 0, 0, 0))
-    vals <- matrix(stats::rnorm(2 * nsim), ncol = 2, nrow = nsim, byrow = TRUE)
+    if (rho != rho_old | nsim != nsim_old) {
+      rvals <- NULL
+    }
+    if ((rho == rho_old & nsim == nsim_old) | nsim != nsim_old){
+      vals <- matrix(stats::rnorm(2 * nsim), ncol = 2, nrow = nsim, byrow = TRUE)
+      assign("vals", vals, envir = envir)
+    }
     x1 <- vals[, 1]
     x2 <- vals[, 2]
     y1 <- rho * x1 + sqrt(1 - rho ^ 2) * x2
     sim_vals <- cbind(x1, y1)
     nf <- layout(mat = matrix(c(0, 2, 2, 0,
                                 1, 1, 1, 1), nrow = 2, byrow = TRUE))
-    if (nseed != nseed_old & rho == rho_old & nsim == nsim_old){
-      histplot <- TRUE
-    } else {
-      histplot <- FALSE
-      rvals <- NULL
-    }
     new_rval <- stats::cor(sim_vals)[1, 2]
     rvals <- c(rvals, new_rval)
     assign("rvals", rvals, envir = envir)
@@ -155,7 +167,7 @@ corr_sim_movie_plot <- function(panel){
     r_vec <- seq(from = -1, to = 1, len = 1001)
     if (abs(rho) < 1) {
       true_pdf_vec <- SuppDists::dPearson(x = r_vec, N = nsim, rho = rho)
-      my_ylim = c(0, max(true_pdf_vec) * 1.2)
+      my_ylim = c(0, max(true_pdf_vec) * 1.25)
     } else {
       my_ylim = NULL
     }

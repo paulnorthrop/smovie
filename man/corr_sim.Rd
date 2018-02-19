@@ -6,7 +6,7 @@
 \usage{
 corr_sim(n = 30, rho = 0, panel_plot = TRUE, hscale = NA,
   vscale = hscale, delta_n = 1, delta_rho = 0.1, pos = 1,
-  envir = as.environment(pos))
+  envir = as.environment(pos), ...)
 }
 \arguments{
 \item{n}{An integer scalar.  The initial value of the sample size.
@@ -36,6 +36,12 @@ By default, uses the current environment.}
 
 \item{envir}{An alternative way (to \code{pos}) of specifying the
 environment. See \code{\link{environment}}.}
+
+\item{...}{Additional arguments to the rpanel functions
+\code{\link[rpanel]{rp.button}} and
+\code{\link[rpanel]{rp.doublebutton}}, not including \code{panel},
+\code{variable}, \code{title}, \code{step}, \code{action}, \code{initval},
+\code{range}.}
 }
 \value{
 Nothing is returned, only the animation is produced.
