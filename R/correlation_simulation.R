@@ -175,7 +175,12 @@ corr_sim_movie_plot <- function(panel){
     br <- seq(from = -1, to = 1, length = 2 / bins)
     # Calculate the true density (under sampling from a BV normal)
     if (!fisher_z | (fisher_z & nsim < 3)) {
-      r_vec <- seq(from = -1, to = 1, len = 1001)
+      if (nsim == 3) {
+        ep <- 1e-2
+        r_vec <- seq(from = -1 + ep, to = 1 - ep, len = 1001)
+      } else {
+        r_vec <- seq(from = -1, to = 1, len = 1001)
+      }
       if (abs(rho) < 1 & nsim > 2) {
         true_pdf_vec <- SuppDists::dPearson(x = r_vec, N = nsim, rho = rho)
         my_ylim = c(0, max(true_pdf_vec) * 1.25)
