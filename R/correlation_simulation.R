@@ -288,8 +288,17 @@ corr_sim_movie_plot <- function(panel){
     graphics::plot(sim_vals, pch = 16, xlab = "x", ylab = "y",
                    xlim = c(-3.5, 3.5), ylim = c(-3.5, 3.5))
     rhoval <- round(rho, 2)
-    rval <- sprintf('%+.2f', cor(sim_vals)[1, 2])
-    ttxt <- paste("rho =", rhoval,", r = ", rval,",  n =", nsim)
+    rprint <- sprintf('%.2f', abs(cor(sim_vals)[1, 2]))
+    rval <- cor(sim_vals)[1, 2]
+    if (rval > 0 ) {
+      ttxt <- substitute(paste(rho == rhoval, " , ", r == +rprint, " , ",
+                               n == nsim),
+                         list(rhoval = rhoval, rprint = rprint, nsim = nsim))
+    } else {
+      ttxt <- substitute(paste(rho == rhoval, " , ", r == -rprint, " , ",
+                               n == nsim),
+                         list(rhoval = rhoval, rprint = rprint, nsim = nsim))
+    }
     graphics::title(main = ttxt, cex.main = 1.5)
     graphics::par(old_par)
   })
