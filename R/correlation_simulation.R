@@ -189,6 +189,7 @@ corr_sim_movie_plot <- function(panel){
         r_vec <- seq(from = -1, to = 1, len = 1001)
       }
       r_range <- SuppDists::qPearson(p = c(0.001, 0.999), N = nsim, rho = rho)
+      r_range <- range(r_range, rvals)
       r_vec <- seq(from = r_range[1], to = r_range[2], len = 1001)
       if (abs(rho) < 1 & nsim > 2) {
         if (pdf_or_cdf == "pdf") {
@@ -211,8 +212,8 @@ corr_sim_movie_plot <- function(panel){
                        ylim = my_ylim, xlab = "r", ylab = "pdf",
                        cex.lab = 1.5)
       } else {
-        ecdfy <- stats::ecdf(rvals)
-        graphics::plot(ecdfy, col = my_col, las = 1, main = "",
+        ecdf_rvals <- stats::ecdf(rvals)
+        graphics::plot(ecdf_rvals, col = my_col, las = 1, main = "",
                        axes = FALSE, xlab = "r", ylab = "cdf",
                        xpd = TRUE,
 #                       xlim = c(-1, 1),
@@ -230,14 +231,17 @@ corr_sim_movie_plot <- function(panel){
           graphics::lines(r_vec, true_pdf_vec, lwd = 2, col = "black")
           leg_pos <- ifelse(rho > 0, "topleft", "topright")
           graphics::legend(leg_pos, legend = c("exact density", "true rho"),
-                           col = c("black", "blue"), lty = c(1, 1), lwd = 2)
+                           col = c("black", "blue"), lty = c(1, 1), lwd = 2,
+                           box.lty = 0)
           rtop <- SuppDists::dPearson(rho, nsim, rho)
           graphics::segments(rho, 0, rho, rtop, lty = 1, lwd = 2, col = "blue")
         } else {
           graphics::lines(r_vec, true_cdf_vec, lwd = 2, col = "black")
           leg_pos <- "topleft"
-          graphics::legend(leg_pos, legend = "exact density", col = "black",
-                           lty = 1, lwd = 2)
+          graphics::legend(leg_pos,
+                           legend = c("exact density", "empirical cdf"),
+                           col = c("black", 8), lty = c(1, -1), lwd = 2,
+                           pch = c(-1, 16), box.lty = 0)
         }
       } else {
         graphics::abline(v = rho, lty = 2, lwd = 2, col = "blue")
@@ -266,7 +270,8 @@ corr_sim_movie_plot <- function(panel){
         graphics::lines(z_vec, true_pdf_vec, lwd = 2, col = "black")
         leg_pos <- ifelse(rho > 0, "topleft", "topright")
         graphics::legend(leg_pos, legend = c("exact density", "true rho"),
-                         col = c("black", "blue"), lty = c(1, 1), lwd = 2)
+                         col = c("black", "blue"), lty = c(1, 1), lwd = 2,
+                         box.lty = 0)
         graphics::segments(atanh(rho), 0, atanh(rho), dFPearson(atanh(rho),
                                                                 nsim, rho),
                            lty = 1, lwd = 2, col = "blue")
@@ -279,13 +284,13 @@ corr_sim_movie_plot <- function(panel){
     assign("rho_old", rho, envir = envir)
     assign("nsim_old", nsim, envir = envir)
     assign("fisher_z_old", fisher_z, envir = envir)
-    graphics::par(mar=c(3, 3, 1, 1))
+    graphics::par(mar = c(3, 3, 2, 1))
     graphics::plot(sim_vals, pch = 16, xlab = "x", ylab = "y",
                    xlim = c(-3.5, 3.5), ylim = c(-3.5, 3.5))
     rhoval <- round(rho, 2)
-    rval <- round(cor(sim_vals)[1, 2], 2)
-    ttxt <- paste("rho =", rhoval,", r =", rval,",  n =", nsim)
-    graphics::title(ttxt, font.main = 1)
+    rval <- sprintf('%+.2f', cor(sim_vals)[1, 2])
+    ttxt <- paste("rho =", rhoval,", r = ", rval,",  n =", nsim)
+    graphics::title(main = ttxt, cex.main = 1.5)
     graphics::par(old_par)
   })
   return(invisible(panel))
