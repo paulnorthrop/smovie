@@ -91,7 +91,7 @@ corr_sim <- function(n = 30, rho = 0, panel_plot = TRUE, hscale = NA,
   #
   corr_sim_panel <- rpanel::rp.control("correlation", nsim = nsim_init,
                                        rho = rho_init, nseed = nseed_init,
-                                       envir = envir)
+                                       fisher_z = "no", envir = envir)
   #
   redraw_plot <- NULL
   panel_redraw <- function(panel) {
@@ -133,6 +133,9 @@ corr_sim <- function(n = 30, rho = 0, panel_plot = TRUE, hscale = NA,
   rpanel::rp.doublebutton(corr_sim_panel, rho, delta_rho, range = c(-1, 1),
                           repeatinterval = 20, initval = rho_init,
                           title = "correlation, rho", action = action, ...)
+  rpanel::rp.radiogroup(panel= corr_sim_panel, fisher_z, c("no", "yes"),
+                        title = "transform using Fisher z-transformation?",
+                        action = action)
   rpanel::rp.do(corr_sim_panel, action = action)
   return(invisible())
 }
@@ -164,29 +167,58 @@ corr_sim_movie_plot <- function(panel){
     bins <- 0.05 - 0.025 * abs(rho)
     br <- seq(from = -1, to = 1, length = 2 / bins)
     # Calculate the true density (under sampling from a BV normal)
-    r_vec <- seq(from = -1, to = 1, len = 1001)
-    if (abs(rho) < 1) {
-      true_pdf_vec <- SuppDists::dPearson(x = r_vec, N = nsim, rho = rho)
-      my_ylim = c(0, max(true_pdf_vec) * 1.25)
-    } else {
-      my_ylim = NULL
-    }
-    graphics::hist(rvals, freq = FALSE, col = 8, breaks = br,
+    if (fisher_z == "no") {
+      r_vec <- seq(from = -1, to = 1, len = 1001)
+      if (abs(rho) < 1) {
+        true_pdf_vec <- SuppDists::dPearson(x = r_vec, N = nsim, rho = rho)
+        my_ylim = c(0, max(true_pdf_vec) * 1.25)
+      } else {
+        my_ylim = NULL
+      }
+      graphics::hist(rvals, freq = FALSE, col = 8, breaks = br,
                      xlim = c(-1, 1), main = "", axes = FALSE,
                      ylim = my_ylim, xlab = "r", cex.lab = 1.5)
-    graphics::rug(rvals, line = 0.5, ticksize = 0.05)
-    graphics::rug(new_rval, line = 0.5, ticksize = 0.05, col = "red", lwd = 2)
-    # Add the true density function, but only if |rho| is not equal to 1
-    if (abs(rho) < 1) {
-      graphics::lines(r_vec, true_pdf_vec, lwd = 2, col = "black")
+      graphics::rug(rvals, line = 0.5, ticksize = 0.05)
+      graphics::rug(new_rval, line = 0.5, ticksize = 0.05, col = "red", lwd = 2)
+      # Add the true density function, but only if |rho| is not equal to 1
+      if (abs(rho) < 1) {
+        graphics::lines(r_vec, true_pdf_vec, lwd = 2, col = "black")
+      }
+      #
+      graphics::segments(rho, 0, rho, SuppDists::dPearson(rho, nsim, rho),
+                         lty = 2, lwd = 2, col = "blue")
+      graphics::axis(1, line = 0.5)
+      leg_pos <- ifelse(rho > 0, "topleft", "topright")
+      graphics::legend(leg_pos, legend = c("exact density", "true rho"),
+                       col = c("black", "blue"), lty = c(1, 2), lwd = 2)
+    } else {
+      r_range <- range(c(0.01, rvals, 0.99))
+      z_range <-   atanh(r_range)
+      z_vec <- seq(from = z_range[1], to = z_range[2], len = 1001)
+      if (abs(rho) < 1) {
+        true_pdf_vec <- dFPearson(x = z_vec, N = nsim, rho = rho)
+        my_ylim = c(0, max(true_pdf_vec) * 1.25)
+      } else {
+        my_ylim = NULL
+      }
+      zvals <- atanh(rvals)
+      new_zval <- atanh(new_rval)
+      graphics::hist(zvals, freq = FALSE, col = 8, main = "", axes = FALSE,
+                     ylim = my_ylim, xlab = "", cex.lab = 1.5)
+      graphics::rug(zvals, line = 0.5, ticksize = 0.05)
+      graphics::rug(new_zval, line = 0.5, ticksize = 0.05, col = "red", lwd = 2)
+      # Add the true density function, but only if |rho| is not equal to 1
+      if (abs(rho) < 1) {
+        graphics::lines(z_vec, true_pdf_vec, lwd = 2, col = "black")
+      }
+      #
+      graphics::segments(rho, 0, atanh(rho), dFPearson(atanh(rho), nsim, rho),
+                         lty = 2, lwd = 2, col = "blue")
+      graphics::axis(1, line = 0.5)
+      leg_pos <- ifelse(rho > 0, "topleft", "topright")
+      graphics::legend(leg_pos, legend = c("exact density", "true rho"),
+                       col = c("black", "blue"), lty = c(1, 2), lwd = 2)
     }
-    #
-    graphics::segments(rho, 0, rho, SuppDists::dPearson(rho, nsim, rho),
-                       lty = 2, lwd = 2, col = "blue")
-    graphics::axis(1, line = 0.5)
-    leg_pos <- ifelse(rho > 0, "topleft", "topright")
-    graphics::legend(leg_pos, legend = c("exact density", "true rho"),
-                     col = c("black", "blue"), lty = c(1, 2), lwd = 2)
     assign("nseed_old", nseed, envir = envir)
     assign("rho_old", rho, envir = envir)
     assign("nsim_old", nsim, envir = envir)
