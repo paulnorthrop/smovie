@@ -135,14 +135,9 @@ corr_sim <- function(n = 30, rho = 0, panel_plot = TRUE, hscale = NA,
   rpanel::rp.doublebutton(corr_sim_panel, rho, delta_rho, range = c(-1, 1),
                           repeatinterval = 20, initval = rho_init,
                           title = "correlation, rho", action = action, ...)
-#  rpanel::rp.radiogroup(panel= corr_sim_panel, fisher_z,
-#                        c("no (need n > 2)", "yes (need n > 3)"),
-#                        title = "transform using Fisher z-transformation?",
-#                        action = action)
   rpanel::rp.checkbox(panel = corr_sim_panel, fisher_z,
                       labels = "Fisher z-transformation",
                       action = action)
-  rpanel::rp.do(corr_sim_panel, action = action)
   return(invisible())
 }
 
@@ -174,13 +169,12 @@ corr_sim_movie_plot <- function(panel){
     } else {
       new_rval <- rvals[length(rvals)]
     }
-    print(rvals)
     assign("rvals", rvals, envir = envir)
     graphics::par(mar = c(4, 3, 1, 1))
     bins <- 0.05 - 0.025 * abs(rho)
     br <- seq(from = -1, to = 1, length = 2 / bins)
     # Calculate the true density (under sampling from a BV normal)
-    if (!fisher_z) {
+    if (!fisher_z | (fisher_z & nsim < 3)) {
       r_vec <- seq(from = -1, to = 1, len = 1001)
       if (abs(rho) < 1 & nsim > 2) {
         true_pdf_vec <- SuppDists::dPearson(x = r_vec, N = nsim, rho = rho)
@@ -206,18 +200,18 @@ corr_sim_movie_plot <- function(panel){
       }
       #
       graphics::axis(1, line = 0.5)
-    } else {
+    } else if (nsim > 2) {
+      zvals <- atanh(rvals)
+      z_range <- range(zvals)
       if (abs(rho) < 1 & nsim > 3) {
-        z_range <- atanh(range(rvals))
         z_range_2 <- qFPearson(p = c(0.01, 0.99), N = nsim, rho = rho)
         z_range <- range(z_range, z_range_2)
-        z_vec <- seq(from = z_range[1], to = z_range[2], len = 1001)
+        z_vec <- seq(from = z_range[1], to = z_range[2], len = 101)
         true_pdf_vec <- dFPearson(x = z_vec, N = nsim, rho = rho)
         my_ylim = c(0, max(true_pdf_vec) * 1.25)
       } else {
         my_ylim = NULL
       }
-      zvals <- atanh(rvals)
       new_zval <- atanh(new_rval)
       graphics::hist(zvals, freq = FALSE, col = 8, main = "", axes = FALSE,
                      ylim = my_ylim, xlab = "", cex.lab = 1.5, xlim = z_range)
