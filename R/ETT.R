@@ -314,6 +314,7 @@ ett <- function(n = 20, distn, params = list(), panel_plot = TRUE, hscale = NA,
   # Create buttons for movie
   show_dens_only <- FALSE
   pdf_or_cdf <- "pdf"
+  assign("old_pdf_or_cdf", pdf_or_cdf, envir = envir)
   ett_panel <- rpanel::rp.control("sample size", n = n, n_add = n_add,
                                   dfun = dfun, qfun = qfun, rfun = rfun,
                                   pfun = pfun, fun_args = fun_args,
@@ -404,12 +405,20 @@ ett_movie_plot <- function(panel) {
     # Do the simulation (if required)
     if (!show_dens_only) {
       sim_list <- c(list(n = n), fun_args)
-      temp <- as.matrix(replicate(n_add, do.call(rfun, sim_list)))
-      max_y <- apply(temp, 2, max)
-      # Extract the last dataset and the last maximum (for drawing the arrow)
-      y <- temp[, n_add]
-      rm(temp)
-      last_y <- max_y[n_add]
+      if (old_pdf_or_cdf == pdf_or_cdf) {
+        temp <- as.matrix(replicate(n_add, do.call(rfun, sim_list)))
+        max_y <- apply(temp, 2, max)
+        # Extract the last dataset and the last maximum (for drawing the arrow)
+        y <- temp[, n_add]
+        assign("old_y", y, envir = envir)
+        rm(temp)
+        last_y <- max_y[n_add]
+        assign("save_last_y", last_y, envir = envir)
+      } else {
+        max_y <- NULL
+        y <- old_y
+        last_y <- save_last_y
+      }
       if (n != old_n) {
         sample_maxima <- max_y
       } else {
@@ -608,6 +617,7 @@ ett_movie_plot <- function(panel) {
     }
     old_n <- n
     assign("old_n", old_n, envir = envir)
+    assign("old_pdf_or_cdf", pdf_or_cdf, envir = envir)
     graphics::par(old_par)
   })
   return(invisible(panel))
