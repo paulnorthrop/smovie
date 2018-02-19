@@ -472,7 +472,7 @@ ett_movie_plot <- function(panel) {
       graphics::lines(x, ydens, xpd = TRUE, lwd = 2, lty = 2)
       graphics::axis(2)
       graphics::axis(1, line = 0.5)
-      graphics::title(paste(the_distn, ",  n = ", n))
+      graphics::title(main = paste(the_distn, ",  n = ", n))
       graphics::legend(top_leg_pos, legend = expression(f(x)),
                        col = 1, lwd = 2, lty = 2, box.lty = 0)
       u_t <- par("usr")
