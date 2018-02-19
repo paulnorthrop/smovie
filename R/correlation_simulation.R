@@ -169,7 +169,8 @@ corr_sim_movie_plot <- function(panel){
       graphics::lines(r_vec, true_pdf_vec, lwd = 2, col = "black")
     }
     #
-    graphics::abline(v = rho, lty = 2, lwd = 2, col = "blue")
+    graphics::segments(rho, 0, rho, SuppDists::dPearson(rho, nsim, rho),
+                       lty = 2, lwd = 2, col = "blue")
     graphics::axis(1, line = 0.5)
     leg_pos <- ifelse(rho > 0, "topleft", "topright")
     graphics::legend(leg_pos, legend = c("exact density", "true rho"),
