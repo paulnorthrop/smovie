@@ -84,16 +84,19 @@ corr_sim <- function(n = 30, rho = 0, panel_plot = TRUE, hscale = NA,
   nsim <- nsim_init <- n
   rvals <- NULL
   fisher_z <- FALSE
+  pdf_or_cdf <- "pdf"
   #
   assign("nseed_old", nseed_init, envir = envir)
   assign("rho_old", rho_init, envir = envir)
   assign("nsim_old", nsim_init, envir = envir)
   assign("rvals", rvals, envir = envir)
   assign("fisher_z_old", fisher_z, envir = envir)
+  assign("old_pdf_or_cdf", pdf_or_cdf, envir = envir)
   #
   corr_sim_panel <- rpanel::rp.control("correlation", nsim = nsim_init,
                                        rho = rho_init, nseed = nseed_init,
-                                       fisher_z = FALSE, envir = envir)
+                                       fisher_z = FALSE, pdf_or_cdf = "pdf",
+                                       envir = envir)
   #
   redraw_plot <- NULL
   panel_redraw <- function(panel) {
@@ -138,6 +141,9 @@ corr_sim <- function(n = 30, rho = 0, panel_plot = TRUE, hscale = NA,
   rpanel::rp.checkbox(panel = corr_sim_panel, fisher_z,
                       labels = "Fisher z-transformation",
                       action = action)
+  rpanel::rp.radiogroup(panel= corr_sim_panel, pdf_or_cdf, c("pdf", "cdf"),
+                        title = "pdf or cdf in bottom plot",
+                        action = action)
   return(invisible())
 }
 
@@ -154,7 +160,8 @@ corr_sim_movie_plot <- function(panel){
     cond1 <- (fisher_z_old & fisher_z) | (!fisher_z_old & !fisher_z)
     cond2 <- (rho == rho_old & nsim == nsim_old) | nsim != nsim_old
     if (cond1 & cond2){
-      vals <- matrix(stats::rnorm(2 * nsim), ncol = 2, nrow = nsim, byrow = TRUE)
+      vals <- matrix(stats::rnorm(2 * nsim), ncol = 2, nrow = nsim,
+                     byrow = TRUE)
       assign("vals", vals, envir = envir)
     }
     x1 <- vals[, 1]
@@ -170,9 +177,9 @@ corr_sim_movie_plot <- function(panel){
       new_rval <- rvals[length(rvals)]
     }
     assign("rvals", rvals, envir = envir)
-    graphics::par(mar = c(4, 3, 1, 1))
-    bins <- 0.05 - 0.025 * abs(rho)
-    br <- seq(from = -1, to = 1, length = 2 / bins)
+    graphics::par(mar = c(4, 4.2, 1, 1))
+#    bins <- 0.05 - 0.025 * abs(rho)
+#    br <- seq(from = -1, to = 1, length = 2 / bins)
     # Calculate the true density (under sampling from a BV normal)
     if (!fisher_z | (fisher_z & nsim < 3)) {
       if (nsim == 3) {
@@ -181,25 +188,57 @@ corr_sim_movie_plot <- function(panel){
       } else {
         r_vec <- seq(from = -1, to = 1, len = 1001)
       }
+      r_range <- SuppDists::qPearson(p = c(0.001, 0.999), N = nsim, rho = rho)
+      r_vec <- seq(from = r_range[1], to = r_range[2], len = 1001)
       if (abs(rho) < 1 & nsim > 2) {
-        true_pdf_vec <- SuppDists::dPearson(x = r_vec, N = nsim, rho = rho)
-        my_ylim = c(0, max(true_pdf_vec) * 1.25)
+        if (pdf_or_cdf == "pdf") {
+          true_pdf_vec <- SuppDists::dPearson(x = r_vec, N = nsim, rho = rho)
+          my_ylim = c(0, max(true_pdf_vec) * 1.25)
+        } else {
+          true_cdf_vec <- SuppDists::pPearson(q = r_vec, N = nsim, rho = rho)
+          my_ylim = c(0, 1)
+        }
       } else {
         my_ylim = NULL
       }
-      graphics::hist(rvals, freq = FALSE, col = 8, breaks = br,
-                     xlim = c(-1, 1), main = "", axes = FALSE,
-                     ylim = my_ylim, xlab = "r", cex.lab = 1.5)
+      my_col <- 8
+      if (pdf_or_cdf == "pdf") {
+        graphics::hist(rvals, freq = FALSE, col = my_col,
+#                       breaks = br,
+#                       xlim = c(-1, 1),
+                       xlim = r_range,
+                       main = "", axes = FALSE,
+                       ylim = my_ylim, xlab = "r", ylab = "pdf",
+                       cex.lab = 1.5)
+      } else {
+        ecdfy <- stats::ecdf(rvals)
+        graphics::plot(ecdfy, col = my_col, las = 1, main = "",
+                       axes = FALSE, xlab = "r", ylab = "cdf",
+                       xpd = TRUE,
+#                       xlim = c(-1, 1),
+                       xlim = r_range,
+                       ylim = my_ylim,
+                       col.01line = 0, cex.lab = 1.5)
+      }
+      graphics::axis(2)
       graphics::rug(rvals, line = 0.5, ticksize = 0.05)
-      graphics::rug(new_rval, line = 0.5, ticksize = 0.05, col = "red", lwd = 2)
+      graphics::rug(new_rval, line = 0.5, ticksize = 0.05, col = "red",
+                    lwd = 2)
       # Add the true density function, but only if |rho| is not equal to 1
       if (abs(rho) < 1 & nsim > 2) {
-        graphics::lines(r_vec, true_pdf_vec, lwd = 2, col = "black")
-        leg_pos <- ifelse(rho > 0, "topleft", "topright")
-        graphics::legend(leg_pos, legend = c("exact density", "true rho"),
-                         col = c("black", "blue"), lty = c(1, 2), lwd = 2)
-        rtop <- SuppDists::dPearson(rho, nsim, rho)
-        graphics::segments(rho, 0, rho, rtop, lty = 2, lwd = 2, col = "blue")
+        if (pdf_or_cdf == "pdf") {
+          graphics::lines(r_vec, true_pdf_vec, lwd = 2, col = "black")
+          leg_pos <- ifelse(rho > 0, "topleft", "topright")
+          graphics::legend(leg_pos, legend = c("exact density", "true rho"),
+                           col = c("black", "blue"), lty = c(1, 1), lwd = 2)
+          rtop <- SuppDists::dPearson(rho, nsim, rho)
+          graphics::segments(rho, 0, rho, rtop, lty = 1, lwd = 2, col = "blue")
+        } else {
+          graphics::lines(r_vec, true_cdf_vec, lwd = 2, col = "black")
+          leg_pos <- "topleft"
+          graphics::legend(leg_pos, legend = "exact density", col = "black",
+                           lty = 1, lwd = 2)
+        }
       } else {
         graphics::abline(v = rho, lty = 2, lwd = 2, col = "blue")
       }
@@ -227,9 +266,10 @@ corr_sim_movie_plot <- function(panel){
         graphics::lines(z_vec, true_pdf_vec, lwd = 2, col = "black")
         leg_pos <- ifelse(rho > 0, "topleft", "topright")
         graphics::legend(leg_pos, legend = c("exact density", "true rho"),
-                         col = c("black", "blue"), lty = c(1, 2), lwd = 2)
-        graphics::segments(rho, 0, atanh(rho), dFPearson(atanh(rho), nsim, rho),
-                           lty = 2, lwd = 2, col = "blue")
+                         col = c("black", "blue"), lty = c(1, 1), lwd = 2)
+        graphics::segments(atanh(rho), 0, atanh(rho), dFPearson(atanh(rho),
+                                                                nsim, rho),
+                           lty = 1, lwd = 2, col = "blue")
       } else {
         graphics::abline(v = atanh(rho), lty = 2, lwd = 2, col = "blue")
       }
