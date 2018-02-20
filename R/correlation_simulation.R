@@ -157,6 +157,8 @@ corr_sim_movie_plot <- function(panel){
     if (rho != rho_old | nsim != nsim_old) {
       rvals <- NULL
     }
+    # Colour for the histograms and empirical cdfs
+    my_col <- 8
     cond1 <- (fisher_z_old & fisher_z) | (!fisher_z_old & !fisher_z)
     cond2 <- (rho == rho_old & nsim == nsim_old) | nsim != nsim_old
     if (cond1 & cond2){
@@ -178,19 +180,23 @@ corr_sim_movie_plot <- function(panel){
     }
     assign("rvals", rvals, envir = envir)
     graphics::par(mar = c(4, 4.2, 1, 1))
-#    bins <- 0.05 - 0.025 * abs(rho)
-#    br <- seq(from = -1, to = 1, length = 2 / bins)
+    atanh_rho <- atanh(rho)
     # Calculate the true density (under sampling from a BV normal)
     if (!fisher_z | (fisher_z & nsim < 3)) {
-      if (nsim == 3) {
+      if (nsim <= 3) {
         ep <- 1e-2
-        r_vec <- seq(from = -1 + ep, to = 1 - ep, len = 1001)
+        # Use the normal approximation to avoid numerical issues
+        z_range <- stats::qnorm(p = c(0.01, 0.99), mean = atanh_rho,
+                                sd = 1 / sqrt(4 - 3))
+        r_range <- tanh(z_range)
       } else {
-        r_vec <- seq(from = -1, to = 1, len = 1001)
+        # Use the normal approximation to avoid numerical issues
+        z_range <- stats::qnorm(p = c(0.01, 0.99), mean = atanh_rho,
+                                sd = 1 / sqrt(nsim - 3))
+        r_range <- tanh(z_range)
       }
-      r_range <- SuppDists::qPearson(p = c(0.001, 0.999), N = nsim, rho = rho)
       r_range <- range(r_range, rvals)
-      r_vec <- seq(from = r_range[1], to = r_range[2], len = 1001)
+      r_vec <- seq(from = r_range[1], to = r_range[2], len = 101)
       if (abs(rho) < 1 & nsim > 2) {
         if (pdf_or_cdf == "pdf") {
           true_pdf_vec <- SuppDists::dPearson(x = r_vec, N = nsim, rho = rho)
@@ -202,24 +208,16 @@ corr_sim_movie_plot <- function(panel){
       } else {
         my_ylim = NULL
       }
-      my_col <- 8
       if (pdf_or_cdf == "pdf") {
-        graphics::hist(rvals, freq = FALSE, col = my_col,
-#                       breaks = br,
-#                       xlim = c(-1, 1),
-                       xlim = r_range,
-                       main = "", axes = FALSE,
-                       ylim = my_ylim, xlab = "r", ylab = "pdf",
-                       cex.lab = 1.5)
+        graphics::hist(rvals, freq = FALSE, col = my_col, xlim = r_range,
+                       main = "", axes = FALSE, ylim = my_ylim, xlab = "r",
+                       ylab = "pdf", cex.lab = 1.5)
       } else {
         ecdf_rvals <- stats::ecdf(rvals)
         graphics::plot(ecdf_rvals, col = my_col, las = 1, main = "",
-                       axes = FALSE, xlab = "r", ylab = "cdf",
-                       xpd = TRUE,
-#                       xlim = c(-1, 1),
-                       xlim = r_range,
-                       ylim = my_ylim,
-                       col.01line = 0, cex.lab = 1.5)
+                       axes = FALSE, xlab = "r", ylab = "cdf", xpd = TRUE,
+                       xlim = r_range, ylim = my_ylim, col.01line = 0,
+                       cex.lab = 1.5, cex = 1.5)
       }
       graphics::axis(2)
       graphics::rug(rvals, line = 0.5, ticksize = 0.05)
@@ -230,18 +228,18 @@ corr_sim_movie_plot <- function(panel){
         if (pdf_or_cdf == "pdf") {
           graphics::lines(r_vec, true_pdf_vec, lwd = 2, col = "black")
           leg_pos <- ifelse(rho > 0, "topleft", "topright")
-          graphics::legend(leg_pos, legend = c("exact density", "true rho"),
+          graphics::legend(leg_pos, legend = c("exact pdf", "true rho"),
                            col = c("black", "blue"), lty = c(1, 1), lwd = 2,
-                           box.lty = 0)
-          rtop <- SuppDists::dPearson(rho, nsim, rho)
+                           box.lty = 0, cex = 1.5)
+          rtop <- SuppDists::dPearson(x = rho, N = nsim, rho = rho)
           graphics::segments(rho, 0, rho, rtop, lty = 1, lwd = 2, col = "blue")
         } else {
           graphics::lines(r_vec, true_cdf_vec, lwd = 2, col = "black")
           leg_pos <- "topleft"
           graphics::legend(leg_pos,
-                           legend = c("exact density", "empirical cdf"),
+                           legend = c("exact cdf", "empirical cdf"),
                            col = c("black", 8), lty = c(1, -1), lwd = 2,
-                           pch = c(-1, 16), box.lty = 0)
+                           pch = c(-1, 16), box.lty = 0, cex = 1.5)
         }
       } else {
         graphics::abline(v = rho, lty = 2, lwd = 2, col = "blue")
@@ -252,31 +250,65 @@ corr_sim_movie_plot <- function(panel){
       zvals <- atanh(rvals)
       z_range <- range(zvals)
       if (abs(rho) < 1 & nsim > 3) {
-        z_range_2 <- qFPearson(p = c(0.01, 0.99), N = nsim, rho = rho)
+        # Use the normal approximation to avoid numerical issues
+        z_range_2 <- stats::qnorm(p = c(0.01, 0.99), mean = atanh_rho,
+                                  sd = 1 / sqrt(nsim - 3))
         z_range <- range(z_range, z_range_2)
         z_vec <- seq(from = z_range[1], to = z_range[2], len = 101)
-        true_pdf_vec <- dFPearson(x = z_vec, N = nsim, rho = rho)
-        my_ylim = c(0, max(true_pdf_vec) * 1.25)
+        if (pdf_or_cdf == "pdf") {
+          true_pdf_vec <- dFPearson(x = z_vec, N = nsim, rho = rho)
+          approx_pdf_vec <- stats::dnorm(x = z_vec, mean = atanh_rho,
+                                         sd = 1 / sqrt(nsim - 3))
+          my_ylim = c(0, max(true_pdf_vec) * 1.25)
+        } else {
+          true_cdf_vec <- pFPearson(q = z_vec, N = nsim, rho = rho)
+          approx_cdf_vec <- stats::pnorm(q = z_vec, mean = atanh_rho,
+                                         sd = 1 / sqrt(nsim - 3))
+          my_ylim = c(0, 1)
+        }
       } else {
         my_ylim = NULL
       }
       new_zval <- atanh(new_rval)
-      graphics::hist(zvals, freq = FALSE, col = 8, main = "", axes = FALSE,
-                     ylim = my_ylim, xlab = "", cex.lab = 1.5, xlim = z_range)
+      if (pdf_or_cdf == "pdf") {
+        graphics::hist(zvals, freq = FALSE, col = 8, main = "", axes = FALSE,
+                       ylim = my_ylim, xlab = "arctanh(r)", cex.lab = 1.5,
+                       xlim = z_range, ylab = "pdf")
+      } else {
+        ecdf_zvals <- stats::ecdf(zvals)
+        graphics::plot(ecdf_zvals, col = my_col, las = 1, main = "",
+                       axes = FALSE, xlab = "arctanh(r)", ylab = "cdf",
+                       xpd = TRUE, xlim = z_range, ylim = my_ylim,
+                       col.01line = 0, cex.lab = 1.5, cex = 1.5)
+      }
+      graphics::axis(2)
       graphics::rug(zvals, line = 0.5, ticksize = 0.05)
       graphics::rug(new_zval, line = 0.5, ticksize = 0.05, col = "red", lwd = 2)
       # Add the true density function, but only if |rho| is not equal to 1
       if (abs(rho) < 1 & nsim > 3) {
-        graphics::lines(z_vec, true_pdf_vec, lwd = 2, col = "black")
-        leg_pos <- ifelse(rho > 0, "topleft", "topright")
-        graphics::legend(leg_pos, legend = c("exact density", "true rho"),
-                         col = c("black", "blue"), lty = c(1, 1), lwd = 2,
-                         box.lty = 0)
-        graphics::segments(atanh(rho), 0, atanh(rho), dFPearson(atanh(rho),
+        if (pdf_or_cdf == "pdf") {
+          graphics::lines(z_vec, true_pdf_vec, lwd = 2, col = "black")
+          graphics::lines(z_vec, approx_pdf_vec, lwd = 2, col = "red", lty = 2)
+          leg_pos <- ifelse(rho > 0, "topleft", "topright")
+          graphics::legend(leg_pos, legend = c("exact", "approximate",
+                                               "true z"),
+                           col = c("black", "red", "blue"), lty = c(1, 2, 1),
+                           lwd = 2, box.lty = 0, cex = 1.5)
+          graphics::segments(atanh_rho, 0, atanh_rho, dFPearson(atanh_rho,
                                                                 nsim, rho),
-                           lty = 1, lwd = 2, col = "blue")
+                             lty = 1, lwd = 2, col = "blue")
+        } else {
+          graphics::lines(z_vec, true_cdf_vec, lwd = 2, col = "black")
+          graphics::lines(z_vec, approx_cdf_vec, lwd = 2, col = "red", lty = 2)
+          leg_pos <- "topleft"
+          graphics::legend(leg_pos,
+                           legend = c("exact", "approximate", "empirical cdf"),
+                           col = c("black", "red", 8), lty = c(1, 2, -1),
+                           lwd = 2, pch = c(-1, -1, 16), box.lty = 0, cex = 1.5)
+        }
+
       } else {
-        graphics::abline(v = atanh(rho), lty = 2, lwd = 2, col = "blue")
+        graphics::abline(v = atanh_rho, lty = 2, lwd = 2, col = "blue")
       }
       graphics::axis(1, line = 0.5)
     }
