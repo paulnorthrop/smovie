@@ -10,8 +10,8 @@ movies <- function(hscale = 1) {
     if (menu.panel$demo =="Binomial pmf") {
       binom_pmf()
     }
-    else if (menu.panel$demo == "Correlation coefficient") {
-      corr_sim(n = 10)
+    else if (menu.panel$demo == "Pearson correlation coefficient") {
+      correlation(n = 10)
     }
     else if (menu.panel$demo == "Maximum") {
       ett(distn = "exponential")
@@ -66,7 +66,6 @@ movies <- function(hscale = 1) {
     }
     return(menu.panel)
   }
-
   menu.panel <- rpanel::rp.control("Movies", homer = FALSE,
                                    number.list = list(),
                                    ss = list(), trans = list(), theta = list())
@@ -74,7 +73,7 @@ movies <- function(hscale = 1) {
                            "Binomial pmf"
   ),
   list("Sampling distributions",
-       "Correlation coefficient",
+       "Pearson correlation coefficient",
        "Maximum"
   ),
   list("Regression",

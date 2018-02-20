@@ -59,13 +59,13 @@
 #' @seealso \code{\link{smovie}}: general information about smovie.
 #' @examples
 #' \dontrun{
-#' corr_sim(n = 2)
-#' corr_sim(n = 10, delta_n = 10)
+#' correlation(rho = 0.8)
+#' correlation(n = 10)
 #' }
 #' @export
-corr_sim <- function(n = 30, rho = 0, panel_plot = TRUE, hscale = NA,
-                     vscale = hscale, delta_n = 1, delta_rho = 0.1, pos = 1,
-                     envir = as.environment(pos), ...) {
+correlation <- function(n = 30, rho = 0, panel_plot = TRUE, hscale = NA,
+                        vscale = hscale, delta_n = 1, delta_rho = 0.1, pos = 1,
+                        envir = as.environment(pos), ...) {
   temp <- set_scales(hscale, vscale)
   hscale <- temp$hscale
   vscale <- temp$vscale
