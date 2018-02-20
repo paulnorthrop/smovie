@@ -2,7 +2,7 @@
 % Please edit documentation in R/correlation_simulation.R
 \name{correlation}
 \alias{correlation}
-\title{Sampling distribution of the correlation coefficient movie}
+\title{Sampling distribution of the Pearson correlation coefficient movie}
 \usage{
 correlation(n = 30, rho = 0, panel_plot = TRUE, hscale = NA,
   vscale = hscale, delta_n = 1, delta_rho = 0.1, pos = 1,
@@ -47,33 +47,44 @@ environment. See \code{\link{environment}}.}
 Nothing is returned, only the animation is produced.
 }
 \description{
-A movie to illustrate how the sampling distribution of the (Pearson
-product moment) sample correlation coefficient \eqn{r} depends on the
+A movie to illustrate how the sampling distribution of the Pearson
+product moment sample correlation coefficient \eqn{r} depends on the
 sample size \eqn{n} and on the true correlation \eqn{\rho}.
 }
 \details{
 Random samples of size \eqn{n} are simulated from a bivariate
-  distribution with the property that the correlation between the two
-  variables is equal to the value of chosen by the user.
-  More specifically, the data are simulated from a
+  normal distribution
   \href{https://en.wikipedia.org/wiki/Multivariate_normal_distribution}{bivariate normal distribution}
-  in which each of the variables has a mean of 0 and a variance of 1.
+  in which each of the variables has a mean of 0 and a variance of 1 and
+  the correlation \eqn{\rho} between the variables is chosen by the user.
 
   The movie contains two plots.  On the top is a scatter plot of the
   simulated sample, illustrating the stength of the association between
   the simulated values of the variables.
-  A new sample is produced by clicking the + button next to
-  "simulate another sample:". [Ignore the - button.]
-  For each simulated sample the sample correlation coefficient \eqn{r} is
-  calculated and displayed in the title of the top plot.
-  The values of these sample correlation coefficients are stored and
-  are plotted in the histogram in the bottom plot.  As we accumulate
-  a large number of values in this histogram the shape of the sampling
-  distribution of \eqn{r} emerges.
+  A new sample is produced by clicking "simulate another sample.
+  For each simulated sample the sample (Pearson product moment)
+  correlation coefficient \eqn{r} is calculated and displayed in the
+  title of the top plot.
+
+  The values of the sample correlation coefficients are stored and are
+  plotted in a histogram in the bottom plot.  A rug displays the individual
+  values, with the most recent value coloured red. As we accumulate a large
+  number of values in this histogram the shape of the sampling
+  distribution of \eqn{r} emerges.  The exact p.d.f. of \eqn{r} is
+  superimposed on this histogram, as is the value of \eqn{\rho}.
+
+  The bottom plot can be changed in two ways:
+  (i) a radio button can be pressed to replace the histogram and pdf with
+  a plot of the empirical c.d.f. and exact cdf;
+  (ii) the variable can be changed from \eqn{\rho} to Fisher's
+  z-transformation \eqn{F(\rho) = arctanh(\rho) = [ln(1+\rho) - ln(1-\rho)]/2}.
+  For sufficiently large values of \eqn{n}, \eqn{F(\rho)} has approximately
+  a normal distribution with mean \eqn{\rho} and standard deviation
+  \eqn{1 / (n - 3)}.
 
   The values of the sample size \eqn{n} or true correlation coefficient
   \eqn{\rho} can be changed using the respective +/- buttons.
-  If one of these is changed then the histogram in the bottom plot is
+  If one of these is changed then the bottom plot is
   reset using the sample correlation coefficient of the first sample
   simulated using the new combination of \eqn{n} and \eqn{\rho}.
 }
