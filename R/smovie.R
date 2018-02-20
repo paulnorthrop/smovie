@@ -25,7 +25,7 @@
 #' \itemize{
 #'   \item {\link[=clt_norm]{Central Limit Theorem: normal data}}
 #'   \item {\link[=clt_exp]{Central Limit Theorem: exponential data}}
-#'   \item {\link[=corr_sim]{Sampling distribution of the correlation
+#'   \item {\link[=correlation]{Sampling distribution of the correlation
 #'     coefficient}}
 #'   \item {\link[=ett]{Extremal Types Theorem: sampling distribution
 #'     of a sample maximum}}
@@ -35,7 +35,7 @@
 #' \itemize{
 #'   \item {\link[=lev_inf]{Leverage and influence in simple linear
 #'     regression}}
-#'   \item {\link[=corr_sim]{Sampling distribution of the correlation
+#'   \item {\link[=correlation]{Sampling distribution of the correlation
 #'     coefficient}}
 #' }
 #'
