@@ -8,9 +8,6 @@
 #' used to change parameters underlying the plot. For the effects of
 #' these buttons see the documentation of the individual functions.
 #'
-#' When a button (produced using \code{\link[rpanel]{rp.button}} or
-#' \code{\link[rpanel]{rp.doublebutton}}) ...
-#'
 #' @references Bowman, A., Crawford, E., Alexander, G. and Bowman, R. W.
 #'  (2007). rpanel: Simple Interactive Controls for R Functions Using the
 #'  tcltk Package.  \emph{Journal of Statistical Software}, \strong{17(9)},
