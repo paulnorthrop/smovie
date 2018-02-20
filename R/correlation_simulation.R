@@ -161,7 +161,8 @@ corr_sim_movie_plot <- function(panel){
     my_col <- 8
     cond1 <- (fisher_z_old & fisher_z) | (!fisher_z_old & !fisher_z)
     cond2 <- (rho == rho_old & nsim == nsim_old) | nsim != nsim_old
-    if (cond1 & cond2){
+    cond3 <- (old_pdf_or_cdf == pdf_or_cdf)
+    if (cond1 & cond2 & cond3){
       vals <- matrix(stats::rnorm(2 * nsim), ncol = 2, nrow = nsim,
                      byrow = TRUE)
       assign("vals", vals, envir = envir)
@@ -200,35 +201,64 @@ corr_sim_movie_plot <- function(panel){
       if (abs(rho) < 1 & nsim > 2) {
         if (pdf_or_cdf == "pdf") {
           true_pdf_vec <- SuppDists::dPearson(x = r_vec, N = nsim, rho = rho)
-          my_ylim = c(0, max(true_pdf_vec) * 1.25)
+          my_ylim <- c(0, max(true_pdf_vec) * 1.25)
         } else {
           true_cdf_vec <- SuppDists::pPearson(q = r_vec, N = nsim, rho = rho)
-          my_ylim = c(0, 1)
+          my_ylim <- 0:1
         }
       } else {
-        my_ylim = NULL
+        if (pdf_or_cdf == "pdf") {
+          my_ylim <- NULL
+        } else {
+          my_ylim <- 0:1
+        }
       }
       if (pdf_or_cdf == "pdf") {
-        graphics::hist(rvals, freq = FALSE, col = my_col, xlim = r_range,
-                       main = "", axes = FALSE, ylim = my_ylim, xlab = "r",
-                       ylab = "pdf", cex.lab = 1.5)
+        if (abs(rho) < 1) {
+          graphics::hist(rvals, freq = FALSE, col = my_col, xlim = r_range,
+                         main = "", axes = FALSE, ylim = my_ylim, xlab = "r",
+                         ylab = "pdf", cex.lab = 1.5)
+        } else {
+          graphics::plot(1, type = "h", xlim = c(-1, 1), ylim = c(0, 1),
+                         lwd = 2, xlab = "r", ylab = "pdf", cex.lab = 1.5,
+                         axes = FALSE)
+          graphics::segments(rho, 0, rho, 1, lty = 1, lwd = 2, col = "blue")
+          leg_pos <- ifelse(rho > 0, "topleft", "topright")
+          graphics::legend(leg_pos, legend = expression(rho), col = "blue", lty = 1,
+                           lwd = 2, box.lty = 0, cex = 1.5)
+        }
       } else {
         ecdf_rvals <- stats::ecdf(rvals)
-        graphics::plot(ecdf_rvals, col = my_col, las = 1, main = "",
+        leg_pos <- "topleft"
+        if (abs(rho) < 1) {
+          graphics::plot(ecdf_rvals, col = my_col, las = 1, main = "",
                        axes = FALSE, xlab = "r", ylab = "cdf", xpd = TRUE,
                        xlim = r_range, ylim = my_ylim, col.01line = 0,
                        cex.lab = 1.5, cex = 1.5)
+          graphics::legend(leg_pos,
+                           legend = c("exact cdf", "empirical cdf"),
+                           col = c("black", 8), lty = c(1, -1), lwd = 2,
+                           pch = c(-1, 16), box.lty = 0, cex = 1.5)
+        } else {
+          graphics::plot(c(-1, 1, 1, 1.2), c(0, 0, 1, 1), xlim = c(-1, 1),
+                         ylim = c(0, 1), type = "l", lwd = 2, axes = FALSE,
+                         xlab = "r", ylab = "cdf", cex.lab = 1.5, cex = 1.5)
+          graphics::legend(leg_pos, legend = "exact cdf", col = "black",
+                           lty = 1, lwd = 2, box.lty = 0, cex = 1.5)
+        }
       }
-      graphics::axis(2)
-      graphics::rug(rvals, line = 0.5, ticksize = 0.05)
-      graphics::rug(new_rval, line = 0.5, ticksize = 0.05, col = "red",
-                    lwd = 2)
+      if (!fisher_z | (fisher_z & abs(rho) < 1)) {
+        graphics::axis(2)
+        graphics::rug(rvals, line = 0.5, ticksize = 0.05)
+        graphics::rug(new_rval, line = 0.5, ticksize = 0.05, col = "red",
+                      lwd = 2)
+      }
       # Add the true density function, but only if |rho| is not equal to 1
       if (abs(rho) < 1 & nsim > 2) {
         if (pdf_or_cdf == "pdf") {
           graphics::lines(r_vec, true_pdf_vec, lwd = 2, col = "black")
           leg_pos <- ifelse(rho > 0, "topleft", "topright")
-          graphics::legend(leg_pos, legend = c("exact pdf", "true rho"),
+          graphics::legend(leg_pos, legend = c("exact pdf", expression(rho)),
                            col = c("black", "blue"), lty = c(1, 1), lwd = 2,
                            box.lty = 0, cex = 1.5)
           rtop <- SuppDists::dPearson(x = rho, N = nsim, rho = rho)
@@ -241,11 +271,14 @@ corr_sim_movie_plot <- function(panel){
                            col = c("black", 8), lty = c(1, -1), lwd = 2,
                            pch = c(-1, 16), box.lty = 0, cex = 1.5)
         }
-      } else {
-        graphics::abline(v = rho, lty = 2, lwd = 2, col = "blue")
+#      } else {
+#        graphics::segments(rho, 0, rho, 1, lty = 1, lwd = 2, col = "blue")
+#        graphics::abline(v = rho, lty = 2, lwd = 2, col = "blue")
       }
       #
-      graphics::axis(1, line = 0.5)
+      if (!fisher_z | (fisher_z & abs(rho) < 1)) {
+        graphics::axis(1, line = 0.5)
+      }
     } else if (nsim > 2) {
       zvals <- atanh(rvals)
       z_range <- range(zvals)
@@ -259,31 +292,71 @@ corr_sim_movie_plot <- function(panel){
           true_pdf_vec <- dFPearson(x = z_vec, N = nsim, rho = rho)
           approx_pdf_vec <- stats::dnorm(x = z_vec, mean = atanh_rho,
                                          sd = 1 / sqrt(nsim - 3))
-          my_ylim = c(0, max(true_pdf_vec) * 1.25)
+          my_ylim <- c(0, max(true_pdf_vec) * 1.25)
         } else {
           true_cdf_vec <- pFPearson(q = z_vec, N = nsim, rho = rho)
           approx_cdf_vec <- stats::pnorm(q = z_vec, mean = atanh_rho,
                                          sd = 1 / sqrt(nsim - 3))
-          my_ylim = c(0, 1)
+          my_ylim <- c(0, 1)
         }
       } else {
-        my_ylim = NULL
+        if (pdf_or_cdf == "pdf") {
+          my_ylim <- NULL
+        } else {
+          my_ylim <- 0:1
+        }
       }
       new_zval <- atanh(new_rval)
       if (pdf_or_cdf == "pdf") {
-        graphics::hist(zvals, freq = FALSE, col = 8, main = "", axes = FALSE,
-                       ylim = my_ylim, xlab = "arctanh(r)", cex.lab = 1.5,
-                       xlim = z_range, ylab = "pdf")
+        if (abs(rho) < 1) {
+          graphics::hist(zvals, freq = FALSE, col = 8, main = "", axes = FALSE,
+                         ylim = my_ylim, xlab = "arctanh(r)", cex.lab = 1.5,
+                         xlim = z_range, ylab = "pdf")
+        } else {
+          graphics::plot(1, type = "n", xlim = c(-1, 1), ylim = c(0, 1),
+                         lwd = 2, xlab = "r", ylab = "pdf",
+                         axes = FALSE, ann = FALSE)
+          graphics::axis(2, col = 0, col.ticks = 0, col.axis = "white")
+          graphics::axis(1, line = 0.5, col = 0, col.ticks = 0,
+                         col.axis = "white")
+          cex_val <- 2
+          if (rho == 1) {
+            text(0, 0.5, "Fisher z value is always +Inf when rho = +1",
+                 cex = cex_val)
+          } else {
+            text(0, 0.5, "Fisher z value is always -Inf when rho = -1",
+                 cex = cex_val)
+          }
+        }
       } else {
         ecdf_zvals <- stats::ecdf(zvals)
-        graphics::plot(ecdf_zvals, col = my_col, las = 1, main = "",
+        if (abs(rho) < 1) {
+          graphics::plot(ecdf_zvals, col = my_col, las = 1, main = "",
                        axes = FALSE, xlab = "arctanh(r)", ylab = "cdf",
                        xpd = TRUE, xlim = z_range, ylim = my_ylim,
                        col.01line = 0, cex.lab = 1.5, cex = 1.5)
+        } else {
+          graphics::plot(1, type = "n", xlim = c(-1, 1), ylim = c(0, 1),
+                         lwd = 2, xlab = "r", ylab = "pdf",
+                         axes = FALSE, ann = FALSE)
+          graphics::axis(2, col = 0, col.ticks = 0, col.axis = "white")
+          graphics::axis(1, line = 0.5, col = 0, col.ticks = 0,
+                         col.axis = "white")
+          cex_val <- 2
+          if (rho == 1) {
+            text(0, 0.5, "Fisher z value is always +Inf when rho = +1",
+                 cex = cex_val)
+          } else {
+            text(0, 0.5, "Fisher z value is always -Inf when rho = -1",
+                 cex = cex_val)
+          }
+        }
       }
-      graphics::axis(2)
-      graphics::rug(zvals, line = 0.5, ticksize = 0.05)
-      graphics::rug(new_zval, line = 0.5, ticksize = 0.05, col = "red", lwd = 2)
+      if (!fisher_z | (fisher_z & abs(rho) < 1)) {
+        graphics::axis(2)
+        graphics::rug(zvals, line = 0.5, ticksize = 0.05)
+        graphics::rug(new_zval, line = 0.5, ticksize = 0.05, col = "red", lwd = 2)
+      }
       # Add the true density function, but only if |rho| is not equal to 1
       if (abs(rho) < 1 & nsim > 3) {
         if (pdf_or_cdf == "pdf") {
@@ -291,7 +364,7 @@ corr_sim_movie_plot <- function(panel){
           graphics::lines(z_vec, approx_pdf_vec, lwd = 2, col = "red", lty = 2)
           leg_pos <- ifelse(rho > 0, "topleft", "topright")
           graphics::legend(leg_pos, legend = c("exact", "approximate",
-                                               "true z"),
+                                               expression(arctanh(rho))),
                            col = c("black", "red", "blue"), lty = c(1, 2, 1),
                            lwd = 2, box.lty = 0, cex = 1.5)
           graphics::segments(atanh_rho, 0, atanh_rho, dFPearson(atanh_rho,
@@ -306,16 +379,18 @@ corr_sim_movie_plot <- function(panel){
                            col = c("black", "red", 8), lty = c(1, 2, -1),
                            lwd = 2, pch = c(-1, -1, 16), box.lty = 0, cex = 1.5)
         }
-
       } else {
         graphics::abline(v = atanh_rho, lty = 2, lwd = 2, col = "blue")
       }
-      graphics::axis(1, line = 0.5)
+      if (!fisher_z | (fisher_z & abs(rho) < 1)) {
+        graphics::axis(1, line = 0.5)
+      }
     }
     assign("nseed_old", nseed, envir = envir)
     assign("rho_old", rho, envir = envir)
     assign("nsim_old", nsim, envir = envir)
     assign("fisher_z_old", fisher_z, envir = envir)
+    assign("old_pdf_or_cdf", pdf_or_cdf, envir = envir)
     graphics::par(mar = c(3, 3, 2, 1))
     graphics::plot(sim_vals, pch = 16, xlab = "x", ylab = "y",
                    xlim = c(-3.5, 3.5), ylim = c(-3.5, 3.5))
