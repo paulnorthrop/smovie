@@ -271,13 +271,10 @@ corr_sim_movie_plot <- function(panel){
                            col = c("black", 8), lty = c(1, -1), lwd = 2,
                            pch = c(-1, 16), box.lty = 0, cex = 1.5)
         }
-#      } else {
-#        graphics::segments(rho, 0, rho, 1, lty = 1, lwd = 2, col = "blue")
-#        graphics::abline(v = rho, lty = 2, lwd = 2, col = "blue")
       }
-      #
       if (!fisher_z | (fisher_z & abs(rho) < 1)) {
         graphics::axis(1, line = 0.5)
+        graphics::axis(1, line = 0.5, at = c(-1, 1))
       }
     } else if (nsim > 2) {
       zvals <- atanh(rvals)
@@ -384,6 +381,7 @@ corr_sim_movie_plot <- function(panel){
       }
       if (!fisher_z | (fisher_z & abs(rho) < 1)) {
         graphics::axis(1, line = 0.5)
+        graphics::axis(1, line = 0.5, at = c(-1e10, 1e10))
       }
     }
     assign("nseed_old", nseed, envir = envir)
