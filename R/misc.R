@@ -142,6 +142,15 @@ set_fun_args <- function(distn, dfun, fun_args, params) {
     fun_args$scale <- 1
     return(fun_args)
   }
+  if (distn == "binomial") {
+    if (is.null(fun_args$size)) {
+      fun_args$size <- 10
+    }
+    if (is.null(fun_args$prob)) {
+      fun_args$prob <- 0.5
+    }
+    return(fun_args)
+  }
 }
 
 set_top_range <- function(distn, p_vec, fun_args, qfun) {
@@ -275,4 +284,24 @@ qngev <- function(p, loc = 0, scale = 1, shape = 0, lower.tail = TRUE,
 
 rngev <- function(n, loc = 0, scale = 1, shape = 0){
   return(-revdbayes::rgev(n, loc = loc, scale = scale, shape = shape))
+}
+
+parameter_range <- function(distn) {
+  if (distn == "binomial") {
+    size <- c(1, NA)
+    prob <- c(0, 1)
+    return(cbind(size, prob))
+  }
+}
+
+parameter_step <- function(distn) {
+  if (distn == "binomial") {
+    return(c(1, 0.1))
+  }
+}
+
+variable_support <- function(distn, fun_args){
+  if (distn == "binomial") {
+    return(0:fun_args$size)
+  }
 }
