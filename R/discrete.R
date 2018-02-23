@@ -101,7 +101,8 @@ discrete <- function(distn, params = list(), panel_plot = TRUE, hscale = NA,
   # A list of arguments to pass to the plotting function via rp.control()
   pass_args <- fun_args
   names(pass_args) <- par_names
-  for_rp_control <- c(list(title = "add title", dfun = dfun, pfun = pfun,
+  my_title <- paste("pmf and cdf for the", distn, "distribution")
+  for_rp_control <- c(list(title = my_title, dfun = dfun, pfun = pfun,
                            distn = distn, fun_args = fun_args, n_pars = n_pars,
                            par_names = par_names, var_support = var_support,
                            pmf_or_cdf = pmf_or_cdf,
