@@ -192,8 +192,8 @@ plot_discrete <- function(panel) {
       graphics::box(bty = "l")
     } else {
       probs <- do.call(pfun, c(list(q = var_support), fun_args))
-      rval <- approxfun(var_support, probs, method = "constant",
-                        yleft = 0, yright = 1, f = 0, ties = "ordered")
+      rval <- stats::approxfun(var_support, probs, method = "constant",
+                               yleft = 0, yright = 1, f = 0, ties = "ordered")
       class(rval) <- c("ecdf", "stepfun", class(rval))
       graphics::plot(rval, main = paste("cdf of the", the_distn,
                                         "distribution"))
