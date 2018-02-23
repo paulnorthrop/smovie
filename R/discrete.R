@@ -1,4 +1,5 @@
 # add delta_params ?
+# add prob to set range.
 
 # ================================= discrete ==================================
 
@@ -97,7 +98,6 @@ discrete <- function(distn, params = list(), panel_plot = TRUE, hscale = NA,
   # Set the limits on the parameters, the parameter stepsize and the support
   par_range <- parameter_range(distn)
   par_step <- parameter_step(distn)
-  var_support <- variable_support(distn, fun_args, qfun)
   #
   pmf_or_cdf <- "pmf"
   # Temporarily change the name of the binomial size to n, because size
@@ -112,8 +112,7 @@ discrete <- function(distn, params = list(), panel_plot = TRUE, hscale = NA,
   for_rp_control <- c(list(title = my_title,
                            dfun = dfun, pfun = pfun, qfun = qfun,
                            distn = distn, fun_args = fun_args, n_pars = n_pars,
-                           par_names = par_names, var_support = var_support,
-                           pmf_or_cdf = pmf_or_cdf,
+                           par_names = par_names, pmf_or_cdf = pmf_or_cdf,
                            observed_value = observed_value), pass_args)
   discrete_panel <- do.call(rpanel::rp.control, for_rp_control)
   redraw_plot <- NULL
@@ -189,8 +188,15 @@ plot_discrete <- function(panel) {
                      ylab = "pmf", xlab = "", col = my_col)
       graphics::axis(1, at = var_support, labels = var_support, cex.axis = 0.7)
       graphics::axis(2, las = 1)
-      graphics::title(main = the_distn)
+      graphics::title(main = paste("pmf of the", the_distn, "distribution"))
       graphics::box(bty = "l")
+    } else {
+      probs <- do.call(pfun, c(list(q = var_support), fun_args))
+      rval <- approxfun(var_support, probs, method = "constant",
+                        yleft = 0, yright = 1, f = 0, ties = "ordered")
+      class(rval) <- c("ecdf", "stepfun", class(rval))
+      graphics::plot(rval, main = paste("cdf of the", the_distn,
+                                        "distribution"))
     }
     graphics::par(old_par)
   })
