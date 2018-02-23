@@ -77,11 +77,18 @@ discrete <- function(distn, params = list(), panel_plot = TRUE, hscale = NA,
   }
   pfun <-
     switch(distn,
-           "binomial" = stats::dbinom,
-           "geometric" = stats::dgeom,
-           "hypergeometric" = stats::dhyper,
-           "negative binomial" = stats::dnbinom,
-           "poisson" = stats::dpois)
+           "binomial" = stats::pbinom,
+           "geometric" = stats::pgeom,
+           "hypergeometric" = stats::phyper,
+           "negative binomial" = stats::pnbinom,
+           "poisson" = stats::ppois)
+  qfun <-
+    switch(distn,
+           "binomial" = stats::qbinom,
+           "geometric" = stats::qgeom,
+           "hypergeometric" = stats::qhyper,
+           "negative binomial" = stats::qnbinom,
+           "poisson" = stats::qpois)
   # Set the arguments to the distributional functions
   fun_args <- set_fun_args(distn, dfun, fun_args, params)
   # Extract the names of the parameters and find the number of parameters
@@ -90,7 +97,7 @@ discrete <- function(distn, params = list(), panel_plot = TRUE, hscale = NA,
   # Set the limits on the parameters, the parameter stepsize and the support
   par_range <- parameter_range(distn)
   par_step <- parameter_step(distn)
-  var_support <- variable_support(distn, fun_args)
+  var_support <- variable_support(distn, fun_args, qfun)
   #
   pmf_or_cdf <- "pmf"
   # Temporarily change the name of the binomial size to n, because size
@@ -102,7 +109,8 @@ discrete <- function(distn, params = list(), panel_plot = TRUE, hscale = NA,
   pass_args <- fun_args
   names(pass_args) <- par_names
   my_title <- paste("pmf and cdf for the", distn, "distribution")
-  for_rp_control <- c(list(title = my_title, dfun = dfun, pfun = pfun,
+  for_rp_control <- c(list(title = my_title,
+                           dfun = dfun, pfun = pfun, qfun = qfun,
                            distn = distn, fun_args = fun_args, n_pars = n_pars,
                            par_names = par_names, var_support = var_support,
                            pmf_or_cdf = pmf_or_cdf,
@@ -164,6 +172,7 @@ plot_discrete <- function(panel) {
                                 new_fun_args$prob, ")"),
              "poisson" = paste(distn, "(", new_fun_args$lambda, ")")
       )
+    var_support <- variable_support(distn, new_fun_args, qfun)
     if (is.null(observed_value)) {
       my_col <- 1
     } else {
