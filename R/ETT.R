@@ -204,7 +204,7 @@ ett <- function(n = 20, distn, params = list(), panel_plot = TRUE, hscale = NA,
   if (distn == "chisq") {
     distn <- "chi-squared"
   }
-  # Set the density and quantile functions and simulation function
+  # Set the density, distribution, quantile and simulation functions
   # "rngev" is included because it is an example that is in the domain of
   # attraction of the Gumbel case but the upper endpoint is finite.
   #
