@@ -157,6 +157,12 @@ set_fun_args <- function(distn, dfun, fun_args, params) {
     }
     return(fun_args)
   }
+  if (distn == "geometric") {
+    if (is.null(fun_args$prob)) {
+      fun_args$prob <- 0.5
+    }
+    return(fun_args)
+  }
 }
 
 set_top_range <- function(distn, p_vec, fun_args, qfun) {
@@ -302,6 +308,10 @@ parameter_range <- function(distn) {
     lambda <- matrix(c(0, Inf), 2, 1)
     return(lambda)
   }
+  if (distn == "geometric") {
+    prob <- matrix(c(1e-6, 1), 2, 1)
+    return(prob)
+  }
 }
 
 parameter_step <- function(distn) {
@@ -311,15 +321,18 @@ parameter_step <- function(distn) {
   if (distn == "poisson") {
     return(0.5)
   }
+  if (distn == "geometric") {
+    return(0.1)
+  }
 }
 
 variable_support <- function(distn, fun_args, qfun){
   if (distn == "binomial") {
     return(0:fun_args$size)
   }
-  if (distn == "poisson") {
-    for_qpois <- c(list(p = c(0.001, 0.999)), fun_args)
-    pois_range <- do.call(qfun, for_qpois)
-    return(pois_range[1]:pois_range[2])
+  if (distn == "poisson"| distn == "geometric") {
+    for_qfun <- c(list(p = c(0.001, 0.999)), fun_args)
+    var_range <- do.call(qfun, for_qfun)
+    return(var_range[1]:var_range[2])
   }
 }

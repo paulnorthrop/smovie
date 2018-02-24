@@ -169,6 +169,7 @@ plot_discrete <- function(panel) {
       switch(distn,
              "binomial" = paste(distn, "(", new_fun_args$size, ",",
                                 new_fun_args$prob, ")"),
+             "geometric" = paste(distn, "(", new_fun_args$prob, ")"),
              "poisson" = paste(distn, "(", new_fun_args$lambda, ")")
       )
     var_support <- variable_support(distn, new_fun_args, qfun)
