@@ -48,6 +48,11 @@
 #' @export
 discrete <- function(distn, params = list(), panel_plot = TRUE, hscale = NA,
                      vscale = hscale, observed_value = NA, ...) {
+  # To add another distribution
+  # 1. misc.R: add code to set_fun_args(), parameter_range(), parameter_step(),
+  #            variable_support()
+  # 2. add lines to dfun, qfun, pfun
+  # 3. plot_discrete(): add to the_distn
   temp <- set_scales(hscale, vscale)
   hscale <- temp$hscale
   vscale <- temp$vscale
@@ -61,9 +66,7 @@ discrete <- function(distn, params = list(), panel_plot = TRUE, hscale = NA,
   if (missing(distn)) {
     distn <- "binomial"
   }
-  # Set the density and quantile functions and simulation function
-  # "rngev" is included because it is an example that is in the domain of
-  # attraction of the Gumbel case but the upper endpoint is finite.
+  # Set the density, distribution and quantile functions
   #
   dfun <-
     switch(distn,

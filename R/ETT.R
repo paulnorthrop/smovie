@@ -163,6 +163,13 @@
 ett <- function(n = 20, distn, params = list(), panel_plot = TRUE, hscale = NA,
                 vscale = hscale, n_add = 1, delta_n = 1, arrow = TRUE,
                 pos = 1, envir = as.environment(pos), ...) {
+  temp <- set_scales(hscale, vscale)
+  hscale <- temp$hscale
+  vscale <- temp$vscale
+  # To add another distribution
+  # 1. misc.R: add code to set_fun_args(), set_top_range(), set_leg_pos()
+  # 2. add lines to rfun, dfun, qfun, pfun
+  # 3. ett_movie_plot(): add to the_distn and gev_pars
   if (!is.wholenumber(n) | n < 2) {
     stop("n must be an integer that is no smaller than 2")
   }
@@ -189,13 +196,6 @@ ett <- function(n = 20, distn, params = list(), panel_plot = TRUE, hscale = NA,
     }
   }
   xlab <- "x"
-  # To add another distribution
-  # 1. misc.R: add code to set_fun_args(), set_top_range(), set_leg_pos()
-  # 2. add lines to rfun, dfun, qfun, pfun
-  # 3. ett_movie_plot(): add to the_distn and gev_pars
-  temp <- set_scales(hscale, vscale)
-  hscale <- temp$hscale
-  vscale <- temp$vscale
   #
   distn <- tolower(distn)
   if (distn == "log-normal") {
