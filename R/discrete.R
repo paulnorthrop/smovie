@@ -68,6 +68,8 @@ discrete <- function(distn, params = list(), panel_plot = TRUE, hscale = NA,
   if (missing(distn)) {
     distn <- "binomial"
   }
+  # Allow stats:: abbreviations
+  distn <- recognise_stats_abbreviations(distn)
   # Set the density, distribution and quantile functions
   #
   dfun <-

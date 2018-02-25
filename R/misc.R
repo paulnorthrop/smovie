@@ -421,3 +421,22 @@ variable_support <- function(distn, fun_args, qfun, pmf_or_cdf){
     return(0:fun_args$k)
   }
 }
+
+recognise_stats_abbreviations <- function(distn) {
+  if (distn == "binom") {
+    return("binomial")
+  }
+  if (distn == "geom") {
+    return("geometric")
+  }
+  if (distn == "hyper") {
+    return("hypergeometric")
+  }
+  if (distn == "nbinom") {
+    return("negative binomial")
+  }
+  if (distn == "pois") {
+    return("poisson")
+  }
+  return(distn)
+}
