@@ -29,9 +29,9 @@
 #'   \itemize{
 #'     \item{\code{model = "norm"}: }{\code{n} = 10, \code{mu} = 0,
 #'       \code{sigma} = 1 and \code{data} contains a sample of
-#'       a sample of size \code{n} simulated, using \code{\link[stats]{rnorm}},
-#'       from a normal distribution with mean \code{mu} and standard deviation
-#'       \code{sigma}.}
+#'       a sample of size \code{n} simulated, using
+#'       \code{\link[stats]{Normal}}, from a normal distribution with mean
+#'       \code{mu} and standard deviation \code{sigma}.}
 #'     \item{\code{model = "binom"}: }{\code{data = c(7, 13)}, that is,
 #'       7 successes and 13 failures observed in 20 trials.  For the purposes
 #'       of this movie there must be at least one success and at least one

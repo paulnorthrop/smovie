@@ -2,7 +2,7 @@
 #'
 #' Uses the template \code{\link[rpanel]{rp.cartoons}} function to produce
 #' a menu panel from which any of the movies in
-#' \code{\link[smovie]{smovie-package}} can be launched.
+#' \code{\link[smovie]{smovie}} package can be launched.
 #' @param hscale Add description.
 #' @export
 movies <- function(hscale = 1) {

@@ -12,5 +12,5 @@ movies(hscale = 1)
 \description{
 Uses the template \code{\link[rpanel]{rp.cartoons}} function to produce
 a menu panel from which any of the movies in
-\code{\link[smovie]{smovie-package}} can be launched.
+\code{\link[smovie]{smovie}} package can be launched.
 }

@@ -7,7 +7,7 @@
 \title{smovie: some movies to illustrate concepts in statistics}
 \description{
 These movies are animations used to illustrate key statistical ideas.
-They are produced using the package \code{\link[rpanel]{rpanel}}.
+They are produced using the \code{\link[rpanel]{rpanel-package}}.
 }
 \details{
 When one of these functions is called R opens up a small

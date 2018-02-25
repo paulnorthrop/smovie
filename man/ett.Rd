@@ -25,12 +25,12 @@ than 2.}
 
   The \code{"gp"} case uses the \code{\link[revdbayes]{gp}}
   distributional functions in the
-  \code{\link[revdbayes]{revdbayes-package}}.
+  \code{\link[revdbayes]{revdbayes}} package.
 
   The \code{"ngev"} case is a negated GEV(1 / \eqn{\xi}, 1, \eqn{\xi})
   distribution, for \eqn{\xi} > 0, and uses the \code{\link[revdbayes]{gev}}
   distributional functions in the
-  \code{\link[revdbayes]{revdbayes-package}}.
+  \code{\link[revdbayes]{revdbayes}} package.
   If \eqn{\xi} = 1 then this coincides with Example 1.7.5 in Leadbetter,
   Lindgren and Rootzen (1983).
 
