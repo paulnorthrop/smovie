@@ -4,8 +4,8 @@
 \alias{discrete}
 \title{Univariate Discrete Distributions: p.m.f and c.d.f.}
 \usage{
-discrete(distn, params = list(), panel_plot = TRUE, hscale = NA,
-  vscale = hscale, observed_value = NA, ...)
+discrete(distn, params = list(), plot_par = list(), panel_plot = TRUE,
+  hscale = NA, vscale = hscale, observed_value = NA, ...)
 }
 \arguments{
 \item{distn}{A character scalar specifying the distribution from which
@@ -13,7 +13,8 @@ discrete(distn, params = list(), panel_plot = TRUE, hscale = NA,
   \code{"geometric"}, \code{"hypergeometric"}, \code{"negative binomial"},
   \code{Poisson} are recognised, case being ignored.
   The relevant distributional functions \code{dxxx} and \code{pxxx} in the
-  \code{\link[stats]{stats-package}} is used to .
+  \code{\link[stats]{stats-package}} are used.  The abbreviations
+  \code{xxx} are also recognised.
 
   If \code{distn} is not supplied then \code{distn = "binomial"}
   is used.}
@@ -23,6 +24,10 @@ discrete(distn, params = list(), panel_plot = TRUE, hscale = NA,
 
   If a parameter value is not supplied then the default values in the
   relevant distributional function set using \code{distn} are used}
+
+\item{plot_par}{A named list of graphical parameters
+(see \code{link[graphics]{par}}) to be passed to
+\code{\link[graphics]{plot}}.}
 
 \item{panel_plot}{A logical parameter that determines whether the plot
 is placed inside the panel (\code{TRUE}) or in the standard graphics
@@ -35,8 +40,7 @@ Unix platforms and 2 on Windows platforms.}
 
 \item{observed_value}{A non-negative integer.  If \code{observed_value} is
 supplied then the corresponding line in the plot of the p.m.f. is coloured
-in red.  If \code{observed_value} is not an integer then
-\code{round(observed_value)} is used.}
+in red.}
 
 \item{...}{Additional arguments to be passed to
 \code{\link[rpanel]{rp.doublebutton}}, not including \code{panel},

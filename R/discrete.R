@@ -14,7 +14,8 @@
 #'   \code{"geometric"}, \code{"hypergeometric"}, \code{"negative binomial"},
 #'   \code{Poisson} are recognised, case being ignored.
 #'   The relevant distributional functions \code{dxxx} and \code{pxxx} in the
-#'   \code{\link[stats]{stats-package}} is used to .
+#'   \code{\link[stats]{stats-package}} are used.  The abbreviations
+#'   \code{xxx} are also recognised.
 #'
 #'   If \code{distn} is not supplied then \code{distn = "binomial"}
 #'   is used.
@@ -23,6 +24,9 @@
 #'
 #'   If a parameter value is not supplied then the default values in the
 #'   relevant distributional function set using \code{distn} are used
+#' @param plot_par A named list of graphical parameters
+#'   (see \code{link[graphics]{par}}) to be passed to
+#'   \code{\link[graphics]{plot}}.
 #' @param panel_plot A logical parameter that determines whether the plot
 #'   is placed inside the panel (\code{TRUE}) or in the standard graphics
 #'   window (\code{FALSE}).  If the plot is to be placed inside the panel
@@ -32,8 +36,7 @@
 #'   Unix platforms and 2 on Windows platforms.
 #' @param observed_value A non-negative integer.  If \code{observed_value} is
 #'   supplied then the corresponding line in the plot of the p.m.f. is coloured
-#'   in red.  If \code{observed_value} is not an integer then
-#'   \code{round(observed_value)} is used.
+#'   in red.
 #' @param ... Additional arguments to be passed to
 #'   \code{\link[rpanel]{rp.doublebutton}}, not including \code{panel},
 #'   \code{variable}, \code{title}, \code{step}, \code{action}, \code{initval},
@@ -46,8 +49,9 @@
 #' discrete()
 #' }
 #' @export
-discrete <- function(distn, params = list(), panel_plot = TRUE, hscale = NA,
-                     vscale = hscale, observed_value = NA, ...) {
+discrete <- function(distn, params = list(), plot_par = list(),
+                     panel_plot = TRUE, hscale = NA, vscale = hscale,
+                     observed_value = NA, ...) {
   # To add another distribution
   # 1. misc.R: add code to set_fun_args(), parameter_range(), parameter_step(),
   #            variable_support()
@@ -120,7 +124,8 @@ discrete <- function(distn, params = list(), panel_plot = TRUE, hscale = NA,
                            dfun = dfun, pfun = pfun, qfun = qfun,
                            distn = distn, fun_args = fun_args, n_pars = n_pars,
                            par_names = par_names, pmf_or_cdf = pmf_or_cdf,
-                           observed_value = observed_value), pass_args)
+                           observed_value = observed_value,
+                           plot_par = plot_par), pass_args)
   discrete_panel <- do.call(rpanel::rp.control, for_rp_control)
   redraw_plot <- NULL
   panel_redraw <- function(panel) {
@@ -196,30 +201,44 @@ plot_discrete <- function(panel) {
       )
     var_support <- variable_support(distn, new_fun_args, qfun, pmf_or_cdf)
     if (is.null(observed_value)) {
-      my_col <- 1
+      my_col <- "black"
     } else {
       my_col <- rep(1, length(var_support))
       which_obs <- which(var_support == observed_value)
       if (length(which_obs) == 1) {
-        my_col[which_obs] <- 2
+        my_col[which_obs] <- "red"
       }
     }
     fun_args <- new_fun_args
+    my_xlab <- ifelse(!is.null(plot_par$xlab), plot_par$xlab, "x")
+    my_ylab <- ifelse(!is.null(plot_par$ylab), plot_par$ylab, "probability")
+    my_bty <- ifelse(!is.null(plot_par$bty), plot_par$bty, "l")
     if (pmf_or_cdf == "pmf") {
       probs <- do.call(dfun, c(list(x = var_support), fun_args))
-      graphics::plot(var_support, probs, type = "h", axes = FALSE,
-                     ylab = "pmf", xlab = "", col = my_col)
-      graphics::axis(1, at = var_support, labels = var_support, cex.axis = 0.7)
-      graphics::axis(2, las = 1)
-      graphics::title(main = paste("pmf of the", the_distn, "distribution"))
-      graphics::box(bty = "l")
+      my_main <- ifelse(!is.null(plot_par$main), plot_par$main,
+                        paste("pmf of the", the_distn, "distribution"))
+      if (!is.null(plot_par$col)) {
+        my_col <- plot_par$col
+      }
+      for_plot <- list(x = var_support, y = probs, type = "h", xlab = my_xlab,
+                       ylab = my_ylab, col = my_col, bty = my_bty,
+                       main = my_main)
+      do.call(plot, for_plot)
     } else {
       probs <- do.call(pfun, c(list(q = var_support), fun_args))
       rval <- stats::approxfun(var_support, probs, method = "constant",
                                yleft = 0, yright = 1, f = 0, ties = "ordered")
       class(rval) <- c("ecdf", "stepfun", class(rval))
-      graphics::plot(rval, main = paste("cdf of the", the_distn,
-                                        "distribution"))
+      my_main <- ifelse(!is.null(plot_par$main), plot_par$main,
+                        paste("cdf of the", the_distn, "distribution"))
+      if (!is.null(plot_par$col)) {
+        my_col <- plot_par$col
+      } else {
+        my_col <- "black"
+      }
+      for_plot <- list(x = rval, xlab = my_xlab, ylab = my_ylab, col = my_col,
+                       bty = my_bty, main = my_main)
+      do.call(plot, for_plot)
     }
     graphics::par(old_par)
   })
