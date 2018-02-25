@@ -56,6 +56,8 @@ discrete <- function(distn, params = list(), panel_plot = TRUE, hscale = NA,
   temp <- set_scales(hscale, vscale)
   hscale <- temp$hscale
   vscale <- temp$vscale
+  # Smallest value of positive parameters to be set in parameter_range()
+  ep <- 1e-6
   if (!is.na(observed_value) && observed_value < 0) {
     stop("observed_value cannot be negative")
   }
@@ -99,14 +101,14 @@ discrete <- function(distn, params = list(), panel_plot = TRUE, hscale = NA,
   par_names <- names(fun_args)
   n_pars <- length(par_names)
   # Set the limits on the parameters, the parameter stepsize and the support
-  par_range <- parameter_range(distn)
-  par_step <- parameter_step(distn)
+  par_range <- parameter_range(distn, fun_args, ep)
+  par_step <- parameter_step(distn, fun_args)
   #
   pmf_or_cdf <- "pmf"
-  # Temporarily change the name of the binomial size to n, because size
-  # is a man argument of rp.control
-  if (distn == "binomial") {
-    par_names[1] <- "n"
+  # Temporarily change the name of the binomial or negative binomial size
+  # to n, because size is a man argument of rp.control
+  if (distn == "binomial" | distn == "negative binomial") {
+    par_names[which(names(fun_args) == "size")] <- "n"
   }
   # A list of arguments to pass to the plotting function via rp.control()
   pass_args <- fun_args
@@ -168,11 +170,21 @@ plot_discrete <- function(panel) {
       names(temp) <- names(fun_args)[i]
       new_fun_args <- c(new_fun_args, temp)
     }
+    distn_name <- distn
+    if (!is.null(fun_args$mu)) {
+      distn_name <- "negbin2"
+    } else {
+      distn_name <- "negbin1"
+    }
     the_distn <-
-      switch(distn,
+      switch(distn_name,
              "binomial" = paste(distn, "(", new_fun_args$size, ",",
                                 new_fun_args$prob, ")"),
              "geometric" = paste(distn, "(", new_fun_args$prob, ")"),
+             "negbin1" = paste(distn, "(", new_fun_args$size, ",",
+                                new_fun_args$prob, ")"),
+             "negbin2" = paste(distn, "(", new_fun_args$size, ",",
+                               new_fun_args$mu, ")"),
              "poisson" = paste(distn, "(", new_fun_args$lambda, ")")
       )
     var_support <- variable_support(distn, new_fun_args, qfun)

@@ -163,6 +163,23 @@ set_fun_args <- function(distn, dfun, fun_args, params) {
     }
     return(fun_args)
   }
+  if (distn == "negative binomial") {
+    if (is.null(fun_args$size)) {
+      fun_args$size <- 1
+    }
+    if (is.null(fun_args$prob) & is.null(fun_args$mu)) {
+      fun_args$prob <- 0.5
+    }
+    if (!is.null(fun_args$mu)) {
+      n_names <- length(names(fun_args))
+      which_size <- which(names(fun_args) == "size")
+      print(n_names)
+      print(which_size)
+      fun_args <- fun_args[c(which_size, (1:n_names)[-which_size])]
+    }
+    print(fun_args)
+    return(fun_args)
+  }
 }
 
 set_top_range <- function(distn, p_vec, fun_args, qfun) {
@@ -298,7 +315,7 @@ rngev <- function(n, loc = 0, scale = 1, shape = 0){
   return(-revdbayes::rgev(n, loc = loc, scale = scale, shape = shape))
 }
 
-parameter_range <- function(distn) {
+parameter_range <- function(distn, fun_args, ep) {
   if (distn == "binomial") {
     size <- c(1, NA)
     prob <- c(0, 1)
@@ -309,14 +326,32 @@ parameter_range <- function(distn) {
     return(lambda)
   }
   if (distn == "geometric") {
-    prob <- matrix(c(1e-6, 1), 2, 1)
+    prob <- matrix(c(ep, 1), 2, 1)
     return(prob)
+  }
+  if (distn == "negative binomial") {
+    if (!is.null(fun_args$prob)) {
+      size <- c(0, NA)
+      prob <- c(ep, 1)
+      return(cbind(size, prob))
+    } else {
+      size <- c(0, NA)
+      mu <- c(ep, NA)
+      return(cbind(size, mu))
+    }
   }
 }
 
-parameter_step <- function(distn) {
+parameter_step <- function(distn, fun_args) {
   if (distn == "binomial") {
     return(c(1, 0.1))
+  }
+  if (distn == "negative binomial") {
+    if (!is.null(fun_args$prob)) {
+      return(c(1, 0.1))
+    } else {
+      return(c(1, 1))
+    }
   }
   if (distn == "poisson") {
     return(0.5)
@@ -330,7 +365,8 @@ variable_support <- function(distn, fun_args, qfun){
   if (distn == "binomial") {
     return(0:fun_args$size)
   }
-  if (distn == "poisson"| distn == "geometric") {
+  if (distn == "poisson" | distn == "geometric" |
+      distn == "negative binomial") {
     for_qfun <- c(list(p = c(0.001, 0.999)), fun_args)
     var_range <- do.call(qfun, for_qfun)
     return(var_range[1]:var_range[2])
