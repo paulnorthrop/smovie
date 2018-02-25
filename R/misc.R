@@ -180,6 +180,18 @@ set_fun_args <- function(distn, dfun, fun_args, params) {
     print(fun_args)
     return(fun_args)
   }
+  if (distn == "hypergeometric") {
+    if (is.null(fun_args$m)) {
+      fun_args$m <- 10
+    }
+    if (is.null(fun_args$n)) {
+      fun_args$n <- 7
+    }
+    if (is.null(fun_args$k)) {
+      fun_args$k <- 8
+    }
+    return(fun_args)
+  }
 }
 
 set_top_range <- function(distn, p_vec, fun_args, qfun) {
@@ -340,6 +352,12 @@ parameter_range <- function(distn, fun_args, ep) {
       return(cbind(size, mu))
     }
   }
+  if (distn == "hypergeometric") {
+    m <- c(1, NA)
+    n <- c(1, NA)
+    k <- c(1, NA)
+    return(cbind(m, n, k))
+  }
 }
 
 parameter_step <- function(distn, fun_args) {
@@ -358,6 +376,9 @@ parameter_step <- function(distn, fun_args) {
   }
   if (distn == "geometric") {
     return(0.1)
+  }
+  if (distn == "hypergeometric") {
+    return(c(1, 1, 1))
   }
 }
 
@@ -395,5 +416,8 @@ variable_support <- function(distn, fun_args, qfun, pmf_or_cdf){
     for_qfun <- c(list(p = c(0.001, 0.999)), fun_args)
     var_range <- do.call(qfun, for_qfun)
     return(var_range[1]:var_range[2])
+  }
+  if (distn == "hypergeometric") {
+    return(0:fun_args$k)
   }
 }
