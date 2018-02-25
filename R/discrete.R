@@ -62,12 +62,11 @@ discrete <- function(distn, params = list(), plot_par = list(),
   vscale <- temp$vscale
   # Smallest value of positive parameters to be set in parameter_range()
   ep <- 0.01
-  if (!is.na(observed_value) && observed_value < 0) {
-    stop("observed_value cannot be negative")
-  }
-  observed_value <- round(observed_value)
   if (!is.list(params)) {
     stop("params must be a named list")
+  }
+  if (!is.list(plot_par)) {
+    stop("plot_par must be a named list")
   }
   if (missing(distn)) {
     distn <- "binomial"
