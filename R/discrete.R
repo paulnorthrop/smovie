@@ -57,7 +57,7 @@ discrete <- function(distn, params = list(), panel_plot = TRUE, hscale = NA,
   hscale <- temp$hscale
   vscale <- temp$vscale
   # Smallest value of positive parameters to be set in parameter_range()
-  ep <- 1e-6
+  ep <- 0.01
   if (!is.na(observed_value) && observed_value < 0) {
     stop("observed_value cannot be negative")
   }
@@ -171,10 +171,12 @@ plot_discrete <- function(panel) {
       new_fun_args <- c(new_fun_args, temp)
     }
     distn_name <- distn
-    if (!is.null(fun_args$mu)) {
-      distn_name <- "negbin2"
-    } else {
-      distn_name <- "negbin1"
+    if (distn == "negative binomial") {
+      if (!is.null(fun_args$mu)) {
+        distn_name <- "negbin2"
+      } else {
+        distn_name <- "negbin1"
+      }
     }
     the_distn <-
       switch(distn_name,
