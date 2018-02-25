@@ -189,7 +189,7 @@ plot_discrete <- function(panel) {
                                new_fun_args$mu, ")"),
              "poisson" = paste(distn, "(", new_fun_args$lambda, ")")
       )
-    var_support <- variable_support(distn, new_fun_args, qfun)
+    var_support <- variable_support(distn, new_fun_args, qfun, pmf_or_cdf)
     if (is.null(observed_value)) {
       my_col <- 1
     } else {

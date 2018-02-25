@@ -361,12 +361,37 @@ parameter_step <- function(distn, fun_args) {
   }
 }
 
-variable_support <- function(distn, fun_args, qfun){
+variable_support <- function(distn, fun_args, qfun, pmf_or_cdf){
   if (distn == "binomial") {
     return(0:fun_args$size)
   }
-  if (distn == "poisson" | distn == "geometric" |
-      distn == "negative binomial") {
+  if (distn == "poisson") {
+    if (fun_args$lambda == 0) {
+      if (pmf_or_cdf == "pmf") {
+        return(0:2)
+      } else {
+        return(-1:1)
+      }
+    } else {
+      for_qfun <- c(list(p = c(0.001, 0.999)), fun_args)
+      var_range <- do.call(qfun, for_qfun)
+      return(var_range[1]:var_range[2])
+    }
+  }
+  if (distn == "negative binomial") {
+    if (fun_args$size == 0) {
+      if (pmf_or_cdf == "pmf") {
+        return(0:2)
+      } else {
+        return(-1:1)
+      }
+    } else {
+      for_qfun <- c(list(p = c(0.001, 0.999)), fun_args)
+      var_range <- do.call(qfun, for_qfun)
+      return(var_range[1]:var_range[2])
+    }
+  }
+  if (distn == "geometric") {
     for_qfun <- c(list(p = c(0.001, 0.999)), fun_args)
     var_range <- do.call(qfun, for_qfun)
     return(var_range[1]:var_range[2])
