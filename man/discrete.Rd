@@ -61,6 +61,8 @@ Ass details.
 \examples{
 \dontrun{
 discrete()
+
+discrete(distn = stats::dbinom, params = list(size = 10, prob = 0.5))
 }
 }
 \seealso{

@@ -25,6 +25,10 @@ set_fun_args <- function(distn, dfun, fun_args, params) {
   params_names <- names(params)
   is_par_name <- is.element(params_names, par_names)
   fun_args <- params[is_par_name]
+  # If a name was not supplied (user function supplied for distn) the return
+  if (distn == "user") {
+    return(fun_args)
+  }
   if (distn == "exponential") {
     if (is.null(fun_args$rate)) {
       fun_args$rate <- 1
@@ -327,7 +331,10 @@ rngev <- function(n, loc = 0, scale = 1, shape = 0){
   return(-revdbayes::rgev(n, loc = loc, scale = scale, shape = shape))
 }
 
-parameter_range <- function(distn, fun_args, ep) {
+parameter_range <- function(distn, fun_args, ep, n_pars) {
+  if (distn == "user") {
+    return(matrix(NA, nrow = 2, ncol = n_pars))
+  }
   if (distn == "binomial") {
     size <- c(1, NA)
     prob <- c(0, 1)
@@ -360,7 +367,10 @@ parameter_range <- function(distn, fun_args, ep) {
   }
 }
 
-parameter_step <- function(distn, fun_args) {
+parameter_step <- function(distn, fun_args, n_pars) {
+  if (distn == "user") {
+    return(rep(0.1, n_pars))
+  }
   if (distn == "binomial") {
     return(c(1, 0.1))
   }
@@ -383,6 +393,11 @@ parameter_step <- function(distn, fun_args) {
 }
 
 variable_support <- function(distn, fun_args, qfun, pmf_or_cdf){
+  if (distn == "user") {
+    for_qfun <- c(list(p = c(0.001, 0.999)), fun_args)
+    var_range <- do.call(qfun, for_qfun)
+    return(var_range[1]:var_range[2])
+  }
   if (distn == "binomial") {
     return(0:fun_args$size)
   }

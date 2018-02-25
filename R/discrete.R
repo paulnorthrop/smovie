@@ -1,3 +1,12 @@
+# distn = "user" if distn is a function
+
+# do.call()
+# don't worry about stats:: bit - doesn't work with do.call() ??
+# ylim for pmf plot: start from 0?
+
+# Need to sort out size vs n inside plot function also
+# Also title with parameters
+
 # add delta_params ?
 # add prob to set range.
 
@@ -47,6 +56,8 @@
 #' @examples
 #' \dontrun{
 #' discrete()
+#'
+#' discrete(distn = stats::dbinom, params = list(size = 10, prob = 0.5))
 #' }
 #' @export
 discrete <- function(distn, params = list(), plot_par = list(),
@@ -71,54 +82,93 @@ discrete <- function(distn, params = list(), plot_par = list(),
   if (missing(distn)) {
     distn <- "binomial"
   }
-  # Allow stats:: abbreviations
-  distn <- recognise_stats_abbreviations(distn)
-  # Set the density, distribution and quantile functions
-  #
-  dfun <-
-    switch(distn,
-           "binomial" = stats::dbinom,
-           "geometric" = stats::dgeom,
-           "hypergeometric" = stats::dhyper,
-           "negative binomial" = stats::dnbinom,
-           "poisson" = stats::dpois,
-           NULL)
-  if (is.null(dfun)) {
-    stop("Unsupported distribution")
+  if (is.function(distn)) {
+    dfun <- distn
+    user_fun <- as.character(substitute(distn))
+    if (user_fun[1] == "::") {
+      fun_name <- user_fun[3]
+#      first_bit <- paste(user_fun[2], user_fun[1], sep = "")
+      first_bit <- NULL
+    } else {
+      fun_name <- user_fun
+      first_bit <- NULL
+    }
+    root_name <- substr(fun_name, start = 2, stop = nchar(fun_name))
+#    pfun <- as.name(paste(first_bit, "p", root_name, sep = ""))
+    pfun <- eval(
+      substitute(x, list(x = paste(first_bit, "p", root_name, sep = "")))
+    )
+    print(pfun)
+#    qfun <- as.name(paste(first_bit, "q", root_name, sep = ""))
+    qfun <- eval(
+      substitute(x, list(x = paste(first_bit, "q", root_name, sep = "")))
+    )
+    distn <- "user"
+    # Set the arguments to the distributional functions
+    fun_args <- set_fun_args(distn, dfun, fun_args, params)
+    # Extract the names of the parameters and find the number of parameters
+    par_names <- names(fun_args)
+    n_pars <- length(par_names)
+    # Set the limits on the parameters, the parameter stepsize and the support
+    par_range <- parameter_range(distn, fun_args, ep, n_pars)
+    par_step <- parameter_step(distn, fun_args, n_pars)
+  } else if (is.character(distn)) {
+    # Allow stats:: abbreviations
+    distn <- recognise_stats_abbreviations(distn)
+    root_name <- distn
+    # Set the density, distribution and quantile functions
+    #
+    dfun <-
+      switch(distn,
+             "binomial" = stats::dbinom,
+             "geometric" = stats::dgeom,
+             "hypergeometric" = stats::dhyper,
+             "negative binomial" = stats::dnbinom,
+             "poisson" = stats::dpois,
+             NULL)
+    if (is.null(dfun)) {
+      stop("Unsupported distribution")
+    }
+    pfun <-
+      switch(distn,
+             "binomial" = stats::pbinom,
+             "geometric" = stats::pgeom,
+             "hypergeometric" = stats::phyper,
+             "negative binomial" = stats::pnbinom,
+             "poisson" = stats::ppois)
+    qfun <-
+      switch(distn,
+             "binomial" = stats::qbinom,
+             "geometric" = stats::qgeom,
+             "hypergeometric" = stats::qhyper,
+             "negative binomial" = stats::qnbinom,
+             "poisson" = stats::qpois)
+    # Set the arguments to the distributional functions
+    fun_args <- set_fun_args(distn, dfun, fun_args, params)
+    # Extract the names of the parameters and find the number of parameters
+    par_names <- names(fun_args)
+    n_pars <- length(par_names)
+    # Set the limits on the parameters, the parameter stepsize and the support
+    par_range <- parameter_range(distn, fun_args, ep, n_pars)
+    par_step <- parameter_step(distn, fun_args)
+  } else {
+    stop("distn must be a character scalar or a function")
   }
-  pfun <-
-    switch(distn,
-           "binomial" = stats::pbinom,
-           "geometric" = stats::pgeom,
-           "hypergeometric" = stats::phyper,
-           "negative binomial" = stats::pnbinom,
-           "poisson" = stats::ppois)
-  qfun <-
-    switch(distn,
-           "binomial" = stats::qbinom,
-           "geometric" = stats::qgeom,
-           "hypergeometric" = stats::qhyper,
-           "negative binomial" = stats::qnbinom,
-           "poisson" = stats::qpois)
-  # Set the arguments to the distributional functions
-  fun_args <- set_fun_args(distn, dfun, fun_args, params)
-  # Extract the names of the parameters and find the number of parameters
-  par_names <- names(fun_args)
-  n_pars <- length(par_names)
-  # Set the limits on the parameters, the parameter stepsize and the support
-  par_range <- parameter_range(distn, fun_args, ep)
-  par_step <- parameter_step(distn, fun_args)
   #
   pmf_or_cdf <- "pmf"
   # Temporarily change the name of the binomial or negative binomial size
   # to n, because size is a man argument of rp.control
-  if (distn == "binomial" | distn == "negative binomial") {
+#  if (distn == "binomial" | distn == "negative binomial") {
+  if (any(names(fun_args) == "size")) {
     par_names[which(names(fun_args) == "size")] <- "n"
   }
+  print(par_names)
   # A list of arguments to pass to the plotting function via rp.control()
   pass_args <- fun_args
   names(pass_args) <- par_names
-  my_title <- paste("pmf and cdf for the", distn, "distribution")
+#  my_title <- paste("pmf and cdf for the", distn, "distribution")
+  my_title <- paste("pmf and cdf for the", root_name, "distribution")
+  print(my_title)
   for_rp_control <- c(list(title = my_title,
                            dfun = dfun, pfun = pfun, qfun = qfun,
                            distn = distn, fun_args = fun_args, n_pars = n_pars,
@@ -214,6 +264,7 @@ plot_discrete <- function(panel) {
     my_bty <- ifelse(!is.null(plot_par$bty), plot_par$bty, "l")
     if (pmf_or_cdf == "pmf") {
       probs <- do.call(dfun, c(list(x = var_support), fun_args))
+      my_ylim <- c(0, max(probs))
       my_main <- ifelse(!is.null(plot_par$main), plot_par$main,
                         paste("pmf of the", the_distn, "distribution"))
       if (!is.null(plot_par$col)) {
@@ -221,7 +272,7 @@ plot_discrete <- function(panel) {
       }
       for_plot <- list(x = var_support, y = probs, type = "h", xlab = my_xlab,
                        ylab = my_ylab, col = my_col, bty = my_bty,
-                       main = my_main)
+                       main = my_main, ylim = my_ylim)
       do.call(plot, for_plot)
     } else {
       probs <- do.call(pfun, c(list(q = var_support), fun_args))
