@@ -29,7 +29,8 @@ discrete(distn, params = list(), plot_par = list(), param_step = list(),
   CRAN task view on distributions}.
 
   If \code{distn} is not supplied then \code{distn = "binomial"}
-  is used.}
+  is used.  It is assumed that the support of the random variable is a
+  subset of the integers.}
 
 \item{params}{A named list of initial parameter values with which to start
   the movie.  If \code{distn} is a string and a particular parameter value
