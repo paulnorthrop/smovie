@@ -323,7 +323,7 @@ plot_discrete <- function(panel) {
       for_plot <- list(x = var_support, y = probs, type = "h", xlab = my_xlab,
                        ylab = my_ylab, col = my_col, bty = my_bty,
                        main = my_main, ylim = my_ylim)
-      do.call(plot, for_plot)
+      do.call(graphics::plot, for_plot)
     } else {
       probs <- do.call(pfun, c(list(q = var_support), fun_args))
       rval <- stats::approxfun(var_support, probs, method = "constant",
@@ -338,7 +338,7 @@ plot_discrete <- function(panel) {
       }
       for_plot <- list(x = rval, xlab = my_xlab, ylab = my_ylab, col = my_col,
                        bty = my_bty, main = my_main)
-      do.call(plot, for_plot)
+      do.call(graphics::plot, for_plot)
     }
     graphics::par(old_par)
   })
