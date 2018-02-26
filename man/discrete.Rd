@@ -27,10 +27,11 @@ discrete(distn, params = list(), plot_par = list(), param_step = list(),
   and with arguments to set the parameters of the distribution in between.
   See the \href{https://cran.r-project.org/web/views/Distributions.html}{
   CRAN task view on distributions}.
+  It is assumed that the support of the random variable is a
+  subset of the integers.
 
   If \code{distn} is not supplied then \code{distn = "binomial"}
-  is used.  It is assumed that the support of the random variable is a
-  subset of the integers.}
+  is used.}
 
 \item{params}{A named list of initial parameter values with which to start
   the movie.  If \code{distn} is a string and a particular parameter value
