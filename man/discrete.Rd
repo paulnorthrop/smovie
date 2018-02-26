@@ -100,10 +100,13 @@ The movie starts with a plot of the p.m.f. of the distribution
 }
 \examples{
 \dontrun{
+# Binomial example
 discrete()
-
+# The same, but using a user-supplied function and setting manually
+# the initial parameters, parameter step size and range
 discrete(distn = dbinom, params = list(size = 10, prob = 0.5),
-         param_step = list(size = 1))
+         param_step = list(size = 1),
+         param_range = list(size = c(1, NA), prob = c(0, 1)))
 }
 }
 \seealso{

@@ -1,7 +1,3 @@
-# param_step: allow setting only some of the steps
-# merge list, giving priority to the user-supplied one.
-# do similar for param_range
-
 # ================================= discrete ==================================
 
 #' Univariate Discrete Distributions: p.m.f and c.d.f.
@@ -84,10 +80,13 @@
 #' @seealso \code{\link{smovie}}: general information about smovie.
 #' @examples
 #' \dontrun{
+#' # Binomial example
 #' discrete()
-#'
+#' # The same, but using a user-supplied function and setting manually
+#' # the initial parameters, parameter step size and range
 #' discrete(distn = dbinom, params = list(size = 10, prob = 0.5),
-#'          param_step = list(size = 1))
+#'          param_step = list(size = 1),
+#'          param_range = list(size = c(1, NA), prob = c(0, 1)))
 #' }
 #' @export
 discrete <- function(distn, params = list(), plot_par = list(),
