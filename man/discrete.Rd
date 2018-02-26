@@ -5,8 +5,8 @@
 \title{Univariate Discrete Distributions: p.m.f and c.d.f.}
 \usage{
 discrete(distn, params = list(), plot_par = list(), param_step = list(),
-  panel_plot = TRUE, hscale = NA, vscale = hscale, observed_value = NA,
-  ...)
+  param_range = list(), panel_plot = TRUE, hscale = NA, vscale = hscale,
+  observed_value = NA, ...)
 }
 \arguments{
 \item{distn}{Either a character string or a function to choose the discrete
@@ -50,7 +50,16 @@ of the plots of the p.m.f. and c.d.f.}
 
 \item{param_step}{A named list of the amounts by which the respective
 parameters in \code{params} are increased/decreased after one click of
-the +/- button. The default is 0.1 for all parameters.}
+the +/- button. If \code{distn} is a function then the default is 0.1
+for all parameters.  If \code{distn} is a string then a sensible
+distribution-specific default is set internally.}
+
+\item{param_range}{A named list of the ranges over which the respective
+parameters in \code{params} are allowed to vary.  Each element of the list
+should be a vector of length 2: the first element gives the lower limit
+of the range, the second element the upper limit.
+Use \code{NA} to impose no limit.
+If \code{distn} is a function then all parameters are unconstrained.}
 
 \item{panel_plot}{A logical parameter that determines whether the plot
 is placed inside the panel (\code{TRUE}) or in the standard graphics
@@ -93,7 +102,8 @@ The movie starts with a plot of the p.m.f. of the distribution
 \dontrun{
 discrete()
 
-discrete(distn = dbinom, params = list(size = 10, prob = 0.5))
+discrete(distn = dbinom, params = list(size = 10, prob = 0.5),
+         param_step = list(size = 1))
 }
 }
 \seealso{

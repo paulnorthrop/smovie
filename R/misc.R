@@ -330,62 +330,66 @@ rngev <- function(n, loc = 0, scale = 1, shape = 0){
 
 parameter_range <- function(distn, fun_args, ep, n_pars) {
   if (distn == "user") {
-    return(matrix(NA, nrow = 2, ncol = n_pars))
+    par_step <- rep(list(c(NA, NA)), n_pars)
+    names(par_step) <- names(fun_args)
+    return(par_step)
   }
   if (distn == "binomial") {
     size <- c(1, NA)
     prob <- c(0, 1)
-    return(cbind(size, prob))
+    return(list(size = size, prob = prob))
   }
   if (distn == "poisson") {
-    lambda <- matrix(c(0, Inf), 2, 1)
-    return(lambda)
+    lambda <- c(0, Inf)
+    return(list(lambda = lambda))
   }
   if (distn == "geometric") {
-    prob <- matrix(c(ep, 1), 2, 1)
-    return(prob)
+    prob <- c(ep, 1)
+    return(list(prob = prob))
   }
   if (distn == "negative binomial") {
     if (!is.null(fun_args$prob)) {
       size <- c(0, NA)
       prob <- c(ep, 1)
-      return(cbind(size, prob))
+      return(list(size = size, prob = prob))
     } else {
       size <- c(0, NA)
       mu <- c(ep, NA)
-      return(cbind(size, mu))
+      return(list(size = size, prob = prob))
     }
   }
   if (distn == "hypergeometric") {
     m <- c(1, NA)
     n <- c(1, NA)
     k <- c(1, NA)
-    return(cbind(m, n, k))
+    return(list(m = m, n = n, k = k))
   }
 }
 
 parameter_step <- function(distn, fun_args, n_pars) {
   if (distn == "user") {
-    return(rep(0.1, n_pars))
+    par_step <- rep(list(0.1), n_pars)
+    names(par_step) <- names(fun_args)
+    return(par_step)
   }
   if (distn == "binomial") {
-    return(c(1, 0.1))
+    return(list(size = 1, prob = 0.1))
   }
   if (distn == "negative binomial") {
     if (!is.null(fun_args$prob)) {
-      return(c(1, 0.1))
+      return(list(size = 1, prob = 0.1))
     } else {
-      return(c(1, 1))
+      return(list(size = 1, mu = 1))
     }
   }
   if (distn == "poisson") {
-    return(0.5)
+    return(list(lambda = 1))
   }
   if (distn == "geometric") {
-    return(0.1)
+    return(list(prob = 0.1))
   }
   if (distn == "hypergeometric") {
-    return(c(1, 1, 1))
+    return(list(m = 1, n = 1, k = 1))
   }
 }
 
@@ -451,4 +455,19 @@ recognise_stats_abbreviations <- function(distn) {
     return("poisson")
   }
   return(distn)
+}
+
+merge_lists <- function(list1, list2) {
+  # Merge list1 and list2.  If a component exists in both list1 and list2 then
+  # use the component in list2
+  names1 <- names(list1)
+  names2 <- names(list2)
+  # Find all the names
+  all_names <- unique(c(names1, names2))
+  in1 <- is.element(all_names, names1)
+  in2 <- is.element(all_names, names2)
+  # If in2 is TRUE use list2 value, otherwise list1
+  merged_list <- ifelse(in2, list2, list1)
+  names(merged_list) <- all_names
+  return(merged_list)
 }

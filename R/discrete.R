@@ -1,4 +1,5 @@
 # param_step: allow setting only some of the steps
+# merge list, giving priority to the user-supplied one.
 # do similar for param_range
 
 # ================================= discrete ==================================
@@ -43,7 +44,15 @@
 #'   parameters.
 #' @param param_step A named list of the amounts by which the respective
 #'   parameters in \code{params} are increased/decreased after one click of
-#'   the +/- button. The default is 0.1 for all parameters.
+#'   the +/- button. If \code{distn} is a function then the default is 0.1
+#'   for all parameters.  If \code{distn} is a string then a sensible
+#'   distribution-specific default is set internally.
+#' @param param_range A named list of the ranges over which the respective
+#'   parameters in \code{params} are allowed to vary.  Each element of the list
+#'   should be a vector of length 2: the first element gives the lower limit
+#'   of the range, the second element the upper limit.
+#'   Use \code{NA} to impose no limit.
+#'   If \code{distn} is a function then all parameters are unconstrained.
 #' @param plot_par A named list of graphical parameters
 #'   (see \code{link[graphics]{par}}) to be passed to
 #'   \code{\link[graphics]{plot}}.  This may be used to alter the appearance
@@ -77,12 +86,14 @@
 #' \dontrun{
 #' discrete()
 #'
-#' discrete(distn = dbinom, params = list(size = 10, prob = 0.5))
+#' discrete(distn = dbinom, params = list(size = 10, prob = 0.5),
+#'          param_step = list(size = 1))
 #' }
 #' @export
 discrete <- function(distn, params = list(), plot_par = list(),
-                     param_step = list(), panel_plot = TRUE, hscale = NA,
-                     vscale = hscale, observed_value = NA, ...) {
+                     param_step = list(), param_range = list(),
+                     panel_plot = TRUE, hscale = NA, vscale = hscale,
+                     observed_value = NA, ...) {
   # To add another distribution
   # 1. misc.R: add code to set_fun_args(), parameter_range(), parameter_step(),
   #            variable_support()
@@ -103,6 +114,9 @@ discrete <- function(distn, params = list(), plot_par = list(),
     distn <- "binomial"
   }
   if (is.function(distn)) {
+    if (length(params) == 0) {
+      stop("params must be supplied")
+    }
     dfun <- distn
     user_fun <- as.character(substitute(distn))
     if (user_fun[1] == "::") {
@@ -119,11 +133,10 @@ discrete <- function(distn, params = list(), plot_par = list(),
     n_pars <- length(par_names)
     # Set the limits on the parameters, the parameter stepsize and the support
     par_range <- parameter_range(distn, fun_args, ep, n_pars)
-    if (length(param_step) == 0) {
-      par_step <- parameter_step(distn, fun_args, n_pars)
-    } else {
-      par_step <- param_step
-    }
+    par_step <- parameter_step(distn, fun_args, n_pars)
+    # Merge the lists, giving precedence to the user-supplied param_step
+    par_range <- merge_lists(par_range, param_range)
+    par_step <- merge_lists(par_step, param_step)
   } else if (is.character(distn)) {
     # Allow stats:: abbreviations
     distn <- recognise_stats_abbreviations(distn)
@@ -162,11 +175,12 @@ discrete <- function(distn, params = list(), plot_par = list(),
     n_pars <- length(par_names)
     # Set the limits on the parameters, the parameter stepsize and the support
     par_range <- parameter_range(distn, fun_args, ep, n_pars)
-    if (length(param_step) == 0) {
-      par_step <- parameter_step(distn, fun_args, n_pars)
-    } else {
-      par_step <- param_step
-    }
+    par_step <- parameter_step(distn, fun_args, n_pars)
+    # Merge the lists, giving precedence to the user-supplied param_step
+    par_range <- merge_lists(par_range, param_range)
+    par_step <- merge_lists(par_step, param_step)
+    print(par_range)
+    print(par_range[1])
   } else {
     stop("distn must be a character scalar or a function")
   }
@@ -213,7 +227,7 @@ discrete <- function(distn, params = list(), plot_par = list(),
         rpanel::rp.doublebutton(panel = discrete_panel, variable = x,
                                 title = par_names[i], step = par_step[i],
                                 action = action, initval = fun_args[i],
-                                range = par_range[, i], ...),
+                                range = unlist(par_range[i]), ...),
         list(x = as.name(par_names[i]))
       )
     )
