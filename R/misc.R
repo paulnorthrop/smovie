@@ -177,11 +177,8 @@ set_fun_args <- function(distn, dfun, fun_args, params) {
     if (!is.null(fun_args$mu)) {
       n_names <- length(names(fun_args))
       which_size <- which(names(fun_args) == "size")
-      print(n_names)
-      print(which_size)
       fun_args <- fun_args[c(which_size, (1:n_names)[-which_size])]
     }
-    print(fun_args)
     return(fun_args)
   }
   if (distn == "hypergeometric") {

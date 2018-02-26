@@ -1,12 +1,3 @@
-# distn = "user" if distn is a function
-
-# do.call()
-# don't worry about stats:: bit - doesn't work with do.call() ??
-# ylim for pmf plot: start from 0?
-
-# Need to sort out size vs n inside plot function also
-# Also title with parameters
-
 # add delta_params ?
 # add prob to set range.
 
@@ -18,24 +9,42 @@
 #' cumulative distribution function (c.d.f.) of a discrete random variable
 #' depends on the values of its parameters.
 #'
-#' @param distn A character scalar specifying the distribution from which
-#'   observations are sampled..   Distributions \code{"binomial"},
-#'   \code{"geometric"}, \code{"hypergeometric"}, \code{"negative binomial"},
-#'   \code{Poisson} are recognised, case being ignored.
-#'   The relevant distributional functions \code{dxxx} and \code{pxxx} in the
-#'   \code{\link[stats]{stats-package}} are used.  The abbreviations
-#'   \code{xxx} are also recognised.
+#' @param distn Either a character string or a function to choose the discrete
+#'   random variable.
+#'
+#'   Strings \code{"binomial"}, \code{"geometric"},
+#'   \code{"hypergeometric"}, \code{"negative binomial"}, \code{Poisson} are
+#'   recognised, case being ignored.  The relevant distributional functions
+#'   \code{dxxx} and \code{pxxx} in the \code{\link[stats]{stats-package}}
+#'   are used.  The abbreviations \code{xxx} are also recognised.
+#'   If \code{distn = "hypergeometric"} then the \code{(size, prob)}
+#'   parameterisation is used, unless a value for \code{mu} is provided
+#'   via the argument \code{params} when the \code{(size, mu)}
+#'   parameterisation is used.
+#'
+#'   Valid functions are set up like a standard distributional function
+#'   \code{dxxx}, with first argument \code{x}, last argument \code{log}
+#'   and with arguments to set the parameters of the distribution in between.
+#'   See the \href{https://cran.r-project.org/web/views/Distributions.html}{
+#'   CRAN task view on distributions}.
 #'
 #'   If \code{distn} is not supplied then \code{distn = "binomial"}
 #'   is used.
-#' @param params A named list of additional arguments to be passed to the
-#'   density function associated with distribution \code{distn}.
+#' @param params A named list of initial parameter values with which to start
+#'   the movie.  If \code{distn} is a string and a particular parameter value
+#'   is not supplied then the following values are used.
+#'   \code{"binomial"}: \code{size = 10, prob = 0.5};
+#'   \code{"geometric"}: \code{prob = 0.5};
+#'   \code{"hypergeometric"}: \code{m = 10, n = 7, k = 8};
+#'   \code{"negative binomial"}: \code{size = 10, prob = 0.5};
+#'   \code{"poisson"}: \code{lambda = 5}.
 #'
-#'   If a parameter value is not supplied then the default values in the
-#'   relevant distributional function set using \code{distn} are used
+#'   If \code{distn} is a function then \code{params} must set any required
+#'   parameters.
 #' @param plot_par A named list of graphical parameters
 #'   (see \code{link[graphics]{par}}) to be passed to
-#'   \code{\link[graphics]{plot}}.
+#'   \code{\link[graphics]{plot}}.  This may be used to alter the appearance
+#'   of the plots of the p.m.f. and c.d.f.
 #' @param panel_plot A logical parameter that determines whether the plot
 #'   is placed inside the panel (\code{TRUE}) or in the standard graphics
 #'   window (\code{FALSE}).  If the plot is to be placed inside the panel
@@ -50,14 +59,22 @@
 #'   \code{\link[rpanel]{rp.doublebutton}}, not including \code{panel},
 #'   \code{variable}, \code{title}, \code{step}, \code{action}, \code{initval},
 #'   \code{range}.
-#' @details Ass details.
+#' @details The movie starts with a plot of the p.m.f. of the distribution
+#'   for the initial values of the parameters.  There are buttoms to
+#'   increase (+) or decrease (-) each parameter.  There is a radio button
+#'   to switch the plot from the p.m.f. to the c.d.f.
+#'
+#'   Owing to a conflict with the argument \code{size} of the function
+#'   \code{\link[rpanel]{rp.control}} the parameter \code{size} of,
+#'   for example, the binomial and negative binomial distributions, is
+#'   labelled as \code{n}.
 #' @return Nothing is returned, only the animation is produced.
 #' @seealso \code{\link{smovie}}: general information about smovie.
 #' @examples
 #' \dontrun{
 #' discrete()
 #'
-#' discrete(distn = stats::dbinom, params = list(size = 10, prob = 0.5))
+#' discrete(distn = dbinom, params = list(size = 10, prob = 0.5))
 #' }
 #' @export
 discrete <- function(distn, params = list(), plot_par = list(),
@@ -86,23 +103,11 @@ discrete <- function(distn, params = list(), plot_par = list(),
     dfun <- distn
     user_fun <- as.character(substitute(distn))
     if (user_fun[1] == "::") {
-      fun_name <- user_fun[3]
-#      first_bit <- paste(user_fun[2], user_fun[1], sep = "")
-      first_bit <- NULL
-    } else {
-      fun_name <- user_fun
-      first_bit <- NULL
+      stop("Use dbinom, not stats::dbinom (for example)")
     }
-    root_name <- substr(fun_name, start = 2, stop = nchar(fun_name))
-#    pfun <- as.name(paste(first_bit, "p", root_name, sep = ""))
-    pfun <- eval(
-      substitute(x, list(x = paste(first_bit, "p", root_name, sep = "")))
-    )
-    print(pfun)
-#    qfun <- as.name(paste(first_bit, "q", root_name, sep = ""))
-    qfun <- eval(
-      substitute(x, list(x = paste(first_bit, "q", root_name, sep = "")))
-    )
+    root_name <- substr(user_fun, start = 2, stop = nchar(user_fun))
+    pfun <- paste("p", root_name, sep = "")
+    qfun <- paste("q", root_name, sep = "")
     distn <- "user"
     # Set the arguments to the distributional functions
     fun_args <- set_fun_args(distn, dfun, fun_args, params)
@@ -158,23 +163,20 @@ discrete <- function(distn, params = list(), plot_par = list(),
   pmf_or_cdf <- "pmf"
   # Temporarily change the name of the binomial or negative binomial size
   # to n, because size is a man argument of rp.control
-#  if (distn == "binomial" | distn == "negative binomial") {
   if (any(names(fun_args) == "size")) {
     par_names[which(names(fun_args) == "size")] <- "n"
   }
-  print(par_names)
   # A list of arguments to pass to the plotting function via rp.control()
   pass_args <- fun_args
   names(pass_args) <- par_names
-#  my_title <- paste("pmf and cdf for the", distn, "distribution")
   my_title <- paste("pmf and cdf for the", root_name, "distribution")
-  print(my_title)
   for_rp_control <- c(list(title = my_title,
                            dfun = dfun, pfun = pfun, qfun = qfun,
                            distn = distn, fun_args = fun_args, n_pars = n_pars,
                            par_names = par_names, pmf_or_cdf = pmf_or_cdf,
                            observed_value = observed_value,
-                           plot_par = plot_par), pass_args)
+                           plot_par = plot_par, root_name = root_name),
+                      pass_args)
   discrete_panel <- do.call(rpanel::rp.control, for_rp_control)
   redraw_plot <- NULL
   panel_redraw <- function(panel) {
@@ -234,6 +236,16 @@ plot_discrete <- function(panel) {
         distn_name <- "negbin1"
       }
     }
+    if (distn_name == "user") {
+      par_paste <- "("
+      for (i in 1:n_pars) {
+        par_paste <- paste(par_paste, new_fun_args[i])
+        if (i < n_pars) {
+          par_paste <- paste(par_paste, ",")
+        }
+      }
+      par_paste <- paste(par_paste, ")")
+    }
     the_distn <-
       switch(distn_name,
              "binomial" = paste(distn, "(", new_fun_args$size, ",",
@@ -246,7 +258,8 @@ plot_discrete <- function(panel) {
                                 new_fun_args$prob, ")"),
              "negbin2" = paste(distn, "(", new_fun_args$size, ",",
                                new_fun_args$mu, ")"),
-             "poisson" = paste(distn, "(", new_fun_args$lambda, ")")
+             "poisson" = paste(distn, "(", new_fun_args$lambda, ")"),
+             "user" = paste(root_name, par_paste)
       )
     var_support <- variable_support(distn, new_fun_args, qfun, pmf_or_cdf)
     if (is.null(observed_value)) {

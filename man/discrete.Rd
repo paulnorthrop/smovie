@@ -8,26 +8,44 @@ discrete(distn, params = list(), plot_par = list(), panel_plot = TRUE,
   hscale = NA, vscale = hscale, observed_value = NA, ...)
 }
 \arguments{
-\item{distn}{A character scalar specifying the distribution from which
-  observations are sampled..   Distributions \code{"binomial"},
-  \code{"geometric"}, \code{"hypergeometric"}, \code{"negative binomial"},
-  \code{Poisson} are recognised, case being ignored.
-  The relevant distributional functions \code{dxxx} and \code{pxxx} in the
-  \code{\link[stats]{stats-package}} are used.  The abbreviations
-  \code{xxx} are also recognised.
+\item{distn}{Either a character string or a function to choose the discrete
+  random variable.
+
+  Strings \code{"binomial"}, \code{"geometric"},
+  \code{"hypergeometric"}, \code{"negative binomial"}, \code{Poisson} are
+  recognised, case being ignored.  The relevant distributional functions
+  \code{dxxx} and \code{pxxx} in the \code{\link[stats]{stats-package}}
+  are used.  The abbreviations \code{xxx} are also recognised.
+  If \code{distn = "hypergeometric"} then the \code{(size, prob)}
+  parameterisation is used, unless a value for \code{mu} is provided
+  via the argument \code{params} when the \code{(size, mu)}
+  parameterisation is used.
+
+  Valid functions are set up like a standard distributional function
+  \code{dxxx}, with first argument \code{x}, last argument \code{log}
+  and with arguments to set the parameters of the distribution in between.
+  See the \href{https://cran.r-project.org/web/views/Distributions.html}{
+  CRAN task view on distributions}.
 
   If \code{distn} is not supplied then \code{distn = "binomial"}
   is used.}
 
-\item{params}{A named list of additional arguments to be passed to the
-  density function associated with distribution \code{distn}.
+\item{params}{A named list of initial parameter values with which to start
+  the movie.  If \code{distn} is a string and a particular parameter value
+  is not supplied then the following values are used.
+  \code{"binomial"}: \code{size = 10, prob = 0.5};
+  \code{"geometric"}: \code{prob = 0.5};
+  \code{"hypergeometric"}: \code{m = 10, n = 7, k = 8};
+  \code{"negative binomial"}: \code{size = 10, prob = 0.5};
+  \code{"poisson"}: \code{lambda = 5}.
 
-  If a parameter value is not supplied then the default values in the
-  relevant distributional function set using \code{distn} are used}
+  If \code{distn} is a function then \code{params} must set any required
+  parameters.}
 
 \item{plot_par}{A named list of graphical parameters
 (see \code{link[graphics]{par}}) to be passed to
-\code{\link[graphics]{plot}}.}
+\code{\link[graphics]{plot}}.  This may be used to alter the appearance
+of the plots of the p.m.f. and c.d.f.}
 
 \item{panel_plot}{A logical parameter that determines whether the plot
 is placed inside the panel (\code{TRUE}) or in the standard graphics
@@ -56,13 +74,21 @@ cumulative distribution function (c.d.f.) of a discrete random variable
 depends on the values of its parameters.
 }
 \details{
-Ass details.
+The movie starts with a plot of the p.m.f. of the distribution
+  for the initial values of the parameters.  There are buttoms to
+  increase (+) or decrease (-) each parameter.  There is a radio button
+  to switch the plot from the p.m.f. to the c.d.f.
+
+  Owing to a conflict with the argument \code{size} of the function
+  \code{\link[rpanel]{rp.control}} the parameter \code{size} of,
+  for example, the binomial and negative binomial distributions, is
+  labelled as \code{n}.
 }
 \examples{
 \dontrun{
 discrete()
 
-discrete(distn = stats::dbinom, params = list(size = 10, prob = 0.5))
+discrete(distn = dbinom, params = list(size = 10, prob = 0.5))
 }
 }
 \seealso{
