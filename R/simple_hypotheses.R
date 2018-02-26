@@ -157,7 +157,6 @@ sh_plot <- function(panel) {
       z_alpha <- stats::qnorm(target_alpha, mean = 0, sd = 1,
                               lower.tail = FALSE)
       a <- sd * z_alpha / sqrt(n)
-      print(a)
     } else if (set_values == "set a and n to achieve target alpha and beta") {
       z_alpha <- stats::qnorm(target_alpha, mean = 0, sd = 1,
                               lower.tail = FALSE)
@@ -166,8 +165,6 @@ sh_plot <- function(panel) {
       n <- sd ^ 2 * (z_alpha + z_beta) ^ 2 / eff ^ 2
       a <- sd * z_alpha / sqrt(n)
       n <- ceiling(n)
-      print(n)
-      print(a)
     }
     # Set the standard error for later use, based on the current value of n
     se <- sd / sqrt(n)
