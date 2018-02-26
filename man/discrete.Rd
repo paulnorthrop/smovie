@@ -96,7 +96,7 @@ depends on the values of its parameters.
 The movie starts with a plot of the p.m.f. of the distribution
   for the initial values of the parameters.  There are buttons to
   increase (+) or decrease (-) each parameter.  There is a radio button
-  to switch the plot from the p.m.f. to the c.d.f.
+  to switch the plot from the p.m.f. to the c.d.f. and back.
 
   Owing to a conflict with the argument \code{size} of the function
   \code{\link[rpanel]{rp.control}} the parameter \code{size} of,
