@@ -13,7 +13,7 @@ discrete(distn, params = list(), plot_par = list(), param_step = list(),
   random variable.
 
   Strings \code{"binomial"}, \code{"geometric"},
-  \code{"hypergeometric"}, \code{"negative binomial"}, \code{Poisson} are
+  \code{"hypergeometric"}, \code{"negative binomial"}, \code{poisson} are
   recognised, case being ignored.  The relevant distributional functions
   \code{dxxx} and \code{pxxx} in the \code{\link[stats]{stats-package}}
   are used.  The abbreviations \code{xxx} are also recognised.
