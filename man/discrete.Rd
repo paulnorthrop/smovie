@@ -4,8 +4,9 @@
 \alias{discrete}
 \title{Univariate Discrete Distributions: p.m.f and c.d.f.}
 \usage{
-discrete(distn, params = list(), plot_par = list(), panel_plot = TRUE,
-  hscale = NA, vscale = hscale, observed_value = NA, ...)
+discrete(distn, params = list(), plot_par = list(), param_step = list(),
+  panel_plot = TRUE, hscale = NA, vscale = hscale, observed_value = NA,
+  ...)
 }
 \arguments{
 \item{distn}{Either a character string or a function to choose the discrete
@@ -46,6 +47,10 @@ discrete(distn, params = list(), plot_par = list(), panel_plot = TRUE,
 (see \code{link[graphics]{par}}) to be passed to
 \code{\link[graphics]{plot}}.  This may be used to alter the appearance
 of the plots of the p.m.f. and c.d.f.}
+
+\item{param_step}{A named list of the amounts by which the respective
+parameters in \code{params} are increased/decreased after one click of
+the +/- button. The default is 0.1 for all parameters.}
 
 \item{panel_plot}{A logical parameter that determines whether the plot
 is placed inside the panel (\code{TRUE}) or in the standard graphics

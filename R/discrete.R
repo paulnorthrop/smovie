@@ -1,5 +1,5 @@
-# add delta_params ?
-# add prob to set range.
+# param_step: allow setting only some of the steps
+# do similar for param_range
 
 # ================================= discrete ==================================
 
@@ -41,6 +41,9 @@
 #'
 #'   If \code{distn} is a function then \code{params} must set any required
 #'   parameters.
+#' @param param_step A named list of the amounts by which the respective
+#'   parameters in \code{params} are increased/decreased after one click of
+#'   the +/- button. The default is 0.1 for all parameters.
 #' @param plot_par A named list of graphical parameters
 #'   (see \code{link[graphics]{par}}) to be passed to
 #'   \code{\link[graphics]{plot}}.  This may be used to alter the appearance
@@ -78,8 +81,8 @@
 #' }
 #' @export
 discrete <- function(distn, params = list(), plot_par = list(),
-                     panel_plot = TRUE, hscale = NA, vscale = hscale,
-                     observed_value = NA, ...) {
+                     param_step = list(), panel_plot = TRUE, hscale = NA,
+                     vscale = hscale, observed_value = NA, ...) {
   # To add another distribution
   # 1. misc.R: add code to set_fun_args(), parameter_range(), parameter_step(),
   #            variable_support()
@@ -116,7 +119,11 @@ discrete <- function(distn, params = list(), plot_par = list(),
     n_pars <- length(par_names)
     # Set the limits on the parameters, the parameter stepsize and the support
     par_range <- parameter_range(distn, fun_args, ep, n_pars)
-    par_step <- parameter_step(distn, fun_args, n_pars)
+    if (length(param_step) == 0) {
+      par_step <- parameter_step(distn, fun_args, n_pars)
+    } else {
+      par_step <- param_step
+    }
   } else if (is.character(distn)) {
     # Allow stats:: abbreviations
     distn <- recognise_stats_abbreviations(distn)
@@ -155,7 +162,11 @@ discrete <- function(distn, params = list(), plot_par = list(),
     n_pars <- length(par_names)
     # Set the limits on the parameters, the parameter stepsize and the support
     par_range <- parameter_range(distn, fun_args, ep, n_pars)
-    par_step <- parameter_step(distn, fun_args)
+    if (length(param_step) == 0) {
+      par_step <- parameter_step(distn, fun_args, n_pars)
+    } else {
+      par_step <- param_step
+    }
   } else {
     stop("distn must be a character scalar or a function")
   }
