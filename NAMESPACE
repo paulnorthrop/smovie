@@ -3,6 +3,7 @@
 export(binom_pmf)
 export(clt_exp)
 export(clt_norm)
+export(continuous)
 export(correlation)
 export(dFPearson)
 export(discrete)

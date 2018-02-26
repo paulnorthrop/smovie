@@ -364,6 +364,11 @@ parameter_range <- function(distn, fun_args, ep, n_pars) {
     k <- c(1, NA)
     return(list(m = m, n = n, k = k))
   }
+  if (distn == "normal") {
+    mu <- c(NA, NA)
+    sd <- c(ep, NA)
+    return(list(mean = mu, sd = sd))
+  }
 }
 
 parameter_step <- function(distn, fun_args, n_pars) {
@@ -390,6 +395,9 @@ parameter_step <- function(distn, fun_args, n_pars) {
   }
   if (distn == "hypergeometric") {
     return(list(m = 1, n = 1, k = 1))
+  }
+  if (distn == "normal") {
+    return(list(mean = 1, sd = 1))
   }
 }
 
@@ -436,6 +444,11 @@ variable_support <- function(distn, fun_args, qfun, pmf_or_cdf){
   if (distn == "hypergeometric") {
     return(0:fun_args$k)
   }
+}
+
+variable_range <- function(distn, fun_args, qfun){
+  for_qfun <- c(list(p = c(0.001, 0.999)), fun_args)
+  return(do.call(qfun, for_qfun))
 }
 
 recognise_stats_abbreviations <- function(distn) {
