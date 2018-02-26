@@ -38,6 +38,9 @@
 #'
 #'   If \code{distn} is a function then \code{params} must set any required
 #'   parameters.
+#'
+#'   If parameter value is outside the corresponding range specified by
+#'   \code{param_range} then it is set to the closest limit of the range.
 #' @param param_step A named list of the amounts by which the respective
 #'   parameters in \code{params} are increased/decreased after one click of
 #'   the +/- button. If \code{distn} is a function then the default is 0.1
@@ -178,12 +181,19 @@ discrete <- function(distn, params = list(), plot_par = list(),
     # Merge the lists, giving precedence to the user-supplied param_step
     par_range <- merge_lists(par_range, param_range)
     par_step <- merge_lists(par_step, param_step)
-    print(par_range)
-    print(par_range[1])
   } else {
     stop("distn must be a character scalar or a function")
   }
-  #
+  # Check that the initial values are in the parameter ranges
+  # If not then move the initial value to the closest end of par_range
+  for (i in 1:n_pars) {
+    par_range_i <- unlist(par_range[i])
+    if (!is.na(par_range_i[2]) && fun_args[i] > par_range_i[2]) {
+      fun_args[i] <- par_range_i[2]
+    } else if (!is.na(par_range_i[1]) && fun_args[i] < par_range_i[1]) {
+      fun_args[i] <- par_range_i[1]
+    }
+  }
   pmf_or_cdf <- "pmf"
   # Temporarily change the name of the binomial or negative binomial size
   # to n, because size is a man argument of rp.control

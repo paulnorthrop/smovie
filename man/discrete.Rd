@@ -41,7 +41,10 @@ discrete(distn, params = list(), plot_par = list(), param_step = list(),
   \code{"poisson"}: \code{lambda = 5}.
 
   If \code{distn} is a function then \code{params} must set any required
-  parameters.}
+  parameters.
+
+  If parameter value is outside the corresponding range specified by
+  \code{param_range} then it is set to the closest limit of the range.}
 
 \item{plot_par}{A named list of graphical parameters
 (see \code{link[graphics]{par}}) to be passed to
