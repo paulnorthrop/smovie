@@ -369,6 +369,12 @@ parameter_range <- function(distn, fun_args, ep, n_pars) {
     sd <- c(ep, NA)
     return(list(mean = mu, sd = sd))
   }
+  if (distn == "beta") {
+    shape1 <- c(ep, NA)
+    shape2 <- c(ep, NA)
+    ncp <- c(0, NA)
+    return(list(shape1 = shape1, shape2 = shape2, ncp = ncp))
+  }
 }
 
 parameter_step <- function(distn, fun_args, n_pars) {
@@ -398,6 +404,9 @@ parameter_step <- function(distn, fun_args, n_pars) {
   }
   if (distn == "normal") {
     return(list(mean = 1, sd = 1))
+  }
+  if (distn == "beta") {
+    return(list(shape1 = 0.5, shape2 = 0.5, ncp = 1))
   }
 }
 
@@ -466,6 +475,9 @@ recognise_stats_abbreviations <- function(distn) {
   }
   if (distn == "pois") {
     return("poisson")
+  }
+  if (distn == "norm") {
+    return("normal")
   }
   return(distn)
 }

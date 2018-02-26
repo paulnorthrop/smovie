@@ -146,10 +146,7 @@ continuous <- function(distn, params = list(), plot_par = list(),
     dfun <-
       switch(distn,
              "normal" = stats::dnorm,
-             "geometric" = stats::dgeom,
-             "hypergeometric" = stats::dhyper,
-             "negative binomial" = stats::dnbinom,
-             "poisson" = stats::dpois,
+             "beta" = stats::dbeta,
              NULL)
     if (is.null(dfun)) {
       stop("Unsupported distribution")
@@ -157,17 +154,11 @@ continuous <- function(distn, params = list(), plot_par = list(),
     pfun <-
       switch(distn,
              "normal" = stats::pnorm,
-             "geometric" = stats::pgeom,
-             "hypergeometric" = stats::phyper,
-             "negative binomial" = stats::pnbinom,
-             "poisson" = stats::ppois)
+             "beta" = stats::pbeta)
     qfun <-
       switch(distn,
              "normal" = stats::qnorm,
-             "geometric" = stats::qgeom,
-             "hypergeometric" = stats::qhyper,
-             "negative binomial" = stats::qnbinom,
-             "poisson" = stats::qpois)
+             "beta" = stats::qbeta)
     # Set the arguments to the distributional functions
     fun_args <- set_fun_args(distn, dfun, fun_args, params)
     # Extract the names of the parameters and find the number of parameters
@@ -282,15 +273,8 @@ plot_continuous <- function(panel) {
       switch(distn_name,
              "normal" = paste(distn, "(", new_fun_args$mean, ",",
                                 new_fun_args$sd, ")"),
-             "geometric" = paste(distn, "(", new_fun_args$prob, ")"),
-             "hypergeometric" = paste(distn, "(", new_fun_args$m, ",",
-                                      new_fun_args$n, ",", new_fun_args$k,
-                                      ")"),
-             "negbin1" = paste(distn, "(", new_fun_args$size, ",",
-                                new_fun_args$prob, ")"),
-             "negbin2" = paste(distn, "(", new_fun_args$size, ",",
-                               new_fun_args$mu, ")"),
-             "poisson" = paste(distn, "(", new_fun_args$lambda, ")"),
+             "beta" = paste(distn, "(", new_fun_args$shape1, ",",
+                            new_fun_args$shape2, ",", new_fun_args$ncp, ")"),
              "user" = paste(root_name, par_paste)
       )
     if (is.null(var_range)) {
