@@ -107,7 +107,7 @@ The movie starts with a plot of the p.m.f. of the distribution
 \dontrun{
 # Binomial example
 discrete()
-# The same, but using a user-supplied function and setting manually
+# The same example, but using a user-supplied function and setting manually
 # the initial parameters, parameter step size and range
 discrete(distn = dbinom, params = list(size = 10, prob = 0.5),
          param_step = list(size = 1),
