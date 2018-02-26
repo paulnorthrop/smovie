@@ -198,7 +198,8 @@ discrete <- function(distn, params = list(), plot_par = list(),
   }
   pmf_or_cdf <- "pmf"
   # Temporarily change the name of the binomial or negative binomial size
-  # to n, because size is a man argument of rp.control
+  # (or an argument size to a user-supplied function) to n, because size
+  # is a main argument of rp.control
   if (any(names(fun_args) == "size")) {
     par_names[which(names(fun_args) == "size")] <- "n"
   }
