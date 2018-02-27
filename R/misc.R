@@ -128,7 +128,7 @@ set_fun_args <- function(distn, dfun, fun_args, params,
   }
   if (distn == "chi-squared") {
     if (is.null(fun_args$df)) {
-      fun_args$df <- 4
+      fun_args$df <- 3
     }
     if (is.null(fun_args$ncp)) {
       fun_args$ncp <- 0
@@ -442,8 +442,9 @@ parameter_range <- function(distn, fun_args, ep, n_pars) {
     return(list(df = df, ncp = ncp))
   }
   if (distn == "uniform") {
-    min <- c(NA, NA)
-    max <- c(NA, NA)
+    mid_range <- (fun_args$min + fun_args$max) / 2
+    min <- c(NA,  mid_range - 0.05)
+    max <- c(mid_range + 0.05, NA)
     return(list(min = min, max = max))
   }
   if (distn == "weibull") {
@@ -507,16 +508,16 @@ parameter_step <- function(distn, fun_args, n_pars) {
     return(list(loc = 1, scale = 0.25, shape = 0.1))
   }
   if (distn == "lognormal") {
-    return(list(meanlog = 1, sdlog = 0.25))
+    return(list(meanlog = 0.25, sdlog = 0.25))
   }
   if (distn == "t") {
     return(list(df = 1, ncp = 1))
   }
   if (distn == "uniform") {
-    return(list(min = 1, max = 1))
+    return(list(min = 0.25, max = 0.25))
   }
   if (distn == "weibull") {
-    return(list(shape = 0.5, scale = 0.25))
+    return(list(shape = 0.25, scale = 0.25))
   }
 }
 
