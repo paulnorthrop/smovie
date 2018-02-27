@@ -4,9 +4,10 @@
 \alias{continuous}
 \title{Univariate Continuous Distributions: p.d.f and c.d.f.}
 \usage{
-continuous(distn, var_range = NULL, params = list(), plot_par = list(),
-  param_step = list(), param_range = list(), p_vec = NULL,
-  panel_plot = TRUE, hscale = NA, vscale = hscale, ...)
+continuous(distn, var_range = NULL, params = list(), param_step = list(),
+  param_range = list(), p_vec = NULL, smallest = 0.01,
+  plot_par = list(), panel_plot = TRUE, hscale = NA, vscale = hscale,
+  ...)
 }
 \arguments{
 \item{distn}{Either a character string or a function to choose the
@@ -53,11 +54,6 @@ If \code{var_range} is set then it overrides \code{p_vec} (see below).}
   If parameter value is outside the corresponding range specified by
   \code{param_range} then it is set to the closest limit of the range.}
 
-\item{plot_par}{A named list of graphical parameters
-(see \code{link[graphics]{par}}) to be passed to
-\code{\link[graphics]{plot}}.  This may be used to alter the appearance
-of the plots of the p.m.f. and c.d.f.}
-
 \item{param_step}{A named list of the amounts by which the respective
 parameters in \code{params} are increased/decreased after one click of
 the +/- button. If \code{distn} is a function then the default is 0.1
@@ -76,6 +72,14 @@ plotted between the 100\code{p_vec[1]}\% and 100\code{p_vec[2]}\%
 quantiles of the distribution.  If \code{p_vec} is not supplied then
 a sensible distribution-specific default is used.  If \code{distn} is
 a function then the default is \code{p_vec = c(0.001, 0.999)}.}
+
+\item{smallest}{A positive numeric scalar.  The smallest value to be
+used for any strictly positive parameters when \code{distn} is a string.}
+
+\item{plot_par}{A named list of graphical parameters
+(see \code{link[graphics]{par}}) to be passed to
+\code{\link[graphics]{plot}}.  This may be used to alter the appearance
+of the plots of the p.m.f. and c.d.f.}
 
 \item{panel_plot}{A logical parameter that determines whether the plot
 is placed inside the panel (\code{TRUE}) or in the standard graphics

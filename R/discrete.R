@@ -64,6 +64,8 @@
 #'   quantiles of the distribution.  If \code{p_vec} is not supplied then
 #'   a sensible distribution-specific default is used.  If \code{distn} is
 #'   a function then the default is \code{p_vec = c(0.001, 0.999)}.
+#' @param smallest A positive numeric scalar.  The smallest value to be
+#'   used for any strictly positive parameters when \code{distn} is a string.
 #' @param plot_par A named list of graphical parameters
 #'   (see \code{link[graphics]{par}}) to be passed to
 #'   \code{\link[graphics]{plot}}.  This may be used to alter the appearance
@@ -105,8 +107,8 @@
 #' }
 #' @export
 discrete <- function(distn, var_support = NULL, params = list(),
-                     plot_par = list(), param_step = list(),
-                     param_range = list(), p_vec = NULL, panel_plot = TRUE,
+                     param_step = list(), param_range = list(), p_vec = NULL,
+                     smallest = 0.01, plot_par = list(), panel_plot = TRUE,
                      hscale = NA, vscale = hscale, observed_value = NA, ...) {
   # To add another distribution
   # 1. misc.R: add code to set_fun_args(), parameter_range(), parameter_step(),
@@ -117,7 +119,7 @@ discrete <- function(distn, var_support = NULL, params = list(),
   hscale <- temp$hscale
   vscale <- temp$vscale
   # Smallest value of positive parameters to be set in parameter_range()
-  ep <- 0.01
+  ep <- smallest
   if (!is.list(params)) {
     stop("params must be a named list")
   }
