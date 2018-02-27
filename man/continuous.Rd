@@ -46,7 +46,19 @@ If \code{var_range} is set then it overrides \code{p_vec} (see below).}
 \item{params}{A named list of initial parameter values with which to start
   the movie.  If \code{distn} is a string and a particular parameter value
   is not supplied then the following values are used.
+  \code{"beta"}: \code{shape1 = 2, shape2 = 2, ncp = 0};
+  \code{"cauchy"}: \code{location = 0, scale = 1};
+  \code{"chi-squared"}: \code{df = 4, ncp = 0};
+  \code{"exponential"}: \code{rate = 1};
+  \code{"f"}: \code{df1 = 4, df2 = 8, ncp =0};
+  \code{"gamma"}: \code{shape = 2, rate = 1};
+  \code{"gev"}: \code{loc = 0, scale = 1, shape = 0.1};
+  \code{"gp"}: \code{loc = 0, scale = 1, shape = 0.1};
+  \code{"lognormal"}: \code{meanlog = 0, sdlog = 1};
   \code{"normal"}: \code{mean = 0, sd = 1};
+  \code{"t"}: \code{df = 4, ncp = 0};
+  \code{"uniform"}: \code{min = 0, max = 1};
+  \code{"weibull"}: \code{shape = 2, scale = 1}.
 
   If \code{distn} is a function then \code{params} must set any required
   parameters.
