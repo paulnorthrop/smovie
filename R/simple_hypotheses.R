@@ -127,16 +127,17 @@ shypo <- function(mu0 = 0, sd = 6, eff = sd, n = 30, a = mu0 + eff / 2,
   }
   #
   rpanel::rp.doublebutton(sh_panel, n, delta_n, range = c(1, NA), initval = n,
-                          title = "sample size, n", action = action)
+                          title = "sample size, n", action = action,
+                          showvalue = TRUE)
   rpanel::rp.doublebutton(sh_panel, a, delta_a, range = c(NA, NA), initval = a,
-                          title = "critical value, a", action = action)
+                          title = "critical value, a", action = action,
+                          showvalue = TRUE)
   rpanel::rp.doublebutton(sh_panel, mu0, delta_mu0, range = c(NA, NA),
                           initval = mu0, title = "mu under H0, mu0",
-                          action = action)
+                          action = action, showvalue = TRUE)
   rpanel::rp.doublebutton(sh_panel, eff, delta_eff, range = c(0, NA),
-                          initval = eff,
-                          title = "eff size, eff = mu1 - mu0",
-                          action = action)
+                          initval = eff, title = "eff size, eff = mu1 - mu0",
+                          action = action, showvalue = TRUE)
   rpanel::rp.radiogroup(sh_panel, set_values,
                         c("no", "set a to achieve target alpha",
                           "set a and n to achieve target alpha and beta"),

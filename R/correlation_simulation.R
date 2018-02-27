@@ -145,10 +145,11 @@ correlation <- function(n = 30, rho = 0, panel_plot = TRUE, hscale = NA,
   rpanel::rp.doublebutton(corr_sim_panel, nsim, delta_n, range = c(6, 1000),
                           repeatinterval = 20, initval = n,
                           title = "sample size, n",
-                          action = action, ...)
+                          action = action, showvalue = TRUE, ...)
   rpanel::rp.doublebutton(corr_sim_panel, rho, delta_rho, range = c(-1, 1),
                           repeatinterval = 20, initval = rho_init,
-                          title = "correlation, rho", action = action, ...)
+                          title = "correlation, rho", action = action,
+                          showvalue = TRUE, ...)
   rpanel::rp.checkbox(panel = corr_sim_panel, fisher_z,
                       labels = "Fisher z-transformation",
                       action = action)

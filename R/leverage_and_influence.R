@@ -100,10 +100,12 @@ lev_inf <- function(association = c("positive", "negative", "none"), n = 25,
   #
   rpanel::rp.doublebutton(lev_inf_1_panel, outx, 0.2, range = c(-0.8, 1.8),
                           repeatinterval = 20, initval = 1,
-                          title = "x coefficient:", action = action)
+                          title = "x coefficient:", action = action,
+                          showvalue = TRUE)
   rpanel::rp.doublebutton(lev_inf_1_panel, outy, 0.2, range = c(-0.8,1.8),
                           repeatinterval = 20, initval = 0,
-                          title = "y coefficient:", action = action)
+                          title = "y coefficient:", action = action,
+                          showvalue = TRUE)
   rpanel::rp.do(lev_inf_1_panel, action = action)
   return(invisible())
 }

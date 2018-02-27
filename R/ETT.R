@@ -357,7 +357,7 @@ ett <- function(n = 20, distn, params = list(), panel_plot = TRUE, hscale = NA,
   rpanel::rp.doublebutton(panel = ett_panel, variable = n, step = delta_n,
                           title = "sample size, n",
                           action = action, initval = n,
-                          range = c(2, NA), ...)
+                          range = c(2, NA), showvalue = TRUE, ...)
   if (n_add == 1) {
     my_title <- paste("simulate another sample of size n")
   } else {
