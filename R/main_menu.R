@@ -19,13 +19,13 @@ movies <- function(hscale = 1) {
     else if (menu.panel$demo == "negative binomial") {
       discrete(distn = "negative binomial")
     }
-    else if (menu.panel$demo == "poisson") {
+    else if (menu.panel$demo == "Poisson") {
       discrete(distn = "poisson")
     }
     else if (menu.panel$demo == "beta") {
       continuous(distn = "beta")
     }
-    else if (menu.panel$demo == "cauchy") {
+    else if (menu.panel$demo == "Cauchy") {
       continuous(distn = "cauchy")
     }
     else if (menu.panel$demo == "chi-squared") {
@@ -34,16 +34,16 @@ movies <- function(hscale = 1) {
     else if (menu.panel$demo == "exponential") {
       continuous(distn = "exponential")
     }
-    else if (menu.panel$demo == "f") {
+    else if (menu.panel$demo == "F") {
       continuous(distn = "f")
     }
     else if (menu.panel$demo == "gamma") {
       continuous(distn = "gamma")
     }
-    else if (menu.panel$demo == "gev") {
+    else if (menu.panel$demo == "GEV") {
       continuous(distn = "gev")
     }
-    else if (menu.panel$demo == "gp") {
+    else if (menu.panel$demo == "GP") {
       continuous(distn = "gp")
     }
     else if (menu.panel$demo == "lognormal") {
@@ -52,13 +52,13 @@ movies <- function(hscale = 1) {
     else if (menu.panel$demo == "normal") {
       continuous(distn = "normal")
     }
-    else if (menu.panel$demo == "t") {
+    else if (menu.panel$demo == "Student t") {
       continuous(distn = "t")
     }
     else if (menu.panel$demo == "uniform") {
       continuous(distn = "uniform")
     }
-    else if (menu.panel$demo == "weibull") {
+    else if (menu.panel$demo == "Weibull") {
       continuous(distn = "weibull")
     }
     else if (menu.panel$demo == "Pearson correlation coefficient") {
@@ -125,22 +125,22 @@ movies <- function(hscale = 1) {
                            "geometric",
                            "hypergeometric",
                            "negative binomial",
-                           "poisson"
+                           "Poisson"
   ),
   list("Continuous",
        "beta",
-       "cauchy",
+       "Cauchy",
        "chi-squared",
        "exponential",
-       "f",
+       "F",
        "gamma",
-       "gev",
-       "gp",
+       "GEV",
+       "GP",
        "lognormal",
        "normal",
-       "t",
+       "Student t",
        "uniform",
-       "weibull"
+       "Weibull"
   ),
   list("Sampling distributions",
        "Pearson correlation coefficient",

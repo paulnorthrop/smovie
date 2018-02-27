@@ -311,7 +311,7 @@ plot_discrete <- function(panel) {
                                 new_fun_args$prob, ")"),
              "negbin2" = paste(distn, "(", new_fun_args$size, ",",
                                new_fun_args$mu, ")"),
-             "poisson" = paste(distn, "(", new_fun_args$lambda, ")"),
+             "poisson" = paste("Poisson", "(", new_fun_args$lambda, ")"),
              "user" = paste(root_name, par_paste)
       )
     if (is.null(var_support)) {
