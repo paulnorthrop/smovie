@@ -470,7 +470,7 @@ parameter_step <- function(distn, fun_args, n_pars) {
     }
   }
   if (distn == "poisson") {
-    return(list(lambda = 1))
+    return(list(lambda = 0.5))
   }
   if (distn == "geometric") {
     return(list(prob = 0.1))
@@ -498,9 +498,9 @@ parameter_step <- function(distn, fun_args, n_pars) {
   }
   if (distn == "gamma") {
     if (!is.null(fun_args$scale)) {
-      return(list(shape = 0.5, scale = 0.25))
+      return(list(shape = 0.25, scale = 0.25))
     } else {
-      return(list(shape = 0.5, rate = 0.25))
+      return(list(shape = 0.25, rate = 0.25))
     }
   }
   if (distn == "gev" || distn == "gp") {
