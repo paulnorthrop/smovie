@@ -295,7 +295,8 @@ continuous <- function(distn, var_range = NULL, params = list(),
         rpanel::rp.doublebutton(panel = continuous_panel, variable = x,
                                 title = par_names[i], step = par_step[i],
                                 action = action, initval = fun_args[i],
-                                range = unlist(par_range[i]), ...),
+                                range = unlist(par_range[i]), showvalue = TRUE,
+                                ...),
         list(x = as.name(par_names[i]))
       )
     )

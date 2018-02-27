@@ -261,7 +261,8 @@ discrete <- function(distn, var_support = NULL, params = list(),
         rpanel::rp.doublebutton(panel = discrete_panel, variable = x,
                                 title = par_names[i], step = par_step[i],
                                 action = action, initval = fun_args[i],
-                                range = unlist(par_range[i]), ...),
+                                range = unlist(par_range[i]), showvalue = TRUE,
+                                ...),
         list(x = as.name(par_names[i]))
       )
     )
