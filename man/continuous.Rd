@@ -4,8 +4,8 @@
 \alias{continuous}
 \title{Univariate Continuous Distributions: p.d.f and c.d.f.}
 \usage{
-continuous(distn, params = list(), plot_par = list(), param_step = list(),
-  param_range = list(), p_vec = NULL, var_range = NULL,
+continuous(distn, var_range = NULL, params = list(), plot_par = list(),
+  param_step = list(), param_range = list(), p_vec = NULL,
   panel_plot = TRUE, hscale = NA, vscale = hscale, ...)
 }
 \arguments{
@@ -36,6 +36,11 @@ continuous(distn, params = list(), plot_par = list(), param_step = list(),
 
   If \code{distn} is not supplied then \code{distn = "normal"}
   is used.}
+
+\item{var_range}{A numeric vector of length 2.  Can be used to set a fixed
+range of values over which to plot the p.d.f. and c.d.f., in order better
+to see the effects of changing the parameter values.
+If \code{var_range} is set then it overrides \code{p_vec} (see below).}
 
 \item{params}{A named list of initial parameter values with which to start
   the movie.  If \code{distn} is a string and a particular parameter value
@@ -71,11 +76,6 @@ plotted between the 100\code{p_vec[1]}\% and 100\code{p_vec[2]}\%
 quantiles of the distribution.  If \code{p_vec} is not supplied then
 a sensible distribution-specific default is used.  If \code{distn} is
 a function then the default is \code{p_vec = c(0.001, 0.999)}.}
-
-\item{var_range}{A numeric vector of length 2.  Can be used to set a fixed
-range of values over which to plot the p.d.f. and c.d.f., in order better
-to see the effects of changing the parameter values.
-If \code{var_range} is set then it overrides \code{p_vec}.}
 
 \item{panel_plot}{A logical parameter that determines whether the plot
 is placed inside the panel (\code{TRUE}) or in the standard graphics

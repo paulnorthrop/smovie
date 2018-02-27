@@ -29,6 +29,11 @@
 #'
 #'   If \code{distn} is not supplied then \code{distn = "binomial"}
 #'   is used.
+#' @param var_support A numeric vector.  Can be used to set a fixed set of
+#'   values for which to plot the p.m.f. and c.d.f., in order better
+#'   to see the effects of changing the parameter values or to set a support
+#'   that isn't a subset of the integers.
+#'   If \code{var_support} is set then it overrides \code{p_vec} (see below).
 #' @param params A named list of initial parameter values with which to start
 #'   the movie.  If \code{distn} is a string and a particular parameter value
 #'   is not supplied then the following values are used.
@@ -59,11 +64,6 @@
 #'   quantiles of the distribution.  If \code{p_vec} is not supplied then
 #'   a sensible distribution-specific default is used.  If \code{distn} is
 #'   a function then the default is \code{p_vec = c(0.001, 0.999)}.
-#' @param var_support A numeric vector.  Can be used to set a fixed set of
-#'   values for which to plot the p.m.f. and c.d.f., in order better
-#'   to see the effects of changing the parameter values or to set a support
-#'   that isn't a subset of the integers.
-#'   If \code{var_support} is set then it overrides \code{p_vec}.
 #' @param plot_par A named list of graphical parameters
 #'   (see \code{link[graphics]{par}}) to be passed to
 #'   \code{\link[graphics]{plot}}.  This may be used to alter the appearance
@@ -104,9 +104,9 @@
 #'          param_range = list(size = c(1, NA), prob = c(0, 1)))
 #' }
 #' @export
-discrete <- function(distn, params = list(), plot_par = list(),
-                     param_step = list(), param_range = list(),
-                     p_vec = NULL, var_support = NULL, panel_plot = TRUE,
+discrete <- function(distn, var_support = NULL, params = list(),
+                     plot_par = list(), param_step = list(),
+                     param_range = list(), p_vec = NULL, panel_plot = TRUE,
                      hscale = NA, vscale = hscale, observed_value = NA, ...) {
   # To add another distribution
   # 1. misc.R: add code to set_fun_args(), parameter_range(), parameter_step(),

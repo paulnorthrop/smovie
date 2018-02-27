@@ -4,8 +4,8 @@
 \alias{discrete}
 \title{Univariate Discrete Distributions: p.m.f and c.d.f.}
 \usage{
-discrete(distn, params = list(), plot_par = list(), param_step = list(),
-  param_range = list(), p_vec = NULL, var_support = NULL,
+discrete(distn, var_support = NULL, params = list(), plot_par = list(),
+  param_step = list(), param_range = list(), p_vec = NULL,
   panel_plot = TRUE, hscale = NA, vscale = hscale, observed_value = NA,
   ...)
 }
@@ -33,6 +33,12 @@ discrete(distn, params = list(), plot_par = list(), param_step = list(),
 
   If \code{distn} is not supplied then \code{distn = "binomial"}
   is used.}
+
+\item{var_support}{A numeric vector.  Can be used to set a fixed set of
+values for which to plot the p.m.f. and c.d.f., in order better
+to see the effects of changing the parameter values or to set a support
+that isn't a subset of the integers.
+If \code{var_support} is set then it overrides \code{p_vec} (see below).}
 
 \item{params}{A named list of initial parameter values with which to start
   the movie.  If \code{distn} is a string and a particular parameter value
@@ -72,12 +78,6 @@ plotted between the 100\code{p_vec[1]}\% and 100\code{p_vec[2]}\%
 quantiles of the distribution.  If \code{p_vec} is not supplied then
 a sensible distribution-specific default is used.  If \code{distn} is
 a function then the default is \code{p_vec = c(0.001, 0.999)}.}
-
-\item{var_support}{A numeric vector.  Can be used to set a fixed set of
-values for which to plot the p.m.f. and c.d.f., in order better
-to see the effects of changing the parameter values or to set a support
-that isn't a subset of the integers.
-If \code{var_support} is set then it overrides \code{p_vec}.}
 
 \item{panel_plot}{A logical parameter that determines whether the plot
 is placed inside the panel (\code{TRUE}) or in the standard graphics
