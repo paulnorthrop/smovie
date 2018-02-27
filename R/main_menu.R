@@ -7,8 +7,35 @@
 #' @export
 movies <- function(hscale = 1) {
   panel.launch <- function(menu.panel) {
-    if (menu.panel$demo =="Binomial pmf") {
-      binom_pmf()
+    if (menu.panel$demo == "binomial") {
+      discrete(distn = "binomial")
+    }
+    else if (menu.panel$demo == "geometric") {
+      discrete(distn = "geometric")
+    }
+    else if (menu.panel$demo == "hypergeometric") {
+      discrete(distn = "hypergeometric")
+    }
+    else if (menu.panel$demo == "negative binomial") {
+      discrete(distn = "negative binomial")
+    }
+    else if (menu.panel$demo == "poisson") {
+      discrete(distn = "poisson")
+    }
+    else if (menu.panel$demo == "beta") {
+      continuous(distn = "beta")
+    }
+    else if (menu.panel$demo == "cauchy") {
+      continuous(distn = "cauchy")
+    }
+    else if (menu.panel$demo == "chi-squared") {
+      continuous(distn = "chi-squared")
+    }
+    else if (menu.panel$demo == "exponential") {
+      continuous(distn = "exponential")
+    }
+    else if (menu.panel$demo == "normal") {
+      continuous(distn = "normal")
     }
     else if (menu.panel$demo == "Pearson correlation coefficient") {
       correlation(n = 10)
@@ -69,8 +96,19 @@ movies <- function(hscale = 1) {
   menu.panel <- rpanel::rp.control("Movies", homer = FALSE,
                                    number.list = list(),
                                    ss = list(), trans = list(), theta = list())
-  menu.list  <-  list(list("Distributions",
-                           "Binomial pmf"
+  menu.list  <-  list(list("Discrete",
+                           "binomial",
+                           "geometric",
+                           "hypergeometric",
+                           "negative binomial",
+                           "poisson"
+  ),
+  list("Continuous",
+       "beta",
+       "cauchy",
+       "chi-squared",
+       "exponential",
+       "normal"
   ),
   list("Sampling distributions",
        "Pearson correlation coefficient",
