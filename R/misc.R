@@ -16,7 +16,8 @@ set_scales <- function(hscale, vscale) {
   return(list(hscale = hscale, vscale = vscale))
 }
 
-set_fun_args <- function(distn, dfun, fun_args, params) {
+set_fun_args <- function(distn, dfun, fun_args, params,
+        for_continuous = FALSE) {
   # Get the names of the parameters
   par_names <- names(formals(dfun))
   to_remove <- which(is.element(par_names, c("x", "log")))
@@ -87,12 +88,20 @@ set_fun_args <- function(distn, dfun, fun_args, params) {
     if (is.null(fun_args$shape)) {
       fun_args$shape <- 2
     }
-    if (!is.null(fun_args$scale)) {
-      fun_args$rate <- 1 / fun_args$scale
-      fun_args$scale <- NULL
+    if (!for_continuous) {
+      if (!is.null(fun_args$scale)) {
+        fun_args$rate <- 1 / fun_args$scale
+        fun_args$scale <- NULL
+      }
     }
     if (is.null(fun_args$rate) & is.null(fun_args$scale)) {
       fun_args$rate <- 1
+    }
+    # Put the arguments back into the usual order
+    if (!is.null(fun_args$scale)) {
+      n_names <- length(names(fun_args))
+      which_shape <- which(names(fun_args) == "shape")
+      fun_args <- fun_args[c(which_shape, (1:n_names)[-which_shape])]
     }
     return(fun_args)
   }
@@ -119,7 +128,7 @@ set_fun_args <- function(distn, dfun, fun_args, params) {
       fun_args$df <- 4
     }
     if (is.null(fun_args$ncp)) {
-      fun_args$ncp <- 1
+      fun_args$ncp <- 0
     }
     return(fun_args)
   }
@@ -129,6 +138,9 @@ set_fun_args <- function(distn, dfun, fun_args, params) {
     }
     if (is.null(fun_args$df2)) {
       fun_args$df2 <- 8
+    }
+    if (is.null(fun_args$ncp)) {
+      fun_args$ncp <- 0
     }
     return(fun_args)
   }
@@ -177,6 +189,7 @@ set_fun_args <- function(distn, dfun, fun_args, params) {
     if (is.null(fun_args$prob) & is.null(fun_args$mu)) {
       fun_args$prob <- 0.5
     }
+    # Put the arguments back into the usual order
     if (!is.null(fun_args$mu)) {
       n_names <- length(names(fun_args))
       which_size <- which(names(fun_args) == "size")
@@ -385,12 +398,29 @@ parameter_range <- function(distn, fun_args, ep, n_pars) {
   }
   if (distn == "chi-squared") {
     df <- c(ep, NA)
-    ncp <- c(ep, NA)
+    ncp <- c(0, NA)
     return(list(df = df, ncp = ncp))
   }
   if (distn == "exponential") {
     rate <- c(ep, NA)
     return(list(rate = rate))
+  }
+  if (distn == "f") {
+    df1 <- c(ep, NA)
+    df2 <- c(ep, NA)
+    ncp <- c(0, NA)
+    return(list(df1 = df1, df2 = df2, ncp = ncp))
+  }
+  if (distn == "gamma") {
+    if (!is.null(fun_args$scale)) {
+      shape <- c(ep, NA)
+      scale <- c(ep, NA)
+      return(list(shape = shape, scale = scale))
+    } else {
+      shape <- c(ep, NA)
+      rate <- c(ep, NA)
+      return(list(shape = shape, rate = rate))
+    }
   }
 }
 
@@ -433,6 +463,16 @@ parameter_step <- function(distn, fun_args, n_pars) {
   }
   if (distn == "exponential") {
     return(list(rate = 0.25))
+  }
+  if (distn == "f") {
+    return(list(df1 = 1, df2 = 1, ncp = 1))
+  }
+  if (distn == "gamma") {
+    if (!is.null(fun_args$scale)) {
+      return(list(shape = 0.5, scale = 0.25))
+    } else {
+      return(list(shape = 0.5, rate = 0.25))
+    }
   }
 }
 

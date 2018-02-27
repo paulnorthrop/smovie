@@ -207,7 +207,8 @@ continuous <- function(distn, var_range = NULL, params = list(),
              "uniform" = stats::qunif,
              "weibull" = stats::qweib)
     # Set the arguments to the distributional functions
-    fun_args <- set_fun_args(distn, dfun, fun_args, params)
+    fun_args <- set_fun_args(distn, dfun, fun_args, params,
+                             for_continuous = TRUE)
     # Extract the names of the parameters and find the number of parameters
     par_names <- names(fun_args)
     n_pars <- length(par_names)
@@ -331,6 +332,12 @@ plot_continuous <- function(panel) {
              "chi-squared" = paste(distn, "(", new_fun_args$df, ",",
                               new_fun_args$ncp, ")"),
              "exponential" = paste(distn, "(", new_fun_args$rate, ")"),
+             "f" = paste(distn, "(", new_fun_args$df1, ",", new_fun_args$df2,
+                         ",", new_fun_args$ncp, ")"),
+             "gamma1" = paste(distn, "(", new_fun_args$shape, ",",
+                               new_fun_args$rate, ")"),
+             "gamma2" = paste(distn, "(", new_fun_args$shape, ",",
+                               new_fun_args$scale, ")"),
              "user" = paste(root_name, par_paste)
       )
     if (is.null(var_range)) {
