@@ -39,6 +39,9 @@
 #'   \code{\link[stats]{stats-package}}.
 #' @param params A named list of additional arguments to be passed to the
 #'   density function associated with distribution \code{distn}.
+#'   The \code{(shape, rate)} parameterisation is used for the gamma
+#'   distribution (see \code{\link[stats]{GammaDist}}) even if the value of
+#'   the \code{scale} parameter is set using \code{params}.
 #'
 #'   If a parameter value is not supplied then the default values in the
 #'   relevant distributional function set using \code{distn} are used,
