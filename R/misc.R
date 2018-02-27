@@ -118,6 +118,9 @@ set_fun_args <- function(distn, dfun, fun_args, params) {
     if (is.null(fun_args$df)) {
       fun_args$df <- 4
     }
+    if (is.null(fun_args$ncp)) {
+      fun_args$ncp <- 1
+    }
     return(fun_args)
   }
   if (distn == "f") {
@@ -375,6 +378,20 @@ parameter_range <- function(distn, fun_args, ep, n_pars) {
     ncp <- c(0, NA)
     return(list(shape1 = shape1, shape2 = shape2, ncp = ncp))
   }
+  if (distn == "cauchy") {
+    location <- c(NA, NA)
+    scale <- c(ep, NA)
+    return(list(location = location, scale = scale))
+  }
+  if (distn == "chi-squared") {
+    df <- c(ep, NA)
+    ncp <- c(ep, NA)
+    return(list(df = df, ncp = ncp))
+  }
+  if (distn == "exponential") {
+    rate <- c(ep, NA)
+    return(list(rate = rate))
+  }
 }
 
 parameter_step <- function(distn, fun_args, n_pars) {
@@ -403,10 +420,19 @@ parameter_step <- function(distn, fun_args, n_pars) {
     return(list(m = 1, n = 1, k = 1))
   }
   if (distn == "normal") {
-    return(list(mean = 1, sd = 1))
+    return(list(mean = 1, sd = 0.25))
   }
   if (distn == "beta") {
     return(list(shape1 = 0.5, shape2 = 0.5, ncp = 1))
+  }
+  if (distn == "cauchy") {
+    return(list(location = 1, scale = 0.25))
+  }
+  if (distn == "chi-squared") {
+    return(list(df = 1, ncp = 1))
+  }
+  if (distn == "exponential") {
+    return(list(rate = 0.25))
   }
 }
 
@@ -461,10 +487,17 @@ variable_range <- function(distn, fun_args, qfun, p_vec){
 }
 
 set_p_vec <- function(distn) {
-  if (distn == "normal" | distn == "user") {
+  if (distn %in% c("normal", "user", "chi-squared", "f", "gamma", "gev",
+                   "lognormal", "t", "weibull")) {
     return(c(0.001, 0.999))
   }
-  if (distn == "beta") {
+  if (distn %in% c("exponential", "gp")) {
+    return(c(0, 0.999))
+  }
+  if (distn == "cauchy") {
+    return(c(0.05, 0.95))
+  }
+  if (distn %in% c("beta", "uniform")) {
     return(c(0, 1))
   }
 }
@@ -487,6 +520,21 @@ recognise_stats_abbreviations <- function(distn) {
   }
   if (distn == "norm") {
     return("normal")
+  }
+  if (distn == "exp") {
+    return("exponential")
+  }
+  if (distn == "lnorm") {
+    return("lognormal")
+  }
+  if (distn == "unif") {
+    return("uniform")
+  }
+  if (distn == "weib") {
+    return("weibull")
+  }
+  if (distn == "chisq") {
+    return("chi-squared")
   }
   return(distn)
 }

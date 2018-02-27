@@ -9,9 +9,9 @@
 #' @param distn Either a character string or a function to choose the
 #'   continuous random variable.
 #'
-#'   Strings \code{"beta"}, \code{"cauchy"}, \code{"chisquared"}
+#'   Strings \code{"beta"}, \code{"cauchy"}, \code{"chisq"}
 #'   \code{"chi-squared"}, \code{"exponential"}, \code{"f"}, \code{"gamma"},
-#'   \code{"gev"}, \code{"gp"}, \code{lognormal}, \code{"log-normal"},
+#'   \code{"gev"}, \code{"gp"}, \code{"lognormal"}, \code{"log-normal"},
 #'   \code{"normal"}, \code{"t"}, \code{"uniform"} and \code{"weibull"} are
 #'   recognised, case being ignored.  The relevant distributional functions
 #'   \code{dxxx} and \code{pxxx} in the \code{\link[stats]{stats-package}}
@@ -102,7 +102,8 @@ continuous <- function(distn, params = list(), plot_par = list(),
                        p_vec = NULL, var_range = NULL, panel_plot = TRUE,
                        hscale = NA, vscale = hscale, ...) {
   # To add another distribution
-  # 1. misc.R: add code to set_fun_args(), parameter_range(), parameter_step()
+  # 1. misc.R: add code to set_fun_args(), parameter_range(), parameter_step(),
+  #            set_p_vec()
   # 2. add lines to dfun, qfun, pfun
   # 3. plot_continuous(): add to the_distn
   temp <- set_scales(hscale, vscale)
@@ -145,6 +146,12 @@ continuous <- function(distn, params = list(), plot_par = list(),
     par_step <- merge_lists(par_step, param_step)
   } else if (is.character(distn)) {
     distn <- tolower(distn)
+    if (distn == "log-normal") {
+      distn <- "lognormal"
+    }
+    if (distn == "chisquared") {
+      distn <- "chi-squared"
+    }
     # Allow stats:: abbreviations
     distn <- recognise_stats_abbreviations(distn)
     root_name <- distn
@@ -154,6 +161,17 @@ continuous <- function(distn, params = list(), plot_par = list(),
       switch(distn,
              "normal" = stats::dnorm,
              "beta" = stats::dbeta,
+             "cauchy" = stats::dcauchy,
+             "chi-squared" = stats::dchisq,
+             "exponential" = stats::dexp,
+             "f" = stats::df,
+             "gamma" = stats::dgamma,
+             "gev" = revdbayes::dgev,
+             "gp" = revdbayes::dgp,
+             "lognormal" = stats::dlnorm,
+             "t" = stats::dt,
+             "uniform" = stats::dunif,
+             "weibull" = stats::dweib,
              NULL)
     if (is.null(dfun)) {
       stop("Unsupported distribution")
@@ -161,11 +179,33 @@ continuous <- function(distn, params = list(), plot_par = list(),
     pfun <-
       switch(distn,
              "normal" = stats::pnorm,
-             "beta" = stats::pbeta)
+             "beta" = stats::pbeta,
+             "cauchy" = stats::pcauchy,
+             "chi-squared" = stats::pchisq,
+             "exponential" = stats::pexp,
+             "f" = stats::pf,
+             "gamma" = stats::pgamma,
+             "gev" = revdbayes::pgev,
+             "gp" = revdbayes::pgp,
+             "lognormal" = stats::plnorm,
+             "t" = stats::pt,
+             "uniform" = stats::punif,
+             "weibull" = stats::pweib)
     qfun <-
       switch(distn,
              "normal" = stats::qnorm,
-             "beta" = stats::qbeta)
+             "beta" = stats::qbeta,
+             "cauchy" = stats::qcauchy,
+             "chi-squared" = stats::qchisq,
+             "exponential" = stats::qexp,
+             "f" = stats::qf,
+             "gamma" = stats::qgamma,
+             "gev" = revdbayes::qgev,
+             "gp" = revdbayes::qgp,
+             "lognormal" = stats::qlnorm,
+             "t" = stats::qt,
+             "uniform" = stats::qunif,
+             "weibull" = stats::qweib)
     # Set the arguments to the distributional functions
     fun_args <- set_fun_args(distn, dfun, fun_args, params)
     # Extract the names of the parameters and find the number of parameters
@@ -286,6 +326,11 @@ plot_continuous <- function(panel) {
                                 new_fun_args$sd, ")"),
              "beta" = paste(distn, "(", new_fun_args$shape1, ",",
                             new_fun_args$shape2, ",", new_fun_args$ncp, ")"),
+             "cauchy" = paste(distn, "(", new_fun_args$location, ",",
+                              new_fun_args$scale, ")"),
+             "chi-squared" = paste(distn, "(", new_fun_args$df, ",",
+                              new_fun_args$ncp, ")"),
+             "exponential" = paste(distn, "(", new_fun_args$rate, ")"),
              "user" = paste(root_name, par_paste)
       )
     if (is.null(var_range)) {

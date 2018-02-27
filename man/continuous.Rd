@@ -12,9 +12,9 @@ continuous(distn, params = list(), plot_par = list(), param_step = list(),
 \item{distn}{Either a character string or a function to choose the
   continuous random variable.
 
-  Strings \code{"beta"}, \code{"cauchy"}, \code{"chisquared"}
+  Strings \code{"beta"}, \code{"cauchy"}, \code{"chisq"}
   \code{"chi-squared"}, \code{"exponential"}, \code{"f"}, \code{"gamma"},
-  \code{"gev"}, \code{"gp"}, \code{lognormal}, \code{"log-normal"},
+  \code{"gev"}, \code{"gp"}, \code{"lognormal"}, \code{"log-normal"},
   \code{"normal"}, \code{"t"}, \code{"uniform"} and \code{"weibull"} are
   recognised, case being ignored.  The relevant distributional functions
   \code{dxxx} and \code{pxxx} in the \code{\link[stats]{stats-package}}
