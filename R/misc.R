@@ -82,6 +82,9 @@ set_fun_args <- function(distn, dfun, fun_args, params,
     if (is.null(fun_args$df)) {
       fun_args$df <- 4
     }
+    if (is.null(fun_args$ncp)) {
+      fun_args$ncp <- 0
+    }
     return(fun_args)
   }
   if (distn == "gamma") {
@@ -428,6 +431,16 @@ parameter_range <- function(distn, fun_args, ep, n_pars) {
     shape <- c(NA, NA)
     return(list(loc = loc, scale = scale, shape = shape))
   }
+  if (distn == "lognormal") {
+    meanlog <- c(NA, NA)
+    sdlog <- c(ep, NA)
+    return(list(meanlog = meanlog, sdlog = sdlog))
+  }
+  if (distn == "t") {
+    df <- c(ep, NA)
+    ncp <- c(-37.62, 37.62)
+    return(list(df = df, ncp = ncp))
+  }
 }
 
 parameter_step <- function(distn, fun_args, n_pars) {
@@ -482,6 +495,12 @@ parameter_step <- function(distn, fun_args, n_pars) {
   }
   if (distn == "gev" || distn == "gp") {
     return(list(loc = 1, scale = 0.25, shape = 0.1))
+  }
+  if (distn == "lognormal") {
+    return(list(meanlog = 1, sdlog = 0.25))
+  }
+  if (distn == "t") {
+    return(list(df = 1, ncp = 1))
   }
 }
 
