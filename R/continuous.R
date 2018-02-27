@@ -335,9 +335,13 @@ plot_continuous <- function(panel) {
              "f" = paste(distn, "(", new_fun_args$df1, ",", new_fun_args$df2,
                          ",", new_fun_args$ncp, ")"),
              "gamma1" = paste(distn, "(", new_fun_args$shape, ",",
-                               new_fun_args$rate, ")"),
+                              new_fun_args$rate, ")"),
              "gamma2" = paste(distn, "(", new_fun_args$shape, ",",
-                               new_fun_args$scale, ")"),
+                              new_fun_args$scale, ")"),
+             "gev" = paste(distn, "(", new_fun_args$loc, ",",
+                           new_fun_args$scale, ",", new_fun_args$shape, ")"),
+             "gp" = paste(distn, "(", new_fun_args$loc, ",",
+                          new_fun_args$scale, ",", new_fun_args$shape, ")"),
              "user" = paste(root_name, par_paste)
       )
     if (is.null(var_range)) {

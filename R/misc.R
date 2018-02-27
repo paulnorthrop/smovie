@@ -45,7 +45,7 @@ set_fun_args <- function(distn, dfun, fun_args, params,
     }
     return(fun_args)
   }
-  if (distn == "gp") {
+  if (distn == "gp" || distn == "gev") {
     if (is.null(fun_args$loc)) {
       fun_args$loc <- 0
     }
@@ -422,6 +422,12 @@ parameter_range <- function(distn, fun_args, ep, n_pars) {
       return(list(shape = shape, rate = rate))
     }
   }
+  if (distn == "gev" | distn == "gp") {
+    loc <- c(NA, NA)
+    scale <- c(ep, NA)
+    shape <- c(NA, NA)
+    return(list(loc = loc, scale = scale, shape = shape))
+  }
 }
 
 parameter_step <- function(distn, fun_args, n_pars) {
@@ -473,6 +479,9 @@ parameter_step <- function(distn, fun_args, n_pars) {
     } else {
       return(list(shape = 0.5, rate = 0.25))
     }
+  }
+  if (distn == "gev" || distn == "gp") {
+    return(list(loc = 1, scale = 0.25, shape = 0.1))
   }
 }
 
