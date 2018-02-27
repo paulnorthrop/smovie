@@ -69,7 +69,8 @@ If \code{distn} is a function then all parameters are unconstrained.}
 \item{p_vec}{A numeric vector of length 2.  The p.d.f. and c.d.f. are
 plotted between the 100\code{p_vec[1]}\% and 100\code{p_vec[2]}\%
 quantiles of the distribution.  If \code{p_vec} is not supplied then
-a sensible distribution-specific default is used.}
+a sensible distribution-specific default is used.  If \code{distn} is
+a function then the default is \code{p_vec = c(0.001, 0.999)}.}
 
 \item{var_range}{A numeric vector of length 2.  Can be used to set a fixed
 range of values over which to plot the p.d.f. and c.d.f., in order better
