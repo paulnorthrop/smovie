@@ -4,10 +4,21 @@
 \alias{movies}
 \title{Main menu for smovie movies}
 \usage{
-movies(hscale = 1)
+movies(fixed_range = TRUE, hscale = 1)
 }
 \arguments{
-\item{hscale}{Add description.}
+\item{fixed_range}{A logical scalar.  Only relevant to the \strong{Discrete}
+and \strong{Continuous} menus.  If \code{TRUE} then in the call to
+\code{\link{discrete}} or \code{\link{continuous}} the argument
+\code{var_support} (\code{dicrete}) or \code{var_range}
+(\code{continuous}) is set so that the values on the horizontal axes
+are fixed at values that enable the movie to show the effects of changing
+the parameters of the distribution, at least locally to the default
+initial values for the parameters.  For greater control call
+\code{\link{discrete}} or \code{\link{continuous}} directly.}
+
+\item{hscale}{A numeric scalar.  A scaling parameter for the size of the
+plot, which will be passed to all relevant menu items.}
 }
 \description{
 Uses the template \code{\link[rpanel]{rp.cartoons}} function to produce

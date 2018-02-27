@@ -3,24 +3,46 @@
 #' Uses the template \code{\link[rpanel]{rp.cartoons}} function to produce
 #' a menu panel from which any of the movies in
 #' \code{\link[smovie]{smovie}} package can be launched.
-#' @param hscale Add description.
+#' @param fixed_range A logical scalar.  Only relevant to the \strong{Discrete}
+#'   and \strong{Continuous} menus.  If \code{TRUE} then in the call to
+#'   \code{\link{discrete}} or \code{\link{continuous}} the argument
+#'   \code{var_support} (\code{dicrete}) or \code{var_range}
+#'   (\code{continuous}) is set so that the values on the horizontal axes
+#'   are fixed at values that enable the movie to show the effects of changing
+#'   the parameters of the distribution, at least locally to the default
+#'   initial values for the parameters.  For greater control call
+#'   \code{\link{discrete}} or \code{\link{continuous}} directly.
+#' @param hscale A numeric scalar.  A scaling parameter for the size of the
+#'   plot, which will be passed to all relevant menu items.
 #' @export
-movies <- function(hscale = 1) {
+movies <- function(fixed_range = TRUE, hscale = 1) {
   panel.launch <- function(menu.panel) {
     if (menu.panel$demo == "binomial") {
       discrete(distn = "binomial")
     }
     else if (menu.panel$demo == "geometric") {
-      discrete(distn = "geometric")
+      if (fixed_range) {
+        discrete(distn = "geometric", var_support = 0:30)
+      } else {
+        discrete(distn = "geometric")
+      }
     }
     else if (menu.panel$demo == "hypergeometric") {
       discrete(distn = "hypergeometric")
     }
     else if (menu.panel$demo == "negative binomial") {
-      discrete(distn = "negative binomial")
+      if (fixed_range) {
+        discrete(distn = "negative binomial", var_support = 0:100)
+      } else {
+        discrete(distn = "negative binomial")
+      }
     }
     else if (menu.panel$demo == "Poisson") {
-      discrete(distn = "poisson")
+      if (fixed_range) {
+        discrete(distn = "poisson", var_support = 0:20)
+      } else {
+        discrete(distn = "poisson")
+      }
     }
     else if (menu.panel$demo == "beta") {
       continuous(distn = "beta")
