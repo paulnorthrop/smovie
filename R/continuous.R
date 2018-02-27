@@ -171,7 +171,7 @@ continuous <- function(distn, var_range = NULL, params = list(),
              "lognormal" = stats::dlnorm,
              "t" = stats::dt,
              "uniform" = stats::dunif,
-             "weibull" = stats::dweib,
+             "weibull" = stats::dweibull,
              NULL)
     if (is.null(dfun)) {
       stop("Unsupported distribution")
@@ -190,7 +190,7 @@ continuous <- function(distn, var_range = NULL, params = list(),
              "lognormal" = stats::plnorm,
              "t" = stats::pt,
              "uniform" = stats::punif,
-             "weibull" = stats::pweib)
+             "weibull" = stats::pweibull)
     qfun <-
       switch(distn,
              "normal" = stats::qnorm,
@@ -205,7 +205,7 @@ continuous <- function(distn, var_range = NULL, params = list(),
              "lognormal" = stats::qlnorm,
              "t" = stats::qt,
              "uniform" = stats::qunif,
-             "weibull" = stats::qweib)
+             "weibull" = stats::qweibull)
     # Set the arguments to the distributional functions
     fun_args <- set_fun_args(distn, dfun, fun_args, params,
                              for_continuous = TRUE)
@@ -346,6 +346,10 @@ plot_continuous <- function(panel) {
                                    new_fun_args$sdlog, ")"),
              "t" = paste(distn, "(", new_fun_args$df, ",",
                                  new_fun_args$ncp, ")"),
+             "uniform" = paste(distn, "(", new_fun_args$min, ",",
+                               new_fun_args$max, ")"),
+             "weibull" = paste(distn, "(", new_fun_args$shape, ",",
+                               new_fun_args$scale, ")"),
              "user" = paste(root_name, par_paste)
       )
     if (is.null(var_range)) {

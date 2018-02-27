@@ -441,6 +441,16 @@ parameter_range <- function(distn, fun_args, ep, n_pars) {
     ncp <- c(-37.62, 37.62)
     return(list(df = df, ncp = ncp))
   }
+  if (distn == "uniform") {
+    min <- c(NA, NA)
+    max <- c(NA, NA)
+    return(list(min = min, max = max))
+  }
+  if (distn == "weibull") {
+    shape <- c(ep, NA)
+    scale <- c(ep, NA)
+    return(list(shape = shape, scale = scale))
+  }
 }
 
 parameter_step <- function(distn, fun_args, n_pars) {
@@ -501,6 +511,12 @@ parameter_step <- function(distn, fun_args, n_pars) {
   }
   if (distn == "t") {
     return(list(df = 1, ncp = 1))
+  }
+  if (distn == "uniform") {
+    return(list(min = 1, max = 1))
+  }
+  if (distn == "weibull") {
+    return(list(shape = 0.5, scale = 0.25))
   }
 }
 
@@ -597,9 +613,6 @@ recognise_stats_abbreviations <- function(distn) {
   }
   if (distn == "unif") {
     return("uniform")
-  }
-  if (distn == "weib") {
-    return("weibull")
   }
   if (distn == "chisq") {
     return("chi-squared")
