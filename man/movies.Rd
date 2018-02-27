@@ -10,7 +10,7 @@ movies(fixed_range = TRUE, hscale = 1)
 \item{fixed_range}{A logical scalar.  Only relevant to the \strong{Discrete}
 and \strong{Continuous} menus.  If \code{TRUE} then in the call to
 \code{\link{discrete}} or \code{\link{continuous}} the argument
-\code{var_support} (\code{dicrete}) or \code{var_range}
+\code{var_support} (\code{discrete}) or \code{var_range}
 (\code{continuous}) is set so that the values on the horizontal axes
 are fixed at values that enable the movie to show the effects of changing
 the parameters of the distribution, at least locally to the default

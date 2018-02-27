@@ -6,7 +6,7 @@
 #' @param fixed_range A logical scalar.  Only relevant to the \strong{Discrete}
 #'   and \strong{Continuous} menus.  If \code{TRUE} then in the call to
 #'   \code{\link{discrete}} or \code{\link{continuous}} the argument
-#'   \code{var_support} (\code{dicrete}) or \code{var_range}
+#'   \code{var_support} (\code{discrete}) or \code{var_range}
 #'   (\code{continuous}) is set so that the values on the horizontal axes
 #'   are fixed at values that enable the movie to show the effects of changing
 #'   the parameters of the distribution, at least locally to the default
@@ -48,40 +48,88 @@ movies <- function(fixed_range = TRUE, hscale = 1) {
       continuous(distn = "beta")
     }
     else if (menu.panel$demo == "Cauchy") {
-      continuous(distn = "cauchy")
+      if (fixed_range) {
+        continuous(distn = "cauchy", var_range = c(-20, 20))
+      } else {
+        continuous(distn = "cauchy")
+      }
     }
     else if (menu.panel$demo == "chi-squared") {
-      continuous(distn = "chi-squared")
+      if (fixed_range) {
+        continuous(distn = "chi-squared", var_range = c(0, 15))
+      } else {
+        continuous(distn = "chi-squared")
+      }
     }
     else if (menu.panel$demo == "exponential") {
-      continuous(distn = "exponential")
+      if (fixed_range) {
+        continuous(distn = "exponential", var_range = c(0, 10))
+      } else {
+        continuous(distn = "exponential")
+      }
     }
     else if (menu.panel$demo == "F") {
-      continuous(distn = "f")
+      if (fixed_range) {
+        continuous(distn = "f", var_range = c(0, 10))
+      } else {
+        continuous(distn = "f")
+      }
     }
     else if (menu.panel$demo == "gamma") {
-      continuous(distn = "gamma")
+      if (fixed_range) {
+        continuous(distn = "gamma", var_range = c(0, 20))
+      } else {
+        continuous(distn = "gamma")
+      }
     }
     else if (menu.panel$demo == "GEV") {
-      continuous(distn = "gev")
+      if (fixed_range) {
+        continuous(distn = "gev", var_range = c(-5, 15))
+      } else {
+        continuous(distn = "gev")
+      }
     }
     else if (menu.panel$demo == "GP") {
-      continuous(distn = "gp")
+      if (fixed_range) {
+        continuous(distn = "gp", var_range = c(-3, 15))
+      } else {
+        continuous(distn = "gp")
+      }
     }
     else if (menu.panel$demo == "lognormal") {
-      continuous(distn = "lognormal")
+      if (fixed_range) {
+        continuous(distn = "lognormal", var_range = c(0, 15))
+      } else {
+        continuous(distn = "lognormal")
+      }
     }
     else if (menu.panel$demo == "normal") {
-      continuous(distn = "normal")
+      if (fixed_range) {
+        continuous(distn = "normal", var_range = c(-8, 8))
+      } else {
+        continuous(distn = "normal")
+      }
     }
     else if (menu.panel$demo == "Student t") {
-      continuous(distn = "t")
+      if (fixed_range) {
+        continuous(distn = "t", var_range = c(-10, 10))
+      } else {
+        continuous(distn = "t")
+      }
     }
     else if (menu.panel$demo == "uniform") {
-      continuous(distn = "uniform")
+      if (fixed_range) {
+        continuous(distn = "uniform", var_range = c(-2, 3))
+      } else {
+        continuous(distn = "uniform")
+      }
     }
     else if (menu.panel$demo == "Weibull") {
-      continuous(distn = "weibull")
+      if (fixed_range) {
+        continuous(distn = "weibull", var_range = c(0, 10))
+      } else {
+        continuous(distn = "weibull")
+      }
     }
     else if (menu.panel$demo == "Pearson correlation coefficient") {
       correlation(n = 10)
