@@ -34,8 +34,32 @@ movies <- function(hscale = 1) {
     else if (menu.panel$demo == "exponential") {
       continuous(distn = "exponential")
     }
+    else if (menu.panel$demo == "f") {
+      continuous(distn = "f")
+    }
+    else if (menu.panel$demo == "gamma") {
+      continuous(distn = "gamma")
+    }
+    else if (menu.panel$demo == "gev") {
+      continuous(distn = "gev")
+    }
+    else if (menu.panel$demo == "gp") {
+      continuous(distn = "gp")
+    }
+    else if (menu.panel$demo == "lognormal") {
+      continuous(distn = "lognormal")
+    }
     else if (menu.panel$demo == "normal") {
       continuous(distn = "normal")
+    }
+    else if (menu.panel$demo == "t") {
+      continuous(distn = "t")
+    }
+    else if (menu.panel$demo == "uniform") {
+      continuous(distn = "uniform")
+    }
+    else if (menu.panel$demo == "weibull") {
+      continuous(distn = "weibull")
     }
     else if (menu.panel$demo == "Pearson correlation coefficient") {
       correlation(n = 10)
@@ -108,7 +132,15 @@ movies <- function(hscale = 1) {
        "cauchy",
        "chi-squared",
        "exponential",
-       "normal"
+       "f",
+       "gamma",
+       "gev",
+       "gp",
+       "lognormal",
+       "normal",
+       "t",
+       "uniform",
+       "weibull"
   ),
   list("Sampling distributions",
        "Pearson correlation coefficient",
