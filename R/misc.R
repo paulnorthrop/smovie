@@ -410,9 +410,9 @@ parameter_step <- function(distn, fun_args, n_pars) {
   }
 }
 
-variable_support <- function(distn, fun_args, qfun, pmf_or_cdf){
+variable_support <- function(distn, fun_args, qfun, pmf_or_cdf, p_vec){
   if (distn == "user") {
-    for_qfun <- c(list(p = c(0.001, 0.999)), fun_args)
+    for_qfun <- c(list(p = p_vec), fun_args)
     var_range <- do.call(qfun, for_qfun)
     return(var_range[1]:var_range[2])
   }
@@ -427,7 +427,7 @@ variable_support <- function(distn, fun_args, qfun, pmf_or_cdf){
         return(-1:1)
       }
     } else {
-      for_qfun <- c(list(p = c(0.001, 0.999)), fun_args)
+      for_qfun <- c(list(p = p_vec), fun_args)
       var_range <- do.call(qfun, for_qfun)
       return(var_range[1]:var_range[2])
     }
@@ -440,13 +440,13 @@ variable_support <- function(distn, fun_args, qfun, pmf_or_cdf){
         return(-1:1)
       }
     } else {
-      for_qfun <- c(list(p = c(0.001, 0.999)), fun_args)
+      for_qfun <- c(list(p = p_vec), fun_args)
       var_range <- do.call(qfun, for_qfun)
       return(var_range[1]:var_range[2])
     }
   }
   if (distn == "geometric") {
-    for_qfun <- c(list(p = c(0.001, 0.999)), fun_args)
+    for_qfun <- c(list(p = p_vec), fun_args)
     var_range <- do.call(qfun, for_qfun)
     return(var_range[1]:var_range[2])
   }
@@ -455,9 +455,18 @@ variable_support <- function(distn, fun_args, qfun, pmf_or_cdf){
   }
 }
 
-variable_range <- function(distn, fun_args, qfun){
-  for_qfun <- c(list(p = c(0.001, 0.999)), fun_args)
+variable_range <- function(distn, fun_args, qfun, p_vec){
+  for_qfun <- c(list(p = p_vec), fun_args)
   return(do.call(qfun, for_qfun))
+}
+
+set_p_vec <- function(distn) {
+  if (distn == "normal" | distn == "user") {
+    return(c(0.001, 0.999))
+  }
+  if (distn == "beta") {
+    return(c(0, 1))
+  }
 }
 
 recognise_stats_abbreviations <- function(distn) {

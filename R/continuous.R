@@ -1,3 +1,8 @@
+# distn = string: build in sensible choices of p_vec and/or var_range,
+#                 e.g. beta, depending on shape1 and shape2
+# distn = function: use p_vec or var_range
+# Document this clearly.
+
 # ================================ continuous =================================
 
 #' Univariate Continuous Distributions: p.d.f and c.d.f.
@@ -54,9 +59,14 @@
 #'   of the range, the second element the upper limit.
 #'   Use \code{NA} to impose no limit.
 #'   If \code{distn} is a function then all parameters are unconstrained.
+#' @param p_vec A numeric vector of length 2.  The p.d.f. and c.d.f. are
+#'   plotted between the 100\code{p_vec[1]}\% and 100\code{p_vec[2]}\%
+#'   quantiles of the distribution.  If \code{p_vec} is not supplied then
+#'   a sensible distribution-specific default is used.
 #' @param var_range A numeric vector of length 2.  Can be used to set a fixed
 #'   range of values over which to plot the p.d.f. and c.d.f., in order better
 #'   to see the effects of changing the parameter values.
+#'   If \code{var_range} is set then it overrides \code{p_vec}.
 #' @param plot_par A named list of graphical parameters
 #'   (see \code{link[graphics]{par}}) to be passed to
 #'   \code{\link[graphics]{plot}}.  This may be used to alter the appearance
@@ -92,9 +102,9 @@
 #' }
 #' @export
 continuous <- function(distn, params = list(), plot_par = list(),
-                     param_step = list(), param_range = list(),
-                     var_range = NULL, panel_plot = TRUE, hscale = NA,
-                     vscale = hscale, ...) {
+                       param_step = list(), param_range = list(),
+                       p_vec = NULL, var_range = NULL,
+                       panel_plot = TRUE, hscale = NA, vscale = hscale, ...) {
   # To add another distribution
   # 1. misc.R: add code to set_fun_args(), parameter_range(), parameter_step()
   # 2. add lines to dfun, qfun, pfun
@@ -138,6 +148,7 @@ continuous <- function(distn, params = list(), plot_par = list(),
     par_range <- merge_lists(par_range, param_range)
     par_step <- merge_lists(par_step, param_step)
   } else if (is.character(distn)) {
+    distn <- tolower(distn)
     # Allow stats:: abbreviations
     distn <- recognise_stats_abbreviations(distn)
     root_name <- distn
@@ -189,6 +200,10 @@ continuous <- function(distn, params = list(), plot_par = list(),
   if (any(names(fun_args) == "size")) {
     par_names[which(names(fun_args) == "size")] <- "n"
   }
+  # If p_vec has not been set then set a distribution-specific default
+  if (is.null(p_vec)) {
+    p_vec <- set_p_vec(distn)
+  }
   # A list of arguments to pass to the plotting function via rp.control()
   pass_args <- fun_args
   names(pass_args) <- par_names
@@ -198,7 +213,7 @@ continuous <- function(distn, params = list(), plot_par = list(),
                            distn = distn, fun_args = fun_args, n_pars = n_pars,
                            par_names = par_names, pdf_or_cdf = pdf_or_cdf,
                            plot_par = plot_par, root_name = root_name,
-                           var_range = var_range),
+                           var_range = var_range, p_vec = p_vec),
                       pass_args)
   continuous_panel <- do.call(rpanel::rp.control, for_rp_control)
   redraw_plot <- NULL
@@ -278,7 +293,7 @@ plot_continuous <- function(panel) {
              "user" = paste(root_name, par_paste)
       )
     if (is.null(var_range)) {
-      var_range <- variable_range(distn, new_fun_args, qfun)
+      var_range <- variable_range(distn, new_fun_args, qfun, p_vec)
     }
     var_range <- seq(from = var_range[1], to = var_range[2], len = 1001)
     my_col <- "black"
@@ -289,11 +304,17 @@ plot_continuous <- function(panel) {
     my_bty <- ifelse(!is.null(plot_par$bty), plot_par$bty, "l")
     if (pdf_or_cdf == "pdf") {
       probs <- do.call(dfun, c(list(x = var_range), fun_args))
+      cond <- is.finite(probs)
+      probs <- probs[cond]
+      var_range <- var_range[cond]
       my_ylim <- c(0, max(probs))
       my_main <- ifelse(!is.null(plot_par$main), plot_par$main,
                         paste("pdf of the", the_distn, "distribution"))
     } else {
       probs <- do.call(pfun, c(list(q = var_range), fun_args))
+      cond <- is.finite(probs)
+      probs <- probs[cond]
+      var_range <- var_range[cond]
       my_ylim <- c(0, 1)
       my_main <- ifelse(!is.null(plot_par$main), plot_par$main,
                         paste("cdf of the", the_distn, "distribution"))
