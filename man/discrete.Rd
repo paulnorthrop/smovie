@@ -5,16 +5,17 @@
 \title{Univariate Discrete Distributions: p.m.f and c.d.f.}
 \usage{
 discrete(distn, params = list(), plot_par = list(), param_step = list(),
-  param_range = list(), panel_plot = TRUE, hscale = NA, vscale = hscale,
-  observed_value = NA, ...)
+  param_range = list(), p_vec = NULL, var_support = NULL,
+  panel_plot = TRUE, hscale = NA, vscale = hscale, observed_value = NA,
+  ...)
 }
 \arguments{
 \item{distn}{Either a character string or a function to choose the discrete
   random variable.
 
   Strings \code{"binomial"}, \code{"geometric"},
-  \code{"hypergeometric"}, \code{"negative binomial"} and \code{poisson} are
-  recognised, case being ignored.  The relevant distributional functions
+  \code{"hypergeometric"}, \code{"negative binomial"} and \code{"poisson"}
+  are recognised, case being ignored.  The relevant distributional functions
   \code{dxxx} and \code{pxxx} in the \code{\link[stats]{stats-package}}
   are used.  The abbreviations \code{xxx} are also recognised.
   If \code{distn = "hypergeometric"} then the \code{(size, prob)}
@@ -28,7 +29,7 @@ discrete(distn, params = list(), plot_par = list(), param_step = list(),
   See the \href{https://cran.r-project.org/web/views/Distributions.html}{
   CRAN task view on distributions}.
   It is assumed that the support of the random variable is a
-  subset of the integers.
+  subset of the integers, unless \code{var_support} is set to the contrary.
 
   If \code{distn} is not supplied then \code{distn = "binomial"}
   is used.}
@@ -65,6 +66,18 @@ should be a vector of length 2: the first element gives the lower limit
 of the range, the second element the upper limit.
 Use \code{NA} to impose no limit.
 If \code{distn} is a function then all parameters are unconstrained.}
+
+\item{p_vec}{A numeric vector of length 2.  The p.d.f. and c.d.f. are
+plotted between the 100\code{p_vec[1]}\% and 100\code{p_vec[2]}\%
+quantiles of the distribution.  If \code{p_vec} is not supplied then
+a sensible distribution-specific default is used.  If \code{distn} is
+a function then the default is \code{p_vec = c(0.001, 0.999)}.}
+
+\item{var_support}{A numeric vector.  Can be used to set a fixed set of
+values for which to plot the p.m.f. and c.d.f., in order better
+to see the effects of changing the parameter values or to set a support
+that isn't a subset of the integers.
+If \code{var_support} is set then it overrides \code{p_vec}.}
 
 \item{panel_plot}{A logical parameter that determines whether the plot
 is placed inside the panel (\code{TRUE}) or in the standard graphics

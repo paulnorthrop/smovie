@@ -10,8 +10,8 @@
 #'   random variable.
 #'
 #'   Strings \code{"binomial"}, \code{"geometric"},
-#'   \code{"hypergeometric"}, \code{"negative binomial"} and \code{poisson} are
-#'   recognised, case being ignored.  The relevant distributional functions
+#'   \code{"hypergeometric"}, \code{"negative binomial"} and \code{"poisson"}
+#'   are recognised, case being ignored.  The relevant distributional functions
 #'   \code{dxxx} and \code{pxxx} in the \code{\link[stats]{stats-package}}
 #'   are used.  The abbreviations \code{xxx} are also recognised.
 #'   If \code{distn = "hypergeometric"} then the \code{(size, prob)}
@@ -25,7 +25,7 @@
 #'   See the \href{https://cran.r-project.org/web/views/Distributions.html}{
 #'   CRAN task view on distributions}.
 #'   It is assumed that the support of the random variable is a
-#'   subset of the integers.
+#'   subset of the integers, unless \code{var_support} is set to the contrary.
 #'
 #'   If \code{distn} is not supplied then \code{distn = "binomial"}
 #'   is used.
@@ -54,6 +54,16 @@
 #'   of the range, the second element the upper limit.
 #'   Use \code{NA} to impose no limit.
 #'   If \code{distn} is a function then all parameters are unconstrained.
+#' @param p_vec A numeric vector of length 2.  The p.d.f. and c.d.f. are
+#'   plotted between the 100\code{p_vec[1]}\% and 100\code{p_vec[2]}\%
+#'   quantiles of the distribution.  If \code{p_vec} is not supplied then
+#'   a sensible distribution-specific default is used.  If \code{distn} is
+#'   a function then the default is \code{p_vec = c(0.001, 0.999)}.
+#' @param var_support A numeric vector.  Can be used to set a fixed set of
+#'   values for which to plot the p.m.f. and c.d.f., in order better
+#'   to see the effects of changing the parameter values or to set a support
+#'   that isn't a subset of the integers.
+#'   If \code{var_support} is set then it overrides \code{p_vec}.
 #' @param plot_par A named list of graphical parameters
 #'   (see \code{link[graphics]{par}}) to be passed to
 #'   \code{\link[graphics]{plot}}.  This may be used to alter the appearance
@@ -96,8 +106,8 @@
 #' @export
 discrete <- function(distn, params = list(), plot_par = list(),
                      param_step = list(), param_range = list(),
-                     panel_plot = TRUE, hscale = NA, vscale = hscale,
-                     observed_value = NA, ...) {
+                     p_vec = NULL, var_support = NULL, panel_plot = TRUE,
+                     hscale = NA, vscale = hscale, observed_value = NA, ...) {
   # To add another distribution
   # 1. misc.R: add code to set_fun_args(), parameter_range(), parameter_step(),
   #            variable_support()
@@ -142,6 +152,7 @@ discrete <- function(distn, params = list(), plot_par = list(),
     par_range <- merge_lists(par_range, param_range)
     par_step <- merge_lists(par_step, param_step)
   } else if (is.character(distn)) {
+    distn <- tolower(distn)
     # Allow stats:: abbreviations
     distn <- recognise_stats_abbreviations(distn)
     root_name <- distn
@@ -203,6 +214,10 @@ discrete <- function(distn, params = list(), plot_par = list(),
   if (any(names(fun_args) == "size")) {
     par_names[which(names(fun_args) == "size")] <- "n"
   }
+  # If p_vec has not been set then set a distribution-specific default
+  if (is.null(p_vec)) {
+    p_vec <- c(0.001, 0.999)
+  }
   # A list of arguments to pass to the plotting function via rp.control()
   pass_args <- fun_args
   names(pass_args) <- par_names
@@ -212,7 +227,8 @@ discrete <- function(distn, params = list(), plot_par = list(),
                            distn = distn, fun_args = fun_args, n_pars = n_pars,
                            par_names = par_names, pmf_or_cdf = pmf_or_cdf,
                            observed_value = observed_value,
-                           plot_par = plot_par, root_name = root_name),
+                           plot_par = plot_par, root_name = root_name,
+                           var_support = var_support, p_vec = p_vec),
                       pass_args)
   discrete_panel <- do.call(rpanel::rp.control, for_rp_control)
   redraw_plot <- NULL
@@ -298,7 +314,10 @@ plot_discrete <- function(panel) {
              "poisson" = paste(distn, "(", new_fun_args$lambda, ")"),
              "user" = paste(root_name, par_paste)
       )
-    var_support <- variable_support(distn, new_fun_args, qfun, pmf_or_cdf)
+    if (is.null(var_support)) {
+      var_support <- variable_support(distn, new_fun_args, qfun, pmf_or_cdf,
+                                      p_vec)
+    }
     if (is.null(observed_value)) {
       my_col <- "black"
     } else {
