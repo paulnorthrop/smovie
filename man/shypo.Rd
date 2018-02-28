@@ -84,15 +84,16 @@ The movie is based on two plots.
   Radio buttons can be used either to:
   \itemize{
     \item{}{set \code{a} to achieve the target type I error probability
-            \code{target_alpha}, based on the current value of \code{n};}
-    \item{}{set \code{a} and \code{n} to achieve the respective target
-            type I and type II error probabilities of \code{target_alpha}
-            and \code{target_beta}, based on the current value of \code{n}.}
+      \code{target_alpha}, based on the current value of \code{n};}
+    \item{}{set \code{a} and (integer) \code{n} to achieve (or better) the
+      respective target type I and type II error probabilities of
+      \code{target_alpha} and \code{target_beta}, based on the current
+      value of \code{n}.}
   }
 }
 \examples{
 \dontrun{
-# 1. Change a (for fixed n) to achieve alpha <= 0.05
+# 1. Change a (for fixed n) to achieve alpha = 0.05
 # 2. Change a and n to achieve alpha <= 0.05 and beta <= 0.1
 shypo(mu0 = 0, eff = 5, n = 16, a = 2.3, delta_a = 0.01)
 }
