@@ -41,13 +41,13 @@ least squares regression line.
   middle of the plot.
 
   Superimposed on the plot are two least squares regression lines:
-  one based on all the data (`with outlier') and one in which the
-  `red' observation has been removed (`without outlier'.
+  one based on all the data (`with observation') and one in which the
+  `red' observation has been removed (`without observation'.
   Initially these lines coincide.
 
   The location of the `red' observation can be changed using the
   +/- buttons so that the effect of the position of this observation
-  on the `with outlier' line can be seen.
+  on the `with observation' line can be seen.
 
   We see that if the red observation is outlying, that is, it is far
   from the least squares line fitted to the other observations, then
