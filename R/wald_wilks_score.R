@@ -250,7 +250,7 @@ wws <- function(model = c("norm", "binom"), theta_range = NULL, mult = 3,
   test_stat <- "none"
   perform_tests <- "no"
   # Create buttons for movie
-  wws_panel <- rpanel::rp.control("Change theta0",
+  wws_panel <- rpanel::rp.control("Wald, Wilks and Score",
                                  loglik = loglik, theta_range = theta_range,
                                  theta0 = theta0, user_args = user_args,
                                  test_stat = "none",
