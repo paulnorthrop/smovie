@@ -95,7 +95,7 @@ shypo <- function(mu0 = 0, sd = 6, eff = sd, n = 10, a = mu0 + eff / 2,
   }
   # Create buttons for movie
   set_values <- "no"
-  sh_panel <- rpanel::rp.control("Change n, a, mu0 or eff (= mu1 - mu0)",
+  sh_panel <- rpanel::rp.control("Testing simple hypotheses",
                                  n = n, a = a, mu0 = mu0, eff = eff,
                                  sd = sd, target_alpha = target_alpha,
                                  target_beta = target_beta,
