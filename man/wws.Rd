@@ -103,10 +103,31 @@ parameter \eqn{\theta}.  The user can change the value of the parameter
 under a simple null hypothesis and observe the effect on the test
 statistics and (approximate) p-values associated with the tests of
 this hypothesis against the general alternative.  The user can
-specify their own loglikelihood or use one of two in-built examples.
+specify their own log-likelihood or use one of two in-built examples.
 }
 \details{
-Add details.
+The \href{https://en.wikipedia.org/wiki/Wald_test}{Wald},
+  \href{https://en.wikipedia.org/wiki/Likelihood-ratio_test}{Wilks}
+  (or likelihood ratio)
+  and \href{https://en.wikipedia.org/wiki/Score_test}{Score} tests are
+  asymptotically equivalent tests of a simple hypothesis that a parameter
+  of interest \eqn{\theta} is equal to a particular value \eqn{\theta_0}.
+  The test statistics are all based on the log-likelihood \eqn{l(\theta}
+  for \eqn{\theta} but they differ in the way that they measure the
+  distance between the maximum likelihood estimate (MLE) of \eqn{\theta} and
+  \eqn{\theta_0}.  The Wilks statistic is the amount by which the
+  log-likelihood evaluated \eqn{\theta_0} is smaller than the log-likelihood
+  evaluated at the MLE.  The Walk statistics is based on the absolute
+  difference between the MLE and \eqn{\theta_0}.  The score test is
+  based on the gradient of the log-likelihood (the score function)
+  at \eqn{\theta_0}.
+  For details see Azzalini (1996).
+
+  This movie illustrates the differences between the test
+  statistics for simple models with a single scalar parameter.
+  In the (default) normal example the three test statistics coincide.
+  This is not true in general, as shown by the other in-built example
+  (\code{distn} = "binom").
 }
 \examples{
 \dontrun{
@@ -145,6 +166,10 @@ wws(bin_loglik, theta0 = 0.5, theta_range = c(0.1, 0.7),
     theta_mle = 7 / 20, n_success = 7, n_failure = 13,
     alg_score = bin_alg_score, alg_obs_info = bin_alg_obs_info)
 }
+}
+\references{
+Azzalini, A. (1996) Statistical Inference Based on the
+ Likelihood, Chapman & Hall / CRC, London.
 }
 \seealso{
 \code{\link{smovie}}: general information about smovie.
