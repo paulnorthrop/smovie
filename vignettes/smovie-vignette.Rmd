@@ -1,58 +1,117 @@
 ---
-title: "Vignette Title"
-author: "Vignette Author"
+title: "An overview of smovie"
+author: "Paul Northrop"
 date: "`r Sys.Date()`"
-output: rmarkdown::html_vignette
+output: 
+  rmarkdown::html_vignette:
+    toc: true
 vignette: >
-  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteIndexEntry{An overview of smovie}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
+bibliography: smovie.bib
 ---
 
-Vignettes are long form documentation commonly included in packages. Because they are part of the distribution of the package, they need to be as compact as possible. The `html_vignette` output type provides a custom style sheet (and tweaks some options) to ensure that the resulting html is as small as possible. The `html_vignette` format:
-
-- Never uses retina figures
-- Has a smaller default figure size
-- Uses a custom CSS stylesheet instead of the default Twitter Bootstrap style
-
-## Vignette Info
-
-Note the various macros within the `vignette` section of the metadata block above. These are required in order to instruct R how to build the vignette. Note that you should change the `title` field and the `\VignetteIndexEntry` to match the title of your vignette.
-
-## Styles
-
-The `html_vignette` template includes a basic CSS theme. To override this theme you can specify your own CSS in the document metadata as follows:
-
-    output: 
-      rmarkdown::html_vignette:
-        css: mystyles.css
-
-## Figures
-
-The figure sizes have been customised so that you can easily put two images side-by-side. 
-
-```{r, fig.show='hold'}
-plot(1:10)
-plot(10:1)
+```{r, include = FALSE}
+knitr::opts_chunk$set(comment = "#>", collapse = TRUE)
 ```
 
-You can enable figure captions by `fig_caption: yes` in YAML:
+The *smovie* package provides movies to help students to understand statistical concepts.  The [rpanel](https://cran.r-project.org/package=rpanel) package [@rpanel] is used to create interactive plots that move in response to changes in parameter values.  This vignette provides an overview of the movies that are available currently, using screenshots from the movies.  Any comments or suggestions are gratefully received.
 
-    output:
-      rmarkdown::html_vignette:
-        fig_caption: yes
+The function `movies` creates a panel from which examples of the movies can be launched.  It is based on the function `rp.cartoons` in the *rpanel* package, and the image in the panel has been taken from there.  These examples have been set up with sensible default arguments.  For greater control of an individual example call the relevant function directly.
 
-Then you can use the chunk option `fig.cap = "Your figure caption."` in **knitr**.
-
-## More Examples
-
-You can write math expressions, e.g. $Y = X\beta + \epsilon$, footnotes^[A footnote here.], and tables, e.g. using `knitr::kable()`.
-
-```{r, echo=FALSE, results='asis'}
-knitr::kable(head(mtcars, 10))
+```{r}
+library(smovie)
+```
+```{r, eval = FALSE}
+movies()
 ```
 
-Also a quote using `>`:
+## Probability distributions
 
-> "He who gives up [code] safety for [code] speed deserves neither."
-([via](https://twitter.com/hadleywickham/status/504368538874703872))
+The functions `discrete` and `continuous` create interactive plots to illustrate how the behaviour of some common probability distributions depends on their parameter values.  There are buttons to change the parameter values and to switch between displaying the p.m.f./p.d.f. and the c.d.f.  These functions also allow you to provide their own distribution.  If you are calling `discrete` or `continuous` directly it may be useful to use the argument `var_support` (for `discrete`) or `var_range` (for `continuous`) to fix the scale on the horizontal axis in order better to see the effects of changing the parameter values.  Otherwise, for some of the distributions, the scale on the horizontal axis will react to changes in the parameters and mask the effects of any changes in location and scale parameters.
+
+### Discrete distributions
+
+```{r, eval = FALSE}
+discrete(distn = "binomial")
+```
+
+```{r, echo = FALSE, fig.align = 'center', out.width = "600px"}
+knitr::include_graphics("binom.PNG")
+```
+
+### Continuous distributions
+
+```{r, eval = FALSE}
+continuous(distn = "gamma")
+```
+
+```{r, echo = FALSE, fig.align = 'center', out.width = "600px"}
+knitr::include_graphics("gamma.PNG")
+```
+
+## Sampling distributions
+
+Three movies illustrate the general idea of the sampling distribution of a statistic.
+
+### Central Limit Theorem (CLT)
+
+
+### Extremal Types Theorem (ETT)
+
+The [Extremal Types Theorem](https://en.wikipedia.org/wiki/Extreme_value_theory#Univariate_theory) is rather like the CLT but applied to the sample maximum instead of the sample mean.  Loosely speaking, it states that, in many situations, the maximum of a **large number** $n$ of independent random variables has **approximately** a Generalized Extreme Value (GEV) distribution with shape parameter $\xi$.  See @Coles2001 for an introductory account of extreme value theory.
+
+The function `ett` can be used to illustrate the convergence of the distribution of sample maxima to a GEV limit.  Several continous distributions for the underlying variables are available corresponding to different values of the limiting shape parameter $\xi$.  There are buttons to change the value of $n$ and to simulate another sample of size $n$.  As the simulations progress a histogram of the sample maxima can be compared to the GEV approximation to the sampling distribution.  The exact sampling distribution is also displayed.
+
+```{r, eval = FALSE}
+ett(distn = "exponential")
+```
+
+```{r, echo = FALSE, fig.align = 'center', out.width = "600px"}
+knitr::include_graphics("ett.PNG")
+```
+
+### Pearson Correlation Coefficient
+
+The function `correlation` illustrates the sampling distribution of the Pearson product moment correlation coefficient, under sampling from a bivariate normal distribution. There are buttons to change the values of $n$ and the true correlation $\rho$ and to simulate another sample of size $n$.  A histogram of the sample correlation coefficients is compared to the exact pdf of the sampling distribution.  There is also an option to switch to a display of [Fisher's $z$-transformation](https://en.wikipedia.org/wiki/Fisher_transformation) $[\ln(1+\rho) - \ln(1-\rho)] / 2$.  Then the histogram can be compared both to the exact distribution and to a normal approximation to this distribution.
+
+```{r, eval = FALSE}
+correlation(rho = 0.8, n = 30)
+```
+
+```{r, echo = FALSE, fig.align = 'center', out.width = "600px"}
+knitr::include_graphics("correlation1.PNG")
+```
+
+```{r, echo = FALSE, fig.align = 'center', out.width = "600px"}
+knitr::include_graphics("correlation2.PNG")
+```
+
+## Regression
+
+## Hypothesis Testing
+
+Two movies illustrate key concepts in hypothesis testing.  `wws` compares three test statistics (Wald, Wilks and Score) based on the log-likelihood.  See @Azzalini1996 for details.  `shypo` illustrates the concepts of type I and type II errors, using as an example a test of simple hypothesis about the mean, against the general alternative, based on a random sample from a normal distribtution with known variance. 
+
+### Wald, Wilks and Score test statistics
+
+The function `wws` shows the differing ways in which these three test statistics measure the deviation between the maximum likelihood estimate of a scalar parameter $\theta$ and the value $\theta_0$ under a null hypothesis.  There are buttons to change the value of $\theta_0$, select which test statistic to display and to add the values of the test statistics and the associated $p$-values of the test of the null hypothesis that $\theta = \theta_0$.  The example below is based on a sample from a binomial($20, \theta$) distribution in 7 successes and 13 failures are observed.  An example based on a normal distribution is also avaiable.  The used may also specify their own log-likelihood.
+
+```{r, eval = FALSE}
+wws(theta0 = 0.5, model = "binom", data = c(7, 13))
+```
+
+```{r, echo = FALSE, fig.align = 'center', out.width = "600px"}
+knitr::include_graphics("wws.PNG")
+```
+
+### Testing simply hypothesis: normally distributed variables
+
+Add text
+
+## References
+
+<script type="text/x-mathjax-config">
+   MathJax.Hub.Config({  "HTML-CSS": { minScaleAdjust: 125, availableFonts: [] }  });
+</script>
