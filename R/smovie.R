@@ -15,7 +15,8 @@
 #'
 #' @section {Probability distributions}:
 #' \itemize{
-#'   \item {\link[=binom_pmf]{Binomial p.m.f.}}
+#'   \item {\link[=discrete]{Discrete distribtions}}
+#'   \item {\link[=continuous]{Continuous distribtions}}
 #' }
 #'
 #' @section {Sampling distributions}:

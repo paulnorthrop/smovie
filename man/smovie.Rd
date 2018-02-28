@@ -18,7 +18,8 @@ these buttons see the documentation of the individual functions.
 \section{{Probability distributions}}{
 
 \itemize{
-  \item {\link[=binom_pmf]{Binomial p.m.f.}}
+  \item {\link[=discrete]{Discrete distribtions}}
+  \item {\link[=continuous]{Continuous distribtions}}
 }
 }
 
