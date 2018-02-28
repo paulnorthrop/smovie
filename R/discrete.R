@@ -4,7 +4,7 @@
 #'
 #' A movie to illustrate how the probability mass function (p.m.f.) and
 #' cumulative distribution function (c.d.f.) of a discrete random variable
-#' depends on the values of its parameters.
+#' depend on the values of its parameters.
 #'
 #' @param distn Either a character string or a function to choose the discrete
 #'   random variable.
@@ -86,7 +86,7 @@
 #'   \code{range}.
 #' @details The movie starts with a plot of the p.m.f. of the distribution
 #'   for the initial values of the parameters.  There are buttons to
-#'   increase (+) or decrease (-) each parameter.  There is a radio button
+#'   increase (+) or decrease (-) each parameter.  There are radio buttons
 #'   to switch the plot from the p.m.f. to the c.d.f. and back.
 #'
 #'   Owing to a conflict with the argument \code{size} of the function

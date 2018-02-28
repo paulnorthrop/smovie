@@ -113,12 +113,12 @@ Nothing is returned, only the animation is produced.
 \description{
 A movie to illustrate how the probability density function (p.d.f.) and
 cumulative distribution function (c.d.f.) of a continuous random variable
-depends on the values of its parameters.
+depend on the values of its parameters.
 }
 \details{
 The movie starts with a plot of the p.d.f. of the distribution
   for the initial values of the parameters.  There are buttons to
-  increase (+) or decrease (-) each parameter.  There is a radio button
+  increase (+) or decrease (-) each parameter.  There are radio buttons
   to switch the plot from the p.d.f. to the c.d.f. and back.
 }
 \examples{
