@@ -58,7 +58,7 @@
 #'   (ii) the variable can be changed from \eqn{\rho} to Fisher's
 #'   z-transformation \eqn{F(\rho) = arctanh(\rho) = [ln(1+\rho) - ln(1-\rho)]/2}.
 #'   For sufficiently large values of \eqn{n}, \eqn{F(\rho)} has approximately
-#'   a normal distribution with mean \eqn{\rho} and standard deviation
+#'   a normal distribution with mean \eqn{\rho} and variance
 #'   \eqn{1 / (n - 3)}.
 #'
 #'   The values of the sample size \eqn{n} or true correlation coefficient
