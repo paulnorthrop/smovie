@@ -51,8 +51,8 @@
 #'   which is indicated by a vertical black line.
 #'
 #'   The bottom plot shows how the probabilities of making a type I or type II
-#'   error depend on the value of \code{a}, by plotting these probabilities
-#'   against \code{a}.
+#'   error (alpha and beta respectively) depend on the value of \code{a},
+#'   by plotting these probabilities against \code{a}.
 #'
 #'   A parameter window enables the user to change the values of \code{n},
 #'   \code{a}, \code{mu0}, \code{eff} = \code{mu1} - \code{mu0} or \code{sd}
@@ -71,21 +71,12 @@
 #' @seealso \code{\link{smovie}}: general information about smovie.
 #' @examples
 #' \dontrun{
-#' # Start with the plot just after slide 10 of the STAT3001 notes
-#' # See the effect of increasing a
-#' shypo(mu0 = 0, eff = 5, n = 1)
-#'
-#' # Repeat with a larger sample size
-#' shypo(mu0 = 0, eff = 1, n = 30)
-#'
-#' # First example on slide 13 of STAT3001 notes
-#' shypo(mu0 = 0, eff = 5, n = 16, delta_a = 0.01)
-#'
-#' # Second example on slide 13 of STAT3001 notes
-#' shypo(mu0 = 0, eff = 5, n = 12.3, a = 2.75, delta_a = 0.01, delta_n = 0.01)
+#' # 1. Change a (for fixed n) to achieve alpha <= 0.05
+#' # 2. Change a and n to achieve alpha <= 0.05 and beta <= 0.1
+#' shypo(mu0 = 0, eff = 5, n = 16, a = 2.3, delta_a = 0.01)
 #' }
 #' @export
-shypo <- function(mu0 = 0, sd = 5, eff = sd, n = 10, a = mu0 + eff / 2,
+shypo <- function(mu0 = 0, sd = 6, eff = sd, n = 10, a = mu0 + eff / 2,
                   target_alpha = 0.05, target_beta = 0.1, panel_plot = TRUE,
                   hscale = NA, vscale = hscale, delta_n = 1,
                   delta_a = sd / (10 * sqrt(n)), delta_eff = sd,
