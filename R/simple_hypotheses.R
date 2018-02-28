@@ -5,7 +5,8 @@
 #' A movie to illustrate statistical concepts involved in the testing
 #' of one simple hypothesis against another.  The example used is a
 #' random sample from a normal distribution whose variance is assumed
-#' to be known.
+#' to be known.  The simple hypotheses relate to the value of the mean
+#' \eqn{\mu}.
 #'
 #' @param mu0 A numeric scalar.  The value of \eqn{\mu} under the null
 #'   hypothesis H0 with which to start the movie.
@@ -35,9 +36,9 @@
 #' @param hscale,vscale Numeric scalars.  Scaling parameters for the size
 #'   of the plot when \code{panel_plot = TRUE}. The default values are 1.4 on
 #'   Unix platforms and 2 on Windows platforms.
-#' @param delta_mu0,delta_eff,delta_a,delta_n Numeric scalars.  The
-#'   respective amounts by which the values of \code{mu0, eff, a} and
-#'   \code{n} are increased (or decreased) after one click of the + (or -)
+#' @param delta_mu0,delta_eff,delta_a,delta_n,delta_sd Numeric scalars.  The
+#'   respective amounts by which the values of \code{mu0, eff, a, n} and
+#'   \code{sd} are increased (or decreased) after one click of the + (or -)
 #'   button in the parameter window.
 #' @details The movie is based on two plots.
 #'
@@ -54,8 +55,8 @@
 #'   against \code{a}.
 #'
 #'   A parameter window enables the user to change the values of \code{n},
-#'   \code{a}, \code{mu0} or \code{eff} = \code{mu1} - \code{mu0} by clicking
-#'   the +/- buttons.
+#'   \code{a}, \code{mu0}, \code{eff} = \code{mu1} - \code{mu0} or \code{sd}
+#'   by clicking the +/- buttons.
 #'
 #'   Radio buttons can be used either to:
 #'   \itemize{
@@ -84,11 +85,11 @@
 #' shypo(mu0 = 0, eff = 5, n = 12.3, a = 2.75, delta_a = 0.01, delta_n = 0.01)
 #' }
 #' @export
-shypo <- function(mu0 = 0, sd = 6, eff = sd, n = 30, a = mu0 + eff / 2,
+shypo <- function(mu0 = 0, sd = 5, eff = sd, n = 10, a = mu0 + eff / 2,
                   target_alpha = 0.05, target_beta = 0.1, panel_plot = TRUE,
                   hscale = NA, vscale = hscale, delta_n = 1,
                   delta_a = sd / (10 * sqrt(n)), delta_eff = sd,
-                  delta_mu0 = 1) {
+                  delta_mu0 = 1, delta_sd = 1) {
   temp <- set_scales(hscale, vscale)
   hscale <- temp$hscale
   vscale <- temp$vscale
@@ -106,7 +107,8 @@ shypo <- function(mu0 = 0, sd = 6, eff = sd, n = 30, a = mu0 + eff / 2,
   sh_panel <- rpanel::rp.control("Change n, a, mu0 or eff (= mu1 - mu0)",
                                  n = n, a = a, mu0 = mu0, eff = eff,
                                  sd = sd, target_alpha = target_alpha,
-                                 target_beta = target_beta, set_values = "no")
+                                 target_beta = target_beta,
+                                 set_values = "set a and n by hand")
   #
   redraw_plot <- NULL
   panel_redraw <- function(panel) {
@@ -138,11 +140,17 @@ shypo <- function(mu0 = 0, sd = 6, eff = sd, n = 30, a = mu0 + eff / 2,
   rpanel::rp.doublebutton(sh_panel, eff, delta_eff, range = c(0, NA),
                           initval = eff, title = "eff size, eff = mu1 - mu0",
                           action = action, showvalue = TRUE)
+  rpanel::rp.doublebutton(sh_panel, sd, delta_sd, range = c(0.1, NA),
+                          initval = sd, title = "standard deviation",
+                          action = action, showvalue = TRUE)
+  title_text <- paste("Targets: alpha =", target_alpha, "beta =",
+                      target_beta)
   rpanel::rp.radiogroup(sh_panel, set_values,
-                        c("no", "set a to achieve target alpha",
+                        c("set a and n by hand",
+                          "set a to achieve target alpha",
                           "set a and n to achieve target alpha and beta"),
                         action = action,
-                        title = "Set a and/or n automatically?")
+                        title = title_text)
   rpanel::rp.do(sh_panel, action = action)
   return(invisible())
 }

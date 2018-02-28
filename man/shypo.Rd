@@ -4,10 +4,10 @@
 \alias{shypo}
 \title{Testing simple hypotheses}
 \usage{
-shypo(mu0 = 0, sd = 6, eff = sd, n = 30, a = mu0 + eff/2,
+shypo(mu0 = 0, sd = 5, eff = sd, n = 10, a = mu0 + eff/2,
   target_alpha = 0.05, target_beta = 0.1, panel_plot = TRUE,
   hscale = NA, vscale = hscale, delta_n = 1, delta_a = sd/(10 *
-  sqrt(n)), delta_eff = sd, delta_mu0 = 1)
+  sqrt(n)), delta_eff = sd, delta_mu0 = 1, delta_sd = 1)
 }
 \arguments{
 \item{mu0}{A numeric scalar.  The value of \eqn{\mu} under the null
@@ -47,9 +47,9 @@ then the tkrplot library is required.}
 of the plot when \code{panel_plot = TRUE}. The default values are 1.4 on
 Unix platforms and 2 on Windows platforms.}
 
-\item{delta_mu0, delta_eff, delta_a, delta_n}{Numeric scalars.  The
-respective amounts by which the values of \code{mu0, eff, a} and
-\code{n} are increased (or decreased) after one click of the + (or -)
+\item{delta_mu0, delta_eff, delta_a, delta_n, delta_sd}{Numeric scalars.  The
+respective amounts by which the values of \code{mu0, eff, a, n} and
+\code{sd} are increased (or decreased) after one click of the + (or -)
 button in the parameter window.}
 }
 \value{
@@ -59,7 +59,8 @@ Nothing is returned, only the animation is produced.
 A movie to illustrate statistical concepts involved in the testing
 of one simple hypothesis against another.  The example used is a
 random sample from a normal distribution whose variance is assumed
-to be known.
+to be known.  The simple hypotheses relate to the value of the mean
+\eqn{\mu}.
 }
 \details{
 The movie is based on two plots.
@@ -77,8 +78,8 @@ The movie is based on two plots.
   against \code{a}.
 
   A parameter window enables the user to change the values of \code{n},
-  \code{a}, \code{mu0} or \code{eff} = \code{mu1} - \code{mu0} by clicking
-  the +/- buttons.
+  \code{a}, \code{mu0}, \code{eff} = \code{mu1} - \code{mu0} or \code{sd}
+  by clicking the +/- buttons.
 
   Radio buttons can be used either to:
   \itemize{
