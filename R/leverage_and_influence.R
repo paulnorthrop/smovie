@@ -25,13 +25,13 @@
 #'   middle of the plot.
 #'
 #'   Superimposed on the plot are two least squares regression lines:
-#'   one based on all the data (`with outlier') and one in which the
-#'   `red' observation has been removed (`without outlier'.
+#'   one based on all the data (`with observation') and one in which the
+#'   `red' observation has been removed (`without observation'.
 #'   Initially these lines coincide.
 #'
 #'   The location of the `red' observation can be changed using the
 #'   +/- buttons so that the effect of the position of this observation
-#'   on the `with outlier' line can be seen.
+#'   on the `with observation' line can be seen.
 #'
 #'   We see that if the red observation is outlying, that is, it is far
 #'   from the least squares line fitted to the other observations, then
@@ -77,8 +77,9 @@ lev_inf <- function(association = c("positive", "negative", "none"), n = 25,
   outx <- init.x
   outy <- init.y
   # Create buttons for movie
-  lev_inf_1_panel <- rpanel::rp.control("parameters", x = x, set1 = set1,
-                                        outx = init.x, outy = init.y)
+  lev_inf_1_panel <- rpanel::rp.control("Leverage and influence", x = x,
+                                        set1 = set1, outx = init.x,
+                                        outy = init.y)
   #
   redraw_plot <- NULL
   panel_redraw <- function(panel) {
@@ -101,11 +102,11 @@ lev_inf <- function(association = c("positive", "negative", "none"), n = 25,
   rpanel::rp.doublebutton(lev_inf_1_panel, outx, 0.2, range = c(-0.8, 1.8),
                           repeatinterval = 20, initval = 1,
                           title = "x coefficient:", action = action,
-                          showvalue = TRUE)
+                          showvalue = FALSE)
   rpanel::rp.doublebutton(lev_inf_1_panel, outy, 0.2, range = c(-0.8,1.8),
                           repeatinterval = 20, initval = 0,
                           title = "y coefficient:", action = action,
-                          showvalue = TRUE)
+                          showvalue = FALSE)
   rpanel::rp.do(lev_inf_1_panel, action = action)
   return(invisible())
 }
@@ -128,7 +129,7 @@ expl_plot <- function(x, y, c1, c2, ntitle, p = 0.0185, q = 0.05, nleg = NULL,
   u <- graphics::par("usr")
   if (!is.null(nleg)) {
     graphics::legend(u[2], u[3],
-              legend = c("with outlier","without outlier","outlier"),
+              legend = c("with observation","without observation","observation"),
               lty = c(1, 2, -1), xjust = 1, yjust = 0, lwd = c(2, 2),
               pch = c(-1, -1, 16), col = c(1, 1, 2))
   }
@@ -149,7 +150,7 @@ lev_inf_1_plot <- function(panel){
     lm1b <- stats::lm(set1 ~ x)
     c2 <- lm1b$coeff
     expl_plot(x, set1, c1, c2,
-              ntitle = "Effects of an outlier on LS regression line",
+              ntitle = "Effects of an observation on LS regression line",
               nleg = 1, xlim = c(-0.75, 1.75), ylim = c(-0.75, 1.75),
               col = pcol)
     graphics::par(old_par)
