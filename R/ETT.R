@@ -359,9 +359,9 @@ ett <- function(n = 20, distn, params = list(), panel_plot = TRUE, hscale = NA,
                           action = action, initval = n,
                           range = c(2, NA), showvalue = TRUE, ...)
   if (n_add == 1) {
-    my_title <- paste("simulate another sample of size n")
+    my_title <- paste("simulate another sample")
   } else {
-    my_title <- paste("simulate another", n_add, "samples of size n")
+    my_title <- paste("simulate another", n_add, "samples")
   }
   dlist <- list(...)
   # If the user hasn't set either repeatdelay or repeatinterval then set them
