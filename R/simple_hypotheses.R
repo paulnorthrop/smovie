@@ -10,12 +10,12 @@
 #'
 #' @param mu0 A numeric scalar.  The value of \eqn{\mu} under the null
 #'   hypothesis H0 with which to start the movie.
-#' @param sd A positive numeric scalar.  The (common) standard deviation of
-#'   the normal distributions of the data under the two hypotheses.
-#'   of \eqn{\mu} under the alternative hypothesis is greater than \code{mu0}.
+#' @param sd A positive numeric scalar.  The (common) standard deviation
+#'   \eqn{\sigma} of the normal distributions of the data under the two
+#'   hypotheses.
 #' @param eff A numeric scalar.  The \emph{effect size}. The amount by which
 #'   the value of \eqn{\mu} under the alternative hypothesis is greater than
-#'   thevalue \code{mu0} under the null hypothesis.
+#'   the value \code{mu0} under the null hypothesis.
 #'   That is, \code{mu1} = \code{eff} + \code{mu0}.
 #'   \code{eff} must be non-negative.
 #' @param n A positive integer scalar.  The sample size with which to start
@@ -132,7 +132,7 @@ shypo <- function(mu0 = 0, sd = 6, eff = sd, n = 10, a = mu0 + eff / 2,
                           initval = eff, title = "eff size, eff = mu1 - mu0",
                           action = action, showvalue = TRUE)
   rpanel::rp.doublebutton(sh_panel, sd, delta_sd, range = c(0.1, NA),
-                          initval = sd, title = "standard deviation",
+                          initval = sd, title = "standard deviation, sigma",
                           action = action, showvalue = TRUE)
   title_text <- paste("Targets: alpha =", target_alpha, "beta =",
                       target_beta)

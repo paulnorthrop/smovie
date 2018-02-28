@@ -13,13 +13,13 @@ shypo(mu0 = 0, sd = 6, eff = sd, n = 10, a = mu0 + eff/2,
 \item{mu0}{A numeric scalar.  The value of \eqn{\mu} under the null
 hypothesis H0 with which to start the movie.}
 
-\item{sd}{A positive numeric scalar.  The (common) standard deviation of
-the normal distributions of the data under the two hypotheses.
-of \eqn{\mu} under the alternative hypothesis is greater than \code{mu0}.}
+\item{sd}{A positive numeric scalar.  The (common) standard deviation
+\eqn{\sigma} of the normal distributions of the data under the two
+hypotheses.}
 
 \item{eff}{A numeric scalar.  The \emph{effect size}. The amount by which
 the value of \eqn{\mu} under the alternative hypothesis is greater than
-thevalue \code{mu0} under the null hypothesis.
+the value \code{mu0} under the null hypothesis.
 That is, \code{mu1} = \code{eff} + \code{mu0}.
 \code{eff} must be non-negative.}
 
