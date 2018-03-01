@@ -321,11 +321,11 @@ ett <- function(n = 20, distn, params = list(), panel_plot = TRUE, hscale = NA,
   show_dens_only <- FALSE
   pdf_or_cdf <- "pdf"
   assign("old_pdf_or_cdf", pdf_or_cdf, envir = envir)
-  ett_panel <- rpanel::rp.control("sample size", n = n, n_add = n_add,
-                                  dfun = dfun, qfun = qfun, rfun = rfun,
-                                  pfun = pfun, fun_args = fun_args,
-                                  distn = distn, top_range = top_range,
-                                  top_p_vec = top_p_vec,
+  ett_panel <- rpanel::rp.control("extremal types theorem", n = n,
+                                  n_add = n_add, dfun = dfun, qfun = qfun,
+                                  rfun = rfun, pfun = pfun,
+                                  fun_args = fun_args, distn = distn,
+                                  top_range = top_range, top_p_vec = top_p_vec,
                                   bottom_p_vec = bottom_p_vec,
                                   show_dens_only = FALSE,
                                   pdf_or_cdf = "pdf",
