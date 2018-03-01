@@ -592,7 +592,7 @@ ett_movie_plot <- function(panel) {
       graphics::rug(last_y, line = 0.5, ticksize = 0.05, col = "red", lwd = 2)
     }
     u_b <- my_xlim
-    my_leg_2 <- paste("GEV(", round(gev_pars$loc, 2), ",",
+    my_leg_2 <- paste("GEV (", round(gev_pars$loc, 2), ",",
                       round(gev_pars$scale, 2), ",",
                       round(gev_pars$shape, 2), ")" )
     if (pdf_or_cdf == "pdf") {
