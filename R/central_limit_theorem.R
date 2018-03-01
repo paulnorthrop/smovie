@@ -2,6 +2,9 @@
 # checks for finite variance
 # remove n > 1 restriction?
 # Exact distn of man: normal, exponential, gamma, Poisson, binomial
+# Only plot eact in these cases
+# exact for normal
+# check set_leg_pos
 
 # =================================== ett =====================================
 
@@ -17,8 +20,8 @@
 #'   observations are sampled.   Distributions \code{"beta"},
 #'   \code{"chisq"}, \code{"chi-squared"}, \code{"exponential"}, \code{"f"},
 #'   \code{"gamma"}, \code{"gp"}, \code{"gev"}, \code{lognormal},
-#'   \code{log-normal}, \code{"normal"}, \code{"t"}, \code{"uniform"} and
-#'   \code{"weibull"} are recognised, case being ignored.
+#'   \code{log-normal}, \code{"normal"}, \code{"poisspn"}, \code{"t"},
+#'   \code{"uniform"} and \code{"weibull"} are recognised, case being ignored.
 #'
 #'   If \code{distn} is not supplied then \code{distn = "exponential"}
 #'   is used.
@@ -45,6 +48,7 @@
 #'   \code{"gev"} (\code{shape = 0.2}).
 #'   \code{"gamma"} (\code{shape = 2},
 #'   \code{"gp"} (\code{shape = 0.1}),
+#'   \code{"poisson"} (\code{lambda = 5}) and
 #'   \code{"t"} (\code{df = 4}) and
 #'   \code{"weibull"} (\code{shape = 2}).
 #' @param panel_plot A logical parameter that determines whether the plot
@@ -172,6 +176,7 @@ clt <- function(n = 20, distn, params = list(), panel_plot = TRUE, hscale = NA,
            "chi-squared" = stats::rchisq,
            "f" = stats::rf,
            "weibull" = stats::rweibull,
+           "poisson" = stats::rpois,
            "gev" = revdbayes::rgev,
            NULL)
   if (is.null(rfun)) {
@@ -190,6 +195,7 @@ clt <- function(n = 20, distn, params = list(), panel_plot = TRUE, hscale = NA,
            "chi-squared" = stats::dchisq,
            "f" = stats::df,
            "weibull" = stats::dweibull,
+           "poisson" = stats::dpois,
            "gev" = revdbayes::dgev)
   qfun <-
     switch(distn,
@@ -204,6 +210,7 @@ clt <- function(n = 20, distn, params = list(), panel_plot = TRUE, hscale = NA,
            "chi-squared" = stats::qchisq,
            "f" = stats::qf,
            "weibull" = stats::qweibull,
+           "poisson" = stats::qpois,
            "gev" = revdbayes::qgev)
   pfun <-
     switch(distn,
@@ -218,6 +225,7 @@ clt <- function(n = 20, distn, params = list(), panel_plot = TRUE, hscale = NA,
            "chi-squared" = stats::pchisq,
            "f" = stats::pf,
            "weibull" = stats::pweibull,
+           "poisson" = stats::ppois,
            "gev" = revdbayes::pgev)
   # Set the arguments to the distributional functions
   fun_args <- set_fun_args(distn, dfun, fun_args, params)
@@ -260,12 +268,15 @@ clt <- function(n = 20, distn, params = list(), panel_plot = TRUE, hscale = NA,
   assign("old_n", old_n, envir = envir)
   # Store the mean and standard deviation of the underlying distribution
   distn_mean <- switch(distn,
+                       "poisson" = fun_args$lambda,
                        "exponential" = 1 / fun_args$rate)
   distn_sd <- switch(distn,
+                     "poisson" = sqrt(fun_args$lambda),
                      "exponential" = 1 / fun_args$rate)
   # Name the function to calculate the exact pdf & cdf of the mean (if any)
   exact_distn <- switch(distn,
-                        "exponential" = exact_exp,
+                        "poisson" = exact_poisson,
+                        "exponential" = exact_exponential,
                          NULL)
   # Create buttons for movie
   show_dens_only <- FALSE
@@ -331,7 +342,7 @@ clt <- function(n = 20, distn, params = list(), panel_plot = TRUE, hscale = NA,
                         title = "pdf or cdf in bottom plot",
                         action = action)
   rpanel::rp.checkbox(panel = cltpanel, show_dens_only,
-                      labels = "show only true and GEV pdf/cdf",
+                      labels = "show only exact and normal pdf/cdf",
                       action = action)
   rpanel::rp.do(panel = cltpanel, action = action)
   return(invisible())
@@ -465,9 +476,6 @@ cltmovie_plot <- function(panel) {
       dens_list <- c(list(q = x), normal_pars)
       ynorm <- do.call(stats::pnorm, dens_list)
     }
-    p_list <- c(list(q = x), fun_args, list(log.p = TRUE))
-    p_list <- c(list(x = x), fun_args, list(n = n))
-    d_list <- c(list(x = x), fun_args)
     d_list <- c(list(x = x), fun_args, list(n = n))
     if (pdf_or_cdf == "pdf") {
       ytrue <- do.call(exact_distn, c(d_list, list(pdf = TRUE)))
@@ -525,8 +533,7 @@ cltmovie_plot <- function(panel) {
       graphics::rug(last_y, line = 0.5, ticksize = 0.05, col = "red", lwd = 2)
     }
     u_b <- my_xlim
-    my_leg_2 <- paste("N(", round(normal_pars$mean, 2), ",",
-                      round(normal_pars$sd ^ 2, 2), ")" )
+    my_leg_2 <- paste("N(", distn_mean, ",", distn_sd ^ 2, "/ n)" )
     if (pdf_or_cdf == "pdf") {
       my_leg_true <- "exact"
       graphics::legend(bottom_leg_pos, legend = c(my_leg_2, my_leg_true),

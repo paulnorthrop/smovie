@@ -17,8 +17,8 @@ than 2.}
   observations are sampled.   Distributions \code{"beta"},
   \code{"chisq"}, \code{"chi-squared"}, \code{"exponential"}, \code{"f"},
   \code{"gamma"}, \code{"gp"}, \code{"gev"}, \code{lognormal},
-  \code{log-normal}, \code{"normal"}, \code{"t"}, \code{"uniform"} and
-  \code{"weibull"} are recognised, case being ignored.
+  \code{log-normal}, \code{"normal"}, \code{"poisspn"}, \code{"t"},
+  \code{"uniform"} and \code{"weibull"} are recognised, case being ignored.
 
   If \code{distn} is not supplied then \code{distn = "exponential"}
   is used.
@@ -46,6 +46,7 @@ than 2.}
   \code{"gev"} (\code{shape = 0.2}).
   \code{"gamma"} (\code{shape = 2},
   \code{"gp"} (\code{shape = 0.1}),
+  \code{"poisson"} (\code{lambda = 5}) and
   \code{"t"} (\code{df = 4}) and
   \code{"weibull"} (\code{shape = 2}).}
 

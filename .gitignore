@@ -3,3 +3,4 @@
 .RData
 .Ruserdata
 inst/doc
+R/with_exact_clt.R
