@@ -1,8 +1,6 @@
-# remove the exact pdf (in most cases)
+# Note the neg bin parameterisation
 # checks for finite variance
 # remove n > 1 restriction?
-# Exact distn of man: normal, exponential, gamma, Poisson, binomial
-# Only plot eact in these cases
 # exact for normal
 # check set_leg_pos
 
@@ -20,7 +18,7 @@
 #'   observations are sampled.   Distributions \code{"beta"},
 #'   \code{"chisq"}, \code{"chi-squared"}, \code{"exponential"}, \code{"f"},
 #'   \code{"gamma"}, \code{"gp"}, \code{"gev"}, \code{lognormal},
-#'   \code{log-normal}, \code{"normal"}, \code{"poisspn"}, \code{"t"},
+#'   \code{log-normal}, \code{"normal"}, \code{"poisson"}, \code{"t"},
 #'   \code{"uniform"} and \code{"weibull"} are recognised, case being ignored.
 #'
 #'   If \code{distn} is not supplied then \code{distn = "exponential"}
@@ -176,6 +174,10 @@ clt <- function(n = 20, distn, params = list(), panel_plot = TRUE, hscale = NA,
            "chi-squared" = stats::rchisq,
            "f" = stats::rf,
            "weibull" = stats::rweibull,
+           "binomial" = stats::rbinom,
+           "geometric" = stats::rgeom,
+           "hypergeometric" = stats::rhyper,
+           "negative binomial" = stats::rnbinom,
            "poisson" = stats::rpois,
            "gev" = revdbayes::rgev,
            NULL)
@@ -195,6 +197,10 @@ clt <- function(n = 20, distn, params = list(), panel_plot = TRUE, hscale = NA,
            "chi-squared" = stats::dchisq,
            "f" = stats::df,
            "weibull" = stats::dweibull,
+           "binomial" = stats::dbinom,
+           "geometric" = stats::dgeom,
+           "hypergeometric" = stats::dhyper,
+           "negative binomial" = stats::dnbinom,
            "poisson" = stats::dpois,
            "gev" = revdbayes::dgev)
   qfun <-
@@ -210,6 +216,10 @@ clt <- function(n = 20, distn, params = list(), panel_plot = TRUE, hscale = NA,
            "chi-squared" = stats::qchisq,
            "f" = stats::qf,
            "weibull" = stats::qweibull,
+           "binomial" = stats::qbinom,
+           "geometric" = stats::qgeom,
+           "hypergeometric" = stats::qhyper,
+           "negative binomial" = stats::qnbinom,
            "poisson" = stats::qpois,
            "gev" = revdbayes::qgev)
   pfun <-
@@ -225,8 +235,18 @@ clt <- function(n = 20, distn, params = list(), panel_plot = TRUE, hscale = NA,
            "chi-squared" = stats::pchisq,
            "f" = stats::pf,
            "weibull" = stats::pweibull,
+           "binomial" = stats::pbinom,
+           "geometric" = stats::pgeom,
+           "hypergeometric" = stats::phyper,
+           "negative binomial" = stats::pnbinom,
            "poisson" = stats::ppois,
            "gev" = revdbayes::pgev)
+  #
+  discrete_distn <- FALSE
+  if (distn %in% c("binomial", "geometric", "hypergeometric",
+                   "negative binomial", "poisson")) {
+    discrete_distn <- TRUE
+  }
   # Set the arguments to the distributional functions
   fun_args <- set_fun_args(distn, dfun, fun_args, params)
   # Set sensible scales for the plots
@@ -267,19 +287,29 @@ clt <- function(n = 20, distn, params = list(), panel_plot = TRUE, hscale = NA,
   old_n <- 0
   assign("old_n", old_n, envir = envir)
   # Store the mean and standard deviation of the underlying distribution
+  if (distn == "hypergeometric") {
+    hp <- fun_args$m / (fun_args$m + fun_args$n)
+  }
   distn_mean <- switch(distn,
+                       "binomial" = fun_args$size * fun_args$prob,
+                       "geometric" = (1 - fun_args$prob) / fun_args$prob,
+                       "hypergeometric" = fun_args$k * hp,
+                       "negative binomial" = fun_args$size *
+                         (1 - fun_args$prob) / fun_args$prob,
                        "poisson" = fun_args$lambda,
                        "exponential" = 1 / fun_args$rate)
   distn_sd <- switch(distn,
+                     "binomial" = sqrt(fun_args$size * fun_args$prob *
+                       (1 -fun_args$prob)),
+                     "geometric" = sqrt(1 - fun_args$prob) / fun_args$prob,
+                     "hypergeometric" = sqrt(fun_args$k * hp * (1 - hp) *
+                       (fun_args$m + fun_args$n - fun_args$k) /
+                         (fun_args$m + fun_args$n - 1)),
+                     "negative binomial" = sqrt(fun_args$size *
+                       (1 - fun_args$prob)) / fun_args$prob,
                      "poisson" = sqrt(fun_args$lambda),
                      "exponential" = 1 / fun_args$rate)
-  # Name the function to calculate the exact pdf & cdf of the mean (if any)
-  exact_distn <- switch(distn,
-                        "poisson" = exact_poisson,
-                        "exponential" = exact_exponential,
-                         NULL)
   # Create buttons for movie
-  show_dens_only <- FALSE
   pdf_or_cdf <- "pdf"
   assign("old_pdf_or_cdf", pdf_or_cdf, envir = envir)
   cltpanel <- rpanel::rp.control("central limit theorem", n = n, n_add = n_add,
@@ -288,13 +318,13 @@ clt <- function(n = 20, distn, params = list(), panel_plot = TRUE, hscale = NA,
                                  distn = distn, top_range = top_range,
                                  top_p_vec = top_p_vec,
                                  bottom_p_vec = bottom_p_vec,
-                                 show_dens_only = FALSE,
                                  pdf_or_cdf = "pdf",
                                  top_leg_pos = top_leg_pos,
                                  bottom_leg_pos = bottom_leg_pos,
                                  xlab = xlab, arrow = arrow,
                                  distn_mean = distn_mean, distn_sd = distn_sd,
-                                 exact_distn = exact_distn, envir = envir)
+                                 discrete_distn = discrete_distn,
+                                 envir = envir)
   #
   redraw_plot <- NULL
   panel_redraw <- function(panel) {
@@ -341,9 +371,6 @@ clt <- function(n = 20, distn, params = list(), panel_plot = TRUE, hscale = NA,
   rpanel::rp.radiogroup(panel= cltpanel, pdf_or_cdf, c("pdf", "cdf"),
                         title = "pdf or cdf in bottom plot",
                         action = action)
-  rpanel::rp.checkbox(panel = cltpanel, show_dens_only,
-                      labels = "show only exact and normal pdf/cdf",
-                      action = action)
   rpanel::rp.do(panel = cltpanel, action = action)
   return(invisible())
 }
@@ -353,51 +380,49 @@ clt <- function(n = 20, distn, params = list(), panel_plot = TRUE, hscale = NA,
 cltmovie_plot <- function(panel) {
   with(panel, {
     old_par <- graphics::par(no.readonly = TRUE)
-    # Don't simulate very large samples (only show pdfs or cdfs)
-    if (n > 100000) {
-      show_dens_only <- TRUE
-    }
     # Don't add the rug in the top plot if n is large
     if (n > 1000) {
       show_rug <- FALSE
     } else {
       show_rug <- TRUE
     }
-    if (show_dens_only) {
-      par(mfrow = c(1, 1), oma = c(0, 0, 0, 0), mar = c(4, 4, 2, 2) + 0.1)
-    } else {
-      par(mfrow = c(2, 1), oma = c(0, 0, 0, 0), mar = c(4, 4, 2, 2) + 0.1)
-    }
+    par(mfrow = c(2, 1), oma = c(0, 0, 0, 0), mar = c(4, 4, 2, 2) + 0.1)
     # Do the simulation (if required)
-    if (!show_dens_only) {
+    if (distn == "hypergeometric") {
+      sim_list <- c(list(nn = n), fun_args)
+    } else {
       sim_list <- c(list(n = n), fun_args)
-      if (old_pdf_or_cdf == pdf_or_cdf) {
-        temp <- as.matrix(replicate(n_add, do.call(rfun, sim_list)))
-        mean_y <- apply(temp, 2, mean)
-        # Extract the last dataset and the last mean (for drawing the arrow)
-        y <- temp[, n_add]
-        assign("old_y", y, envir = envir)
-        rm(temp)
-        last_y <- mean_y[n_add]
-        assign("save_last_y", last_y, envir = envir)
-      } else {
-        mean_y <- NULL
-        y <- old_y
-        last_y <- save_last_y
-      }
-      if (n != old_n) {
-        sample_means <- mean_y
-      } else {
-        sample_means <- c(sample_means, mean_y)
-      }
-      assign("sample_means", sample_means, envir = envir)
     }
+    if (old_pdf_or_cdf == pdf_or_cdf) {
+      temp <- as.matrix(replicate(n_add, do.call(rfun, sim_list)))
+      mean_y <- apply(temp, 2, mean)
+      # Extract the last dataset and the last mean (for drawing the arrow)
+      y <- temp[, n_add]
+      assign("old_y", y, envir = envir)
+      rm(temp)
+      last_y <- mean_y[n_add]
+      assign("save_last_y", last_y, envir = envir)
+    } else {
+      mean_y <- NULL
+      y <- old_y
+      last_y <- save_last_y
+    }
+    if (n != old_n) {
+      sample_means <- mean_y
+    } else {
+      sample_means <- c(sample_means, mean_y)
+    }
+    assign("sample_means", sample_means, envir = envir)
     #
     n_x_axis <- 501
     # Top plot --------
     #
     # Set range for x-axis
-    x <- seq(top_range[1], top_range[2], len = n_x_axis)
+    if (!discrete_distn) {
+      x <- seq(top_range[1], top_range[2], len = n_x_axis)
+    } else {
+      x <- floor(top_range[1]):ceiling(top_range[2])
+    }
     # Calculate the density over this range
     dens_list <- c(list(x = x), fun_args)
     ydens <- do.call(dfun, dens_list)
@@ -426,12 +451,19 @@ cltmovie_plot <- function(panel) {
         "f" = paste("F", "(", fun_args$df1, ",", fun_args$df2, ")"),
         "weibull" = paste("Weibull", "(", fun_args$shape, ",", fun_args$scale,
                           ")"),
+        "binomial" = paste(distn, "(", fun_args$size, ",", fun_args$prob, ")"),
+        "geometric" = paste(distn, "(", fun_args$prob, ")"),
+        "hypergeometric" = paste(distn, "(", fun_args$m, ",", fun_args$n,
+                      ",", fun_args$k, ")"),
+        "negative binomial" = paste(distn, "(", fun_args$size, ",",
+                                    fun_args$prob, ")"),
+        "poisson" = paste("Poisson", "(", fun_args$lambda, ")"),
         "gev" = paste("GEV", "(", fun_args$loc, ",", fun_args$scale,
                        ",", fun_args$shape, ")")
       )
-    if (!show_dens_only) {
-      my_xlim <- pretty(c(y, top_range))
-      my_xlim <- my_xlim[c(1, length(my_xlim))]
+    my_xlim <- pretty(c(y, top_range))
+    my_xlim <- my_xlim[c(1, length(my_xlim))]
+    if (!discrete_distn) {
       # Histogram with rug
       graphics::hist(y, col = 8, probability = TRUE, axes = FALSE,
                      xlab = xlab, ylab = "density", main = "",
@@ -442,17 +474,31 @@ cltmovie_plot <- function(panel) {
       graphics::title(main = paste(the_distn, ",  n = ", n))
       graphics::legend(top_leg_pos, legend = expression(f(x)),
                        col = 1, lwd = 2, lty = 2, box.lty = 0)
-      u_t <- par("usr")
-      if (arrow) {
-        graphics::segments(last_y, u_t[3], last_y, -10, col = "red", xpd = TRUE,
-                           lwd = 2, lty = 2)
-      }
       if (show_rug) {
         graphics::rug(y, line = 0.5, ticksize = 0.05)
       }
-      graphics::rug(last_y, line = 0.5, ticksize = 0.05, col = "red", lwd = 2)
-      u_t <- my_xlim
+    } else {
+      ep <- 0.2
+      y_vals <- table(y)
+      x_vals <- as.numeric(names(y_vals))
+      graphics::matplot(x_vals, y_vals, type = "n", xlab = xlab,
+                     ylab = "probability", axes = FALSE, xlim = my_xlim,
+                     ylim = c(0, ytop))
+      graphics::segments(x_vals, 0, x_vals, y_vals / n, lty = 1)
+      graphics::segments(x + ep, 0, x + ep, ydens, lty = 2)
+      graphics::axis(2)
+      graphics::axis(1, line = 0.5)
+      graphics::title(main = paste(the_distn, ",  n = ", n))
+      graphics::legend(top_leg_pos, legend = c("sample", "P(X = x)"),
+                       col = 1, lwd = 2, lty = 1:2, box.lty = 0)
     }
+    u_t <- par("usr")
+    if (arrow) {
+      graphics::segments(last_y, u_t[3], last_y, -10, col = "red", xpd = TRUE,
+                         lwd = 2, lty = 2)
+    }
+    graphics::rug(last_y, line = 0.5, ticksize = 0.05, col = "red", lwd = 2)
+    u_t <- my_xlim
     #
     # Bottom plot --------
     #
@@ -461,11 +507,7 @@ cltmovie_plot <- function(panel) {
     normal_pars <- list(mean = distn_mean, sd = distn_sd / sqrt(n))
     for_qnorm <- c(list(p = bottom_p_vec), normal_pars)
     normal_bottom_range <- do.call(stats::qnorm, for_qnorm)
-    if (!show_dens_only) {
-      bottom_range <- range(normal_bottom_range, sample_means)
-    } else {
-      bottom_range <- range(normal_bottom_range)
-    }
+    bottom_range <- range(normal_bottom_range, sample_means)
     # Set range for x-axis
     x <- seq(bottom_range[1], bottom_range[2], len = n_x_axis)
     # Calcuate the density over this range
@@ -478,12 +520,10 @@ cltmovie_plot <- function(panel) {
     }
     d_list <- c(list(x = x), fun_args, list(n = n))
     if (pdf_or_cdf == "pdf") {
-      ytrue <- do.call(exact_distn, c(d_list, list(pdf = TRUE)))
       my_ylab <- "pdf"
       # Set the top of the y-axis
-      ytop <- max(ynorm, ytrue) * 1.5
+      ytop <- max(ynorm) * 1.5
     } else{
-      ytrue <- do.call(exact_distn, c(d_list, list(pdf = FALSE)))
       my_ylab <- "cdf"
       # Set the top of the y-axis
       ytop <- 1
@@ -495,71 +535,46 @@ cltmovie_plot <- function(panel) {
     } else {
       show_bottom_rug <- TRUE
     }
-    if (!show_dens_only) {
-      my_xlim <- pretty(c(y, bottom_range))
-    } else {
-      my_xlim <- pretty(bottom_range)
-    }
+    my_xlim <- pretty(c(y, bottom_range))
     my_xlim <- my_xlim[c(1, length(my_xlim))]
     my_col <- 8
-    if (!show_dens_only) {
-      if (pdf_or_cdf == "pdf") {
-        graphics::hist(y, col = my_col, probability = TRUE, las = 1,
-                       axes = FALSE, xlab = my_xlab, ylab = my_ylab, main = "",
-                       xpd = TRUE, xlim = my_xlim, ylim = c(0, ytop))
-      } else {
-        ecdfy <- stats::ecdf(y)
-        graphics::plot(ecdfy, col = my_col, las = 1, main = "",
-                       axes = FALSE, xlab = my_xlab, ylab = my_ylab,
-                       xpd = TRUE, xlim = my_xlim, ylim = c(0, ytop),
-                       col.01line = 0)
-      }
-      graphics::lines(x, ynorm, xpd = TRUE, lwd = 2, lty = 2)
-      graphics::lines(x, ytrue, xpd = TRUE, lwd = 2, lty = 2, col = "red")
+    if (pdf_or_cdf == "pdf") {
+      graphics::hist(y, col = my_col, probability = TRUE, las = 1,
+                     axes = FALSE, xlab = my_xlab, ylab = my_ylab, main = "",
+                     xpd = TRUE, xlim = my_xlim, ylim = c(0, ytop))
     } else {
-      matplot(x, cbind(ynorm, ytrue), col = c("black", "red"), lwd = 2, lty = 2,
-              ylab = my_ylab, las = 1, xlab = my_xlab, xlim = my_xlim,
-              ylim = c(0, ytop), axes = FALSE, type = "l")
+      ecdfy <- stats::ecdf(y)
+      graphics::plot(ecdfy, col = my_col, las = 1, main = "",
+                     axes = FALSE, xlab = my_xlab, ylab = my_ylab,
+                     xpd = TRUE, xlim = my_xlim, ylim = c(0, ytop),
+                     col.01line = 0)
     }
+    graphics::lines(x, ynorm, xpd = TRUE, lwd = 2, lty = 2)
     graphics::axis(2)
     graphics::axis(1, line = 0.5)
-    if (show_dens_only) {
-      graphics::title(paste(the_distn, ",  n = ", n))
+    if (show_bottom_rug) {
+      graphics::rug(y, line = 0.5, ticksize = 0.05)
     }
-    if (!show_dens_only) {
-      if (show_bottom_rug) {
-        graphics::rug(y, line = 0.5, ticksize = 0.05)
-      }
-      graphics::rug(last_y, line = 0.5, ticksize = 0.05, col = "red", lwd = 2)
-    }
+    graphics::rug(last_y, line = 0.5, ticksize = 0.05, col = "red", lwd = 2)
     u_b <- my_xlim
-    my_leg_2 <- paste("N(", distn_mean, ",", distn_sd ^ 2, "/ n)" )
+    my_leg_2 <- paste("N (", round(distn_mean, 2), ",", round(distn_sd ^ 2, 2),
+                      "/ n )" )
     if (pdf_or_cdf == "pdf") {
-      my_leg_true <- "exact"
-      graphics::legend(bottom_leg_pos, legend = c(my_leg_2, my_leg_true),
-                       col = 1:2, lwd = 2, lty = 2, box.lty = 0)
+      graphics::legend(bottom_leg_pos, legend = my_leg_2, col = 1:2, lwd = 2,
+                       lty = 2, box.lty = 0)
     } else {
-      my_leg_true <- "exact"
-      if (!show_dens_only) {
-        graphics::legend(bottom_leg_pos,
+      graphics::legend(bottom_leg_pos,
                        legend = c(my_leg_2, my_leg_true, "empirical cdf"),
                        col = c(1:2, 8), lwd = 2, lty = c(2, 2, -1),
                        pch = c(-1, -1, 16), box.lty = 0)
-      } else {
-        graphics::legend(bottom_leg_pos,
-                         legend = c(my_leg_2, my_leg_true),
-                         col = 1:2, lwd = 2, lty = 2, box.lty = 0)
-      }
     }
-    if (!show_dens_only) {
-      top_ratio <- (last_y - u_t[1]) / (u_t[2] - u_t[1])
-      top_loc <- u_b[1] + (u_b[2] - u_b[1]) * top_ratio
-      if (arrow) {
-        graphics::segments(top_loc, ytop * 2, top_loc, ytop, col = "red",
+    top_ratio <- (last_y - u_t[1]) / (u_t[2] - u_t[1])
+    top_loc <- u_b[1] + (u_b[2] - u_b[1]) * top_ratio
+    if (arrow) {
+      graphics::segments(top_loc, ytop * 2, top_loc, ytop, col = "red",
                          xpd = TRUE, lwd = 2, lty = 2)
-        graphics::arrows(top_loc, ytop, last_y, 0, col = "red", lwd = 2, lty = 2,
-                         xpd = TRUE, code = 2)
-      }
+      graphics::arrows(top_loc, ytop, last_y, 0, col = "red", lwd = 2, lty = 2,
+                       xpd = TRUE, code = 2)
     }
     old_n <- n
     assign("old_n", old_n, envir = envir)

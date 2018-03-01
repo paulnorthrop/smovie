@@ -17,7 +17,7 @@ than 2.}
   observations are sampled.   Distributions \code{"beta"},
   \code{"chisq"}, \code{"chi-squared"}, \code{"exponential"}, \code{"f"},
   \code{"gamma"}, \code{"gp"}, \code{"gev"}, \code{lognormal},
-  \code{log-normal}, \code{"normal"}, \code{"poisspn"}, \code{"t"},
+  \code{log-normal}, \code{"normal"}, \code{"poisson"}, \code{"t"},
   \code{"uniform"} and \code{"weibull"} are recognised, case being ignored.
 
   If \code{distn} is not supplied then \code{distn = "exponential"}

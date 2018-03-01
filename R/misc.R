@@ -237,8 +237,19 @@ set_top_range <- function(distn, p_vec, fun_args, qfun) {
   for_qfun <- c(list(p = p_vec), fun_args)
   top_range <- do.call(qfun, for_qfun)
   if (is.element(distn , c("exponential", "gamma", "chi-squared",
-                           "lognormal", "f", "weibull"))) {
+                           "lognormal", "f", "weibull", "geometric",
+                           "negative binomial"))) {
     top_range[1] <- 0
+    return(top_range)
+  }
+  if (distn == "binomial") {
+    top_range[1] <- 0
+    top_range[2] <- fun_args$size
+    return(top_range)
+  }
+  if (distn == "hypergeometric") {
+    top_range[1] <- 0
+    top_range[2] <- fun_args$k
     return(top_range)
   }
   if (distn == "uniform") {
@@ -253,7 +264,7 @@ set_top_range <- function(distn, p_vec, fun_args, qfun) {
     }
     return(top_range)
   }
-  if (is.element(distn , c("normal", "t", "cauchy"))) {
+  if (is.element(distn , c("normal", "t", "cauchy", "poisson"))) {
     return(top_range)
   }
   if (distn == "beta") {
@@ -320,6 +331,11 @@ set_leg_pos <- function(distn, fun_args) {
            "cauchy" = "right",
            "f" = "right",
            "weibull" = "right",
+           "binomial" = "right",
+           "geometric" = "right",
+           "hypergeometric" = "right",
+           "negative binomial" = "right",
+           "poisson" = "right",
            "ngev" = "topleft"
     )
   bottom_leg_pos <-
@@ -340,6 +356,11 @@ set_leg_pos <- function(distn, fun_args) {
            "cauchy" = "right",
            "f" = "right",
            "weibull" = "right",
+           "binomial" = "topright",
+           "geometric" = "topright",
+           "hypergeometric" = "topleft",
+           "negative binomial" = "topright",
+           "poisson" = "topright",
            "ngev" = "topleft"
     )
   return(list(top_leg_pos = top_leg_pos, bottom_leg_pos = bottom_leg_pos))
@@ -669,15 +690,5 @@ merge_lists <- function(list1, list2) {
   merged_list <- ifelse(in2, list2, list1)
   names(merged_list) <- all_names
   return(merged_list)
-}
-
-# Functions to return the exact distribution of the sample mean, for clt()
-
-exact_exponential <- function(x, rate, n, pdf = TRUE) {
-  if (pdf) {
-    return(stats::dgamma(x = x, shape = n, rate = rate * n))
-  } else {
-    return(stats::pgamma(q = x, shape = n, rate = rate * n))
-  }
 }
 
