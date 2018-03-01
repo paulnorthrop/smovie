@@ -14,7 +14,7 @@
 #'   distribution chosen using \code{distn}.  \code{n} must be no smaller
 #'   than 2.
 #' @param distn A character scalar specifying the distribution from which
-#'   observations are sampled..   Distributions \code{"beta"},
+#'   observations are sampled.   Distributions \code{"beta"},
 #'   \code{"cauchy"}, \code{"chisq"}, \code{"chi-squared"},
 #'   \code{"exponential"}, \code{"f"}, \code{"gamma"}, \code{"gp"},
 #'   \code{lognormal}, \code{log-normal},  \code{"ngev"}, \code{"normal"},
