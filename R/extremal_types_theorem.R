@@ -379,7 +379,7 @@ ett <- function(n = 20, distn, params = list(), panel_plot = TRUE, hscale = NA,
                         title = "pdf or cdf in bottom plot",
                         action = action)
   rpanel::rp.checkbox(panel = ett_panel, show_dens_only,
-                      labels = "show only true and GEV pdf/cdf",
+                      labels = "show only exact and GEV pdf/cdf",
                       action = action)
   rpanel::rp.do(panel = ett_panel, action = action)
   return(invisible())
