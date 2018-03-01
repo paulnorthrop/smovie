@@ -1,6 +1,6 @@
 # =================================== ett =====================================
 
-#' Extremal Types Theorem
+#' Extremal Types Theorem (ETT)
 #'
 #' A movie to illustrate the extremal types theorem, that is, convergence
 #' of the distribution of the maximum of a random sample of size \eqn{n}
@@ -158,8 +158,10 @@
 #' \dontrun{
 #' # Exponential data: xi = 0
 #' ett()
+#'
 #' # Uniform data: xi =-1
 #' ett(distn = "uniform")
+#'
 #' # Student t data: xi = 1 / df
 #' ett(distn = "t", params = list(df = 5))
 #' }
