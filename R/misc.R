@@ -2,6 +2,8 @@ is.wholenumber <-  function(x, tol = .Machine$double.eps^0.5) {
   return(abs(x - round(x)) < tol)
 }
 
+# For rpanel::rp.tkrplot()
+
 set_scales <- function(hscale, vscale) {
   if (is.na(hscale)) {
     if (.Platform$OS.type == "unix") {
@@ -15,6 +17,9 @@ set_scales <- function(hscale, vscale) {
   }
   return(list(hscale = hscale, vscale = vscale))
 }
+
+# Set the parameters of distributions
+# For discrete(), continuous(), clt() and ett()
 
 set_fun_args <- function(distn, dfun, fun_args, params,
         for_continuous = FALSE) {
@@ -164,6 +169,18 @@ set_fun_args <- function(distn, dfun, fun_args, params,
     fun_args$scale <- 1
     return(fun_args)
   }
+  if (distn == "gev") {
+    if (is.null(fun_args$shape)) {
+      fun_args$shape <- 0.2
+    }
+    if (is.null(fun_args$loc)) {
+      fun_args$loc <- 0
+    }
+    if (is.null(fun_args$scale)) {
+      fun_args$scale <- 1
+    }
+    return(fun_args)
+  }
   if (distn == "binomial") {
     if (is.null(fun_args$size)) {
       fun_args$size <- 10
@@ -214,6 +231,8 @@ set_fun_args <- function(distn, dfun, fun_args, params,
   }
 }
 
+# Set the limits of the horizontal axes for the top plots for clt() and ett()
+
 set_top_range <- function(distn, p_vec, fun_args, qfun) {
   for_qfun <- c(list(p = p_vec), fun_args)
   top_range <- do.call(qfun, for_qfun)
@@ -255,6 +274,8 @@ set_top_range <- function(distn, p_vec, fun_args, qfun) {
     return(top_range)
   }
 }
+
+# Set the positions of the legends in the plots for clt() and ett()
 
 set_leg_pos <- function(distn, fun_args) {
   if (distn == "gp") {
@@ -346,6 +367,8 @@ qngev <- function(p, loc = 0, scale = 1, shape = 0, lower.tail = TRUE,
 rngev <- function(n, loc = 0, scale = 1, shape = 0){
   return(-revdbayes::rgev(n, loc = loc, scale = scale, shape = shape))
 }
+
+# Allowable ranges of the parameters for discrete() and continuous()
 
 parameter_range <- function(distn, fun_args, ep, n_pars) {
   if (distn == "user") {
@@ -454,6 +477,8 @@ parameter_range <- function(distn, fun_args, ep, n_pars) {
   }
 }
 
+# Increments of changes in parameter values for discrete() and continuous()
+
 parameter_step <- function(distn, fun_args, n_pars) {
   if (distn == "user") {
     par_step <- rep(list(0.1), n_pars)
@@ -521,6 +546,8 @@ parameter_step <- function(distn, fun_args, n_pars) {
   }
 }
 
+# Set the support of discrete distributions for discrete()
+
 variable_support <- function(distn, fun_args, qfun, pmf_or_cdf, p_vec){
   if (distn == "user") {
     for_qfun <- c(list(p = p_vec), fun_args)
@@ -566,10 +593,14 @@ variable_support <- function(distn, fun_args, qfun, pmf_or_cdf, p_vec){
   }
 }
 
+# Set the support of continuous distributions for continuous()
+
 variable_range <- function(distn, fun_args, qfun, p_vec){
   for_qfun <- c(list(p = p_vec), fun_args)
   return(do.call(qfun, for_qfun))
 }
+
+# Vector of cdf probabilities for use in continous()
 
 set_p_vec <- function(distn) {
   if (distn %in% c("normal", "user", "chi-squared", "f", "gamma", "gev",
@@ -586,6 +617,9 @@ set_p_vec <- function(distn) {
     return(c(0, 1))
   }
 }
+
+# Allow standard d/p/q/rxxx abbreviations from stats::Distributions for
+# discrete() and continuous()
 
 recognise_stats_abbreviations <- function(distn) {
   if (distn == "binom") {
@@ -621,9 +655,10 @@ recognise_stats_abbreviations <- function(distn) {
   return(distn)
 }
 
+# Merge list1 and list2.  If a component exists in both list1 and list2 then
+# use the component in list2
+
 merge_lists <- function(list1, list2) {
-  # Merge list1 and list2.  If a component exists in both list1 and list2 then
-  # use the component in list2
   names1 <- names(list1)
   names2 <- names(list2)
   # Find all the names
@@ -636,10 +671,13 @@ merge_lists <- function(list1, list2) {
   return(merged_list)
 }
 
-exact_exp <- function(x, rate, n, pdf = TRUE) {
+# Functions to return the exact distribution of the sample mean, for clt()
+
+exact_exponential <- function(x, rate, n, pdf = TRUE) {
   if (pdf) {
     return(stats::dgamma(x = x, shape = n, rate = rate * n))
   } else {
     return(stats::pgamma(q = x, shape = n, rate = rate * n))
   }
 }
+
