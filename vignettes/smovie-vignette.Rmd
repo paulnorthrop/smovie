@@ -17,7 +17,7 @@ knitr::opts_chunk$set(comment = "#>", collapse = TRUE)
 ```
 
 The *smovie* package provides movies to help students to understand statistical concepts.  The [rpanel](https://cran.r-project.org/package=rpanel) package [@rpanel] is used to create interactive plots that move in response to changes in parameter values.  There are buttons that can be held down in order to animate the plots.  
-This vignette provides an overview of the movies that are available currently, using screenshots from the movies.  Any comments or suggestions are gratefully received.
+This vignette provides an overview of the movies that are available currently, using screenshots from the movies.  Any comments or suggestions for extra movies to include are gratefully received.
 
 The function `movies` creates a panel from which examples of the movies can be launched.  It is based on the function `rp.cartoons` in the *rpanel* package, and the image that appears in this panel has been taken from there.  These examples have been set up with sensible default arguments.  
 
