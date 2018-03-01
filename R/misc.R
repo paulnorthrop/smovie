@@ -635,3 +635,11 @@ merge_lists <- function(list1, list2) {
   names(merged_list) <- all_names
   return(merged_list)
 }
+
+exact_exp <- function(x, rate, n, pdf = TRUE) {
+  if (pdf) {
+    return(stats::dgamma(x = x, shape = n, rate = rate * n))
+  } else {
+    return(stats::pgamma(q = x, shape = n, rate = rate * n))
+  }
+}
