@@ -528,11 +528,11 @@ cltmovie_plot <- function(panel) {
     my_leg_2 <- paste("N(", round(normal_pars$mean, 2), ",",
                       round(normal_pars$sd ^ 2, 2), ")" )
     if (pdf_or_cdf == "pdf") {
-      my_leg_true <- expression(n * F ^ {n-1} * f)
+      my_leg_true <- "exact"
       graphics::legend(bottom_leg_pos, legend = c(my_leg_2, my_leg_true),
                        col = 1:2, lwd = 2, lty = 2, box.lty = 0)
     } else {
-      my_leg_true <- expression(F ^ n)
+      my_leg_true <- "exact"
       if (!show_dens_only) {
         graphics::legend(bottom_leg_pos,
                        legend = c(my_leg_2, my_leg_true, "empirical cdf"),
