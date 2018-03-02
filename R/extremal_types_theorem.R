@@ -127,7 +127,7 @@
 #'       samples of size n" is clicked \code{n_add} new samples are simulated
 #'       and their sample maxima are added to the bottom histogram.}
 #'     \item{}{There is a button to switch the bottom plot from displaying
-#'       a histogram of the simulated data, the exact p.d.f. and the
+#'       a histogram of the simulated maxima, the exact p.d.f. and the
 #'       limiting GEV p.d.f. to the empirical c.d.f. of the simulated data,
 #'       the exact c.d.f. and the limiting GEV c.d.f.}
 #'     \item{}{There is a box that can be used to display only the bottom
