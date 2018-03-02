@@ -37,6 +37,7 @@
 #'   If \code{distn = "negative binomial"} then the \code{(size, prob)}
 #'   parameterisation is used.  If \code{mu} is supplied via \code{params}
 #'   then \code{prob} is inferred from this (and \code{size}).
+#'   If \code{distn = "beta"} then \code{ncp} is forced to be zero.
 #' @param params A named list of additional arguments to be passed to the
 #'   density function associated with distribution \code{distn}.
 #'   The \code{(shape, rate)} parameterisation is used for the gamma
@@ -130,6 +131,9 @@
 #'
 #' # Uniform data
 #' clt(distn = "uniform")
+#'
+#' # Poisson data
+#' clt(distn = "poisson")
 #' }
 #' @export
 clt <- function(n = 20, distn, params = list(), panel_plot = TRUE, hscale = NA,
@@ -140,7 +144,7 @@ clt <- function(n = 20, distn, params = list(), panel_plot = TRUE, hscale = NA,
   vscale <- temp$vscale
   # To add another distribution
   # 1. misc.R: add code to set_fun_args(), set_top_range(), set_leg_pos()
-  # 2. add lines to rfun, dfun, qfun, pfun
+  # 2. add lines to rfun, dfun, qfun, pfun, distn_mean and distn_sd
   # 3. cltmovie_plot(): add to the_distn and normal_pars
   if (!is.wholenumber(n) | n < 2) {
     stop("n must be an integer that is no smaller than 2")
@@ -255,6 +259,17 @@ clt <- function(n = 20, distn, params = list(), panel_plot = TRUE, hscale = NA,
   }
   # Set the arguments to the distributional functions
   fun_args <- set_fun_args(distn, dfun, fun_args, params)
+  # Check for finite variance
+  if (distn == "f") {
+    if (fun_args$df2 <= 4) {
+      stop("df2 must be greater than 4 for a finite variance")
+    }
+  }
+  if (distn == "gp") {
+    if (fun_args$shape >= 1/2) {
+      stop("shape must be less than 1/2 for a finite variance")
+    }
+  }
   # Set sensible scales for the plots
   if (distn == "t") {
     if (fun_args$df < 2) {
@@ -296,6 +311,18 @@ clt <- function(n = 20, distn, params = list(), panel_plot = TRUE, hscale = NA,
   if (distn == "hypergeometric") {
     hp <- fun_args$m / (fun_args$m + fun_args$n)
   }
+  if (distn == "beta") {
+    alpha <- fun_args$shape1
+    beta <- fun_args$shape2
+  }
+  if (distn == "f") {
+    df1 <- fun_args$df1
+    df2 <- fun_args$df2
+    lam <- fun_args$ncp
+    num <- (2 * (df1 + lam) ^ 2 + (df1 + 2 * lam) * (df2 - 2)) *
+      (df2 / df1) ^ 2
+    den <- (df2 - 2) ^ 2 * (df2 - 4)
+  }
   distn_mean <- switch(distn,
                        "binomial" = fun_args$size * fun_args$prob,
                        "geometric" = (1 - fun_args$prob) / fun_args$prob,
@@ -303,6 +330,13 @@ clt <- function(n = 20, distn, params = list(), panel_plot = TRUE, hscale = NA,
                        "negative binomial" = fun_args$size *
                          (1 - fun_args$prob) / fun_args$prob,
                        "poisson" = fun_args$lambda,
+                       "beta" = alpha / (alpha + beta),
+                       "chi-squared" = fun_args$df + fun_args$ncp,
+                       "f" = df2 * (df1 + lam) / (df1 * (df2 - 2)),
+                       "gamma" = fun_args$shape / fun_args$rate,
+                       "gp" = fun_args$loc + fun_args$scale /
+                         (1 - fun_args$shape),
+                       "uniform" = (fun_args$min + fun_args$max) / 2,
                        "exponential" = 1 / fun_args$rate)
   distn_sd <- switch(distn,
                      "binomial" = sqrt(fun_args$size * fun_args$prob *
@@ -314,6 +348,16 @@ clt <- function(n = 20, distn, params = list(), panel_plot = TRUE, hscale = NA,
                      "negative binomial" = sqrt(fun_args$size *
                        (1 - fun_args$prob)) / fun_args$prob,
                      "poisson" = sqrt(fun_args$lambda),
+                     "beta" = sqrt(alpha * beta / (alpha + beta) ^ 2 /
+                       (alpha + beta + 1)),
+                     "chi-squared" = sqrt(2 * (fun_args$df
+                                               + 2 * fun_args$ncp)),
+                     "f" = sqrt(num / den),
+                     "gamma" = sqrt(fun_args$shape / fun_args$rate ^ 2),
+                     "gp" = sqrt(fun_args$scale ^ 2 /
+                                   (1 - fun_args$shape) ^ 2 /
+                                   (1 - 2 * fun_args$shape)),
+                     "uniform" = sqrt((fun_args$max - fun_args$min) ^ 2 / 12),
                      "exponential" = 1 / fun_args$rate)
   # Create buttons for movie
   pdf_or_cdf <- "pdf"
@@ -453,8 +497,9 @@ cltmovie_plot <- function(panel) {
                             ")"),
         "cauchy" = paste("Cauchy", "(", fun_args$location, ",", fun_args$scale,
                          ")"),
-        "chi-squared" = paste(distn, "(", fun_args$df, ")"),
-        "f" = paste("F", "(", fun_args$df1, ",", fun_args$df2, ")"),
+        "chi-squared" = paste(distn, "(", fun_args$df, ",", fun_args$ncp, ")"),
+        "f" = paste("F", "(", fun_args$df1, ",", fun_args$df2, ",",
+                     fun_args$ncp, ")"),
         "weibull" = paste("Weibull", "(", fun_args$shape, ",", fun_args$scale,
                           ")"),
         "binomial" = paste(distn, "(", fun_args$size, ",", fun_args$prob, ")"),
@@ -558,13 +603,15 @@ cltmovie_plot <- function(panel) {
     graphics::lines(x, ynorm, xpd = TRUE, lwd = 2, lty = 2)
     graphics::axis(2)
     graphics::axis(1, line = 0.5)
+    # Force bottom axis to fill the plot
+    graphics::axis(1, line = 0.5, at = c(-1e10, 1e10))
     if (show_bottom_rug) {
       graphics::rug(y, line = 0.5, ticksize = 0.05)
     }
     graphics::rug(last_y, line = 0.5, ticksize = 0.05, col = "red", lwd = 2)
     u_b <- my_xlim
-    my_leg_2 <- paste("N (", round(distn_mean, 2), ",", round(distn_sd ^ 2, 2),
-                      "/ n )" )
+    my_leg_2 <- paste("N (", signif(distn_mean, 2), ",",
+                      signif(distn_sd ^ 2, 2), "/ n )" )
     if (pdf_or_cdf == "pdf") {
       graphics::legend(bottom_leg_pos, legend = my_leg_2, col = 1:2, lwd = 2,
                        lty = 2, box.lty = 0)

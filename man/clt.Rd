@@ -35,7 +35,8 @@ than 2.}
   then \code{rate} is inferred from this.
   If \code{distn = "negative binomial"} then the \code{(size, prob)}
   parameterisation is used.  If \code{mu} is supplied via \code{params}
-  then \code{prob} is inferred from this (and \code{size}).}
+  then \code{prob} is inferred from this (and \code{size}).
+  If \code{distn = "beta"} then \code{ncp} is forced to be zero.}
 
 \item{params}{A named list of additional arguments to be passed to the
   density function associated with distribution \code{distn}.
@@ -146,6 +147,9 @@ clt()
 
 # Uniform data
 clt(distn = "uniform")
+
+# Poisson data
+clt(distn = "poisson")
 }
 }
 \seealso{
