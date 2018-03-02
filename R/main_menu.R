@@ -17,6 +17,10 @@
 #'   plot, which will be passed to all relevant menu items.
 #' @examples
 #' movies()
+#' @seealso \code{\link{discrete}}, \code{\link{continuous}},
+#'   \code{\link{clt}}, \code{\link{ett}}, \code{\link{correlation}},
+#'   \code{\link{lev_inf}}, \code{\link{wws}}, \code{\link{shypo}}.
+#' @seealso \code{\link{smovie}}: general information about smovie.
 #' @export
 movies <- function(fixed_range = TRUE, hscale = 1) {
   panel.launch <- function(menu.panel) {
