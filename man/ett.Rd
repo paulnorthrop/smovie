@@ -125,14 +125,16 @@ Loosely speaking, a consequence of the
   Samples of size \code{n} are repeatedly simulated from the distribution
   chosen using \code{distn}.  These samples are summarized using a histogram
   that appears at the top of the movie screen.  For each sample the maximum
-  of these \code{n} values is calculated, stored and added to another
-  histogram plotted below the first histogram.
+  of these \code{n} values is calculated, stored and added to another plot.
+  This plot is either a histogram or an empirical c.d.f., chosen using a
+  radio button.
 
   The probability density function (p.d.f.) of the original
-  variables is superimposed on the top histogram.  On the bottom histogram
-  is superimposed the exact p.d.f. of the sample maxima and an
-  approximate (large \code{n}) GEV p.d.f. implied by
-  the ETT.  The GEV shape parameter \eqn{\xi} that applies in the limiting
+  variables is superimposed on the top histogram.
+  On the bottom histogram is superimposed the exact p.d.f./c.d.f. of the
+  sample maxima and an approximate (large \code{n}) GEV p.d.f./c.d.f.
+  implied by the ETT.
+  The GEV shape parameter \eqn{\xi} that applies in the limiting
   case is used.  The GEV location \eqn{\mu} and scale
   \eqn{\sigma} are set based on constants used to normalise the maxima
   to achieve the GEV limit.
@@ -153,6 +155,9 @@ Loosely speaking, a consequence of the
       a histogram of the simulated maxima, the exact p.d.f. and the
       limiting GEV p.d.f. to the empirical c.d.f. of the simulated data,
       the exact c.d.f. and the limiting GEV c.d.f.}
+    \item{}{There is a box that can be used to display only the bottom
+      plot.  This option is selected automatically if the sample size
+      \eqn{n} exceeds 100000.}
     \item{}{There is a box that can be used to display only the bottom
       plot.  This option is selected automatically if the sample size
       \eqn{n} exceeds 100000.}

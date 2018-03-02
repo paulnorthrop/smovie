@@ -102,14 +102,16 @@
 #'   Samples of size \code{n} are repeatedly simulated from the distribution
 #'   chosen using \code{distn}.  These samples are summarized using a histogram
 #'   that appears at the top of the movie screen.  For each sample the maximum
-#'   of these \code{n} values is calculated, stored and added to another
-#'   histogram plotted below the first histogram.
+#'   of these \code{n} values is calculated, stored and added to another plot.
+#'   This plot is either a histogram or an empirical c.d.f., chosen using a
+#'   radio button.
 #'
 #'   The probability density function (p.d.f.) of the original
-#'   variables is superimposed on the top histogram.  On the bottom histogram
-#'   is superimposed the exact p.d.f. of the sample maxima and an
-#'   approximate (large \code{n}) GEV p.d.f. implied by
-#'   the ETT.  The GEV shape parameter \eqn{\xi} that applies in the limiting
+#'   variables is superimposed on the top histogram.
+#'   On the bottom histogram is superimposed the exact p.d.f./c.d.f. of the
+#'   sample maxima and an approximate (large \code{n}) GEV p.d.f./c.d.f.
+#'   implied by the ETT.
+#'   The GEV shape parameter \eqn{\xi} that applies in the limiting
 #'   case is used.  The GEV location \eqn{\mu} and scale
 #'   \eqn{\sigma} are set based on constants used to normalise the maxima
 #'   to achieve the GEV limit.
@@ -130,6 +132,9 @@
 #'       a histogram of the simulated maxima, the exact p.d.f. and the
 #'       limiting GEV p.d.f. to the empirical c.d.f. of the simulated data,
 #'       the exact c.d.f. and the limiting GEV c.d.f.}
+#'     \item{}{There is a box that can be used to display only the bottom
+#'       plot.  This option is selected automatically if the sample size
+#'       \eqn{n} exceeds 100000.}
 #'     \item{}{There is a box that can be used to display only the bottom
 #'       plot.  This option is selected automatically if the sample size
 #'       \eqn{n} exceeds 100000.}
@@ -321,16 +326,19 @@ ett <- function(n = 20, distn, params = list(), panel_plot = TRUE, hscale = NA,
   old_n <- 0
   assign("old_n", old_n, envir = envir)
   # Create buttons for movie
+  show_dens <- FALSE
   show_dens_only <- FALSE
   pdf_or_cdf <- "pdf"
   assign("old_pdf_or_cdf", pdf_or_cdf, envir = envir)
+  assign("old_show_dens", show_dens, envir = envir)
+  assign("old_show_dens_only", show_dens_only, envir = envir)
   ett_panel <- rpanel::rp.control("extremal types theorem", n = n,
                                   n_add = n_add, dfun = dfun, qfun = qfun,
                                   rfun = rfun, pfun = pfun,
                                   fun_args = fun_args, distn = distn,
                                   top_range = top_range, top_p_vec = top_p_vec,
                                   bottom_p_vec = bottom_p_vec,
-                                  show_dens_only = FALSE,
+                                  show_dens = FALSE, show_dens_only = FALSE,
                                   pdf_or_cdf = "pdf",
                                   top_leg_pos = top_leg_pos,
                                   bottom_leg_pos = bottom_leg_pos,
@@ -381,6 +389,9 @@ ett <- function(n = 20, distn, params = list(), panel_plot = TRUE, hscale = NA,
   rpanel::rp.radiogroup(panel= ett_panel, pdf_or_cdf, c("pdf", "cdf"),
                         title = "pdf or cdf in bottom plot",
                         action = action)
+  rpanel::rp.checkbox(panel = ett_panel, show_dens,
+                      labels = "show exact and GEV pdf/cdf",
+                      action = action)
   rpanel::rp.checkbox(panel = ett_panel, show_dens_only,
                       labels = "show only exact and GEV pdf/cdf",
                       action = action)
@@ -414,7 +425,8 @@ ett_movie_plot <- function(panel) {
     # Do the simulation (if required)
     if (!show_dens_only) {
       sim_list <- c(list(n = n), fun_args)
-      if (old_pdf_or_cdf == pdf_or_cdf) {
+      if (old_pdf_or_cdf == pdf_or_cdf & old_show_dens == show_dens &
+          old_show_dens_only == show_dens_only) {
         temp <- as.matrix(replicate(n_add, do.call(rfun, sim_list)))
         max_y <- apply(temp, 2, max)
         # Extract the last dataset and the last maximum (for drawing the arrow)
@@ -577,8 +589,10 @@ ett_movie_plot <- function(panel) {
                        xpd = TRUE, xlim = my_xlim, ylim = c(0, ytop),
                        col.01line = 0)
       }
-      graphics::lines(x, ygev, xpd = TRUE, lwd = 2, lty = 2)
-      graphics::lines(x, ytrue, xpd = TRUE, lwd = 2, lty = 2, col = "red")
+      if (show_dens) {
+        graphics::lines(x, ygev, xpd = TRUE, lwd = 2, lty = 2)
+        graphics::lines(x, ytrue, xpd = TRUE, lwd = 2, lty = 2, col = "red")
+      }
     } else {
       matplot(x, cbind(ygev, ytrue), col = c("black", "red"), lwd = 2, lty = 2,
               ylab = my_ylab, las = 1, xlab = my_xlab, xlim = my_xlim,
@@ -601,15 +615,25 @@ ett_movie_plot <- function(panel) {
                       signif(gev_pars$shape, 2), ")" )
     if (pdf_or_cdf == "pdf") {
       my_leg_true <- expression(n * F ^ {n-1} * f)
-      graphics::legend(bottom_leg_pos, legend = c(my_leg_2, my_leg_true),
-                       col = 1:2, lwd = 2, lty = 2, box.lty = 0)
+      if (show_dens) {
+        graphics::legend(bottom_leg_pos, legend = c(my_leg_2, my_leg_true),
+                         col = 1:2, lwd = 2, lty = 2, box.lty = 0)
+      }
     } else {
       my_leg_true <- expression(F ^ n)
       if (!show_dens_only) {
-        graphics::legend(bottom_leg_pos,
+        if (show_dens) {
+          graphics::legend(bottom_leg_pos,
                        legend = c(my_leg_2, my_leg_true, "empirical cdf"),
                        col = c(1:2, 8), lwd = 2, lty = c(2, 2, -1),
                        pch = c(-1, -1, 16), box.lty = 0)
+        } else {
+          graphics::legend(bottom_leg_pos,
+                           legend = c(my_leg_2, my_leg_true, "empirical cdf"),
+                           col = c(0, 0, 8), lwd = 2, lty = c(2, 2, -1),
+                           pch = c(-1, -1, 16), box.lty = 0,
+                           text.col = c(0, 0, 1))
+        }
       } else {
         graphics::legend(bottom_leg_pos,
                          legend = c(my_leg_2, my_leg_true),
@@ -629,6 +653,8 @@ ett_movie_plot <- function(panel) {
     old_n <- n
     assign("old_n", old_n, envir = envir)
     assign("old_pdf_or_cdf", pdf_or_cdf, envir = envir)
+    assign("old_show_dens", show_dens, envir = envir)
+    assign("old_show_dens_only", show_dens_only, envir = envir)
     graphics::par(old_par)
   })
   return(invisible(panel))
