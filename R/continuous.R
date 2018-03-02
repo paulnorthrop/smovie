@@ -28,7 +28,7 @@
 #'   Valid functions are set up like a standard distributional function
 #'   \code{dxxx}, with first argument \code{x}, last argument \code{log}
 #'   and with arguments to set the parameters of the distribution in between.
-#'   See the \href{https://cran.r-project.org/web/views/Distributions.html}{
+#'   See the \href{https://CRAN.R-project.org/view=Distributions}{
 #'   CRAN task view on distributions}.
 #'
 #'   If \code{distn} is not supplied then \code{distn = "normal"}
