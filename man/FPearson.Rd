@@ -6,7 +6,7 @@
 \alias{pFPearson}
 \alias{qFPearson}
 \alias{rFPearson}
-\title{Fisher's transformation of the Pearson produce moment correlation
+\title{Fisher's transformation of the Pearson product moment correlation
 coefficient}
 \usage{
 dFPearson(x, N, rho = 0, log = FALSE)

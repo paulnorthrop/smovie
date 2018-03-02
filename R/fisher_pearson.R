@@ -1,4 +1,4 @@
-#' Fisher's transformation of the Pearson produce moment correlation
+#' Fisher's transformation of the Pearson product moment correlation
 #' coefficient
 #'
 #' Density, distribution function, quantile function and random generator
