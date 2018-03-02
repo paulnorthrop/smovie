@@ -93,14 +93,15 @@
 #'   Samples of size \code{n} are repeatedly simulated from the distribution
 #'   chosen using \code{distn}.  These samples are summarized using a plot
 #'   that appears at the top of the movie screen.  For each sample the mean
-#'   of these \code{n} values is calculated, stored and added to a
-#'   histogram that sits below the first plot.
+#'   of these \code{n} values is calculated, stored and added to another plot.
+#'   This plot is either a histogram or an empirical c.d.f., chosen using a
+#'   radio button.
 #'
 #'   The p.d.f. (for a continuous variable) or p.m.f. (for a discrete variable)
-#'   of the original variables is added to the top plot.  On the bottom
-#'   histogram is superimposed the approximate (large \code{n}) normal p.d.f.
-#'   (with mean \eqn{\mu} and standard deviation \eqn{\sigma / \sqrt{n}})
-#'   implied by the CLT.
+#'   of the original variables is added to the top plot.
+#'   There is a checkbox to add to the bottom plot the approximate (large
+#'   \code{n}) normal p.d.f./c.d.f. (with mean \eqn{\mu} and standard
+#'   deviation \eqn{\sigma / \sqrt{n}}), implied by the CLT.
 #'
 #'   Once it starts, four aspects of this movie are controlled by the user.
 #'   \itemize{
@@ -392,14 +393,16 @@ clt <- function(n = 20, distn, params = list(), panel_plot = TRUE, hscale = NA,
                      "exponential" = 1 / fun_args$rate)
   # Create buttons for movie
   pdf_or_cdf <- "pdf"
+  show_dens <- FALSE
   assign("old_pdf_or_cdf", pdf_or_cdf, envir = envir)
+  assign("old_show_dens", show_dens, envir = envir)
   cltpanel <- rpanel::rp.control("central limit theorem", n = n, n_add = n_add,
                                  dfun = dfun, qfun = qfun, rfun = rfun,
                                  pfun = pfun, fun_args = fun_args,
                                  distn = distn, top_range = top_range,
                                  top_p_vec = top_p_vec,
                                  bottom_p_vec = bottom_p_vec,
-                                 pdf_or_cdf = "pdf",
+                                 pdf_or_cdf = "pdf", show_dens = show_dens,
                                  top_leg_pos = top_leg_pos,
                                  bottom_leg_pos = bottom_leg_pos,
                                  xlab = xlab, arrow = arrow,
@@ -450,8 +453,9 @@ clt <- function(n = 20, distn, params = list(), panel_plot = TRUE, hscale = NA,
                       ...)
   }
   rpanel::rp.radiogroup(panel= cltpanel, pdf_or_cdf, c("pdf", "cdf"),
-                        title = "pdf or cdf in bottom plot",
-                        action = action)
+                        title = "pdf or cdf in bottom plot", action = action)
+  rpanel::rp.checkbox(panel = cltpanel, show_dens,
+                      labels = "show normal pdf/cdf", action = action)
   rpanel::rp.do(panel = cltpanel, action = action)
   return(invisible())
 }
@@ -474,7 +478,7 @@ cltmovie_plot <- function(panel) {
     } else {
       sim_list <- c(list(n = n), fun_args)
     }
-    if (old_pdf_or_cdf == pdf_or_cdf) {
+    if (old_pdf_or_cdf == pdf_or_cdf & old_show_dens == show_dens) {
       temp <- as.matrix(replicate(n_add, do.call(rfun, sim_list)))
       mean_y <- apply(temp, 2, mean)
       # Extract the last dataset and the last mean (for drawing the arrow)
@@ -632,7 +636,9 @@ cltmovie_plot <- function(panel) {
                      xpd = TRUE, xlim = my_xlim, ylim = c(0, ytop),
                      col.01line = 0)
     }
-    graphics::lines(x, ynorm, xpd = TRUE, lwd = 2, lty = 2)
+    if (show_dens) {
+      graphics::lines(x, ynorm, xpd = TRUE, lwd = 2, lty = 2)
+    }
     graphics::axis(2)
     graphics::axis(1, line = 0.5)
     # Force bottom axis to fill the plot
@@ -645,13 +651,22 @@ cltmovie_plot <- function(panel) {
     my_leg_2 <- paste("N (", signif(distn_mean, 2), ",",
                       signif(distn_sd ^ 2, 2), "/ n )" )
     if (pdf_or_cdf == "pdf") {
-      graphics::legend(bottom_leg_pos, legend = my_leg_2, col = 1:2, lwd = 2,
-                       lty = 2, box.lty = 0)
+      if (show_dens) {
+        graphics::legend(bottom_leg_pos, legend = my_leg_2, col = 1:2, lwd = 2,
+                         lty = 2, box.lty = 0)
+      }
     } else {
-      graphics::legend(bottom_leg_pos,
+      if (show_dens) {
+        graphics::legend(bottom_leg_pos,
                        legend = c(my_leg_2, "empirical cdf"),
                        col = c(1, 8), lwd = 2, lty = c(2, -1),
                        pch = c(-1, 16), box.lty = 0)
+      } else {
+        graphics::legend(bottom_leg_pos,
+                         legend = c(my_leg_2, "empirical cdf"),
+                         col = c(0, 8), lwd = 2, lty = c(2, -1),
+                         pch = c(-1, 16), box.lty = 0, text.col = c(0, 1))
+      }
     }
     top_ratio <- (last_y - u_t[1]) / (u_t[2] - u_t[1])
     top_loc <- u_b[1] + (u_b[2] - u_b[1]) * top_ratio
@@ -664,6 +679,7 @@ cltmovie_plot <- function(panel) {
     old_n <- n
     assign("old_n", old_n, envir = envir)
     assign("old_pdf_or_cdf", pdf_or_cdf, envir = envir)
+    assign("old_show_dens", show_dens, envir = envir)
     graphics::par(old_par)
   })
   return(invisible(panel))

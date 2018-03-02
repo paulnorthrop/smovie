@@ -116,14 +116,15 @@ Loosely speaking, a consequence of the
   Samples of size \code{n} are repeatedly simulated from the distribution
   chosen using \code{distn}.  These samples are summarized using a plot
   that appears at the top of the movie screen.  For each sample the mean
-  of these \code{n} values is calculated, stored and added to a
-  histogram that sits below the first plot.
+  of these \code{n} values is calculated, stored and added to another plot.
+  This plot is either a histogram or an empirical c.d.f., chosen using a
+  radio button.
 
   The p.d.f. (for a continuous variable) or p.m.f. (for a discrete variable)
-  of the original variables is added to the top plot.  On the bottom
-  histogram is superimposed the approximate (large \code{n}) normal p.d.f.
-  (with mean \eqn{\mu} and standard deviation \eqn{\sigma / \sqrt{n}})
-  implied by the CLT.
+  of the original variables is added to the top plot.
+  There is a checkbox to add to the bottom plot the approximate (large
+  \code{n}) normal p.d.f./c.d.f. (with mean \eqn{\mu} and standard
+  deviation \eqn{\sigma / \sqrt{n}}), implied by the CLT.
 
   Once it starts, four aspects of this movie are controlled by the user.
   \itemize{
