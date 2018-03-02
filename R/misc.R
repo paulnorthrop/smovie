@@ -22,7 +22,7 @@ set_scales <- function(hscale, vscale) {
 # For discrete(), continuous(), clt() and ett()
 
 set_fun_args <- function(distn, dfun, fun_args, params,
-        for_continuous = FALSE) {
+        for_continuous = FALSE, for_discrete = FALSE) {
   # Get the names of the parameters
   par_names <- names(formals(dfun))
   to_remove <- which(is.element(par_names, c("x", "log")))
@@ -205,6 +205,12 @@ set_fun_args <- function(distn, dfun, fun_args, params,
   if (distn == "negative binomial") {
     if (is.null(fun_args$size)) {
       fun_args$size <- 1
+    }
+    if (!for_discrete) {
+      if (!is.null(fun_args$mu)) {
+        fun_args$prob <- fun_args$size / (fun_args$size + fun_args$mu)
+        fun_args$mu <- NULL
+      }
     }
     if (is.null(fun_args$prob) & is.null(fun_args$mu)) {
       fun_args$prob <- 0.5
@@ -418,7 +424,7 @@ parameter_range <- function(distn, fun_args, ep, n_pars) {
     } else {
       size <- c(0, NA)
       mu <- c(ep, NA)
-      return(list(size = size, prob = prob))
+      return(list(size = size, mu = mu))
     }
   }
   if (distn == "hypergeometric") {
