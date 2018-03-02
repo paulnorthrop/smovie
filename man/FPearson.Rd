@@ -69,4 +69,6 @@ Fisher, R. A. (1921). On the "probable error" of a coefficient
 \code{\link[SuppDists]{Pearson}} in the SuppDists package for
   dpqr functions for the untransformed Pearson produce moment correlation
   coefficient.
+
+\code{\link{correlation}}: correlation sampling distribution movie.
 }

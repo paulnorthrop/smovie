@@ -31,6 +31,7 @@
 #' qFPearson(0.5, N = c(10, 20), rho = c(0, 0.3))
 #'
 #' rFPearson(6, N = 10, rho = 0.6)
+#' @seealso \code{\link{correlation}}: correlation sampling distribution movie.
 #' @references Fisher, R. A. (1915). Frequency distribution of the values of
 #'   the correlation coefficient in samples of an indefinitely large
 #'   population. \emph{Biometrika}, \strong{10}(4), 507-521.
