@@ -8,6 +8,9 @@
 #' used to change parameters underlying the plot. For the effects of
 #' these buttons see the documentation of the individual functions.
 #'
+#' See `vignette("smovie-vignette", package = "smovie")` for an overview
+#' of the package.  There are movies on the following topics.
+#'
 #' @references Bowman, A., Crawford, E., Alexander, G. and Bowman, R. W.
 #'  (2007). rpanel: Simple Interactive Controls for R Functions Using the
 #'  tcltk Package.  \emph{Journal of Statistical Software}, \strong{17(9)},
