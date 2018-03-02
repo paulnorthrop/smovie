@@ -78,7 +78,8 @@ set_fun_args <- function(distn, dfun, fun_args, params,
     if (is.null(fun_args$shape2)) {
       fun_args$shape2 <- 2
     }
-    if (is.null(fun_args$ncp)) {
+    # Force ncp = 0 for clt() and ett()
+    if (is.null(fun_args$ncp) || !for_continuous) {
       fun_args$ncp <- 0
     }
     return(fun_args)
