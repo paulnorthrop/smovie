@@ -62,7 +62,10 @@ least squares regression line.
 }
 \examples{
 \dontrun{
+# Positive association
 lev_inf()
+
+# No association
 lev_inf(association = "none")
 }
 }

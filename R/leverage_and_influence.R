@@ -47,7 +47,10 @@
 #' @seealso \code{\link{smovie}}: general information about smovie.
 #' @examples
 #' \dontrun{
+#' # Positive association
 #' lev_inf()
+#'
+#' # No association
 #' lev_inf(association = "none")
 #' }
 #' @export
