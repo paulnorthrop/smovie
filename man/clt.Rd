@@ -10,8 +10,7 @@ clt(n = 20, distn, params = list(), panel_plot = TRUE, hscale = NA,
 }
 \arguments{
 \item{n}{An integer scalar.  The size of the samples drawn from the
-distribution chosen using \code{distn}.  \code{n} must be no smaller
-than 2.}
+distribution chosen using \code{distn}.}
 
 \item{distn}{A character scalar specifying the distribution from which
   observations are sampled.   Distributions \code{"beta"},
@@ -111,19 +110,20 @@ Loosely speaking, a consequence of the
   This movie considers examples where this limiting result holds and
   illustrates graphically the closeness of the limiting approximation
   provided by the relevant normal limit to the true finite-\eqn{n}
-  distribution.
+  distribution.  Of course, when \code{distn = "normal"} this result is
+  exact.
 
   Samples of size \code{n} are repeatedly simulated from the distribution
-  chosen using \code{distn}.  These samples are summarized using a histogram
+  chosen using \code{distn}.  These samples are summarized using a plot
   that appears at the top of the movie screen.  For each sample the mean
-  of these \code{n} values is calculated, stored and added to another
-  histogram plotted below the first histogram.
+  of these \code{n} values is calculated, stored and added to a
+  histogram that sits below the first plot.
 
-  The probability density function (p.d.f.) of the original
-  variables is superimposed on the top histogram.  On the bottom histogram
-  is superimposed the exact p.d.f. of the sample mean and the
-  approximate (large \code{n}) normal p.d.f. (with mean \eqn{\mu} and standard
-  deviation \eqn{\sigma / \sqrt{n}}) implied by the CLT.
+  The p.d.f. (for a continous variable) or p.m.f. (for a discrete variable)
+  of the original variables is added to the top plot.  On the bottom
+  histogram is superimposed the approximate (large \code{n}) normal p.d.f.
+  (with mean \eqn{\mu} and standard deviation \eqn{\sigma / \sqrt{n}})
+  implied by the CLT.
 
   Once it starts, four aspects of this movie are controlled by the user.
   \itemize{
@@ -134,12 +134,9 @@ Loosely speaking, a consequence of the
       samples of size n" is clicked \code{n_add} new samples are simulated
       and their sample mean are added to the bottom histogram.}
     \item{}{There is a button to switch the bottom plot from displaying
-      a histogram of the simulated data, the exact p.d.f. and the
-      limiting normal p.d.f. to the empirical c.d.f. of the simulated data,
-      the exact c.d.f. and the limiting normal c.d.f.}
-    \item{}{There is a box that can be used to display only the bottom
-      plot.  This option is selected automatically if the sample size
-      \eqn{n} exceeds 100000.}
+      a histogram of the simulated means and the limiting normal p.d.f. to
+      the empirical c.d.f. of the simulated data, the exact c.d.f. and the
+      limiting normal c.d.f.}
   }
 }
 \examples{

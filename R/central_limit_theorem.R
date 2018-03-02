@@ -1,7 +1,3 @@
-# remove n > 1 restriction?
-# exact for normal
-# check set_leg_pos
-
 # =================================== clt =====================================
 
 #' Central Limit Theorem (CLT)
@@ -10,8 +6,7 @@
 #' and the central limit theorem.
 #'
 #' @param n An integer scalar.  The size of the samples drawn from the
-#'   distribution chosen using \code{distn}.  \code{n} must be no smaller
-#'   than 2.
+#'   distribution chosen using \code{distn}.
 #' @param distn A character scalar specifying the distribution from which
 #'   observations are sampled.   Distributions \code{"beta"},
 #'   \code{"binomial"}, \code{"chisq"}, \code{"chi-squared"},
@@ -92,19 +87,20 @@
 #'   This movie considers examples where this limiting result holds and
 #'   illustrates graphically the closeness of the limiting approximation
 #'   provided by the relevant normal limit to the true finite-\eqn{n}
-#'   distribution.
+#'   distribution.  Of course, when \code{distn = "normal"} this result is
+#'   exact.
 #'
 #'   Samples of size \code{n} are repeatedly simulated from the distribution
-#'   chosen using \code{distn}.  These samples are summarized using a histogram
+#'   chosen using \code{distn}.  These samples are summarized using a plot
 #'   that appears at the top of the movie screen.  For each sample the mean
-#'   of these \code{n} values is calculated, stored and added to another
-#'   histogram plotted below the first histogram.
+#'   of these \code{n} values is calculated, stored and added to a
+#'   histogram that sits below the first plot.
 #'
-#'   The probability density function (p.d.f.) of the original
-#'   variables is superimposed on the top histogram.  On the bottom histogram
-#'   is superimposed the exact p.d.f. of the sample mean and the
-#'   approximate (large \code{n}) normal p.d.f. (with mean \eqn{\mu} and standard
-#'   deviation \eqn{\sigma / \sqrt{n}}) implied by the CLT.
+#'   The p.d.f. (for a continous variable) or p.m.f. (for a discrete variable)
+#'   of the original variables is added to the top plot.  On the bottom
+#'   histogram is superimposed the approximate (large \code{n}) normal p.d.f.
+#'   (with mean \eqn{\mu} and standard deviation \eqn{\sigma / \sqrt{n}})
+#'   implied by the CLT.
 #'
 #'   Once it starts, four aspects of this movie are controlled by the user.
 #'   \itemize{
@@ -115,12 +111,9 @@
 #'       samples of size n" is clicked \code{n_add} new samples are simulated
 #'       and their sample mean are added to the bottom histogram.}
 #'     \item{}{There is a button to switch the bottom plot from displaying
-#'       a histogram of the simulated data, the exact p.d.f. and the
-#'       limiting normal p.d.f. to the empirical c.d.f. of the simulated data,
-#'       the exact c.d.f. and the limiting normal c.d.f.}
-#'     \item{}{There is a box that can be used to display only the bottom
-#'       plot.  This option is selected automatically if the sample size
-#'       \eqn{n} exceeds 100000.}
+#'       a histogram of the simulated means and the limiting normal p.d.f. to
+#'       the empirical c.d.f. of the simulated data, the exact c.d.f. and the
+#'       limiting normal c.d.f.}
 #'   }
 #' @return Nothing is returned, only the animation is produced.
 #' @seealso \code{\link{smovie}}: general information about smovie.
@@ -146,8 +139,8 @@ clt <- function(n = 20, distn, params = list(), panel_plot = TRUE, hscale = NA,
   # 1. misc.R: add code to set_fun_args(), set_top_range(), set_leg_pos()
   # 2. add lines to rfun, dfun, qfun, pfun, distn_mean and distn_sd
   # 3. cltmovie_plot(): add to the_distn
-  if (!is.wholenumber(n) | n < 2) {
-    stop("n must be an integer that is no smaller than 2")
+  if (!is.wholenumber(n)) {
+    stop("n must be an integer")
   }
   if (!is.wholenumber(n_add) | n_add < 1) {
     stop("n_add must be an integer that is no smaller than 1")
