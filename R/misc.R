@@ -271,6 +271,9 @@ set_top_range <- function(distn, p_vec, fun_args, qfun) {
     }
     return(top_range)
   }
+  if (distn == "gev") {
+    return(top_range)
+  }
   if (is.element(distn , c("normal", "t", "cauchy", "poisson"))) {
     return(top_range)
   }
@@ -307,6 +310,13 @@ set_leg_pos <- function(distn, fun_args) {
       distn <- "gp_non_neg"
     }
   }
+  if (distn == "gev") {
+    if (fun_args$shape < 0) {
+      distn <- "gev_neg"
+    } else {
+      distn <- "gev_non_neg"
+    }
+  }
   if (distn == "beta") {
     if (fun_args$shape2 > fun_args$shape1) {
       distn <- "beta_topright"
@@ -327,6 +337,8 @@ set_leg_pos <- function(distn, fun_args) {
            "gp_neg_1" = "topleft",
            "gp_neg" = "topright",
            "gp_non_neg" = "right",
+           "gev_neg" = "topleft",
+           "gev_non_neg" = "topright",
            "normal" = "right",
            "beta_topleft" = "topleft",
            "beta_topright" = "topright",
@@ -352,6 +364,8 @@ set_leg_pos <- function(distn, fun_args) {
            "gp_neg_1" = "left",
            "gp_neg" = "left",
            "gp_non_neg" = "right",
+           "gev_neg" = "right",
+           "gev_non_neg" = "right",
            "normal" = "right",
            "beta_topleft" = "topleft",
            "beta_topright" = "topleft",

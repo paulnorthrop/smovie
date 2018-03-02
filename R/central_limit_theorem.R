@@ -1,6 +1,3 @@
-# gev, lognormal, normal, t, weibull
-
-# checks for finite variance
 # remove n > 1 restriction?
 # exact for normal
 # check set_leg_pos
@@ -19,8 +16,8 @@
 #'   observations are sampled.   Distributions \code{"beta"},
 #'   \code{"binomial"}, \code{"chisq"}, \code{"chi-squared"},
 #'   \code{"exponential"}, \code{"f"}, \code{"gamma"}, \code{"geometric"},
-#'   \code{"gev"}, \code{"gp"}, \code{"hypergeometric"}, \code{lognormal},
-#'   \code{log-normal}, \code{"negative binomial"}, \code{"normal"},
+#'   \code{"gev"}, \code{"gp"}, \code{"hypergeometric"}, \code{"lognormal"},
+#'   \code{"log-normal"}, \code{"negative binomial"}, \code{"normal"},
 #'   \code{"poisson"}, \code{"t"}, \code{"uniform"} and \code{"weibull"} are
 #'   recognised, case being ignored.
 #'
@@ -148,7 +145,7 @@ clt <- function(n = 20, distn, params = list(), panel_plot = TRUE, hscale = NA,
   # To add another distribution
   # 1. misc.R: add code to set_fun_args(), set_top_range(), set_leg_pos()
   # 2. add lines to rfun, dfun, qfun, pfun, distn_mean and distn_sd
-  # 3. cltmovie_plot(): add to the_distn and normal_pars
+  # 3. cltmovie_plot(): add to the_distn
   if (!is.wholenumber(n) | n < 2) {
     stop("n must be an integer that is no smaller than 2")
   }
@@ -268,7 +265,12 @@ clt <- function(n = 20, distn, params = list(), panel_plot = TRUE, hscale = NA,
       stop("df2 must be greater than 4 for a finite variance")
     }
   }
-  if (distn == "gp") {
+  if (distn == "t") {
+    if (fun_args$df <= 2) {
+      stop("df must be greater than 2 for a finite variance")
+    }
+  }
+  if (distn == "gp" || distn == "gev") {
     if (fun_args$shape >= 1/2) {
       stop("shape must be less than 1/2 for a finite variance")
     }
@@ -326,6 +328,22 @@ clt <- function(n = 20, distn, params = list(), panel_plot = TRUE, hscale = NA,
       (df2 / df1) ^ 2
     den <- (df2 - 2) ^ 2 * (df2 - 4)
   }
+  if (distn == "t") {
+    nu <- fun_args$df
+    ncp <- fun_args$ncp
+  }
+  if (distn == "gev") {
+    mu <- fun_args$loc
+    sigma <- fun_args$scale
+    xi <- fun_args$shape
+    if (xi == 0) {
+      gev_mean <- mu - digamma(1) * sigma
+      gev_var <- sigma ^ 2 / 6
+    } else {
+      gev_mean <- mu + sigma * (gamma(1 - xi) - 1) / xi
+      gev_var <- sigma ^ 2 * (gamma(1 - 2 * xi) - gamma(1 - xi) ^ 2) / xi ^ 2
+    }
+  }
   distn_mean <- switch(distn,
                        "binomial" = fun_args$size * fun_args$prob,
                        "geometric" = (1 - fun_args$prob) / fun_args$prob,
@@ -339,7 +357,15 @@ clt <- function(n = 20, distn, params = list(), panel_plot = TRUE, hscale = NA,
                        "gamma" = fun_args$shape / fun_args$rate,
                        "gp" = fun_args$loc + fun_args$scale /
                          (1 - fun_args$shape),
+                       "gev" = gev_mean,
+                       "lognormal" = exp(fun_args$meanlog +
+                                           fun_args$sdlog ^ 2 / 2),
+                       "normal" = fun_args$mean,
+                       "t" = ncp * sqrt(nu / 2) * gamma((nu - 1) / 2) /
+                         gamma(nu / 2),
                        "uniform" = (fun_args$min + fun_args$max) / 2,
+                       "weibull" = fun_args$scale *
+                         gamma(1 + 1 / fun_args$shape),
                        "exponential" = 1 / fun_args$rate)
   distn_sd <- switch(distn,
                      "binomial" = sqrt(fun_args$size * fun_args$prob *
@@ -360,7 +386,17 @@ clt <- function(n = 20, distn, params = list(), panel_plot = TRUE, hscale = NA,
                      "gp" = sqrt(fun_args$scale ^ 2 /
                                    (1 - fun_args$shape) ^ 2 /
                                    (1 - 2 * fun_args$shape)),
+                     "gev" = sqrt(gev_var),
+                     "lognormal" = sqrt(exp(2 * fun_args$meanlog +
+                                         fun_args$sdlog ^ 2) *
+                       (exp(fun_args$sdlog ^ 2) - 1)),
+                     "normal" = fun_args$sd,
+                     "t" = sqrt(nu * (1 + ncp ^ 2) / (nu - 2) + ncp ^ 2 * nu *
+                       (gamma((nu - 1) / 2) - gamma(nu / 2)) ^ 2 /2),
                      "uniform" = sqrt((fun_args$max - fun_args$min) ^ 2 / 12),
+                     "weibull" = sqrt(fun_args$scale ^ 2 *
+                       gamma(1 + 2 / fun_args$shape) -
+                       gamma(1 + 1 / fun_args$shape) ^ 2),
                      "exponential" = 1 / fun_args$rate)
   # Create buttons for movie
   pdf_or_cdf <- "pdf"
@@ -505,6 +541,7 @@ cltmovie_plot <- function(panel) {
                      fun_args$ncp, ")"),
         "weibull" = paste("Weibull", "(", fun_args$shape, ",", fun_args$scale,
                           ")"),
+        "t" = paste("Weibull", "(", fun_args$df, ",", fun_args$ncp, ")"),
         "binomial" = paste(distn, "(", fun_args$size, ",", fun_args$prob, ")"),
         "geometric" = paste(distn, "(", fun_args$prob, ")"),
         "hypergeometric" = paste(distn, "(", fun_args$m, ",", fun_args$n,
@@ -620,9 +657,9 @@ cltmovie_plot <- function(panel) {
                        lty = 2, box.lty = 0)
     } else {
       graphics::legend(bottom_leg_pos,
-                       legend = c(my_leg_2, my_leg_true, "empirical cdf"),
-                       col = c(1:2, 8), lwd = 2, lty = c(2, 2, -1),
-                       pch = c(-1, -1, 16), box.lty = 0)
+                       legend = c(my_leg_2, "empirical cdf"),
+                       col = c(1, 8), lwd = 2, lty = c(2, -1),
+                       pch = c(-1, 16), box.lty = 0)
     }
     top_ratio <- (last_y - u_t[1]) / (u_t[2] - u_t[1])
     top_loc <- u_b[1] + (u_b[2] - u_b[1]) * top_ratio

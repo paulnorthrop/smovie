@@ -17,8 +17,8 @@ than 2.}
   observations are sampled.   Distributions \code{"beta"},
   \code{"binomial"}, \code{"chisq"}, \code{"chi-squared"},
   \code{"exponential"}, \code{"f"}, \code{"gamma"}, \code{"geometric"},
-  \code{"gev"}, \code{"gp"}, \code{"hypergeometric"}, \code{lognormal},
-  \code{log-normal}, \code{"negative binomial"}, \code{"normal"},
+  \code{"gev"}, \code{"gp"}, \code{"hypergeometric"}, \code{"lognormal"},
+  \code{"log-normal"}, \code{"negative binomial"}, \code{"normal"},
   \code{"poisson"}, \code{"t"}, \code{"uniform"} and \code{"weibull"} are
   recognised, case being ignored.
 
