@@ -16,16 +16,9 @@ bibliography: smovie.bib
 knitr::opts_chunk$set(comment = "#>", collapse = TRUE)
 ```
 
-The *smovie* package provides movies to help students to understand statistical concepts.  The [rpanel](https://cran.r-project.org/package=rpanel) package [@rpanel] is used to create interactive plots that move in response to changes in parameter values.  Buttons that can be held down in order to animate the plots.  
-This vignette provides an overview of the movies that are available currently, using screenshots from the movies.  Any comments, or suggestions for further movies, are gratefully received.
+The *smovie* package provides movies to help students to understand statistical concepts.  The [rpanel](https://cran.r-project.org/package=rpanel) package [@rpanel] is used to create interactive plots that move in response to changes in parameter values.  Buttons that can be held down in order to animate the plots.  This vignette provides an overview of the movies that are available currently, using screenshots from the movies.  Any comments, or suggestions for further movies, are gratefully received.
 
 The function `movies` creates a panel from which examples of the movies can be launched.  It is based on the function `rp.cartoons` in the *rpanel* package, and the image that appears in this panel has been taken from there.  These examples have been set up with sensible default arguments.  
-
-For greater control of an individual example call the relevant function 
-directly.  These functions have an argument `panel_plot` that controls whether
-the movie appears in inside the panel (`TRUE`) or in the standard graphics 
-window (`FALSE`).  The default is `TRUE`, partly because my experience is that 
-holding down buttons to animate the plots works better in this case.
 
 ```{r}
 library(smovie)
@@ -33,6 +26,12 @@ library(smovie)
 ```{r, eval = FALSE}
 movies()
 ```
+
+For greater control of an individual example call the relevant function 
+directly.  These functions have an argument `panel_plot` that controls whether
+the movie appears in inside the panel (`TRUE`) or in the standard graphics 
+window (`FALSE`).  The default is `TRUE`, partly because my experience is that 
+holding down buttons to animate the plots works better in this case.
 
 ## Probability distributions
 
@@ -62,9 +61,9 @@ knitr::include_graphics("gamma.PNG")
 
 Three movies illustrate the general idea of the sampling distribution of a statistic.
 
-### Central Limit Theorem (CLT)
+### Central Limit Theorem
 
-Consider $n$ independent and identically distributed random variables $X_1, \ldots, X_n$, each with mean $\mu$ and finite variance $\sigma^2$. The (classical) [Central limit theorem](https://en.wikipedia.org/wiki/Central_limit_theorem) states that as $n \rightarrow \infty$ the sample mean $(1/ n) \sum_{i=1}^n X_i$ converges in distribution to a standard normal N(0, 1) distribution.  Therefore, the mean of a sufficiently large of such variables has *approximately* a N($\mu, \sigma^2/n$) distribution.
+Consider $n$ independent and identically distributed random variables $X_1, \ldots, X_n$, each with mean $\mu$ and finite variance $\sigma^2$. Let $\bar{X} = (1/ n) \sum_{i=1}^n X_i$.  The (classical) [Central limit theorem](https://en.wikipedia.org/wiki/Central_limit_theorem) (CLT) states that as $n \rightarrow \infty$ $\sqrt{n}(\bar{X} - \mu) / \sigma$ converges in distribution to a standard normal N(0, 1) distribution.  Therefore, the mean of a sufficiently large number of such variables has approximately a N($\mu, \sigma^2/n$) distribution.
 
 The function `clt` can be used to illustrate the convergence of the distribution of the sample mean to a normal limit.  Several continous and discrete distributions for the underlying variables are available.  There are buttons to change the value of $n$ and to simulate another sample of size $n$.  As the simulations progress a histogram of the sample means can be compared to the normal approximation to the sampling distribution.  
 
@@ -84,9 +83,9 @@ clt(distn = "poisson")
 knitr::include_graphics("clt_poisson.PNG")
 ```
 
-### Extremal Types Theorem (ETT)
+### Extremal Types Theorem 
 
-The [Extremal Types Theorem](https://en.wikipedia.org/wiki/Extreme_value_theory#Univariate_theory) is rather like the CLT but applied to the sample maximum instead of the sample mean.  Loosely speaking, it states that, in many situations, the maximum of a *large number* $n$ of independent random variables has *approximately* a Generalized Extreme Value (GEV) distribution with shape parameter $\xi$.  See @Coles2001 for an introductory account of extreme value theory.
+The [Extremal Types Theorem](https://en.wikipedia.org/wiki/Extreme_value_theory#Univariate_theory) is rather like the CLT but applied to the sample maximum instead of the sample mean.  Loosely speaking, it states that, in many situations, the maximum of a large number $n$ of independent random variables has approximately a Generalized Extreme Value (GEV) distribution with shape parameter $\xi$.  See @Coles2001 for an introductory account of extreme value theory.
 
 The function `ett` can be used to illustrate the convergence of the distribution of the sample maximum to a GEV limit.  Several continous distributions for the underlying variables are available corresponding to different values of the limiting shape parameter $\xi$.  `ett` works in essentially the same way as `clt` except that the exact sampling distribution of the sample maximm is also displayed.
 
@@ -115,6 +114,22 @@ knitr::include_graphics("correlation2.PNG")
 ```
 
 ## Regression
+
+### Leverage and influence
+
+The function `lev_inf` creates a plot to visualise the effect on a least squares regression line of moving a single observation, in order to illustrate the concepts of leverage and influence.  In the first plot below the effect of increasing the $y$-coefficient of the red observation is far greater when the $x$-coefficient is far from the mean $x$-coefficient of the other observations. 
+
+```{r, eval = FALSE}
+lev_inf()
+```
+
+```{r, echo = FALSE, fig.align = 'center', out.width = "600px"}
+knitr::include_graphics("lev_inf_1.PNG")
+```
+
+```{r, echo = FALSE, fig.align = 'center', out.width = "600px"}
+knitr::include_graphics("lev_inf_2.PNG")
+```
 
 ## Hypothesis Testing
 
