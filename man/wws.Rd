@@ -130,7 +130,6 @@ The \href{https://en.wikipedia.org/wiki/Wald_test}{Wald},
   (\code{distn} = "binom").
 }
 \examples{
-\dontrun{
 # N(theta, 1) example, test statistics equivalent
 wws(theta0 = 0.8)
 
@@ -165,7 +164,6 @@ bin_alg_obs_info <- function(p, n_success, n_failure) {
 wws(bin_loglik, theta0 = 0.5, theta_range = c(0.1, 0.7),
     theta_mle = 7 / 20, n_success = 7, n_failure = 13,
     alg_score = bin_alg_score, alg_obs_info = bin_alg_obs_info)
-}
 }
 \references{
 Azzalini, A. (1996) Statistical Inference Based on the

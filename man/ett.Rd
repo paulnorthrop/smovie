@@ -174,7 +174,6 @@ Loosely speaking, a consequence of the
   2 / \code{df2} (\code{"f"}, see \code{\link[stats]{FDist}}).
 }
 \examples{
-\dontrun{
 # Exponential data: xi = 0
 ett()
 
@@ -183,7 +182,6 @@ ett(distn = "uniform")
 
 # Student t data: xi = 1 / df
 ett(distn = "t", params = list(df = 5))
-}
 }
 \references{
 Coles, S. G. (2001) \emph{An Introduction to Statistical

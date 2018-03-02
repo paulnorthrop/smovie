@@ -61,13 +61,11 @@ least squares regression line.
   then its influence will be low.
 }
 \examples{
-\dontrun{
 # Positive association
 lev_inf()
 
 # No association
 lev_inf(association = "none")
-}
 }
 \seealso{
 \code{\link{smovie}}: general information about smovie.

@@ -99,7 +99,6 @@
 #' @return Nothing is returned, only the animation is produced.
 #' @seealso \code{\link{smovie}}: general information about smovie.
 #' @examples
-#' \dontrun{
 #' # Normal example
 #' continuous()
 #' # Fix the range of values over which to plot
@@ -113,7 +112,6 @@
 #'
 #' # Gamma distribution. Show the use of var_range
 #' continuous(distn = "gamma", var_range = c(0, 15))
-#' }
 #' @export
 continuous <- function(distn, var_range = NULL, params = list(),
                        param_step = list(), param_range = list(),

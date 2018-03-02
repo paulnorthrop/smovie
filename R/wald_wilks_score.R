@@ -105,7 +105,6 @@
 #' @references Azzalini, A. (1996) Statistical Inference Based on the
 #'  Likelihood, Chapman & Hall / CRC, London.
 #' @examples
-#' \dontrun{
 #' # N(theta, 1) example, test statistics equivalent
 #' wws(theta0 = 0.8)
 #'
@@ -140,7 +139,6 @@
 #' wws(bin_loglik, theta0 = 0.5, theta_range = c(0.1, 0.7),
 #'     theta_mle = 7 / 20, n_success = 7, n_failure = 13,
 #'     alg_score = bin_alg_score, alg_obs_info = bin_alg_obs_info)
-#' }
 #' @export
 wws <- function(model = c("norm", "binom"), theta_range = NULL, mult = 3,
                 theta0 = if (!is.null(theta_range))

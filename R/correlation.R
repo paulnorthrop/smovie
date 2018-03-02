@@ -69,10 +69,8 @@
 #' @return Nothing is returned, only the animation is produced.
 #' @seealso \code{\link{smovie}}: general information about smovie.
 #' @examples
-#' \dontrun{
 #' correlation(rho = 0.8)
 #' correlation(n = 10)
-#' }
 #' @export
 correlation <- function(n = 30, rho = 0, panel_plot = TRUE, hscale = NA,
                         vscale = hscale, delta_n = 1, delta_rho = 0.1, pos = 1,

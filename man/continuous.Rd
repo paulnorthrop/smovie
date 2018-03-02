@@ -122,7 +122,6 @@ The movie starts with a plot of the p.d.f. of the distribution
   to switch the plot from the p.d.f. to the c.d.f. and back.
 }
 \examples{
-\dontrun{
 # Normal example
 continuous()
 # Fix the range of values over which to plot
@@ -136,7 +135,6 @@ continuous(distn = dnorm, params = list(mean = 0, sd = 1),
 
 # Gamma distribution. Show the use of var_range
 continuous(distn = "gamma", var_range = c(0, 15))
-}
 }
 \seealso{
 \code{\link{smovie}}: general information about smovie.

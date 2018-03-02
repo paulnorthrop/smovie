@@ -46,13 +46,11 @@
 #' @return Nothing is returned, only the animation is produced.
 #' @seealso \code{\link{smovie}}: general information about smovie.
 #' @examples
-#' \dontrun{
 #' # Positive association
 #' lev_inf()
 #'
 #' # No association
 #' lev_inf(association = "none")
-#' }
 #' @export
 lev_inf <- function(association = c("positive", "negative", "none"), n = 25,
                     panel_plot = TRUE, hscale = NA, vscale = hscale) {

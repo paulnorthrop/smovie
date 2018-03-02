@@ -26,3 +26,6 @@ a menu panel from which any of the movies in
 \code{\link[smovie]{smovie}} package can be launched. For greater control
 of an individual example call the relevant function directly.
 }
+\examples{
+movies()
+}

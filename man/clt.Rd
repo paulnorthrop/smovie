@@ -140,7 +140,6 @@ Loosely speaking, a consequence of the
   }
 }
 \examples{
-\dontrun{
 # Exponential data
 clt()
 
@@ -149,7 +148,6 @@ clt(distn = "uniform")
 
 # Poisson data
 clt(distn = "poisson")
-}
 }
 \seealso{
 \code{\link{smovie}}: general information about smovie.

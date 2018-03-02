@@ -118,7 +118,6 @@
 #' @return Nothing is returned, only the animation is produced.
 #' @seealso \code{\link{smovie}}: general information about smovie.
 #' @examples
-#' \dontrun{
 #' # Exponential data
 #' clt()
 #'
@@ -127,7 +126,6 @@
 #'
 #' # Poisson data
 #' clt(distn = "poisson")
-#' }
 #' @export
 clt <- function(n = 20, distn, params = list(), panel_plot = TRUE, hscale = NA,
                 vscale = hscale, n_add = 1, delta_n = 1, arrow = TRUE,

@@ -15,6 +15,8 @@
 #'   \code{\link{discrete}} or \code{\link{continuous}} directly.
 #' @param hscale A numeric scalar.  A scaling parameter for the size of the
 #'   plot, which will be passed to all relevant menu items.
+#' @examples
+#' movies()
 #' @export
 movies <- function(fixed_range = TRUE, hscale = 1) {
   panel.launch <- function(menu.panel) {

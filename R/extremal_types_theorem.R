@@ -159,7 +159,6 @@
 #'   \url{http://dx.doi.org/10.1007/978-1-4612-5449-2}
 #' @seealso \code{\link{smovie}}: general information about smovie.
 #' @examples
-#' \dontrun{
 #' # Exponential data: xi = 0
 #' ett()
 #'
@@ -168,7 +167,6 @@
 #'
 #' # Student t data: xi = 1 / df
 #' ett(distn = "t", params = list(df = 5))
-#' }
 #' @export
 ett <- function(n = 20, distn, params = list(), panel_plot = TRUE, hscale = NA,
                 vscale = hscale, n_add = 1, delta_n = 1, arrow = TRUE,
