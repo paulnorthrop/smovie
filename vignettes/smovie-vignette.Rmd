@@ -65,7 +65,7 @@ Three movies illustrate the general idea of the sampling distribution of a stati
 
 Consider $n$ independent and identically distributed random variables $X_1, \ldots, X_n$, each with mean $\mu$ and finite variance $\sigma^2$. Let $\bar{X} = (1/ n) \sum_{i=1}^n X_i$.  The (classical) [Central limit theorem](https://en.wikipedia.org/wiki/Central_limit_theorem) (CLT) states that as $n \rightarrow \infty$ $\sqrt{n}(\bar{X} - \mu) / \sigma$ converges in distribution to a standard normal N(0, 1) distribution.  Therefore, the mean of a sufficiently large number of such variables has approximately a N($\mu, \sigma^2/n$) distribution.
 
-The function `clt` can be used to illustrate the convergence of the distribution of the sample mean to a normal limit.  Several continous and discrete distributions for the underlying variables are available.  There are buttons to change the value of $n$ and to simulate another sample of size $n$.  As the simulations progress a histogram of the sample means can be compared to the normal approximation to the sampling distribution.  
+The function `clt` can be used to illustrate the convergence of the distribution of the sample mean to a normal limit.  Several continuous and discrete distributions for the underlying variables are available.  There are buttons to change the value of $n$ and to simulate another sample of size $n$.  As the simulations progress a histogram of the sample means can be compared to the normal approximation to the sampling distribution.  
 
 ```{r, eval = FALSE}
 clt(distn = "exponential")
@@ -87,7 +87,7 @@ knitr::include_graphics("clt_poisson.PNG")
 
 The [Extremal Types Theorem](https://en.wikipedia.org/wiki/Extreme_value_theory#Univariate_theory) is rather like the CLT but applied to the sample maximum instead of the sample mean.  Loosely speaking, it states that, in many situations, the maximum of a large number $n$ of independent random variables has approximately a Generalized Extreme Value (GEV) distribution with shape parameter $\xi$.  See @Coles2001 for an introductory account of extreme value theory.
 
-The function `ett` can be used to illustrate the convergence of the distribution of the sample maximum to a GEV limit.  Several continous distributions for the underlying variables are available corresponding to different values of the limiting shape parameter $\xi$.  `ett` works in essentially the same way as `clt` except that the exact sampling distribution of the sample maximm is also displayed.
+The function `ett` can be used to illustrate the convergence of the distribution of the sample maximum to a GEV limit.  Several continuous distributions for the underlying variables are available corresponding to different values of the limiting shape parameter $\xi$.  `ett` works in essentially the same way as `clt` except that the exact sampling distribution of the sample maximm is also displayed.
 
 ```{r, eval = FALSE}
 ett(distn = "exponential")

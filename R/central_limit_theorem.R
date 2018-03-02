@@ -96,7 +96,7 @@
 #'   of these \code{n} values is calculated, stored and added to a
 #'   histogram that sits below the first plot.
 #'
-#'   The p.d.f. (for a continous variable) or p.m.f. (for a discrete variable)
+#'   The p.d.f. (for a continuous variable) or p.m.f. (for a discrete variable)
 #'   of the original variables is added to the top plot.  On the bottom
 #'   histogram is superimposed the approximate (large \code{n}) normal p.d.f.
 #'   (with mean \eqn{\mu} and standard deviation \eqn{\sigma / \sqrt{n}})

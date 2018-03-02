@@ -24,5 +24,5 @@ plot, which will be passed to all relevant menu items.}
 Uses the template \code{\link[rpanel]{rp.cartoons}} function to produce
 a menu panel from which any of the movies in
 \code{\link[smovie]{smovie}} package can be launched. For greater control
-of an individual example call the relvevant function directly.
+of an individual example call the relevant function directly.
 }

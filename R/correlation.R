@@ -38,7 +38,7 @@
 #'   the correlation \eqn{\rho} between the variables is chosen by the user.
 #'
 #'   The movie contains two plots.  On the top is a scatter plot of the
-#'   simulated sample, illustrating the stength of the association between
+#'   simulated sample, illustrating the strength of the association between
 #'   the simulated values of the variables.
 #'   A new sample is produced by clicking "simulate another sample.
 #'   For each simulated sample the sample (Pearson product moment)

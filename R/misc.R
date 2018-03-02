@@ -642,7 +642,7 @@ variable_range <- function(distn, fun_args, qfun, p_vec){
   return(do.call(qfun, for_qfun))
 }
 
-# Vector of cdf probabilities for use in continous()
+# Vector of cdf probabilities for use in continuous()
 
 set_p_vec <- function(distn) {
   if (distn %in% c("normal", "user", "chi-squared", "f", "gamma", "gev",
