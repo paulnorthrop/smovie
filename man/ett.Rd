@@ -39,7 +39,8 @@ than 2.}
   \code{\link[stats]{stats-package}}.
   If \code{distn = "gamma"} then the \code{(shape, rate)}
   parameterisation is used.  If \code{scale} is supplied via \code{params}
-  then \code{rate} is inferred from this.}
+  then \code{rate} is inferred from this.
+  If \code{distn = "beta"} then \code{ncp} is forced to be zero.}
 
 \item{params}{A named list of additional arguments to be passed to the
   density function associated with distribution \code{distn}.

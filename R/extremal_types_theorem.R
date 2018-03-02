@@ -40,6 +40,7 @@
 #'   If \code{distn = "gamma"} then the \code{(shape, rate)}
 #'   parameterisation is used.  If \code{scale} is supplied via \code{params}
 #'   then \code{rate} is inferred from this.
+#'   If \code{distn = "beta"} then \code{ncp} is forced to be zero.
 #' @param params A named list of additional arguments to be passed to the
 #'   density function associated with distribution \code{distn}.
 #'   The \code{(shape, rate)} parameterisation is used for the gamma
@@ -465,8 +466,9 @@ ett_movie_plot <- function(panel) {
                             ")"),
         "cauchy" = paste("Cauchy", "(", fun_args$location, ",", fun_args$scale,
                          ")"),
-        "chi-squared" = paste(distn, "(", fun_args$df, ")"),
-        "f" = paste("F", "(", fun_args$df1, ",", fun_args$df2, ")"),
+        "chi-squared" = paste(distn, "(", fun_args$df, ",", fun_args$ncp, ")"),
+        "f" = paste("F", "(", fun_args$df1, ",", fun_args$df2, ",",
+                    fun_args$ncp, ")"),
         "weibull" = paste("Weibull", "(", fun_args$shape, ",", fun_args$scale,
                           ")"),
         "ngev" = paste("negated GEV", "(", fun_args$loc, ",", fun_args$scale,
@@ -595,9 +597,9 @@ ett_movie_plot <- function(panel) {
       graphics::rug(last_y, line = 0.5, ticksize = 0.05, col = "red", lwd = 2)
     }
     u_b <- my_xlim
-    my_leg_2 <- paste("GEV (", round(gev_pars$loc, 2), ",",
-                      round(gev_pars$scale, 2), ",",
-                      round(gev_pars$shape, 2), ")" )
+    my_leg_2 <- paste("GEV (", signif(gev_pars$loc, 2), ",",
+                      signif(gev_pars$scale, 2), ",",
+                      signif(gev_pars$shape, 2), ")" )
     if (pdf_or_cdf == "pdf") {
       my_leg_true <- expression(n * F ^ {n-1} * f)
       graphics::legend(bottom_leg_pos, legend = c(my_leg_2, my_leg_true),
