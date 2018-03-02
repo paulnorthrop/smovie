@@ -29,7 +29,13 @@ than 2.}
   \code{\link[revdbayes]{revdbayes}} package.
 
   The other cases use the distributional functions in the
-  \code{\link[stats]{stats-package}}.}
+  \code{\link[stats]{stats-package}}.
+  If \code{distn = "gamma"} then the \code{(shape, rate)}
+  parameterisation is used.  If \code{scale} is supplied via \code{params}
+  then \code{rate} is inferred from this.
+  If \code{distn = "negative binomial"} then the \code{(size, prob)}
+  parameterisation is used.  If \code{mu} is supplied via \code{params}
+  then \code{prob} is inferred from this (and \code{size}).}
 
 \item{params}{A named list of additional arguments to be passed to the
   density function associated with distribution \code{distn}.
