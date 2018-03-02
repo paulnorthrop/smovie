@@ -131,8 +131,8 @@ Loosely speaking, a consequence of the
 
   The probability density function (p.d.f.) of the original
   variables is superimposed on the top histogram.
-  On the bottom histogram is superimposed the exact p.d.f./c.d.f. of the
-  sample maxima and an approximate (large \code{n}) GEV p.d.f./c.d.f.
+  There is a checkbox to add to the bottom plot the exact p.d.f./c.d.f. of
+  the sample maxima and an approximate (large \code{n}) GEV p.d.f./c.d.f.
   implied by the ETT.
   The GEV shape parameter \eqn{\xi} that applies in the limiting
   case is used.  The GEV location \eqn{\mu} and scale
