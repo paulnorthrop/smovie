@@ -85,8 +85,8 @@
 #'   \code{range}.
 #' @details Loosely speaking, a consequence of the
 #'   \href{https://en.wikipedia.org/wiki/Extreme_value_theory#Univariate_theory}{Extremal Types Theorem}
-#'   is that, in many situations, the maximum of a \strong{large number}
-#'   \eqn{n} of independent random variables has \strong{approximately} a
+#'   is that, in many situations, the maximum of a \emph{large number}
+#'   \eqn{n} of independent random variables has \emph{approximately} a
 #'   GEV(\eqn{\mu, \sigma, \xi)}) distribution, where \eqn{\mu} is a location
 #'   parameter, \eqn{\sigma} is a scale parameter and \eqn{\xi} is a shape
 #'   parameter.  See Coles (2001) for an introductory account and

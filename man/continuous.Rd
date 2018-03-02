@@ -117,7 +117,7 @@ depend on the values of its parameters.
 }
 \details{
 The movie starts with a plot of the p.d.f. of the distribution
-  for the initial values of the parameters.  There are buttons to
+  for the initial values of the parameters.  Buttons
   increase (+) or decrease (-) each parameter.  There are radio buttons
   to switch the plot from the p.d.f. to the c.d.f. and back.
 }

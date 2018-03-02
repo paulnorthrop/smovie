@@ -8,7 +8,7 @@
 #' used to change parameters underlying the plot. For the effects of
 #' these buttons see the documentation of the individual functions.
 #'
-#' See `vignette("smovie-vignette", package = "smovie")` for an overview
+#' See \code{vignette("smovie-vignette", package = "smovie")} for an overview
 #' of the package.  There are movies on the following topics.
 #'
 #' @references Bowman, A., Crawford, E., Alexander, G. and Bowman, R. W.

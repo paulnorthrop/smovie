@@ -37,9 +37,9 @@
 #'   from the least squares line fitted to the other observations, then
 #'   its \strong{influence} on the least squares regression line depends on
 #'   its x-coordinate.  If its x-coordinate is much larger or smaller than
-#'   the x-coordinate of the other observations (high \strong{leverage}) then
+#'   the x-coordinate of the other observations (\strong{high leverage}) then
 #'   the influence is higher than if it has a similar x-coordinate to the
-#'   other observations (low \strong{leverage}).  An observation with high
+#'   other observations (\strong{low leverage}).  An observation with high
 #'   leverage does not necessarily have high influence: if its y-coordinate
 #'   falls very close to the regression line fitted to the other observations
 #'   then its influence will be low.
