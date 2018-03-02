@@ -9,7 +9,9 @@
 #' these buttons see the documentation of the individual functions.
 #'
 #' See \code{vignette("smovie-vignette", package = "smovie")} for an overview
-#' of the package.  There are movies on the following topics.
+#' of the package and the \link[=movies]{user-friendly menu panel}.
+#'
+#' There are movies on the following topics.
 #'
 #' @references Bowman, A., Crawford, E., Alexander, G. and Bowman, R. W.
 #'  (2007). rpanel: Simple Interactive Controls for R Functions Using the
@@ -18,8 +20,8 @@
 #'
 #' @section {Probability distributions}:
 #' \itemize{
-#'   \item {\link[=discrete]{Discrete distribtions}}
-#'   \item {\link[=continuous]{Continuous distribtions}}
+#'   \item {\link[=discrete]{Discrete distributions}}
+#'   \item {\link[=continuous]{Continuous distributions}}
 #' }
 #'
 #' @section {Sampling distributions}:

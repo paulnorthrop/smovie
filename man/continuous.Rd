@@ -137,5 +137,7 @@ continuous(distn = dnorm, params = list(mean = 0, sd = 1),
 continuous(distn = "gamma", var_range = c(0, 15))
 }
 \seealso{
+\code{\link{movies}}: a user-friendly menu panel.
+
 \code{\link{smovie}}: general information about smovie.
 }

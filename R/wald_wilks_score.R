@@ -101,6 +101,7 @@
 #'   This is not true in general, as shown by the other in-built example
 #'   (\code{distn} = "binom").
 #' @return Nothing is returned, only the animation is produced.
+#' @seealso \code{\link{movies}}: a user-friendly menu panel.
 #' @seealso \code{\link{smovie}}: general information about smovie.
 #' @references Azzalini, A. (1996) Statistical Inference Based on the
 #'  Likelihood, Chapman & Hall / CRC, London.

@@ -97,6 +97,7 @@
 #'   increase (+) or decrease (-) each parameter.  There are radio buttons
 #'   to switch the plot from the p.d.f. to the c.d.f. and back.
 #' @return Nothing is returned, only the animation is produced.
+#' @seealso \code{\link{movies}}: a user-friendly menu panel.
 #' @seealso \code{\link{smovie}}: general information about smovie.
 #' @examples
 #' # Normal example

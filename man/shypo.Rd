@@ -97,5 +97,7 @@ The movie is based on two plots.
 shypo(mu0 = 0, eff = 5, n = 16, a = 2.3, delta_a = 0.01)
 }
 \seealso{
+\code{\link{movies}}: a user-friendly menu panel.
+
 \code{\link{smovie}}: general information about smovie.
 }

@@ -157,6 +157,7 @@
 #'   \emph{Extremes and Related Properties of Random Sequences and Processes.}
 #'   Springer-Verlag, New York.
 #'   \url{http://dx.doi.org/10.1007/978-1-4612-5449-2}
+#' @seealso \code{\link{movies}}: a user-friendly menu panel.
 #' @seealso \code{\link{smovie}}: general information about smovie.
 #' @examples
 #' # Exponential data: xi = 0

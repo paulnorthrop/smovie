@@ -94,6 +94,7 @@
 #'   for example, the binomial and negative binomial distributions, is
 #'   labelled as \code{n}.
 #' @return Nothing is returned, only the animation is produced.
+#' @seealso \code{\link{movies}}: a user-friendly menu panel.
 #' @seealso \code{\link{smovie}}: general information about smovie.
 #' @examples
 #' # Binomial example

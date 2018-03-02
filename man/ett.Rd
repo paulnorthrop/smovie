@@ -194,5 +194,7 @@ Leadbetter, M., Lindgren, G. and Rootzen, H. (1983)
   \url{http://dx.doi.org/10.1007/978-1-4612-5449-2}
 }
 \seealso{
+\code{\link{movies}}: a user-friendly menu panel.
+
 \code{\link{smovie}}: general information about smovie.
 }

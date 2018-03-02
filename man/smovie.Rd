@@ -16,13 +16,15 @@ used to change parameters underlying the plot. For the effects of
 these buttons see the documentation of the individual functions.
 
 See \code{vignette("smovie-vignette", package = "smovie")} for an overview
-of the package.  There are movies on the following topics.
+of the package and the \link[=movies]{user-friendly menu panel}.
+
+There are movies on the following topics.
 }
 \section{{Probability distributions}}{
 
 \itemize{
-  \item {\link[=discrete]{Discrete distribtions}}
-  \item {\link[=continuous]{Continuous distribtions}}
+  \item {\link[=discrete]{Discrete distributions}}
+  \item {\link[=continuous]{Continuous distributions}}
 }
 }
 

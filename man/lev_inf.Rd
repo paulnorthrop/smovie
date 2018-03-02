@@ -68,5 +68,7 @@ lev_inf()
 lev_inf(association = "none")
 }
 \seealso{
+\code{\link{movies}}: a user-friendly menu panel.
+
 \code{\link{smovie}}: general information about smovie.
 }

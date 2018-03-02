@@ -170,5 +170,7 @@ Azzalini, A. (1996) Statistical Inference Based on the
  Likelihood, Chapman & Hall / CRC, London.
 }
 \seealso{
+\code{\link{movies}}: a user-friendly menu panel.
+
 \code{\link{smovie}}: general information about smovie.
 }

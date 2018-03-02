@@ -133,5 +133,7 @@ discrete(distn = dbinom, params = list(size = 10, prob = 0.5),
 discrete(distn = "poisson", var_support = 0:20)
 }
 \seealso{
+\code{\link{movies}}: a user-friendly menu panel.
+
 \code{\link{smovie}}: general information about smovie.
 }

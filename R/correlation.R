@@ -67,6 +67,7 @@
 #'   reset using the sample correlation coefficient of the first sample
 #'   simulated using the new combination of \eqn{n} and \eqn{\rho}.
 #' @return Nothing is returned, only the animation is produced.
+#' @seealso \code{\link{movies}}: a user-friendly menu panel.
 #' @seealso \code{\link{smovie}}: general information about smovie.
 #' @examples
 #' correlation(rho = 0.8)

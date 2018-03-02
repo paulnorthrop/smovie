@@ -69,6 +69,7 @@
 #'   }
 #'
 #' @return Nothing is returned, only the animation is produced.
+#' @seealso \code{\link{movies}}: a user-friendly menu panel.
 #' @seealso \code{\link{smovie}}: general information about smovie.
 #' @examples
 #' # 1. Change a (for fixed n) to achieve alpha = 0.05
