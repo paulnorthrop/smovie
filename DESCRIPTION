@@ -2,12 +2,19 @@ Package: smovie
 Type: Package
 Title: smovie: some movies to illustrate concepts in statistics
 Version: 0.0.0.9000
-Date: 2017-12-22
+Date: 2018-03-02
 Authors@R: person(c("Paul", "J."), "Northrop", email = "p.northrop@ucl.ac.uk",
   role = c("aut", "cre", "cph"))
 Description: Provides movies to help students to understand statistical 
-  concepts.  Also provided are dpqr functions for the sampling distribution of 
-  the Fisher transformation of the Pearson product moment correlation 
+  concepts.  The 'rpanel' package  <https://cran.r-project.org/package=rpanel> 
+  is used to create interactive plots that move to illustrate key statistical 
+  ideas and methods.  There are movies to: visualise probability distributions
+  (including user-supplied ones); illustrate sampling distributions of the
+  sample mean (central limit theorem), sample maximum (extremal types theorem)
+  and (Pearson product moment) correlation coefficient; examine the influence
+  of an individual observation in simple linear regression; illustrate key 
+  concepts in statistical hypothesis testing. Also provided are dpqr functions 
+  for the distribution of the Fisher transformation of the correlation 
   coefficient under sampling from a bivariate normal distribution.
 Depends:
     R (>= 3.3.0), 
