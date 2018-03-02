@@ -1,6 +1,6 @@
 Package: smovie
 Type: Package
-Title: smovie: some movies to illustrate concepts in statistics
+Title: Some Movies to Illustrate Concepts in Statistics
 Version: 1.0.0
 Date: 2018-03-02
 Authors@R: person(c("Paul", "J."), "Northrop", email = "p.northrop@ucl.ac.uk",
