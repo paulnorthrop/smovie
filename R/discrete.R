@@ -190,7 +190,8 @@ discrete <- function(distn, var_support = NULL, params = list(),
              "negative binomial" = stats::qnbinom,
              "poisson" = stats::qpois)
     # Set the arguments to the distributional functions
-    fun_args <- set_fun_args(distn, dfun, fun_args, params)
+    fun_args <- set_fun_args(distn, dfun, fun_args, params,
+                             for_discrete = TRUE)
     # Extract the names of the parameters and find the number of parameters
     par_names <- names(fun_args)
     n_pars <- length(par_names)
