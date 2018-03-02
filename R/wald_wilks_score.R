@@ -128,7 +128,7 @@
 #'   return(n_success * log(p) + n_failure * log(1 - p))
 #' }
 #'
-#' wws(bin_loglik, theta0 = 0.5, theta_range = c(0.1, 0.7),
+#' wws(loglik = bin_loglik, theta0 = 0.5, theta_range = c(0.1, 0.7),
 #'     theta_mle = 7 / 20, n_success = 7, n_failure = 13)
 #'
 #' bin_alg_score <- function(p, n_success, n_failure) {
@@ -137,7 +137,7 @@
 #' bin_alg_obs_info <- function(p, n_success, n_failure) {
 #'   return(n_success / p ^ 2 + n_failure / (1 - p) ^ 2)
 #' }
-#' wws(bin_loglik, theta0 = 0.5, theta_range = c(0.1, 0.7),
+#' wws(loglik = bin_loglik, theta0 = 0.5, theta_range = c(0.1, 0.7),
 #'     theta_mle = 7 / 20, n_success = 7, n_failure = 13,
 #'     alg_score = bin_alg_score, alg_obs_info = bin_alg_obs_info)
 #' @export
