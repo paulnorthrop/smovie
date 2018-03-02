@@ -26,22 +26,20 @@ these buttons see the documentation of the individual functions.
 \section{{Sampling distributions}}{
 
 \itemize{
-  \item {\link[=clt_norm]{Central Limit Theorem: normal data}}
-  \item {\link[=clt_exp]{Central Limit Theorem: exponential data}}
-  \item {\link[=correlation]{Sampling distribution of the correlation
-    coefficient}}
+  \item {\link[=clt]{Central Limit Theorem: sampling distribution
+    of a sample mean}}
   \item {\link[=ett]{Extremal Types Theorem: sampling distribution
     of a sample maximum}}
+  \item {\link[=correlation]{Pearson product moment correlation
+    coefficient}}
 }
 }
 
-\section{{Regression and correlation}}{
+\section{{Regression}}{
 
 \itemize{
   \item {\link[=lev_inf]{Leverage and influence in simple linear
     regression}}
-  \item {\link[=correlation]{Sampling distribution of the correlation
-    coefficient}}
 }
 }
 
@@ -50,14 +48,6 @@ these buttons see the documentation of the individual functions.
 \itemize{
   \item {\link[=wws]{Wald, Wilks and Score tests}}
   \item {\link[=shypo]{Testing simple hypotheses}}
-}
-}
-
-\section{{Extreme Value Theory}}{
-
-\itemize{
-  \item {\link[=ett]{Extremal Types Theorem: sampling distribution
-    of a sample maximum}}
 }
 }
 
