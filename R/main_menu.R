@@ -135,6 +135,9 @@ movies <- function(fixed_range = TRUE, hscale = 1) {
     else if (menu.panel$demo == "Pearson correlation coefficient") {
       correlation(n = 10)
     }
+    else if (menu.panel$demo == "Mean") {
+      clt(distn = "exponential")
+    }
     else if (menu.panel$demo == "Maximum") {
       ett(distn = "exponential")
     }
@@ -147,6 +150,7 @@ movies <- function(fixed_range = TRUE, hscale = 1) {
     else if (menu.panel$demo == "Testing simple hypotheses") {
       shypo(mu0 = 0, eff = 5, n = 1)
     }
+    # ETT
     else if (menu.panel$demo == "beta ") {
       ett(distn = "beta")
     }
@@ -186,6 +190,58 @@ movies <- function(fixed_range = TRUE, hscale = 1) {
     else if (menu.panel$demo == "Weibull ") {
       ett(distn = "weibull")
     }
+    # CLT
+    else if (menu.panel$demo == " beta") {
+      clt(distn = "beta")
+    }
+    else if (menu.panel$demo == " binomial") {
+      clt(distn = "binomial")
+    }
+    else if (menu.panel$demo == " chi-squared") {
+      clt(distn = "chi-squared")
+    }
+    else if (menu.panel$demo == " exponential") {
+      clt(distn = "exponential")
+    }
+    else if (menu.panel$demo == " F") {
+      clt(distn = "f")
+    }
+    else if (menu.panel$demo == " gamma") {
+      clt(distn = "gamma")
+    }
+    else if (menu.panel$demo == " generalized Pareto") {
+      clt(distn = "gp")
+    }
+    else if (menu.panel$demo == " geometric") {
+      clt(distn = "geometric")
+    }
+    else if (menu.panel$demo == " hypergeometric") {
+      clt(distn = "hypergeometric")
+    }
+    else if (menu.panel$demo == " GEV") {
+      clt(distn = "gev")
+    }
+    else if (menu.panel$demo == " log-normal") {
+      clt(distn = "log-normal")
+    }
+    else if (menu.panel$demo == " negative binomial") {
+      clt(distn = "binomial")
+    }
+    else if (menu.panel$demo == " normal") {
+      clt(distn = "normal")
+    }
+    else if (menu.panel$demo == " poisson") {
+      clt(distn = "poisson")
+    }
+    else if (menu.panel$demo == " Student t") {
+      clt(distn = "t")
+    }
+    else if (menu.panel$demo == " uniform") {
+      clt(distn = "uniform")
+    }
+    else if (menu.panel$demo == " Weibull") {
+      clt(distn = "weibull")
+    }
     return(menu.panel)
   }
   menu.panel <- rpanel::rp.control("Movies", homer = FALSE,
@@ -215,7 +271,28 @@ movies <- function(fixed_range = TRUE, hscale = 1) {
   ),
   list("Sampling distributions",
        "Pearson correlation coefficient",
+       "Mean",
        "Maximum"
+  ),
+  list("CLT",
+       " beta",
+       " binomial",
+       " Cauchy",
+       " chi-squared",
+       " exponential",
+       " F",
+       " gamma",
+       " generalized Pareto",
+       " geometric",
+       " hypergeometric",
+       " log-normal",
+       " GEV",
+       " negative binomial",
+       " normal",
+       " poisson",
+       " Student t",
+       " uniform",
+       " Weibull"
   ),
   list("Regression",
        "Leverage and influence"
