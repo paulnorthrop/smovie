@@ -36,7 +36,10 @@ than 2.}
   Lindgren and Rootzen (1983).
 
   The other cases use the distributional functions in the
-  \code{\link[stats]{stats-package}}.}
+  \code{\link[stats]{stats-package}}.
+  If \code{distn = "gamma"} then the \code{(shape, rate)}
+  parameterisation is used.  If \code{scale} is supplied via \code{params}
+  then \code{rate} is inferred from this.}
 
 \item{params}{A named list of additional arguments to be passed to the
   density function associated with distribution \code{distn}.
