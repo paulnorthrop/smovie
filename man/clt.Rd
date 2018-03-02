@@ -100,8 +100,8 @@ and the central limit theorem.
 }
 \details{
 Loosely speaking, a consequence of the
-  \href{https://en.wikipedia.org/wiki/Central_limit_theorem}{Central Limit Theorem (CLT)}
-  (CLT) is that the mean of a \strong{large number} of independent and
+  \href{https://en.wikipedia.org/wiki/Central_limit_theorem}{Central Limit Theorem}
+  is that the mean of a \strong{large number} of independent and
   identically distributed random variables, each with mean \eqn{\mu} and
   finite standard deviation \eqn{\sigma} has \strong{approximately} a
   normal distribution, even if these original variables are not normally
