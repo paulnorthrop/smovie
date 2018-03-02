@@ -13,11 +13,11 @@
 #' @param model A character scalar.  Name of the the distribution on which
 #'   one of two in-built examples are based.
 #'
-#'   If \code{model = "normal"} then the setting is a random sample of
+#'   If \code{model = "norm"} then the setting is a random sample of
 #'   size \code{n} from a normal distribution with unknown mean
 #'   \code{mu} = \eqn{\theta} and known standard deviation \code{sigma}.
 #'
-#'   If \code{model = "normal"} then the setting is a random sample from a
+#'   If \code{model = "binom"} then the setting is a random sample from a
 #'   Bernoulli distribution with unknown success probability
 #'   \eqn{\theta}.
 #'
@@ -100,6 +100,8 @@
 #'   In the (default) normal example the three test statistics coincide.
 #'   This is not true in general, as shown by the other in-built example
 #'   (\code{distn} = "binom").
+#'
+#'   A user-supplied log-likelihod can be provided via \code{loglik}.
 #' @return Nothing is returned, only the animation is produced.
 #' @seealso \code{\link{movies}}: a user-friendly menu panel.
 #' @seealso \code{\link{smovie}}: general information about smovie.
