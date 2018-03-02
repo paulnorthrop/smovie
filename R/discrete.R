@@ -96,7 +96,6 @@
 #' @return Nothing is returned, only the animation is produced.
 #' @seealso \code{\link{smovie}}: general information about smovie.
 #' @examples
-#' \dontrun{
 #' # Binomial example
 #' discrete()
 #'
@@ -108,7 +107,6 @@
 #'
 #' # Poisson distribution. Show the use of var_support
 #' discrete(distn = "poisson", var_support = 0:20)
-#' }
 #' @export
 discrete <- function(distn, var_support = NULL, params = list(),
                      param_step = list(), param_range = list(), p_vec = NULL,

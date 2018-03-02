@@ -120,7 +120,6 @@ The movie starts with a plot of the p.m.f. of the distribution
   labelled as \code{n}.
 }
 \examples{
-\dontrun{
 # Binomial example
 discrete()
 
@@ -132,7 +131,6 @@ discrete(distn = dbinom, params = list(size = 10, prob = 0.5),
 
 # Poisson distribution. Show the use of var_support
 discrete(distn = "poisson", var_support = 0:20)
-}
 }
 \seealso{
 \code{\link{smovie}}: general information about smovie.
