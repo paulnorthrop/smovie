@@ -16,7 +16,11 @@
 #' @param hscale A numeric scalar.  A scaling parameter for the size of the
 #'   plot, which will be passed to all relevant menu items.
 #' @examples
-#' movies()
+#' # Check that BWidget is available (system requirement for rpanel)
+#' got_BWidget <- tclRequire("BWidget")
+#' if (!is.logical(got_BWidget)) {
+#'   movies()
+#' }
 #' @seealso \code{\link{discrete}}, \code{\link{continuous}},
 #'   \code{\link{clt}}, \code{\link{ett}}, \code{\link{correlation}},
 #'   \code{\link{lev_inf}}, \code{\link{wws}}, \code{\link{shypo}}.

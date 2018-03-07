@@ -89,8 +89,12 @@ Random samples of size \eqn{n} are simulated from a bivariate
   simulated using the new combination of \eqn{n} and \eqn{\rho}.
 }
 \examples{
-correlation(rho = 0.8)
-correlation(n = 10)
+# Check that BWidget is available (system requirement for rpanel)
+got_BWidget <- tclRequire("BWidget")
+if (!is.logical(got_BWidget)) {
+  correlation(rho = 0.8)
+  correlation(n = 10)
+}
 }
 \seealso{
 \code{\link{movies}}: a user-friendly menu panel.

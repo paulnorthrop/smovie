@@ -72,9 +72,13 @@
 #' @seealso \code{\link{movies}}: a user-friendly menu panel.
 #' @seealso \code{\link{smovie}}: general information about smovie.
 #' @examples
-#' # 1. Change a (for fixed n) to achieve alpha = 0.05
-#' # 2. Change a and n to achieve alpha <= 0.05 and beta <= 0.1
-#' shypo(mu0 = 0, eff = 5, n = 16, a = 2.3, delta_a = 0.01)
+#' # Check that BWidget is available (system requirement for rpanel)
+#' got_BWidget <- tclRequire("BWidget")
+#' if (!is.logical(got_BWidget)) {
+#'   # 1. Change a (for fixed n) to achieve alpha = 0.05
+#'   # 2. Change a and n to achieve alpha <= 0.05 and beta <= 0.1
+#'   shypo(mu0 = 0, eff = 5, n = 16, a = 2.3, delta_a = 0.01)
+#' }
 #' @export
 shypo <- function(mu0 = 0, sd = 6, eff = sd, n = 10, a = mu0 + eff / 2,
                   target_alpha = 0.05, target_beta = 0.1, panel_plot = TRUE,

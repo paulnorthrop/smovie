@@ -100,19 +100,23 @@
 #' @seealso \code{\link{movies}}: a user-friendly menu panel.
 #' @seealso \code{\link{smovie}}: general information about smovie.
 #' @examples
-#' # Normal example
-#' continuous()
-#' # Fix the range of values over which to plot
-#' continuous(var_range = c(-10, 10))
+#' # Check that BWidget is available (system requirement for rpanel)
+#' got_BWidget <- tclRequire("BWidget")
+#' if (!is.logical(got_BWidget)) {
+#'   # Normal example
+#'   continuous()
+#'   # Fix the range of values over which to plot
+#'   continuous(var_range = c(-10, 10))
 #'
-#' # The same example, but using a user-supplied function and setting manually
-#' # the initial parameters, parameter step size and range
-#' continuous(distn = dnorm, params = list(mean = 0, sd = 1),
-#'            param_step = list(mean = 1, sd = 1),
-#'            param_range = list(sd = c(0, NA)))
+#'   # The same example, but using a user-supplied function and setting manually
+#'   # the initial parameters, parameter step size and range
+#'   continuous(distn = dnorm, params = list(mean = 0, sd = 1),
+#'              param_step = list(mean = 1, sd = 1),
+#'              param_range = list(sd = c(0, NA)))
 #'
-#' # Gamma distribution. Show the use of var_range
-#' continuous(distn = "gamma", var_range = c(0, 15))
+#'   # Gamma distribution. Show the use of var_range
+#'   continuous(distn = "gamma", var_range = c(0, 15))
+#' }
 #' @export
 continuous <- function(distn, var_range = NULL, params = list(),
                        param_step = list(), param_range = list(),

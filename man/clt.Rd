@@ -141,6 +141,7 @@ Loosely speaking, a consequence of the
   }
 }
 \examples{
+# Check that BWidget is available (system requirement for rpanel)
 got_BWidget <- tclRequire("BWidget")
 if (!is.logical(got_BWidget)) {
   # Exponential data

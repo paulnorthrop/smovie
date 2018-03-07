@@ -120,6 +120,7 @@
 #' @seealso \code{\link{movies}}: a user-friendly menu panel.
 #' @seealso \code{\link{smovie}}: general information about smovie.
 #' @examples
+#' # Check that BWidget is available (system requirement for rpanel)
 #' got_BWidget <- tclRequire("BWidget")
 #' if (!is.logical(got_BWidget)) {
 #'   # Exponential data

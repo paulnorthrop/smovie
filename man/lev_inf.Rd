@@ -61,11 +61,15 @@ least squares regression line.
   then its influence will be low.
 }
 \examples{
-# Positive association
-lev_inf()
+# Check that BWidget is available (system requirement for rpanel)
+got_BWidget <- tclRequire("BWidget")
+if (!is.logical(got_BWidget)) {
+  # Positive association
+  lev_inf()
 
-# No association
-lev_inf(association = "none")
+  # No association
+  lev_inf(association = "none")
+}
 }
 \seealso{
 \code{\link{movies}}: a user-friendly menu panel.

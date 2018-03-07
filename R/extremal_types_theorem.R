@@ -165,14 +165,18 @@
 #' @seealso \code{\link{movies}}: a user-friendly menu panel.
 #' @seealso \code{\link{smovie}}: general information about smovie.
 #' @examples
-#' # Exponential data: xi = 0
-#' ett()
+#' # Check that BWidget is available (system requirement for rpanel)
+#' got_BWidget <- tclRequire("BWidget")
+#' if (!is.logical(got_BWidget)) {
+#'   # Exponential data: xi = 0
+#'   ett()
 #'
-#' # Uniform data: xi =-1
-#' ett(distn = "uniform")
+#'   # Uniform data: xi =-1
+#'   ett(distn = "uniform")
 #'
-#' # Student t data: xi = 1 / df
-#' ett(distn = "t", params = list(df = 5))
+#'   # Student t data: xi = 1 / df
+#'   ett(distn = "t", params = list(df = 5))
+#' }
 #' @export
 ett <- function(n = 20, distn, params = list(), panel_plot = TRUE, hscale = NA,
                 vscale = hscale, n_add = 1, delta_n = 1, arrow = TRUE,
