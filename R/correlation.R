@@ -71,7 +71,7 @@
 #' @seealso \code{\link{smovie}}: general information about smovie.
 #' @examples
 #' # Check that BWidget is available (system requirement for rpanel)
-#' got_BWidget <- tclRequire("BWidget")
+#' got_BWidget <- suppressWarnings(tclRequire("BWidget"))
 #' if (!is.logical(got_BWidget)) {
 #'   correlation(rho = 0.8)
 #'   correlation(n = 10)

@@ -109,7 +109,7 @@
 #'  Likelihood, Chapman & Hall / CRC, London.
 #' @examples
 #' # Check that BWidget is available (system requirement for rpanel)
-#' got_BWidget <- tclRequire("BWidget")
+#' got_BWidget <- suppressWarnings(tclRequire("BWidget"))
 #' if (!is.logical(got_BWidget)) {
 #'   # N(theta, 1) example, test statistics equivalent
 #'   wws(theta0 = 0.8)

@@ -123,7 +123,7 @@ The movie starts with a plot of the p.d.f. of the distribution
 }
 \examples{
 # Check that BWidget is available (system requirement for rpanel)
-got_BWidget <- tclRequire("BWidget")
+got_BWidget <- suppressWarnings(tclRequire("BWidget"))
 if (!is.logical(got_BWidget)) {
   # Normal example
   continuous()

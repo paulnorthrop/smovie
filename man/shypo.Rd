@@ -93,7 +93,7 @@ The movie is based on two plots.
 }
 \examples{
 # Check that BWidget is available (system requirement for rpanel)
-got_BWidget <- tclRequire("BWidget")
+got_BWidget <- suppressWarnings(tclRequire("BWidget"))
 if (!is.logical(got_BWidget)) {
   # 1. Change a (for fixed n) to achieve alpha = 0.05
   # 2. Change a and n to achieve alpha <= 0.05 and beta <= 0.1
