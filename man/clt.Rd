@@ -141,14 +141,17 @@ Loosely speaking, a consequence of the
   }
 }
 \examples{
-# Exponential data
-clt()
+got_BWidget <- tclRequire("BWidget")
+if (!is.logical(got_BWidget)) {
+  # Exponential data
+  clt()
 
-# Uniform data
-clt(distn = "uniform")
+  # Uniform data
+  clt(distn = "uniform")
 
-# Poisson data
-clt(distn = "poisson")
+  # Poisson data
+  clt(distn = "poisson")
+}
 }
 \seealso{
 \code{\link{movies}}: a user-friendly menu panel.

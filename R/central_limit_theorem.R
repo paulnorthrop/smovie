@@ -120,14 +120,17 @@
 #' @seealso \code{\link{movies}}: a user-friendly menu panel.
 #' @seealso \code{\link{smovie}}: general information about smovie.
 #' @examples
-#' # Exponential data
-#' clt()
+#' got_BWidget <- tclRequire("BWidget")
+#' if (!is.logical(got_BWidget)) {
+#'   # Exponential data
+#'   clt()
 #'
-#' # Uniform data
-#' clt(distn = "uniform")
+#'   # Uniform data
+#'   clt(distn = "uniform")
 #'
-#' # Poisson data
-#' clt(distn = "poisson")
+#'   # Poisson data
+#'   clt(distn = "poisson")
+#' }
 #' @export
 clt <- function(n = 20, distn, params = list(), panel_plot = TRUE, hscale = NA,
                 vscale = hscale, n_add = 1, delta_n = 1, arrow = TRUE,
