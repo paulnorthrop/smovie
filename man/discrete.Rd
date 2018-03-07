@@ -120,21 +120,17 @@ The movie starts with a plot of the p.m.f. of the distribution
   labelled as \code{n}.
 }
 \examples{
-# Check that BWidget is available (system requirement for rpanel)
-got_BWidget <- suppressWarnings(tclRequire("BWidget"))
-if (!is.logical(got_BWidget)) {
-  # Binomial example
-  discrete()
+# Binomial example
+discrete()
 
-  # The same example, but using a user-supplied function and setting manually
-  # the initial parameters, parameter step size and range
-  discrete(distn = dbinom, params = list(size = 10, prob = 0.5),
-           param_step = list(size = 1),
-           param_range = list(size = c(1, NA), prob = c(0, 1)))
+# The same example, but using a user-supplied function and setting manually
+# the initial parameters, parameter step size and range
+discrete(distn = dbinom, params = list(size = 10, prob = 0.5),
+         param_step = list(size = 1),
+         param_range = list(size = c(1, NA), prob = c(0, 1)))
 
-  # Poisson distribution. Show the use of var_support
-  discrete(distn = "poisson", var_support = 0:20)
-}
+# Poisson distribution. Show the use of var_support
+discrete(distn = "poisson", var_support = 0:20)
 }
 \seealso{
 \code{\link{movies}}: a user-friendly menu panel.

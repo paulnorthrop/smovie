@@ -100,28 +100,30 @@
 #' @seealso \code{\link{movies}}: a user-friendly menu panel.
 #' @seealso \code{\link{smovie}}: general information about smovie.
 #' @examples
-#' # Check that BWidget is available (system requirement for rpanel)
-#' got_BWidget <- suppressWarnings(tclRequire("BWidget"))
-#' if (!is.logical(got_BWidget)) {
-#'   # Normal example
-#'   continuous()
-#'   # Fix the range of values over which to plot
-#'   continuous(var_range = c(-10, 10))
+#' # Normal example
+#' continuous()
+#' # Fix the range of values over which to plot
+#' continuous(var_range = c(-10, 10))
 #'
-#'   # The same example, but using a user-supplied function and setting manually
-#'   # the initial parameters, parameter step size and range
-#'   continuous(distn = dnorm, params = list(mean = 0, sd = 1),
-#'              param_step = list(mean = 1, sd = 1),
-#'              param_range = list(sd = c(0, NA)))
+#' # The same example, but using a user-supplied function and setting manually
+#' # the initial parameters, parameter step size and range
+#' continuous(distn = dnorm, params = list(mean = 0, sd = 1),
+#'            param_step = list(mean = 1, sd = 1),
+#'            param_range = list(sd = c(0, NA)))
 #'
-#'   # Gamma distribution. Show the use of var_range
-#'   continuous(distn = "gamma", var_range = c(0, 15))
-#' }
+#' # Gamma distribution. Show the use of var_range
+#' continuous(distn = "gamma", var_range = c(0, 15))
 #' @export
 continuous <- function(distn, var_range = NULL, params = list(),
                        param_step = list(), param_range = list(),
                        p_vec = NULL, smallest = 0.01, plot_par = list(),
                        panel_plot = TRUE, hscale = NA, vscale = hscale, ...) {
+  if (!is.tclObj(tcltk::tclRequire("BWidget"))) {
+    message("Package BWidget (https://wiki.tcl.tk/13735) was not found.")
+    message("Please install or add the correct path using tcltk::addTclPath.")
+    message("(BWidget is a system requirement for rpanel.)")
+    return()
+  }
   # To add another distribution
   # 1. misc.R: add code to set_fun_args(), parameter_range(), parameter_step(),
   #            set_p_vec()

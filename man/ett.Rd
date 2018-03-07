@@ -179,18 +179,14 @@ Loosely speaking, a consequence of the
   2 / \code{df2} (\code{"f"}, see \code{\link[stats]{FDist}}).
 }
 \examples{
-# Check that BWidget is available (system requirement for rpanel)
-got_BWidget <- suppressWarnings(tclRequire("BWidget"))
-if (!is.logical(got_BWidget)) {
-  # Exponential data: xi = 0
-  ett()
+# Exponential data: xi = 0
+ett()
 
-  # Uniform data: xi =-1
-  ett(distn = "uniform")
+# Uniform data: xi =-1
+ett(distn = "uniform")
 
-  # Student t data: xi = 1 / df
-  ett(distn = "t", params = list(df = 5))
-}
+# Student t data: xi = 1 / df
+ett(distn = "t", params = list(df = 5))
 }
 \references{
 Coles, S. G. (2001) \emph{An Introduction to Statistical

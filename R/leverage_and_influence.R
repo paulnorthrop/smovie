@@ -47,18 +47,20 @@
 #' @seealso \code{\link{movies}}: a user-friendly menu panel.
 #' @seealso \code{\link{smovie}}: general information about smovie.
 #' @examples
-#' # Check that BWidget is available (system requirement for rpanel)
-#' got_BWidget <- suppressWarnings(tclRequire("BWidget"))
-#' if (!is.logical(got_BWidget)) {
-#'   # Positive association
-#'   lev_inf()
+#' # Positive association
+#' lev_inf()
 #'
-#'   # No association
-#'   lev_inf(association = "none")
-#' }
+#' # No association
+#' lev_inf(association = "none")
 #' @export
 lev_inf <- function(association = c("positive", "negative", "none"), n = 25,
                     panel_plot = TRUE, hscale = NA, vscale = hscale) {
+  if (!is.tclObj(tcltk::tclRequire("BWidget"))) {
+    message("Package BWidget (https://wiki.tcl.tk/13735) was not found.")
+    message("Please install or add the correct path using tcltk::addTclPath.")
+    message("(BWidget is a system requirement for rpanel.)")
+    return()
+  }
   temp <- set_scales(hscale, vscale)
   hscale <- temp$hscale
   vscale <- temp$vscale

@@ -16,17 +16,19 @@
 #' @param hscale A numeric scalar.  A scaling parameter for the size of the
 #'   plot, which will be passed to all relevant menu items.
 #' @examples
-#' # Check that BWidget is available (system requirement for rpanel)
-#' got_BWidget <- suppressWarnings(tclRequire("BWidget"))
-#' if (!is.logical(got_BWidget)) {
-#'   movies()
-#' }
+#' movies()
 #' @seealso \code{\link{discrete}}, \code{\link{continuous}},
 #'   \code{\link{clt}}, \code{\link{ett}}, \code{\link{correlation}},
 #'   \code{\link{lev_inf}}, \code{\link{wws}}, \code{\link{shypo}}.
 #' @seealso \code{\link{smovie}}: general information about smovie.
 #' @export
 movies <- function(fixed_range = TRUE, hscale = 1) {
+  if (!is.tclObj(tcltk::tclRequire("BWidget"))) {
+    message("Package BWidget (https://wiki.tcl.tk/13735) was not found.")
+    message("Please install or add the correct path using tcltk::addTclPath.")
+    message("(BWidget is a system requirement for rpanel.)")
+    return()
+  }
   panel.launch <- function(menu.panel) {
     if (menu.panel$demo == "binomial") {
       discrete(distn = "binomial")

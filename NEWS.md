@@ -4,4 +4,4 @@
 
 ## Bug fixes and minor improvements
 
-* If BWidget (a system requirement for rpanel) is not installed then an informative error message is given.
+* If BWidget (a system requirement for rpanel) is not installed then an informative message is given to explain why the smovie functions don't work.

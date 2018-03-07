@@ -27,11 +27,7 @@ a menu panel from which any of the movies in
 of an individual example call the relevant function directly.
 }
 \examples{
-# Check that BWidget is available (system requirement for rpanel)
-got_BWidget <- suppressWarnings(tclRequire("BWidget"))
-if (!is.logical(got_BWidget)) {
-  movies()
-}
+movies()
 }
 \seealso{
 \code{\link{discrete}}, \code{\link{continuous}},

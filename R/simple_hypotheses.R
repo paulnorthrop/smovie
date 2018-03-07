@@ -72,19 +72,21 @@
 #' @seealso \code{\link{movies}}: a user-friendly menu panel.
 #' @seealso \code{\link{smovie}}: general information about smovie.
 #' @examples
-#' # Check that BWidget is available (system requirement for rpanel)
-#' got_BWidget <- suppressWarnings(tclRequire("BWidget"))
-#' if (!is.logical(got_BWidget)) {
-#'   # 1. Change a (for fixed n) to achieve alpha = 0.05
-#'   # 2. Change a and n to achieve alpha <= 0.05 and beta <= 0.1
-#'   shypo(mu0 = 0, eff = 5, n = 16, a = 2.3, delta_a = 0.01)
-#' }
+#' # 1. Change a (for fixed n) to achieve alpha = 0.05
+#' # 2. Change a and n to achieve alpha <= 0.05 and beta <= 0.1
+#' shypo(mu0 = 0, eff = 5, n = 16, a = 2.3, delta_a = 0.01)
 #' @export
 shypo <- function(mu0 = 0, sd = 6, eff = sd, n = 10, a = mu0 + eff / 2,
                   target_alpha = 0.05, target_beta = 0.1, panel_plot = TRUE,
                   hscale = NA, vscale = hscale, delta_n = 1,
                   delta_a = sd / (10 * sqrt(n)), delta_eff = sd,
                   delta_mu0 = 1, delta_sd = 1) {
+  if (!is.tclObj(tcltk::tclRequire("BWidget"))) {
+    message("Package BWidget (https://wiki.tcl.tk/13735) was not found.")
+    message("Please install or add the correct path using tcltk::addTclPath.")
+    message("(BWidget is a system requirement for rpanel.)")
+    return()
+  }
   temp <- set_scales(hscale, vscale)
   hscale <- temp$hscale
   vscale <- temp$vscale

@@ -122,23 +122,19 @@ The movie starts with a plot of the p.d.f. of the distribution
   to switch the plot from the p.d.f. to the c.d.f. and back.
 }
 \examples{
-# Check that BWidget is available (system requirement for rpanel)
-got_BWidget <- suppressWarnings(tclRequire("BWidget"))
-if (!is.logical(got_BWidget)) {
-  # Normal example
-  continuous()
-  # Fix the range of values over which to plot
-  continuous(var_range = c(-10, 10))
+# Normal example
+continuous()
+# Fix the range of values over which to plot
+continuous(var_range = c(-10, 10))
 
-  # The same example, but using a user-supplied function and setting manually
-  # the initial parameters, parameter step size and range
-  continuous(distn = dnorm, params = list(mean = 0, sd = 1),
-             param_step = list(mean = 1, sd = 1),
-             param_range = list(sd = c(0, NA)))
+# The same example, but using a user-supplied function and setting manually
+# the initial parameters, parameter step size and range
+continuous(distn = dnorm, params = list(mean = 0, sd = 1),
+           param_step = list(mean = 1, sd = 1),
+           param_range = list(sd = c(0, NA)))
 
-  # Gamma distribution. Show the use of var_range
-  continuous(distn = "gamma", var_range = c(0, 15))
-}
+# Gamma distribution. Show the use of var_range
+continuous(distn = "gamma", var_range = c(0, 15))
 }
 \seealso{
 \code{\link{movies}}: a user-friendly menu panel.

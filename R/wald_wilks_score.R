@@ -108,44 +108,40 @@
 #' @references Azzalini, A. (1996) Statistical Inference Based on the
 #'  Likelihood, Chapman & Hall / CRC, London.
 #' @examples
-#' # Check that BWidget is available (system requirement for rpanel)
-#' got_BWidget <- suppressWarnings(tclRequire("BWidget"))
-#' if (!is.logical(got_BWidget)) {
-#'   # N(theta, 1) example, test statistics equivalent
-#'   wws(theta0 = 0.8)
+#' # N(theta, 1) example, test statistics equivalent
+#' wws(theta0 = 0.8)
 #'
-#'   # binomial(20, theta) example, test statistics similar
-#'   wws(theta0 = 0.5, model = "binom")
+#' # binomial(20, theta) example, test statistics similar
+#' wws(theta0 = 0.5, model = "binom")
 #'
-#'   # binomial(20, theta) example, test statistic rather different
-#'   # for theta0 distant from theta_mle
-#'   wws(theta0 = 0.9, model = "binom", data = c(19, 1), theta_range = c(0.1, 0.99))
+#' # binomial(20, theta) example, test statistic rather different
+#' # for theta0 distant from theta_mle
+#' wws(theta0 = 0.9, model = "binom", data = c(19, 1), theta_range = c(0.1, 0.99))
 #'
-#'   # binomial(2000, theta) example, test statistics very similar
-#'   wws(theta0 = 0.5, model = "binom", data = c(1000, 1000))
+#' # binomial(2000, theta) example, test statistics very similar
+#' wws(theta0 = 0.5, model = "binom", data = c(1000, 1000))
 #'
-#'   set.seed(47)
-#'   x <- rnorm(10)
-#'   wws(theta0 = 0.2, model = "norm", theta_range = c(-1, 1))
+#' set.seed(47)
+#' x <- rnorm(10)
+#' wws(theta0 = 0.2, model = "norm", theta_range = c(-1, 1))
 #'
-#'   # Log-likelihood for a binomial experiment (up to an additive constant)
-#'   bin_loglik <- function(p, n_success, n_failure) {
-#'     return(n_success * log(p) + n_failure * log(1 - p))
-#'   }
-#'
-#'   wws(loglik = bin_loglik, theta0 = 0.5, theta_range = c(0.1, 0.7),
-#'       theta_mle = 7 / 20, n_success = 7, n_failure = 13)
-#'
-#'   bin_alg_score <- function(p, n_success, n_failure) {
-#'     return(n_success / p - n_failure / (1 - p))
-#'   }
-#'   bin_alg_obs_info <- function(p, n_success, n_failure) {
-#'     return(n_success / p ^ 2 + n_failure / (1 - p) ^ 2)
-#'   }
-#'   wws(loglik = bin_loglik, theta0 = 0.5, theta_range = c(0.1, 0.7),
-#'       theta_mle = 7 / 20, n_success = 7, n_failure = 13,
-#'       alg_score = bin_alg_score, alg_obs_info = bin_alg_obs_info)
+#' # Log-likelihood for a binomial experiment (up to an additive constant)
+#' bin_loglik <- function(p, n_success, n_failure) {
+#'   return(n_success * log(p) + n_failure * log(1 - p))
 #' }
+#'
+#' wws(loglik = bin_loglik, theta0 = 0.5, theta_range = c(0.1, 0.7),
+#'     theta_mle = 7 / 20, n_success = 7, n_failure = 13)
+#'
+#' bin_alg_score <- function(p, n_success, n_failure) {
+#'   return(n_success / p - n_failure / (1 - p))
+#' }
+#' bin_alg_obs_info <- function(p, n_success, n_failure) {
+#'   return(n_success / p ^ 2 + n_failure / (1 - p) ^ 2)
+#' }
+#' wws(loglik = bin_loglik, theta0 = 0.5, theta_range = c(0.1, 0.7),
+#'     theta_mle = 7 / 20, n_success = 7, n_failure = 13,
+#'     alg_score = bin_alg_score, alg_obs_info = bin_alg_obs_info)
 #' @export
 wws <- function(model = c("norm", "binom"), theta_range = NULL, mult = 3,
                 theta0 = if (!is.null(theta_range))
@@ -156,6 +152,12 @@ wws <- function(model = c("norm", "binom"), theta_range = NULL, mult = 3,
                 theta_mle = NULL,
                 loglik = NULL, alg_score = NULL, alg_obs_info = NULL,
                 digits = 3, ...) {
+  if (!is.tclObj(tcltk::tclRequire("BWidget"))) {
+    message("Package BWidget (https://wiki.tcl.tk/13735) was not found.")
+    message("Please install or add the correct path using tcltk::addTclPath.")
+    message("(BWidget is a system requirement for rpanel.)")
+    return()
+  }
   temp <- set_scales(hscale, vscale)
   hscale <- temp$hscale
   vscale <- temp$vscale
