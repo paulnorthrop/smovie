@@ -3,3 +3,5 @@
 ## New features
 
 ## Bug fixes and minor improvements
+
+* If BWidget (a system requirement for rpanel) is not installed then an informative error message is given.

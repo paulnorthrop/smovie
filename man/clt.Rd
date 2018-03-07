@@ -141,18 +141,14 @@ Loosely speaking, a consequence of the
   }
 }
 \examples{
-# Check that BWidget is available (system requirement for rpanel)
-got_BWidget <- suppressWarnings(tclRequire("BWidget"))
-if (!is.logical(got_BWidget)) {
-  # Exponential data
-  clt()
+# Exponential data
+clt()
 
-  # Uniform data
-  clt(distn = "uniform")
+# Uniform data
+clt(distn = "uniform")
 
-  # Poisson data
-  clt(distn = "poisson")
-}
+# Poisson data
+clt(distn = "poisson")
 }
 \seealso{
 \code{\link{movies}}: a user-friendly menu panel.

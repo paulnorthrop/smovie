@@ -120,22 +120,23 @@
 #' @seealso \code{\link{movies}}: a user-friendly menu panel.
 #' @seealso \code{\link{smovie}}: general information about smovie.
 #' @examples
-#' # Check that BWidget is available (system requirement for rpanel)
-#' got_BWidget <- suppressWarnings(tclRequire("BWidget"))
-#' if (!is.logical(got_BWidget)) {
-#'   # Exponential data
-#'   clt()
+#' # Exponential data
+#' clt()
 #'
-#'   # Uniform data
-#'   clt(distn = "uniform")
+#' # Uniform data
+#' clt(distn = "uniform")
 #'
-#'   # Poisson data
-#'   clt(distn = "poisson")
-#' }
+#' # Poisson data
+#' clt(distn = "poisson")
 #' @export
 clt <- function(n = 20, distn, params = list(), panel_plot = TRUE, hscale = NA,
                 vscale = hscale, n_add = 1, delta_n = 1, arrow = TRUE,
                 pos = 1, envir = as.environment(pos), ...) {
+  if (!is.tclObj(tcltk::tclRequire("BWidget"))) {
+    message("Package BWidget (system requirement for rpanel) was not found.")
+    message("Please install or add the correct path using tcltk::addTclPath.")
+    return()
+  }
   temp <- set_scales(hscale, vscale)
   hscale <- temp$hscale
   vscale <- temp$vscale
