@@ -27,6 +27,8 @@ To get the current released version from CRAN:
 install.packages("smovie")
 ```
 
+Note that [`rpanel`](https://cran.r-project.org/package=rpanel) requires the Tcl extension [`BWidget`](https://sourceforge.net/projects/tcllib/files/BWidget/). `BWidget` is included in the R installers for Windows and macOS. For other platforms please see [Section 1.1.7 of Writing R Extensions](https://cran.r-project.org/doc/manuals/r-devel/R-exts.html#Non_002dR-scripts-in-packages) for installation advice.
+
 ### Vignettes
 
 See `vignette("smovie-vignette", package = "smovie")` for an overview of the package.
