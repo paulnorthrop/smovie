@@ -330,6 +330,13 @@ set_leg_pos <- function(distn, fun_args) {
       }
     }
   }
+  if (distn == "binomial") {
+    if (fun_args$prob > 0.5) {
+      distn <- "binomial_large_prob"
+    } else {
+      distn <- "binomial_small_prob"
+    }
+  }
   top_leg_pos <-
     switch(distn,
            "exponential" = "right",
@@ -350,11 +357,12 @@ set_leg_pos <- function(distn, fun_args) {
            "cauchy" = "right",
            "f" = "right",
            "weibull" = "right",
-           "binomial" = "right",
-           "geometric" = "right",
-           "hypergeometric" = "right",
-           "negative binomial" = "right",
-           "poisson" = "right",
+           "binomial_large_prob" = "topleft",
+           "binomial_small_prob" = "topright",
+           "geometric" = "topright",
+           "hypergeometric" = "topright",
+           "negative binomial" = "topright",
+           "poisson" = "topright",
            "ngev" = "topleft"
     )
   bottom_leg_pos <-
@@ -377,7 +385,8 @@ set_leg_pos <- function(distn, fun_args) {
            "cauchy" = "right",
            "f" = "right",
            "weibull" = "right",
-           "binomial" = "topright",
+           "binomial_large_prob" = "topleft",
+           "binomial_small_prob" = "topright",
            "geometric" = "topright",
            "hypergeometric" = "topleft",
            "negative binomial" = "topright",
