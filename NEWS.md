@@ -1,7 +1,5 @@
 # smovie 1.0.0.9000
 
-## New features
-
 ## Bug fixes and minor improvements
 
-* If BWidget (a system requirement for rpanel) is not installed then an informative message is given to explain why the smovie functions don't work.
+* That smovie requires the RExtension BWidget (via its dependence on the package rpanel) is made explicit using the SystemRequirements field in DESCRIPTION.  If BWidget is not installed then a message is given to explain why the smovie functions don't work.  The README file gives more information.
