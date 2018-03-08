@@ -570,7 +570,8 @@ cltmovie_plot <- function(panel) {
         graphics::rug(y, line = 0.5, ticksize = 0.05)
       }
     } else {
-      ep <- 0.2
+      ep <- (my_xlim[2] - my_xlim[1] ) / 50
+      my_xlim[2] <- my_xlim[2] + ep
       y_vals <- table(y)
       x_vals <- as.numeric(names(y_vals))
       graphics::matplot(x_vals, y_vals, type = "n", xlab = xlab,
