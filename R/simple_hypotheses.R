@@ -82,9 +82,8 @@ shypo <- function(mu0 = 0, sd = 6, eff = sd, n = 10, a = mu0 + eff / 2,
                   delta_a = sd / (10 * sqrt(n)), delta_eff = sd,
                   delta_mu0 = 1, delta_sd = 1) {
   if (!is.tclObj(tcltk::tclRequire("BWidget"))) {
-    message("Package BWidget (https://wiki.tcl.tk/13735) was not found.")
-    message("Please install or add the correct path using tcltk::addTclPath.")
-    message("(BWidget is a system requirement for rpanel.)")
+    message("Package BWidget was not found.")
+    message("Please see the smovie README file for information.")
     return()
   }
   temp <- set_scales(hscale, vscale)

@@ -114,9 +114,8 @@ discrete <- function(distn, var_support = NULL, params = list(),
                      smallest = 0.01, plot_par = list(), panel_plot = TRUE,
                      hscale = NA, vscale = hscale, observed_value = NA, ...) {
   if (!is.tclObj(tcltk::tclRequire("BWidget"))) {
-    message("Package BWidget (https://wiki.tcl.tk/13735) was not found.")
-    message("Please install or add the correct path using tcltk::addTclPath.")
-    message("(BWidget is a system requirement for rpanel.)")
+    message("Package BWidget was not found.")
+    message("Please see the smovie README file for information.")
     return()
   }
   # To add another distribution

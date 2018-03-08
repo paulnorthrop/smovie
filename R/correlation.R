@@ -70,12 +70,17 @@
 #' @seealso \code{\link{movies}}: a user-friendly menu panel.
 #' @seealso \code{\link{smovie}}: general information about smovie.
 #' @examples
-#' correlation(rho = 0.8, panel_plot = FALSE)
-#' correlation(n = 10, panel_plot = FALSE)
+#' correlation(rho = 0.8)
+#' correlation(n = 10)
 #' @export
 correlation <- function(n = 30, rho = 0, panel_plot = TRUE, hscale = NA,
                         vscale = hscale, delta_n = 1, delta_rho = 0.1, pos = 1,
                         envir = as.environment(pos), ...) {
+  if (!is.tclObj(tcltk::tclRequire("BWidget"))) {
+    message("Package BWidget was not found.")
+    message("Please see the smovie README file for information.")
+    return()
+  }
   temp <- set_scales(hscale, vscale)
   hscale <- temp$hscale
   vscale <- temp$vscale

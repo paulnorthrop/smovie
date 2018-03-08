@@ -24,9 +24,8 @@
 #' @export
 movies <- function(fixed_range = TRUE, hscale = 1) {
   if (!is.tclObj(tcltk::tclRequire("BWidget"))) {
-    message("Package BWidget (https://wiki.tcl.tk/13735) was not found.")
-    message("Please install or add the correct path using tcltk::addTclPath.")
-    message("(BWidget is a system requirement for rpanel.)")
+    message("Package BWidget was not found.")
+    message("Please see the smovie README file for information.")
     return()
   }
   panel.launch <- function(menu.panel) {
