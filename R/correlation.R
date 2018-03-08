@@ -70,8 +70,8 @@
 #' @seealso \code{\link{movies}}: a user-friendly menu panel.
 #' @seealso \code{\link{smovie}}: general information about smovie.
 #' @examples
-#' correlation(rho = 0.8)
-#' correlation(n = 10)
+#' correlation(rho = 0.8, panel_plot = FALSE)
+#' correlation(n = 10, panel_plot = FALSE)
 #' @export
 correlation <- function(n = 30, rho = 0, panel_plot = TRUE, hscale = NA,
                         vscale = hscale, delta_n = 1, delta_rho = 0.1, pos = 1,
