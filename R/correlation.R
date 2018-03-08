@@ -76,12 +76,6 @@
 correlation <- function(n = 30, rho = 0, panel_plot = TRUE, hscale = NA,
                         vscale = hscale, delta_n = 1, delta_rho = 0.1, pos = 1,
                         envir = as.environment(pos), ...) {
-  if (!is.tclObj(tcltk::tclRequire("BWidget"))) {
-    message("Package BWidget (https://wiki.tcl.tk/13735) was not found.")
-    message("Please install or add the correct path using tcltk::addTclPath.")
-    message("(BWidget is a system requirement for rpanel.)")
-    return()
-  }
   temp <- set_scales(hscale, vscale)
   hscale <- temp$hscale
   vscale <- temp$vscale
