@@ -620,7 +620,7 @@ ett_movie_plot <- function(panel) {
                       signif(gev_pars$shape, 2), ")" )
     if (pdf_or_cdf == "pdf") {
       my_leg_true <- expression(n * F ^ {n-1} * f)
-      if (show_dens) {
+      if (show_dens || show_dens_only) {
         graphics::legend(bottom_leg_pos, legend = c(my_leg_2, my_leg_true),
                          col = 1:2, lwd = 2, lty = 2, box.lty = 0)
       }
