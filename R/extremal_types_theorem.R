@@ -102,7 +102,10 @@
 #'   Samples of size \code{n} are repeatedly simulated from the distribution
 #'   chosen using \code{distn}.  These samples are summarized using a histogram
 #'   that appears at the top of the movie screen.  For each sample the maximum
-#'   of these \code{n} values is calculated, stored and added to another plot.
+#'   of these \code{n} values is calculated, stored and added to another plot,
+#'   situated below the first plot.
+#'   A \code{\link[stats]{rug}} is added to a histograms provided that it
+#'   contains no more than 1000 points.
 #'   This plot is either a histogram or an empirical c.d.f., chosen using a
 #'   radio button.
 #'

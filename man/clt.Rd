@@ -116,9 +116,12 @@ Loosely speaking, a consequence of the
   Samples of size \code{n} are repeatedly simulated from the distribution
   chosen using \code{distn}.  These samples are summarized using a plot
   that appears at the top of the movie screen.  For each sample the mean
-  of these \code{n} values is calculated, stored and added to another plot.
+  of these \code{n} values is calculated, stored and added to another plot,
+  situated below the first plot.
   This plot is either a histogram or an empirical c.d.f., chosen using a
   radio button.
+  A \code{\link[stats]{rug}} is added to a histogram provided that it
+  contains no more than 1000 points.
 
   The p.d.f. (for a continuous variable) or p.m.f. (for a discrete variable)
   of the original variables is added to the top plot.
