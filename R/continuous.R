@@ -381,35 +381,38 @@ plot_continuous <- function(panel) {
     var_range <- seq(from = var_range[1], to = var_range[2], len = 1001)
     my_col <- "black"
     fun_args <- new_fun_args
-    my_xlab <- ifelse(!is.null(plot_par$xlab), plot_par$xlab, "x")
+    # Set default graphical parameters, except when supplied in plot_par
+    plot_par$xlab <- ifelse(!is.null(plot_par$xlab), plot_par$xlab, "x")
     my_ylab <- ifelse(pdf_or_cdf == "pdf", "density", "probability")
-    my_ylab <- ifelse(!is.null(plot_par$ylab), plot_par$ylab, my_ylab)
-    my_bty <- ifelse(!is.null(plot_par$bty), plot_par$bty, "l")
+    plot_par$ylab <- ifelse(!is.null(plot_par$ylab), plot_par$ylab, my_ylab)
+    plot_par$bty <- ifelse(!is.null(plot_par$bty), plot_par$bty, "l")
     if (pdf_or_cdf == "pdf") {
       probs <- do.call(dfun, c(list(x = var_range), fun_args))
       cond <- is.finite(probs)
       probs <- probs[cond]
       var_range <- var_range[cond]
       my_ylim <- c(0, max(probs))
-      my_main <- ifelse(!is.null(plot_par$main), plot_par$main,
-                        paste("pdf of the", the_distn, "distribution"))
+      if (is.null(plot_par$ylim)) {
+        plot_par$ylim <- my_ylim
+      }
+      plot_par$main <- ifelse(!is.null(plot_par$main), plot_par$main,
+                              paste("pdf of the", the_distn, "distribution"))
     } else {
       probs <- do.call(pfun, c(list(q = var_range), fun_args))
       cond <- is.finite(probs)
       probs <- probs[cond]
       var_range <- var_range[cond]
       my_ylim <- c(0, 1)
-      my_main <- ifelse(!is.null(plot_par$main), plot_par$main,
-                        paste("cdf of the", the_distn, "distribution"))
+      if (is.null(plot_par$ylim)) {
+        plot_par$ylim <- my_ylim
+      }
+      plot_par$main <- ifelse(!is.null(plot_par$main), plot_par$main,
+                              paste("cdf of the", the_distn, "distribution"))
     }
-    if (!is.null(plot_par$col)) {
-      my_col <- plot_par$col
-    } else {
-      my_col <- "black"
+    if (is.null(plot_par$col)) {
+      plot_par$col <- "black"
     }
-    for_plot <- list(x = var_range, y = probs, type = "l", xlab = my_xlab,
-                     ylab = my_ylab, col = my_col, bty = my_bty,
-                     main = my_main, ylim = my_ylim)
+    for_plot <- c(list(x = var_range, y = probs, type = "l"), plot_par)
     do.call(graphics::plot, for_plot)
     graphics::par(old_par)
   })

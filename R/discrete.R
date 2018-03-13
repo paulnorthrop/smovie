@@ -347,29 +347,32 @@ plot_discrete <- function(panel) {
     if (pmf_or_cdf == "pmf") {
       probs <- do.call(dfun, c(list(x = var_support), fun_args))
       my_ylim <- c(0, max(probs))
+      if (is.null(plot_par$ylim)) {
+        plot_par$ylim <- my_ylim
+      }
       plot_par$main <- ifelse(!is.null(plot_par$main), plot_par$main,
                         paste("pmf of the", the_distn, "distribution"))
       if (is.null(plot_par$col)) {
         plot_par$col <- my_col
       }
-      if (is.null(plot_par$ylim)) {
-        plot_par$ylim <- my_ylim
-      }
       for_plot <- c(list(x = var_support, y = probs, type = "h"), plot_par)
-      do.call(graphics::plot, for_plot)
     } else {
       probs <- do.call(pfun, c(list(q = var_support), fun_args))
       rval <- stats::approxfun(var_support, probs, method = "constant",
                                yleft = 0, yright = 1, f = 0, ties = "ordered")
       class(rval) <- c("ecdf", "stepfun", class(rval))
+      my_ylim <- c(0, 1)
+      if (is.null(plot_par$ylim)) {
+        plot_par$ylim <- my_ylim
+      }
       plot_par$main <- ifelse(!is.null(plot_par$main), plot_par$main,
                               paste("cdf of the", the_distn, "distribution"))
       if (is.null(plot_par$col)) {
         plot_par$col <- "black"
       }
       for_plot <- c(list(x = rval), plot_par)
-      do.call(graphics::plot, for_plot)
     }
+    do.call(graphics::plot, for_plot)
     graphics::par(old_par)
   })
   return(panel)
