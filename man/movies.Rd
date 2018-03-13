@@ -4,7 +4,7 @@
 \alias{movies}
 \title{Main menu for smovie movies}
 \usage{
-movies(fixed_range = TRUE, hscale = 1)
+movies(fixed_range = TRUE, hscale = NA, vscale = hscale)
 }
 \arguments{
 \item{fixed_range}{A logical scalar.  Only relevant to the \strong{Discrete}
@@ -17,8 +17,9 @@ the parameters of the distribution, at least locally to the default
 initial values for the parameters.  For greater control call
 \code{\link{discrete}} or \code{\link{continuous}} directly.}
 
-\item{hscale}{A numeric scalar.  A scaling parameter for the size of the
-plot, which will be passed to all relevant menu items.}
+\item{hscale, vscale}{Numeric scalars.  Scaling parameters for the size
+of the plot when \code{panel_plot = TRUE}. The default values are 1.4 on
+Unix platforms and 2 on Windows platforms.}
 }
 \description{
 Uses the template \code{\link[rpanel]{rp.cartoons}} function to produce

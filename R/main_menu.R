@@ -13,8 +13,9 @@
 #'   the parameters of the distribution, at least locally to the default
 #'   initial values for the parameters.  For greater control call
 #'   \code{\link{discrete}} or \code{\link{continuous}} directly.
-#' @param hscale A numeric scalar.  A scaling parameter for the size of the
-#'   plot, which will be passed to all relevant menu items.
+#' @param hscale,vscale Numeric scalars.  Scaling parameters for the size
+#'   of the plot when \code{panel_plot = TRUE}. The default values are 1.4 on
+#'   Unix platforms and 2 on Windows platforms.
 #' @examples
 #' movies()
 #' @seealso \code{\link{discrete}}, \code{\link{continuous}},
@@ -22,7 +23,7 @@
 #'   \code{\link{lev_inf}}, \code{\link{wws}}, \code{\link{shypo}}.
 #' @seealso \code{\link{smovie}}: general information about smovie.
 #' @export
-movies <- function(fixed_range = TRUE, hscale = 1) {
+movies <- function(fixed_range = TRUE, hscale = NA, vscale = hscale) {
   if (!is.tclObj(tcltk::tclRequire("BWidget"))) {
     message("Package BWidget was not found.")
     message("Please see the smovie README file for information.")
@@ -30,228 +31,243 @@ movies <- function(fixed_range = TRUE, hscale = 1) {
   }
   panel.launch <- function(menu.panel) {
     if (menu.panel$demo == "binomial") {
-      discrete(distn = "binomial")
+      discrete(distn = "binomial", hscale = hscale, vscale = vscale)
     }
     else if (menu.panel$demo == "geometric") {
       if (fixed_range) {
-        discrete(distn = "geometric", var_support = 0:30)
+        discrete(distn = "geometric", var_support = 0:30, hscale = hscale,
+                 vscale = vscale)
       } else {
-        discrete(distn = "geometric")
+        discrete(distn = "geometric", hscale = hscale, vscale = vscale)
       }
     }
     else if (menu.panel$demo == "hypergeometric") {
-      discrete(distn = "hypergeometric")
+      discrete(distn = "hypergeometric", hscale = hscale, vscale = vscale)
     }
     else if (menu.panel$demo == "negative binomial") {
       if (fixed_range) {
-        discrete(distn = "negative binomial", var_support = 0:100)
+        discrete(distn = "negative binomial", var_support = 0:100,
+                 hscale = hscale, vscale = vscale)
       } else {
-        discrete(distn = "negative binomial")
+        discrete(distn = "negative binomial", hscale = hscale, vscale = vscale)
       }
     }
     else if (menu.panel$demo == "Poisson") {
       if (fixed_range) {
-        discrete(distn = "poisson", var_support = 0:20)
+        discrete(distn = "poisson", var_support = 0:20, hscale = hscale,
+                 vscale = vscale)
       } else {
-        discrete(distn = "poisson")
+        discrete(distn = "poisson", hscale = hscale, vscale = vscale)
       }
     }
     else if (menu.panel$demo == "beta") {
-      continuous(distn = "beta")
+      continuous(distn = "beta", hscale = hscale, vscale = vscale)
     }
     else if (menu.panel$demo == "Cauchy") {
       if (fixed_range) {
-        continuous(distn = "cauchy", var_range = c(-20, 20))
+        continuous(distn = "cauchy", var_range = c(-20, 20), hscale = hscale,
+                   vscale = vscale)
       } else {
-        continuous(distn = "cauchy")
+        continuous(distn = "cauchy", hscale = hscale, vscale = vscale)
       }
     }
     else if (menu.panel$demo == "chi-squared") {
       if (fixed_range) {
-        continuous(distn = "chi-squared", var_range = c(0, 15))
+        continuous(distn = "chi-squared", var_range = c(0, 15),
+                   hscale = hscale, vscale = vscale)
       } else {
-        continuous(distn = "chi-squared")
+        continuous(distn = "chi-squared", hscale = hscale, vscale = vscale)
       }
     }
     else if (menu.panel$demo == "exponential") {
       if (fixed_range) {
-        continuous(distn = "exponential", var_range = c(0, 10))
+        continuous(distn = "exponential", var_range = c(0, 10),
+                   hscale = hscale, vscale = vscale)
       } else {
-        continuous(distn = "exponential")
+        continuous(distn = "exponential", hscale = hscale, vscale = vscale)
       }
     }
     else if (menu.panel$demo == "F") {
       if (fixed_range) {
-        continuous(distn = "f", var_range = c(0, 10))
+        continuous(distn = "f", var_range = c(0, 10), hscale = hscale,
+                   vscale = vscale)
       } else {
-        continuous(distn = "f")
+        continuous(distn = "f", hscale = hscale, vscale = vscale)
       }
     }
     else if (menu.panel$demo == "gamma") {
       if (fixed_range) {
-        continuous(distn = "gamma", var_range = c(0, 20))
+        continuous(distn = "gamma", var_range = c(0, 20), hscale = hscale,
+                   vscale = vscale)
       } else {
-        continuous(distn = "gamma")
+        continuous(distn = "gamma", hscale = hscale, vscale = vscale)
       }
     }
     else if (menu.panel$demo == "GEV") {
       if (fixed_range) {
-        continuous(distn = "gev", var_range = c(-5, 15))
+        continuous(distn = "gev", var_range = c(-5, 15), hscale = hscale,
+                   vscale = vscale)
       } else {
-        continuous(distn = "gev")
+        continuous(distn = "gev", hscale = hscale, vscale = vscale)
       }
     }
     else if (menu.panel$demo == "GP") {
       if (fixed_range) {
-        continuous(distn = "gp", var_range = c(-3, 15))
+        continuous(distn = "gp", var_range = c(-3, 15), hscale = hscale,
+                   vscale = vscale)
       } else {
-        continuous(distn = "gp")
+        continuous(distn = "gp", hscale = hscale, vscale = vscale)
       }
     }
     else if (menu.panel$demo == "lognormal") {
       if (fixed_range) {
-        continuous(distn = "lognormal", var_range = c(0, 15))
+        continuous(distn = "lognormal", var_range = c(0, 15), hscale = hscale,
+                   vscale = vscale)
       } else {
-        continuous(distn = "lognormal")
+        continuous(distn = "lognormal", hscale = hscale, vscale = vscale)
       }
     }
     else if (menu.panel$demo == "normal") {
       if (fixed_range) {
-        continuous(distn = "normal", var_range = c(-8, 8))
+        continuous(distn = "normal", var_range = c(-8, 8), hscale = hscale,
+                   vscale = vscale)
       } else {
-        continuous(distn = "normal")
+        continuous(distn = "normal", hscale = hscale, vscale = vscale)
       }
     }
     else if (menu.panel$demo == "Student t") {
       if (fixed_range) {
-        continuous(distn = "t", var_range = c(-10, 10))
+        continuous(distn = "t", var_range = c(-10, 10), hscale = hscale,
+                   vscale = vscale)
       } else {
-        continuous(distn = "t")
+        continuous(distn = "t", hscale = hscale, vscale = vscale)
       }
     }
     else if (menu.panel$demo == "uniform") {
       if (fixed_range) {
-        continuous(distn = "uniform", var_range = c(-2, 3))
+        continuous(distn = "uniform", var_range = c(-2, 3), hscale = hscale,
+                   vscale = vscale)
       } else {
-        continuous(distn = "uniform")
+        continuous(distn = "uniform", hscale = hscale, vscale = vscale)
       }
     }
     else if (menu.panel$demo == "Weibull") {
       if (fixed_range) {
-        continuous(distn = "weibull", var_range = c(0, 10))
+        continuous(distn = "weibull", var_range = c(0, 10), hscale = hscale,
+                   vscale = vscale)
       } else {
-        continuous(distn = "weibull")
+        continuous(distn = "weibull", hscale = hscale, vscale = vscale)
       }
     }
     else if (menu.panel$demo == "Pearson correlation coefficient") {
-      correlation(n = 10)
+      correlation(n = 10, hscale = hscale, vscale = vscale)
     }
     else if (menu.panel$demo == "Mean") {
-      clt(distn = "exponential")
+      clt(distn = "exponential", hscale = hscale, vscale = vscale)
     }
     else if (menu.panel$demo == "Maximum") {
-      ett(distn = "exponential")
+      ett(distn = "exponential", hscale = hscale, vscale = vscale)
     }
     else if (menu.panel$demo == "Leverage and influence") {
-      lev_inf()
+      lev_inf(hscale = hscale, vscale = vscale)
     }
     else if (menu.panel$demo == "Wald, Wilks and Score tests") {
-      wws(theta0 = 0.8)
+      wws(theta0 = 0.8, hscale = hscale, vscale = vscale)
     }
     else if (menu.panel$demo == "Testing simple hypotheses") {
-      shypo(mu0 = 0, eff = 5, n = 1)
+      shypo(mu0 = 0, eff = 5, n = 1, hscale = hscale, vscale = vscale)
     }
     # ETT
     else if (menu.panel$demo == "beta ") {
-      ett(distn = "beta")
+      ett(distn = "beta", hscale = hscale, vscale = vscale)
     }
     else if (menu.panel$demo == "Cauchy ") {
-      ett(distn = "cauchy")
+      ett(distn = "cauchy", hscale = hscale, vscale = vscale)
     }
     else if (menu.panel$demo == "chi-squared ") {
-      ett(distn = "chi-squared")
+      ett(distn = "chi-squared", hscale = hscale, vscale = vscale)
     }
     else if (menu.panel$demo == "exponential ") {
-      ett(distn = "exponential")
+      ett(distn = "exponential", hscale = hscale, vscale = vscale)
     }
     else if (menu.panel$demo == "F ") {
-      ett(distn = "f")
+      ett(distn = "f", hscale = hscale, vscale = vscale)
     }
     else if (menu.panel$demo == "gamma ") {
-      ett(distn = "gamma")
+      ett(distn = "gamma", hscale = hscale, vscale = vscale)
     }
     else if (menu.panel$demo == "generalized Pareto ") {
-      ett(distn = "gp")
+      ett(distn = "gp", hscale = hscale, vscale = vscale)
     }
     else if (menu.panel$demo == "log-normal ") {
-      ett(distn = "log-normal")
+      ett(distn = "log-normal", hscale = hscale, vscale = vscale)
     }
     else if (menu.panel$demo == "negated GEV ") {
-      ett(distn = "ngev")
+      ett(distn = "ngev", hscale = hscale, vscale = vscale)
     }
     else if (menu.panel$demo == "normal ") {
-      ett(distn = "normal")
+      ett(distn = "normal", hscale = hscale, vscale = vscale)
     }
     else if (menu.panel$demo == "Student t ") {
-      ett(distn = "t")
+      ett(distn = "t", hscale = hscale, vscale = vscale)
     }
     else if (menu.panel$demo == "uniform ") {
-      ett(distn = "uniform")
+      ett(distn = "uniform", hscale = hscale, vscale = vscale)
     }
     else if (menu.panel$demo == "Weibull ") {
-      ett(distn = "weibull")
+      ett(distn = "weibull", hscale = hscale, vscale = vscale)
     }
     # CLT
     else if (menu.panel$demo == " beta") {
-      clt(distn = "beta")
+      clt(distn = "beta", hscale = hscale, vscale = vscale)
     }
     else if (menu.panel$demo == " binomial") {
-      clt(distn = "binomial")
+      clt(distn = "binomial", hscale = hscale, vscale = vscale)
     }
     else if (menu.panel$demo == " chi-squared") {
-      clt(distn = "chi-squared")
+      clt(distn = "chi-squared", hscale = hscale, vscale = vscale)
     }
     else if (menu.panel$demo == " exponential") {
-      clt(distn = "exponential")
+      clt(distn = "exponential", hscale = hscale, vscale = vscale)
     }
     else if (menu.panel$demo == " F") {
-      clt(distn = "f")
+      clt(distn = "f", hscale = hscale, vscale = vscale)
     }
     else if (menu.panel$demo == " gamma") {
-      clt(distn = "gamma")
+      clt(distn = "gamma", hscale = hscale, vscale = vscale)
     }
     else if (menu.panel$demo == " generalized Pareto") {
-      clt(distn = "gp")
+      clt(distn = "gp", hscale = hscale, vscale = vscale)
     }
     else if (menu.panel$demo == " geometric") {
-      clt(distn = "geometric")
+      clt(distn = "geometric", hscale = hscale, vscale = vscale)
     }
     else if (menu.panel$demo == " hypergeometric") {
-      clt(distn = "hypergeometric")
+      clt(distn = "hypergeometric", hscale = hscale, vscale = vscale)
     }
     else if (menu.panel$demo == " GEV") {
-      clt(distn = "gev")
+      clt(distn = "gev", hscale = hscale, vscale = vscale)
     }
     else if (menu.panel$demo == " log-normal") {
-      clt(distn = "log-normal")
+      clt(distn = "log-normal", hscale = hscale, vscale = vscale)
     }
     else if (menu.panel$demo == " negative binomial") {
-      clt(distn = "binomial")
+      clt(distn = "binomial", hscale = hscale, vscale = vscale)
     }
     else if (menu.panel$demo == " normal") {
-      clt(distn = "normal")
+      clt(distn = "normal", hscale = hscale, vscale = vscale)
     }
     else if (menu.panel$demo == " poisson") {
-      clt(distn = "poisson")
+      clt(distn = "poisson", hscale = hscale, vscale = vscale)
     }
     else if (menu.panel$demo == " Student t") {
-      clt(distn = "t")
+      clt(distn = "t", hscale = hscale, vscale = vscale)
     }
     else if (menu.panel$demo == " uniform") {
-      clt(distn = "uniform")
+      clt(distn = "uniform", hscale = hscale, vscale = vscale)
     }
     else if (menu.panel$demo == " Weibull") {
-      clt(distn = "weibull")
+      clt(distn = "weibull", hscale = hscale, vscale = vscale)
     }
     return(menu.panel)
   }

@@ -5,3 +5,5 @@
 * That smovie requires the RExtension BWidget (via its dependence on the package rpanel) is made explicit using the SystemRequirements field in DESCRIPTION.  If BWidget is not installed then a message is given to explain why the smovie functions don't work.  The README file gives more information.
 
 * The argument `plot_par` in the functions `discrete` and `continuous` didn't work properly.  It does now.
+
+* Both `hscale` and `vscale` may be passed to the main menu function `movies` to scale the size of the graphics panel horizontal and vertically.
