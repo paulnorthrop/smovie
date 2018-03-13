@@ -97,7 +97,7 @@
 #'   situated below the first plot.
 #'   This plot is either a histogram or an empirical c.d.f., chosen using a
 #'   radio button.
-#'   A \code{\link[stats]{rug}} is added to a histogram provided that it
+#'   A \code{\link[graphics]{rug}} is added to a histogram provided that it
 #'   contains no more than 1000 points.
 #'
 #'   The p.d.f. (for a continuous variable) or p.m.f. (for a discrete variable)
