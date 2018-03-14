@@ -257,7 +257,7 @@ movies <- function(fixed_range = TRUE, hscale = NA, vscale = hscale) {
     else if (menu.panel$demo == " normal") {
       clt(distn = "normal", hscale = hscale, vscale = vscale)
     }
-    else if (menu.panel$demo == " poisson") {
+    else if (menu.panel$demo == " Poisson") {
       clt(distn = "poisson", hscale = hscale, vscale = vscale)
     }
     else if (menu.panel$demo == " Student t") {
@@ -316,7 +316,7 @@ movies <- function(fixed_range = TRUE, hscale = NA, vscale = hscale) {
        " GEV",
        " negative binomial",
        " normal",
-       " poisson",
+       " Poisson",
        " Student t",
        " uniform",
        " Weibull"
