@@ -558,6 +558,7 @@ cltmovie_plot <- function(panel) {
       )
     my_xlim <- pretty(c(y, top_range))
     my_xlim <- my_xlim[c(1, length(my_xlim))]
+    leg_cex <- 1.5
     if (!discrete_distn) {
       # Histogram with rug
       graphics::hist(y, col = 8, probability = TRUE, axes = FALSE,
@@ -568,7 +569,7 @@ cltmovie_plot <- function(panel) {
       graphics::axis(1, line = 0.5)
       graphics::title(main = paste(the_distn, ",  n = ", n))
       graphics::legend(top_leg_pos, legend = expression(f(x)),
-                       col = 1, lwd = 2, lty = 2, box.lty = 0)
+                       col = 1, lwd = 2, lty = 2, box.lty = 0, cex = leg_cex)
       if (show_rug) {
         graphics::rug(y, line = 0.5, ticksize = 0.05)
       }
@@ -586,7 +587,7 @@ cltmovie_plot <- function(panel) {
       graphics::axis(1, line = 0.5)
       graphics::title(main = paste(the_distn, ",  n = ", n))
       graphics::legend(top_leg_pos, legend = c("sample", "P(X = x)"),
-                       col = 1, lwd = 2, lty = 1:2, box.lty = 0)
+                       col = 1, lwd = 2, lty = 1:2, box.lty = 0, cex = leg_cex)
     }
     u_t <- par("usr")
     if (arrow) {
@@ -662,19 +663,20 @@ cltmovie_plot <- function(panel) {
     if (pdf_or_cdf == "pdf") {
       if (show_dens) {
         graphics::legend(bottom_leg_pos, legend = my_leg_2, col = 1:2, lwd = 2,
-                         lty = 2, box.lty = 0)
+                         lty = 2, box.lty = 0, cex = leg_cex)
       }
     } else {
       if (show_dens) {
         graphics::legend(bottom_leg_pos,
                        legend = c(my_leg_2, "empirical cdf"),
                        col = c(1, 8), lwd = 2, lty = c(2, -1),
-                       pch = c(-1, 16), box.lty = 0)
+                       pch = c(-1, 16), box.lty = 0, cex = leg_cex)
       } else {
         graphics::legend(bottom_leg_pos,
                          legend = c(my_leg_2, "empirical cdf"),
                          col = c(0, 8), lwd = 2, lty = c(2, -1),
-                         pch = c(-1, 16), box.lty = 0, text.col = c(0, 1))
+                         pch = c(-1, 16), box.lty = 0, text.col = c(0, 1),
+                         cex = leg_cex)
       }
     }
     top_ratio <- (last_y - u_t[1]) / (u_t[2] - u_t[1])

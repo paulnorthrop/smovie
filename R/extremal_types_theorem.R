@@ -493,6 +493,7 @@ ett_movie_plot <- function(panel) {
         "ngev" = paste("negated GEV", "(", fun_args$loc, ",", fun_args$scale,
                        ",", fun_args$shape, ")")
       )
+    leg_cex <- 1.5
     if (!show_dens_only) {
       my_xlim <- pretty(c(y, top_range))
       my_xlim <- my_xlim[c(1, length(my_xlim))]
@@ -505,7 +506,7 @@ ett_movie_plot <- function(panel) {
       graphics::axis(1, line = 0.5)
       graphics::title(main = paste(the_distn, ",  n = ", n))
       graphics::legend(top_leg_pos, legend = expression(f(x)),
-                       col = 1, lwd = 2, lty = 2, box.lty = 0)
+                       col = 1, lwd = 2, lty = 2, box.lty = 0, cex = leg_cex)
       u_t <- par("usr")
       if (arrow) {
         graphics::segments(last_y, u_t[3], last_y, -10, col = "red", xpd = TRUE,
@@ -573,6 +574,8 @@ ett_movie_plot <- function(panel) {
     }
     # Histogram with rug
     y <- sample_maxima
+    print(length(sample_maxima))
+    print(sample_maxima)
     if (length(sample_maxima) > 1000) {
       show_bottom_rug <- FALSE
     } else {
@@ -625,7 +628,8 @@ ett_movie_plot <- function(panel) {
       my_leg_true <- expression(n * F ^ {n-1} * f)
       if (show_dens || show_dens_only) {
         graphics::legend(bottom_leg_pos, legend = c(my_leg_2, my_leg_true),
-                         col = 1:2, lwd = 2, lty = 2, box.lty = 0)
+                         col = 1:2, lwd = 2, lty = 2, box.lty = 0,
+                         cex = leg_cex)
       }
     } else {
       my_leg_true <- expression(F ^ n)
@@ -634,18 +638,19 @@ ett_movie_plot <- function(panel) {
           graphics::legend(bottom_leg_pos,
                        legend = c(my_leg_2, my_leg_true, "empirical cdf"),
                        col = c(1:2, 8), lwd = 2, lty = c(2, 2, -1),
-                       pch = c(-1, -1, 16), box.lty = 0)
+                       pch = c(-1, -1, 16), box.lty = 0, cex = leg_cex)
         } else {
           graphics::legend(bottom_leg_pos,
                            legend = c(my_leg_2, my_leg_true, "empirical cdf"),
                            col = c(0, 0, 8), lwd = 2, lty = c(2, 2, -1),
                            pch = c(-1, -1, 16), box.lty = 0,
-                           text.col = c(0, 0, 1))
+                           text.col = c(0, 0, 1), cex = leg_cex)
         }
       } else {
         graphics::legend(bottom_leg_pos,
                          legend = c(my_leg_2, my_leg_true),
-                         col = 1:2, lwd = 2, lty = 2, box.lty = 0)
+                         col = 1:2, lwd = 2, lty = 2, box.lty = 0,
+                         cex = leg_cex)
       }
     }
     if (!show_dens_only) {
