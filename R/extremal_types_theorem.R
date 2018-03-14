@@ -362,15 +362,10 @@ ett <- function(n = 20, distn, params = list(), panel_plot = TRUE, hscale = NA,
     panel_plot <- FALSE
   }
   if (panel_plot) {
-    # Set a seed and then reset it before the panel is redrawn so that only
-    # one arrow and sample maximum appears in the first plot
-    my_seed <- round(stats::runif(1, 0, 1000))
-    set.seed(my_seed)
     rpanel::rp.tkrplot(panel = ett_panel, name = redraw_plot,
                        plotfun = ett_movie_plot, pos = "right",
                        hscale = hscale, vscale = vscale, background = "white")
     action <- panel_redraw
-    set.seed(my_seed)
   } else {
     action <- ett_movie_plot
   }
@@ -403,7 +398,9 @@ ett <- function(n = 20, distn, params = list(), panel_plot = TRUE, hscale = NA,
   rpanel::rp.checkbox(panel = ett_panel, show_dens_only,
                       labels = "show only exact and GEV pdf/cdf",
                       action = action)
-  rpanel::rp.do(panel = ett_panel, action = action)
+  if (!panel_plot) {
+    rpanel::rp.do(panel = ett_panel, action = action)
+  }
   return(invisible())
 }
 
@@ -574,8 +571,6 @@ ett_movie_plot <- function(panel) {
     }
     # Histogram with rug
     y <- sample_maxima
-    print(length(sample_maxima))
-    print(sample_maxima)
     if (length(sample_maxima) > 1000) {
       show_bottom_rug <- FALSE
     } else {

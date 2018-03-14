@@ -428,15 +428,10 @@ clt <- function(n = 20, distn, params = list(), panel_plot = TRUE, hscale = NA,
     panel_plot <- FALSE
   }
   if (panel_plot) {
-    # Set a seed and then reset it before the panel is redrawn so that only
-    # one arrow and sample mean appears in the first plot
-    my_seed <- round(stats::runif(1, 0, 1000))
-    set.seed(my_seed)
     rpanel::rp.tkrplot(panel = cltpanel, name = redraw_plot,
                        plotfun = cltmovie_plot, pos = "right",
                        hscale = hscale, vscale = vscale, background = "white")
     action <- panel_redraw
-    set.seed(my_seed)
   } else {
     action <- cltmovie_plot
   }
@@ -464,7 +459,9 @@ clt <- function(n = 20, distn, params = list(), panel_plot = TRUE, hscale = NA,
                         title = "pdf or cdf in bottom plot", action = action)
   rpanel::rp.checkbox(panel = cltpanel, show_dens,
                       labels = "show normal pdf/cdf", action = action)
-  rpanel::rp.do(panel = cltpanel, action = action)
+  if (!panel_plot) {
+    rpanel::rp.do(panel = cltpanel, action = action)
+  }
   return(invisible())
 }
 
