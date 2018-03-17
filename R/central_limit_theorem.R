@@ -490,7 +490,8 @@ cltmovie_plot <- function(panel) {
     } else {
       show_rug <- TRUE
     }
-    par(mfrow = c(2, 1), oma = c(0, 0, 0, 0), mar = c(4, 4, 2, 2) + 0.1)
+    graphics::par(mfrow = c(2, 1), oma = c(0, 0, 0, 0),
+                  mar = c(4, 4, 2, 2) + 0.1)
     # Do the simulation (if required)
     if (distn == "hypergeometric") {
       sim_list <- c(list(nn = n), fun_args)
@@ -602,7 +603,7 @@ cltmovie_plot <- function(panel) {
       graphics::legend(top_leg_pos, legend = c("sample", "P(X = x)"),
                        col = 1, lwd = 2, lty = 1:2, box.lty = 0, cex = leg_cex)
     }
-    u_t <- par("usr")
+    u_t <- graphics::par("usr")
     if (arrow) {
       graphics::segments(last_y, u_t[3], last_y, -10, col = "red", xpd = TRUE,
                          lwd = 2, lty = 2)

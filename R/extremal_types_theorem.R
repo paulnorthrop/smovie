@@ -431,9 +431,11 @@ ett_movie_plot <- function(panel) {
       show_rug <- TRUE
     }
     if (show_dens_only) {
-      par(mfrow = c(1, 1), oma = c(0, 0, 0, 0), mar = c(4, 4, 2, 2) + 0.1)
+      graphics::par(mfrow = c(1, 1), oma = c(0, 0, 0, 0),
+                    mar = c(4, 4, 2, 2) + 0.1)
     } else {
-      par(mfrow = c(2, 1), oma = c(0, 0, 0, 0), mar = c(4, 4, 2, 2) + 0.1)
+      graphics::par(mfrow = c(2, 1), oma = c(0, 0, 0, 0),
+                    mar = c(4, 4, 2, 2) + 0.1)
     }
     # Set the range of values for the x-axis of the bottom plot
     for_qfun <- c(list(p = bottom_p_vec ^ (1 / n)), fun_args)
@@ -514,7 +516,7 @@ ett_movie_plot <- function(panel) {
       graphics::title(main = paste(the_distn, ",  n = ", n))
       graphics::legend(top_leg_pos, legend = expression(f(x)),
                        col = 1, lwd = 2, lty = 2, box.lty = 0, cex = leg_cex)
-      u_t <- par("usr")
+      u_t <- graphics::par("usr")
       if (arrow) {
         graphics::segments(last_y, u_t[3], last_y, -10, col = "red", xpd = TRUE,
                            lwd = 2, lty = 2)

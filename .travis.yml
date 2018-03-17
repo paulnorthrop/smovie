@@ -16,7 +16,7 @@ os:
 
 r:
   - release
-  - devel
+#  - devel
 #  - oldrel
 
 before_install:
