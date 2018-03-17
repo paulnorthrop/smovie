@@ -419,7 +419,11 @@ ett <- function(n = 20, distn, params = list(), panel_plot = TRUE, hscale = NA,
 
 ett_movie_plot <- function(panel) {
   old_par <- graphics::par(no.readonly = TRUE)
-  with(panel, {
+  # To please R CMD check
+  n <- distn <- fun_args <- pdf_or_cdf <- show_dens <- n_add <- rfun <-
+    qfun <- pfun <- top_range <- dfun <- xlab <- top_leg_pos <- arrow <-
+    bottom_p_vec <- bottom_leg_pos <- NULL
+  panel <- within(panel, {
     # Don't simulate very large samples (only show pdfs or cdfs)
     if (n > 100000) {
       show_dens_only <- TRUE
@@ -612,9 +616,10 @@ ett_movie_plot <- function(panel) {
         graphics::lines(x, ytrue, xpd = TRUE, lwd = 2, lty = 2, col = "red")
       }
     } else {
-      matplot(x, cbind(ygev, ytrue), col = c("black", "red"), lwd = 2, lty = 2,
-              ylab = my_ylab, las = 1, xlab = my_xlab, xlim = my_xlim,
-              ylim = c(0, ytop), axes = FALSE, type = "l")
+      graphics::matplot(x, cbind(ygev, ytrue), col = c("black", "red"),
+                        lwd = 2, lty = 2, ylab = my_ylab, las = 1,
+                        xlab = my_xlab, xlim = my_xlim, ylim = c(0, ytop),
+                        axes = FALSE, type = "l")
     }
     graphics::axis(2)
     graphics::axis(1, line = 0.5)
