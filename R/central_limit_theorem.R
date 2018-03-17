@@ -427,12 +427,12 @@ clt <- function(n = 20, distn, params = list(), panel_plot = TRUE, hscale = NA,
     rpanel::rp.tkrreplot(panel = panel, name = redraw_plot)
     # rp.tkrreplot() doesn't update the panel automatically, so do it manually
     # Get ...
-    panel$sample_means <- rp.var.get(my_panelname, "sample_means")
-    panel$old_n <- rp.var.get(my_panelname, "old_n")
-    panel$old_pdf_or_cdf <- rp.var.get(my_panelname, "old_pdf_or_cdf")
-    panel$old_show_dens <- rp.var.get(my_panelname, "old_show_dens")
-    panel$old_y <- rp.var.get(my_panelname, "old_y")
-    panel$save_last_y <- rp.var.get(my_panelname, "save_last_y")
+    panel$sample_means <- rpanel::rp.var.get(my_panelname, "sample_means")
+    panel$old_n <- rpanel::rp.var.get(my_panelname, "old_n")
+    panel$old_pdf_or_cdf <- rpanel::rp.var.get(my_panelname, "old_pdf_or_cdf")
+    panel$old_show_dens <- rpanel::rp.var.get(my_panelname, "old_show_dens")
+    panel$old_y <- rpanel::rp.var.get(my_panelname, "old_y")
+    panel$save_last_y <- rpanel::rp.var.get(my_panelname, "save_last_y")
     # Put ...
     rpanel::rp.control.put(my_panelname, panel)
     return(panel)
@@ -703,9 +703,6 @@ cltmovie_plot <- function(panel) {
     old_n <- n
     old_pdf_or_cdf <- pdf_or_cdf
     old_show_dens <- show_dens
-#    assign("old_n", old_n, envir = envir)
-#    assign("old_pdf_or_cdf", pdf_or_cdf, envir = envir)
-#    assign("old_show_dens", show_dens, envir = envir)
   })
   graphics::par(old_par)
   return(panel)
