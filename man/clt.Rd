@@ -5,7 +5,8 @@
 \title{Central Limit Theorem (CLT)}
 \usage{
 clt(n = 20, distn, params = list(), panel_plot = TRUE, hscale = NA,
-  vscale = hscale, n_add = 1, delta_n = 1, arrow = TRUE, ...)
+  vscale = hscale, n_add = 1, delta_n = 1, arrow = TRUE,
+  leg_cex = 1.25, ...)
 }
 \arguments{
 \item{n}{An integer scalar.  The size of the samples drawn from the
@@ -76,6 +77,9 @@ window.}
 \item{arrow}{A logical scalar.  Should an arrow be included to show the
 simulated sample maximum from the top plot being placed into the
 bottom plot?}
+
+\item{leg_cex}{The argument \code{cex} to \code{\link[graphics]{legend}}.
+Allows the size of the legend to be controlled manually.}
 
 \item{...}{Additional arguments to the rpanel functions
 \code{\link[rpanel]{rp.button}} and

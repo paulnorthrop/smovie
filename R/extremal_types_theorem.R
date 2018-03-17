@@ -73,6 +73,8 @@
 #' @param arrow  A logical scalar.  Should an arrow be included to show the
 #'   simulated sample maximum from the top plot being placed into the
 #'   bottom plot?
+#' @param leg_cex The argument \code{cex} to \code{\link[graphics]{legend}}.
+#'   Allows the size of the legend to be controlled manually.
 #' @param ... Additional arguments to the rpanel functions
 #'   \code{\link[rpanel]{rp.button}} and
 #'   \code{\link[rpanel]{rp.doublebutton}}, not including \code{panel},
@@ -173,7 +175,8 @@
 #' ett(distn = "t", params = list(df = 5))
 #' @export
 ett <- function(n = 20, distn, params = list(), panel_plot = TRUE, hscale = NA,
-                vscale = hscale, n_add = 1, delta_n = 1, arrow = TRUE, ...) {
+                vscale = hscale, n_add = 1, delta_n = 1, arrow = TRUE,
+                leg_cex = 1.25, ...) {
   if (!tcltk::is.tclObj(tcltk::tclRequire("BWidget"))) {
     message("Package BWidget was not found.")
     message("Please see the smovie README file for information.")
@@ -350,7 +353,8 @@ ett <- function(n = 20, distn, params = list(), panel_plot = TRUE, hscale = NA,
                                   old_show_dens = show_dens,
                                   old_show_dens_only = show_dens_only,
                                   old_y = old_y, save_last_y = save_last_y,
-                                  sample_maxima = sample_maxima)
+                                  sample_maxima = sample_maxima,
+                                  leg_cex = leg_cex)
   #
   redraw_plot <- NULL
   panel_redraw <- function(panel) {
@@ -506,7 +510,6 @@ ett_movie_plot <- function(panel) {
         "ngev" = paste("negated GEV", "(", fun_args$loc, ",", fun_args$scale,
                        ",", fun_args$shape, ")")
       )
-    leg_cex <- 1.5
     if (!show_dens_only) {
       my_xlim <- pretty(c(y, top_range))
       my_xlim <- my_xlim[c(1, length(my_xlim))]

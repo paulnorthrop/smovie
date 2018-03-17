@@ -66,6 +66,8 @@
 #' @param arrow  A logical scalar.  Should an arrow be included to show the
 #'   simulated sample maximum from the top plot being placed into the
 #'   bottom plot?
+#' @param leg_cex The argument \code{cex} to \code{\link[graphics]{legend}}.
+#'   Allows the size of the legend to be controlled manually.
 #' @param ... Additional arguments to the rpanel functions
 #'   \code{\link[rpanel]{rp.button}} and
 #'   \code{\link[rpanel]{rp.doublebutton}}, not including \code{panel},
@@ -128,7 +130,8 @@
 #' clt(distn = "poisson")
 #' @export
 clt <- function(n = 20, distn, params = list(), panel_plot = TRUE, hscale = NA,
-                vscale = hscale, n_add = 1, delta_n = 1, arrow = TRUE, ...) {
+                vscale = hscale, n_add = 1, delta_n = 1, arrow = TRUE,
+                leg_cex = 1.25, ...) {
   if (!tcltk::is.tclObj(tcltk::tclRequire("BWidget"))) {
     message("Package BWidget was not found.")
     message("Please see the smovie README file for information.")
@@ -415,7 +418,8 @@ clt <- function(n = 20, distn, params = list(), panel_plot = TRUE, hscale = NA,
                                  old_n = old_n, old_pdf_or_cdf = pdf_or_cdf,
                                  old_show_dens = show_dens,
                                  old_y = old_y, save_last_y = save_last_y,
-                                 sample_means = sample_means)
+                                 sample_means = sample_means,
+                                 leg_cex = leg_cex)
   #
   redraw_plot <- NULL
   panel_redraw <- function(panel) {
@@ -568,7 +572,6 @@ cltmovie_plot <- function(panel) {
       )
     my_xlim <- pretty(c(y, top_range))
     my_xlim <- my_xlim[c(1, length(my_xlim))]
-    leg_cex <- 1.5
     if (!discrete_distn) {
       # Histogram with rug
       graphics::hist(y, col = 8, probability = TRUE, axes = FALSE,
