@@ -76,7 +76,7 @@
 correlation <- function(n = 30, rho = 0, panel_plot = TRUE, hscale = NA,
                         vscale = hscale, delta_n = 1, delta_rho = 0.1, pos = 1,
                         envir = as.environment(pos), ...) {
-  if (!is.tclObj(tcltk::tclRequire("BWidget"))) {
+  if (!tcltk::is.tclObj(tcltk::tclRequire("BWidget"))) {
     message("Package BWidget was not found.")
     message("Please see the smovie README file for information.")
     return()

@@ -24,7 +24,7 @@
 #' @seealso \code{\link{smovie}}: general information about smovie.
 #' @export
 movies <- function(fixed_range = TRUE, hscale = NA, vscale = hscale) {
-  if (!is.tclObj(tcltk::tclRequire("BWidget"))) {
+  if (!tcltk::is.tclObj(tcltk::tclRequire("BWidget"))) {
     message("Package BWidget was not found.")
     message("Please see the smovie README file for information.")
     return()

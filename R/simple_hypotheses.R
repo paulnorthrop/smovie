@@ -81,7 +81,7 @@ shypo <- function(mu0 = 0, sd = 6, eff = sd, n = 10, a = mu0 + eff / 2,
                   hscale = NA, vscale = hscale, delta_n = 1,
                   delta_a = sd / (10 * sqrt(n)), delta_eff = sd,
                   delta_mu0 = 1, delta_sd = 1) {
-  if (!is.tclObj(tcltk::tclRequire("BWidget"))) {
+  if (!tcltk::is.tclObj(tcltk::tclRequire("BWidget"))) {
     message("Package BWidget was not found.")
     message("Please see the smovie README file for information.")
     return()

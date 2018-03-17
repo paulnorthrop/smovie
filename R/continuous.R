@@ -118,7 +118,7 @@ continuous <- function(distn, var_range = NULL, params = list(),
                        param_step = list(), param_range = list(),
                        p_vec = NULL, smallest = 0.01, plot_par = list(),
                        panel_plot = TRUE, hscale = NA, vscale = hscale, ...) {
-  if (!is.tclObj(tcltk::tclRequire("BWidget"))) {
+  if (!tcltk::is.tclObj(tcltk::tclRequire("BWidget"))) {
     message("Package BWidget was not found.")
     message("Please see the smovie README file for information.")
     return()

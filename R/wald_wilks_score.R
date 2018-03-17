@@ -152,7 +152,7 @@ wws <- function(model = c("norm", "binom"), theta_range = NULL, mult = 3,
                 theta_mle = NULL,
                 loglik = NULL, alg_score = NULL, alg_obs_info = NULL,
                 digits = 3, ...) {
-  if (!is.tclObj(tcltk::tclRequire("BWidget"))) {
+  if (!tcltk::is.tclObj(tcltk::tclRequire("BWidget"))) {
     message("Package BWidget was not found.")
     message("Please see the smovie README file for information.")
     return()
