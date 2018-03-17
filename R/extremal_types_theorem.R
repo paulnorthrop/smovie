@@ -323,7 +323,7 @@ ett <- function(n = 20, distn, params = list(), panel_plot = TRUE, hscale = NA,
   leg_pos <- set_leg_pos(distn, fun_args)
   top_leg_pos <- leg_pos$top_leg_pos
   bottom_leg_pos <- leg_pos$bottom_leg_pos
-  # Set unique panel name to enable saving of objects to the correct panel
+  # Set a unique panel name to enable saving of objects to the correct panel
   my_panelname <- paste("ett_", distn, sep = "")
   old_n <- 0
   # Create buttons for movie
