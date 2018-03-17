@@ -303,12 +303,9 @@ clt <- function(n = 20, distn, params = list(), panel_plot = TRUE, hscale = NA,
   leg_pos <- set_leg_pos(distn, fun_args)
   top_leg_pos <- leg_pos$top_leg_pos
   bottom_leg_pos <- leg_pos$bottom_leg_pos
-  # Assign variables to an environment so that they can be accessed inside
-  # clt_exponential_movie_plot()
   # Set a unique panel name to enable saving of objects to the correct panel
   my_panelname <- paste("clt_", distn, sep = "")
   old_n <- 0
-#  assign("old_n", old_n, envir = envir)
   # Store the mean and standard deviation of the underlying distribution
   if (distn == "hypergeometric") {
     hp <- fun_args$m / (fun_args$m + fun_args$n)
@@ -402,8 +399,6 @@ clt <- function(n = 20, distn, params = list(), panel_plot = TRUE, hscale = NA,
   old_y <- NULL
   save_last_y <- NULL
   sample_means <- NULL
-#  assign("old_pdf_or_cdf", pdf_or_cdf, envir = envir)
-#  assign("old_show_dens", show_dens, envir = envir)
   cltpanel <- rpanel::rp.control("central limit theorem",
                                  panelname = my_panelname, n = n, n_add = n_add,
                                  dfun = dfun, qfun = qfun, rfun = rfun,
@@ -483,6 +478,8 @@ clt <- function(n = 20, distn, params = list(), panel_plot = TRUE, hscale = NA,
 
 cltmovie_plot <- function(panel) {
   old_par <- graphics::par(no.readonly = TRUE)
+  n <- NULL
+  distn <- NULL
   panel <- within(panel, {
     # Don't add the rug in the top plot if n is large
     if (n > 1000) {
@@ -503,11 +500,9 @@ cltmovie_plot <- function(panel) {
       mean_y <- apply(temp, 2, mean)
       # Extract the last dataset and the last mean (for drawing the arrow)
       y <- temp[, n_add]
-#      assign("old_y", y, envir = envir)
       old_y <- y
       rm(temp)
       last_y <- mean_y[n_add]
-#      assign("save_last_y", last_y, envir = envir)
       save_last_y <- last_y
     } else {
       mean_y <- NULL
@@ -519,7 +514,6 @@ cltmovie_plot <- function(panel) {
     } else {
       sample_means <- c(sample_means, mean_y)
     }
-#    assign("sample_means", sample_means, envir = envir)
     #
     n_x_axis <- 501
     # Top plot --------
