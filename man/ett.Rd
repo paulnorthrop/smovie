@@ -5,8 +5,7 @@
 \title{Extremal Types Theorem (ETT)}
 \usage{
 ett(n = 20, distn, params = list(), panel_plot = TRUE, hscale = NA,
-  vscale = hscale, n_add = 1, delta_n = 1, arrow = TRUE, pos = 1,
-  envir = as.environment(pos), ...)
+  vscale = hscale, n_add = 1, delta_n = 1, arrow = TRUE, ...)
 }
 \arguments{
 \item{n}{An integer scalar.  The size of the samples drawn from the
@@ -79,13 +78,6 @@ window.}
 \item{arrow}{A logical scalar.  Should an arrow be included to show the
 simulated sample maximum from the top plot being placed into the
 bottom plot?}
-
-\item{pos}{A numeric integer.  Used in calls to \code{\link{assign}}
-to make information available across successive frames of a movie.
-By default, uses the current environment.}
-
-\item{envir}{An alternative way (to \code{pos}) of specifying the
-environment. See \code{\link{environment}}.}
 
 \item{...}{Additional arguments to the rpanel functions
 \code{\link[rpanel]{rp.button}} and

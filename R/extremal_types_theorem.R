@@ -73,11 +73,6 @@
 #' @param arrow  A logical scalar.  Should an arrow be included to show the
 #'   simulated sample maximum from the top plot being placed into the
 #'   bottom plot?
-#' @param pos A numeric integer.  Used in calls to \code{\link{assign}}
-#'   to make information available across successive frames of a movie.
-#'   By default, uses the current environment.
-#' @param envir An alternative way (to \code{pos}) of specifying the
-#'   environment. See \code{\link{environment}}.
 #' @param ... Additional arguments to the rpanel functions
 #'   \code{\link[rpanel]{rp.button}} and
 #'   \code{\link[rpanel]{rp.doublebutton}}, not including \code{panel},
@@ -178,8 +173,7 @@
 #' ett(distn = "t", params = list(df = 5))
 #' @export
 ett <- function(n = 20, distn, params = list(), panel_plot = TRUE, hscale = NA,
-                vscale = hscale, n_add = 1, delta_n = 1, arrow = TRUE,
-                pos = 1, envir = as.environment(pos), ...) {
+                vscale = hscale, n_add = 1, delta_n = 1, arrow = TRUE, ...) {
   if (!is.tclObj(tcltk::tclRequire("BWidget"))) {
     message("Package BWidget was not found.")
     message("Please see the smovie README file for information.")
@@ -329,32 +323,49 @@ ett <- function(n = 20, distn, params = list(), panel_plot = TRUE, hscale = NA,
   leg_pos <- set_leg_pos(distn, fun_args)
   top_leg_pos <- leg_pos$top_leg_pos
   bottom_leg_pos <- leg_pos$bottom_leg_pos
-  # Assign variables to an environment so that they can be accessed inside
-  # clt_exponential_movie_plot()
+  # Set unique panel name to enable saving of objects to the correct panel
+  my_panelname <- paste("ett_", distn, sep = "")
   old_n <- 0
-  assign("old_n", old_n, envir = envir)
   # Create buttons for movie
   show_dens <- FALSE
   show_dens_only <- FALSE
   pdf_or_cdf <- "pdf"
-  assign("old_pdf_or_cdf", pdf_or_cdf, envir = envir)
-  assign("old_show_dens", show_dens, envir = envir)
-  assign("old_show_dens_only", show_dens_only, envir = envir)
-  ett_panel <- rpanel::rp.control("extremal types theorem", n = n,
+  old_y <- NULL
+  save_last_y <- NULL
+  sample_maxima <- NULL
+  ett_panel <- rpanel::rp.control("extremal types theorem",
+                                  panelname = my_panelname, n = n,
                                   n_add = n_add, dfun = dfun, qfun = qfun,
                                   rfun = rfun, pfun = pfun,
                                   fun_args = fun_args, distn = distn,
                                   top_range = top_range, top_p_vec = top_p_vec,
                                   bottom_p_vec = bottom_p_vec,
-                                  show_dens = FALSE, show_dens_only = FALSE,
+                                  show_dens = show_dens,
+                                  show_dens_only = show_dens_only,
                                   pdf_or_cdf = "pdf",
                                   top_leg_pos = top_leg_pos,
                                   bottom_leg_pos = bottom_leg_pos,
-                                  xlab = xlab, arrow = arrow, envir = envir)
+                                  xlab = xlab, arrow = arrow,
+                                  old_n = old_n, old_pdf_or_cdf = pdf_or_cdf,
+                                  old_show_dens = show_dens,
+                                  old_show_dens_only = show_dens_only,
+                                  old_y = old_y, save_last_y = save_last_y,
+                                  sample_maxima = sample_maxima)
   #
   redraw_plot <- NULL
   panel_redraw <- function(panel) {
     rpanel::rp.tkrreplot(panel = panel, name = redraw_plot)
+    # rp.tkrreplot() doesn't update the panel automatically, so do it manually
+    # Get ...
+    panel$sample_maxima <- rp.var.get(my_panelname, "sample_maxima")
+    panel$old_n <- rp.var.get(my_panelname, "old_n")
+    panel$old_pdf_or_cdf <- rp.var.get(my_panelname, "old_pdf_or_cdf")
+    panel$old_show_dens <- rp.var.get(my_panelname, "old_show_dens")
+    panel$old_show_dens_only <- rp.var.get(my_panelname, "old_show_dens_only")
+    panel$old_y <- rp.var.get(my_panelname, "old_y")
+    panel$save_last_y <- rp.var.get(my_panelname, "save_last_y")
+    # Put ...
+    rpanel::rp.control.put(my_panelname, panel)
     return(panel)
   }
   if (panel_plot & !requireNamespace("tkrplot", quietly = TRUE)) {
@@ -407,8 +418,8 @@ ett <- function(n = 20, distn, params = list(), panel_plot = TRUE, hscale = NA,
 # Function to be called by ett().
 
 ett_movie_plot <- function(panel) {
-  with(panel, {
-    old_par <- graphics::par(no.readonly = TRUE)
+  old_par <- graphics::par(no.readonly = TRUE)
+  panel <- within(panel, {
     # Don't simulate very large samples (only show pdfs or cdfs)
     if (n > 100000) {
       show_dens_only <- TRUE
@@ -436,10 +447,10 @@ ett_movie_plot <- function(panel) {
         max_y <- apply(temp, 2, max)
         # Extract the last dataset and the last maximum (for drawing the arrow)
         y <- temp[, n_add]
-        assign("old_y", y, envir = envir)
+        old_y <- y
         rm(temp)
         last_y <- max_y[n_add]
-        assign("save_last_y", last_y, envir = envir)
+        save_last_y <- last_y
       } else {
         max_y <- NULL
         y <- old_y
@@ -450,7 +461,6 @@ ett_movie_plot <- function(panel) {
       } else {
         sample_maxima <- c(sample_maxima, max_y)
       }
-      assign("sample_maxima", sample_maxima, envir = envir)
     }
     #
     n_x_axis <- 501
@@ -630,19 +640,19 @@ ett_movie_plot <- function(panel) {
       my_leg_true <- expression(F ^ n)
       if (!show_dens_only) {
         if (show_dens) {
-          graphics::legend(bottom_leg_pos,
+          graphics::legend("topleft",
                        legend = c(my_leg_2, my_leg_true, "empirical cdf"),
                        col = c(1:2, 8), lwd = 2, lty = c(2, 2, -1),
                        pch = c(-1, -1, 16), box.lty = 0, cex = leg_cex)
         } else {
-          graphics::legend(bottom_leg_pos,
+          graphics::legend("topleft",
                            legend = c(my_leg_2, my_leg_true, "empirical cdf"),
                            col = c(0, 0, 8), lwd = 2, lty = c(2, 2, -1),
                            pch = c(-1, -1, 16), box.lty = 0,
                            text.col = c(0, 0, 1), cex = leg_cex)
         }
       } else {
-        graphics::legend(bottom_leg_pos,
+        graphics::legend("topleft",
                          legend = c(my_leg_2, my_leg_true),
                          col = 1:2, lwd = 2, lty = 2, box.lty = 0,
                          cex = leg_cex)
@@ -659,11 +669,10 @@ ett_movie_plot <- function(panel) {
       }
     }
     old_n <- n
-    assign("old_n", old_n, envir = envir)
-    assign("old_pdf_or_cdf", pdf_or_cdf, envir = envir)
-    assign("old_show_dens", show_dens, envir = envir)
-    assign("old_show_dens_only", show_dens_only, envir = envir)
-    graphics::par(old_par)
+    old_pdf_or_cdf <- pdf_or_cdf
+    old_show_dens <- show_dens
+    old_show_dens_only <- show_dens_only
   })
-  return(invisible(panel))
+  graphics::par(old_par)
+  return(panel)
 }
