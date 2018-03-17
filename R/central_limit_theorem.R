@@ -480,7 +480,7 @@ cltmovie_plot <- function(panel) {
   old_par <- graphics::par(no.readonly = TRUE)
   n <- NULL
   distn <- NULL
-  panel <- within(panel, {
+  new_panel <- within(panel, {
     # Don't add the rug in the top plot if n is large
     if (n > 1000) {
       show_rug <- FALSE
@@ -700,5 +700,5 @@ cltmovie_plot <- function(panel) {
     old_show_dens <- show_dens
   })
   graphics::par(old_par)
-  return(panel)
+  return(new_panel)
 }
