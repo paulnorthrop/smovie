@@ -159,8 +159,8 @@ shypo <- function(mu0 = 0, sd = 6, eff = sd, n = 10, a = mu0 + eff / 2,
 # Function to be called by shypo().
 
 sh_plot <- function(panel) {
+  old_par <- graphics::par(no.readonly = TRUE)
   with(panel, {
-    old_par <- graphics::par(no.readonly = TRUE)
     mu1 <- mu0 + eff
     # Set a and/or n automatically if requested
     if (set_values == "set a to achieve target alpha") {
@@ -246,7 +246,7 @@ sh_plot <- function(panel) {
                      lty = 1, lwd = 2, col = "blue", bty = "n", cex = 1.25)
     graphics::legend("left", legend = expression(paste("type II, ", beta)),
                      lty = 1, lwd = 2, col = "red", bty = "n", cex = 1.25)
-    graphics::par(old_par)
   })
+  graphics::par(old_par)
   return(invisible(panel))
 }
