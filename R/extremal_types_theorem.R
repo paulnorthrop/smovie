@@ -327,7 +327,9 @@ ett <- function(n = 20, distn, params = list(), panel_plot = TRUE, hscale = NA,
   top_leg_pos <- leg_pos$top_leg_pos
   bottom_leg_pos <- leg_pos$bottom_leg_pos
   # Set a unique panel name to enable saving of objects to the correct panel
-  my_panelname <- paste("ett_", distn, sep = "")
+  now_time <- strsplit(substr(date(), 12, 19), ":")[[1]]
+  now_time <- paste(now_time[1], now_time[2], now_time[3], sep = "")
+  my_panelname <- paste("ett_", now_time, sep = "")
   old_n <- 0
   # Create buttons for movie
   show_dens <- FALSE

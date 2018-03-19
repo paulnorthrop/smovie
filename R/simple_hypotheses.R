@@ -98,9 +98,14 @@ shypo <- function(mu0 = 0, sd = 6, eff = sd, n = 10, a = mu0 + eff / 2,
   if (sd <= 0) {
     stop("sd must be positive")
   }
+  # Set a unique panel name to enable saving of objects to the correct panel
+  now_time <- strsplit(substr(date(), 12, 19), ":")[[1]]
+  now_time <- paste(now_time[1], now_time[2], now_time[3], sep = "")
+  my_panelname <- paste("shypo_", now_time, sep = "")
   # Create buttons for movie
   set_values <- "no"
-  sh_panel <- rpanel::rp.control("Testing simple hypotheses",
+  sh_panel <- rpanel::rp.control(title = "Testing simple hypotheses",
+                                 panelname = my_panelname,
                                  n = n, a = a, mu0 = mu0, eff = eff,
                                  sd = sd, target_alpha = target_alpha,
                                  target_beta = target_beta,

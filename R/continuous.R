@@ -263,11 +263,15 @@ continuous <- function(distn, var_range = NULL, params = list(),
   if (is.null(p_vec)) {
     p_vec <- set_p_vec(distn)
   }
+  # Set a unique panel name to enable saving of objects to the correct panel
+  now_time <- strsplit(substr(date(), 12, 19), ":")[[1]]
+  now_time <- paste(now_time[1], now_time[2], now_time[3], sep = "")
+  my_panelname <- paste("continuous_", now_time, sep = "")
   # A list of arguments to pass to the plotting function via rp.control()
   pass_args <- fun_args
   names(pass_args) <- par_names
   my_title <- paste("pdf and cdf of the", root_name, "distribution")
-  for_rp_control <- c(list(title = my_title,
+  for_rp_control <- c(list(title = my_title, panelname = my_panelname,
                            dfun = dfun, pfun = pfun, qfun = qfun,
                            distn = distn, fun_args = fun_args, n_pars = n_pars,
                            par_names = par_names, pdf_or_cdf = pdf_or_cdf,

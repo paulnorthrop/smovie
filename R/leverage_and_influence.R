@@ -83,8 +83,13 @@ lev_inf <- function(association = c("positive", "negative", "none"), n = 25,
   init.y <- mean(set1)
   outx <- init.x
   outy <- init.y
+  # Set a unique panel name to enable saving of objects to the correct panel
+  now_time <- strsplit(substr(date(), 12, 19), ":")[[1]]
+  now_time <- paste(now_time[1], now_time[2], now_time[3], sep = "")
+  my_panelname <- paste("lev_inf_", now_time, sep = "")
   # Create buttons for movie
-  lev_inf_1_panel <- rpanel::rp.control("Leverage and influence", x = x,
+  lev_inf_1_panel <- rpanel::rp.control(title = "Leverage and influence",
+                                        panelname = my_panelname, x = x,
                                         set1 = set1, outx = init.x,
                                         outy = init.y)
   #

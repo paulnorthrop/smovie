@@ -278,17 +278,22 @@ wws <- function(model = c("norm", "binom"), theta_range = NULL, mult = 3,
   }
   test_stat <- "none"
   perform_tests <- "no"
+  # Set a unique panel name to enable saving of objects to the correct panel
+  now_time <- strsplit(substr(date(), 12, 19), ":")[[1]]
+  now_time <- paste(now_time[1], now_time[2], now_time[3], sep = "")
+  my_panelname <- paste("wws_", now_time, sep = "")
   # Create buttons for movie
-  wws_panel <- rpanel::rp.control("Wald, Wilks and Score",
-                                 loglik = loglik, theta_range = theta_range,
-                                 theta0 = theta0, user_args = user_args,
-                                 test_stat = "none",
-                                 perform_tests = "no", theta_mle = theta_mle,
-                                 loglik_at_mle = loglik_at_mle,
-                                 alg_score = alg_score,
-                                 alg_obs_info = alg_obs_info,
-                                 obs_info_at_mle = obs_info_at_mle,
-                                 digits = digits)
+  wws_panel <- rpanel::rp.control(title = "Wald, Wilks and Score",
+                                  panelname = my_panelname,
+                                  loglik = loglik, theta_range = theta_range,
+                                  theta0 = theta0, user_args = user_args,
+                                  test_stat = "none",
+                                  perform_tests = "no", theta_mle = theta_mle,
+                                  loglik_at_mle = loglik_at_mle,
+                                  alg_score = alg_score,
+                                  alg_obs_info = alg_obs_info,
+                                  obs_info_at_mle = obs_info_at_mle,
+                                  digits = digits)
   #
   redraw_plot <- NULL
   panel_redraw <- function(panel) {
