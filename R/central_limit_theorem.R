@@ -485,7 +485,7 @@ cltmovie_plot <- function(panel) {
   # To please R CMD check
   n <- distn <- fun_args <- pdf_or_cdf <- show_dens <- n_add <- rfun <-
     discrete_distn <- top_range <- dfun <- xlab <- top_leg_pos <- arrow <-
-    distn_mean <- distn_sd <- bottom_p_vec <- bottom_leg_pos <- NULL
+    distn_mean <- distn_sd <- bottom_p_vec <- bottom_leg_pos <- leg_cex <- NULL
   panel <- within(panel, {
     # Don't add the rug in the top plot if n is large
     if (n > 1000) {

@@ -426,7 +426,7 @@ ett_movie_plot <- function(panel) {
   # To please R CMD check
   n <- distn <- fun_args <- pdf_or_cdf <- show_dens <- n_add <- rfun <-
     qfun <- pfun <- top_range <- dfun <- xlab <- top_leg_pos <- arrow <-
-    bottom_p_vec <- bottom_leg_pos <- NULL
+    bottom_p_vec <- bottom_leg_pos <- leg_cex <- NULL
   panel <- within(panel, {
     # Don't simulate very large samples (only show pdfs or cdfs)
     if (n > 100000) {
