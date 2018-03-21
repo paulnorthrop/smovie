@@ -283,7 +283,9 @@ discrete <- function(distn, var_support = NULL, params = list(),
   rpanel::rp.radiogroup(panel= discrete_panel, pmf_or_cdf, c("pmf", "cdf"),
                         title = "pmf or cdf",
                         action = action)
-  rpanel::rp.do(discrete_panel, action = action)
+  if (!panel_plot) {
+    rpanel::rp.do(discrete_panel, action = action)
+  }
   return(invisible())
 }
 

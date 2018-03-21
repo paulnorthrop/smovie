@@ -316,7 +316,9 @@ continuous <- function(distn, var_range = NULL, params = list(),
   rpanel::rp.radiogroup(panel= continuous_panel, pdf_or_cdf, c("pdf", "cdf"),
                         title = "pdf or cdf",
                         action = action)
-  rpanel::rp.do(continuous_panel, action = action)
+  if (!panel_plot) {
+    rpanel::rp.do(continuous_panel, action = action)
+  }
   return(invisible())
 }
 

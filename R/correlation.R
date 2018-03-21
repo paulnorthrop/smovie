@@ -98,7 +98,6 @@ correlation <- function(n = 30, rho = 0, panel_plot = TRUE, hscale = NA,
   now_time <- paste(now_time[1], now_time[2], now_time[3], sep = "")
   # Set a unique panel name to enable saving of objects to the correct panel
   my_panelname <- paste("correlation_", now_time, sep = "")
-  print(my_panelname)
   nseed_old <- nseed_init
   rho_old <- rho_init
   nsim_old <- nsim_init
@@ -173,6 +172,9 @@ correlation <- function(n = 30, rho = 0, panel_plot = TRUE, hscale = NA,
   rpanel::rp.radiogroup(panel= corr_sim_panel, pdf_or_cdf, c("pdf", "cdf"),
                         title = "pdf or cdf in bottom plot",
                         action = action)
+  if (!panel_plot) {
+    rpanel::rp.do(panel = corr_sim_panel, action = action)
+  }
   return(invisible())
 }
 

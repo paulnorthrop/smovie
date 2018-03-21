@@ -119,7 +119,9 @@ lev_inf <- function(association = c("positive", "negative", "none"), n = 25,
                           repeatinterval = 20, initval = 0,
                           title = "y coefficient:", action = action,
                           showvalue = FALSE)
-  rpanel::rp.do(lev_inf_1_panel, action = action)
+  if (!panel_plot) {
+    rpanel::rp.do(lev_inf_1_panel, action = action)
+  }
   return(invisible())
 }
 

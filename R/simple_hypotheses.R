@@ -152,7 +152,9 @@ shypo <- function(mu0 = 0, sd = 6, eff = sd, n = 10, a = mu0 + eff / 2,
                           "set a and n to achieve target alpha and beta"),
                         action = action,
                         title = title_text)
-  rpanel::rp.do(sh_panel, action = action)
+  if (!panel_plot) {
+    rpanel::rp.do(sh_panel, action = action)
+  }
   return(invisible())
 }
 

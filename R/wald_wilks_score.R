@@ -324,7 +324,9 @@ wws <- function(model = c("norm", "binom"), theta_range = NULL, mult = 3,
   rpanel::rp.radiogroup(wws_panel, perform_tests, c("no", "yes"),
                         action = action,
                         title = "Calculate approximate p-values?")
-  rpanel::rp.do(wws_panel, action = action)
+  if (!panel_plot) {
+    rpanel::rp.do(wws_panel, action = action)
+  }
   return(invisible())
 }
 
