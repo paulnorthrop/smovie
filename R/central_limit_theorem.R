@@ -63,7 +63,7 @@
 #' @param delta_n A numeric scalar.  The amount by which n is increased
 #'   (or decreased) after one click of the + (or -) button in the parameter
 #'   window.
-#' @param arrow  A logical scalar.  Should an arrow be included to show the
+#' @param arrow A logical scalar.  Should an arrow be included to show the
 #'   simulated sample maximum from the top plot being placed into the
 #'   bottom plot?
 #' @param leg_cex The argument \code{cex} to \code{\link[graphics]{legend}}.
