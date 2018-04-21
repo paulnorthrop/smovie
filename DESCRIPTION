@@ -26,7 +26,6 @@ LazyData: TRUE
 RoxygenNote: 6.0.1
 Imports: graphics,
     methods,
-    numDeriv,
     revdbayes (>= 1.1.0),
     stats,
     SuppDists
