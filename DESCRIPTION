@@ -2,7 +2,7 @@ Package: smovie
 Type: Package
 Title: Some Movies to Illustrate Concepts in Statistics
 Version: 1.0.0.9000
-Date: 2018-03-05
+Date: 2018-04-21
 Authors@R: person(c("Paul", "J."), "Northrop", email = "p.northrop@ucl.ac.uk",
   role = c("aut", "cre", "cph"))
 Description: Provides movies to help students to understand statistical 
@@ -27,6 +27,7 @@ LazyData: TRUE
 RoxygenNote: 6.0.1
 Imports: graphics,
     methods,
+    numDeriv,
     revdbayes (>= 1.1.0),
     stats,
     SuppDists
