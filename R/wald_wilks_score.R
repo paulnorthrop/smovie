@@ -101,7 +101,7 @@
 #'   This is not true in general, as shown by the other in-built example
 #'   (\code{distn} = "binom").
 #'
-#'   A user-supplied log-likelihod can be provided via \code{loglik}.
+#'   A user-supplied log-likelihood can be provided via \code{loglik}.
 #' @return Nothing is returned, only the animation is produced.
 #' @seealso \code{\link{movies}}: a user-friendly menu panel.
 #' @seealso \code{\link{smovie}}: general information about smovie.

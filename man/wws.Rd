@@ -129,7 +129,7 @@ The \href{https://en.wikipedia.org/wiki/Wald_test}{Wald},
   This is not true in general, as shown by the other in-built example
   (\code{distn} = "binom").
 
-  A user-supplied log-likelihod can be provided via \code{loglik}.
+  A user-supplied log-likelihood can be provided via \code{loglik}.
 }
 \examples{
 # N(theta, 1) example, test statistics equivalent
