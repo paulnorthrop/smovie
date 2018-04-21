@@ -10,4 +10,4 @@
 
 * In `ett()` and `clt()` the legend position in plots of cdfs has been moved to "topleft" better to avoid overlapping the contents of the plot.  The argument `leg_cex` has been added to enable manual control of the size of the legends.
 
-* That smovie requires the R extension BWidget (via its dependence on the package rpanel) is made explicit using the SystemRequirements field in DESCRIPTION.  If BWidget is not installed then a message is given to explain why the smovie functions don't work.  The README file gives more information.
+* That smovie requires the R extension BWidget (via its dependence on the package rpanel) is noted in the README file. If BWidget is not installed then a message is given to explain why the smovie functions don't work.
