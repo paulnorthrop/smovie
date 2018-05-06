@@ -55,5 +55,5 @@
 #' @docType package
 #' @name smovie
 #' @import methods
-#' @importFrom rpanel rp.control
+#' @import rpanel
 NULL
