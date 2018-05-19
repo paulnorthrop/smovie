@@ -32,8 +32,9 @@ movies()
 }
 \seealso{
 \code{\link{discrete}}, \code{\link{continuous}},
-  \code{\link{clt}}, \code{\link{ett}}, \code{\link{correlation}},
-  \code{\link{lev_inf}}, \code{\link{wws}}, \code{\link{shypo}}.
+  \code{\link{clt}}, \code{\link{ett}}, \code{\link{mean_vs_median}},
+  \code{\link{correlation}}, \code{\link{lev_inf}}, \code{\link{wws}},
+  \code{\link{shypo}}.
 
 \code{\link{smovie}}: general information about smovie.
 }

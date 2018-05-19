@@ -19,8 +19,9 @@
 #' @examples
 #' movies()
 #' @seealso \code{\link{discrete}}, \code{\link{continuous}},
-#'   \code{\link{clt}}, \code{\link{ett}}, \code{\link{correlation}},
-#'   \code{\link{lev_inf}}, \code{\link{wws}}, \code{\link{shypo}}.
+#'   \code{\link{clt}}, \code{\link{ett}}, \code{\link{mean_vs_median}},
+#'   \code{\link{correlation}}, \code{\link{lev_inf}}, \code{\link{wws}},
+#'   \code{\link{shypo}}.
 #' @seealso \code{\link{smovie}}: general information about smovie.
 #' @export
 movies <- function(fixed_range = TRUE, hscale = NA, vscale = hscale) {
@@ -168,6 +169,9 @@ movies <- function(fixed_range = TRUE, hscale = NA, vscale = hscale) {
     else if (menu.panel$demo == "Maximum") {
       ett(distn = "exponential", hscale = hscale, vscale = vscale)
     }
+    else if (menu.panel$demo == "Mean vs median") {
+      mean_vs_median()
+    }
     else if (menu.panel$demo == "Leverage and influence") {
       lev_inf(hscale = hscale, vscale = vscale)
     }
@@ -299,7 +303,8 @@ movies <- function(fixed_range = TRUE, hscale = NA, vscale = hscale) {
   list("Sampling distributions",
        "Pearson correlation coefficient",
        "Mean",
-       "Maximum"
+       "Maximum",
+       "Mean vs median"
   ),
   list("CLT",
        " beta",

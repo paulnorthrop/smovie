@@ -40,6 +40,8 @@ There are movies on the following topics.
 \itemize{
   \item {\link[=clt]{Central Limit Theorem: sampling distribution
     of a sample mean}}
+  \item {\link[=mean_vs_median]{Sampling distributions of the mean
+    and median}}
   \item {\link[=ett]{Extremal Types Theorem: sampling distribution
     of a sample maximum}}
   \item {\link[=correlation]{Pearson product moment correlation

@@ -9,7 +9,7 @@ smovie
 
 ### What does smovie do?
 
-The `smovie` package provides movies to help students to understand statistical concepts. The [`rpanel` package](https://cran.r-project.org/package=rpanel) is used to create interactive plots that move to illustrate key statistical ideas and methods. The movies cover the topics of probability distributions; sampling distributions of the mean (central limit theorem), the maximum (extremal types theorem) and the (Fisher transformation of the) correlation coefficient; simple linear regression; hypothesis testing.
+The `smovie` package provides movies to help students to understand statistical concepts. The [`rpanel` package](https://cran.r-project.org/package=rpanel) is used to create interactive plots that move to illustrate key statistical ideas and methods. The movies cover the topics of probability distributions; sampling distributions of the mean (central limit theorem), the median, the maximum (extremal types theorem) and the (Fisher transformation of the) correlation coefficient; simple linear regression; hypothesis testing.
 
 ### An example
 

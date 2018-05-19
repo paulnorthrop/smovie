@@ -1,5 +1,7 @@
 # smovie 1.0.1.9000
 
+* New movie: mean_vs_median.  Compares the sampling distributions of the mean and median for random samples from a normal distribution.
+
 # smovie 1.0.1
 
 ## Bug fixes and minor improvements
