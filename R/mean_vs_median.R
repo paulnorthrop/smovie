@@ -34,28 +34,39 @@
 #'   \code{n} from a standard normal N(0,1) distribution.  It contains
 #'   three plots.  The top plot contains a histogram of the most recently
 #'   simulated dataset, with the N(0,1) probability density function (p.d.f.)
-#'   superimposed.
+#'   superimposed.  A \code{\link[graphics]{rug}} is added to a histogram
+#'   provided that it contains no more than 1000 points.
 #'
 #'   Each time a sample is simulated the sample mean and sample median are
-#'   calculated.  These values are indicated on the top plot as a filled
-#'   circle: a red circle for the sample mean and a blue circle for the
-#'   sample median; and are added to the values plotted in the middle and
-#'   bottom plots.
+#'   calculated.  These values are indicated on the top plot using an
+#'   arrow (if \code{arrow = TRUE}) or a vertical (rug) line on the horizontal
+#'   axis (\code{arrow = FALSE}), coloured red for the sample mean and blue for
+#'   the sample median.
+#'   If \code{arrow = TRUE} then the arrows show the positionings of most
+#'   recent mean and median in the two plots below.  If \code{arrow = FALSE}
+#'   then the rug lines are replicated in these plots.
 #'
 #'   The plot in the middle contains a histogram of
-#'   the sample means of \emph{all} the simulated samples.  The p.d.f.s of
-#'   the sampling distributions of the sample mean (thick red line)
-#'   and the sample medians (thin blue line) are superimposed.
-#'
+#'   the sample means of \emph{all} the simulated samples.
 #'   The plot on the bottom contains a histogram of
-#'   the sample medians of \emph{all} the simulated samples.  The p.d.f.s of
-#'   the sampling distributions of the sample mean (thin red line)
-#'   and the sample medians (thick blue line) are superimposed.
+#'   the sample medians of \emph{all} the simulated samples.
+#'   There is a checkbox to add to these plots the p.d.f.s of the
+#'   distribution of the sample mean and the (approximate, large \code{n})
+#'   distribution of the sample median.
+#'   A \code{\link[graphics]{rug}} is added to these histograms
+#'   provided that they contains no more than 1000 points.
 #'
-#'   An extra sample is prodcued by clicking the + button next to
-#'   "number of samples of size n". [Ignore the - button.]
-#'   The value of the sample size can be changed using the +/-
-#'   buttons in the panel.
+#'   Once it starts, three aspects of this movie are controlled by the user.
+#'   \itemize{
+#'     \item{}{There are buttons to increase (+) or decrease (-) the sample
+#'       size, that is, the number of values over which a maximum is
+#'       calculated.}
+#'     \item{}{Each time the button labelled "simulate another \code{n_add}
+#'       samples of size n" is clicked \code{n_add} new samples are simulated
+#'       and their sample mean are added to the bottom histogram.}
+#'     \item{}{There is a checkbox to choose whether or not to include the
+#'       p.d.f.s in the bottom plot.}
+#'   }
 #' @return Nothing is returned, only the animation is produced.
 #' @seealso \code{\link{movies}}: a user-friendly menu panel.
 #' @seealso \code{\link{smovie}}: general information about smovie.
@@ -88,17 +99,22 @@ mean_vs_median <- function(n = 10, panel_plot = TRUE, hscale = NA,
   now_time <- paste(now_time[1], now_time[2], now_time[3], sep = "")
   my_panelname <- paste("mean_vs_median_", now_time, sep = "")
   # Create buttons for movie
+  show_dens <- FALSE
   old_n <- 0
   sample_means <- NULL
   sample_medians <- NULL
+  save_last_mean <- NULL
+  save_last_median <- NULL
 #  nsim <- 1
   mean_vs_median_panel <- rpanel::rp.control("mean vs median",
                                  panelname = my_panelname, n = n,
                                  n_add = n_add, old_n = old_n, ntop = 1000,
                                  sample_means = sample_means,
                                  sample_medians = sample_medians,
-                                 arrow = arrow,
-                                 leg_cex = leg_cex)
+                                 arrow = arrow, show_dens = show_dens,
+                                 old_show_dens = show_dens, leg_cex = leg_cex,
+                                 save_last_mean = save_last_mean,
+                                 save_last_median = save_last_median)
   #
   redraw_plot <- NULL
   panel_redraw <- function(panel) {
@@ -107,7 +123,12 @@ mean_vs_median <- function(n = 10, panel_plot = TRUE, hscale = NA,
     # Get ...
     panel$sample_means <- rpanel::rp.var.get(my_panelname, "sample_means")
     panel$sample_medians <- rpanel::rp.var.get(my_panelname, "sample_medians")
+    panel$old_show_dens <- rpanel::rp.var.get(my_panelname, "old_show_dens")
+    panel$old_y <- rpanel::rp.var.get(my_panelname, "old_y")
     panel$old_n <- rpanel::rp.var.get(my_panelname, "old_n")
+    panel$save_last_mean <- rpanel::rp.var.get(my_panelname, "save_last_mean")
+    panel$save_last_median <- rpanel::rp.var.get(my_panelname,
+                                                 "save_last_median")
     # Put ...
     rpanel::rp.control.put(my_panelname, panel)
     return(panel)
@@ -145,6 +166,8 @@ mean_vs_median <- function(n = 10, panel_plot = TRUE, hscale = NA,
     rpanel::rp.button(panel = mean_vs_median_panel, action = action,
                       title = my_title, ...)
   }
+  rpanel::rp.checkbox(panel = mean_vs_median_panel, show_dens,
+                      labels = "show sampling pdfs", action = action)
   if (!panel_plot) {
     rpanel::rp.do(panel = mean_vs_median_panel, action = action)
   }
@@ -156,28 +179,41 @@ mean_vs_median <- function(n = 10, panel_plot = TRUE, hscale = NA,
 mean_vs_median_plot <- function(panel) {
   old_par <- graphics::par(no.readonly = TRUE)
   # To please R CMD check
-  n <- n_add <- arrow <- leg_cex <- NULL
+  n <- n_add <- arrow <- leg_cex <- show_dens <- NULL
   panel <- within(panel, {
-    old_par <- graphics::par(no.readonly = TRUE)
+    # Don't add the rug in the top plot if n is large
+    if (n > 1000) {
+      show_rug <- FALSE
+    } else {
+      show_rug <- TRUE
+    }
     graphics::par(mfrow = c(3, 1), oma = c(0, 0, 0, 0),
                   mar = c(4, 4, 2, 2) + 0.1, cex.axis = 1.5, cex.lab = 1.5)
     mu <- 0
     sigma <- 1
 #    y <- stats::rnorm(n, mean = mu, sd = sigma)
 #    temp <- as.matrix(replicate(n_add, do.call(rfun, sim_list)))
-    temp <- as.matrix(replicate(n_add, stats::rnorm(n, mean = mu, sd = sigma)))
-    mean_y <- apply(temp, 2, mean)
-    median_y <- apply(temp, 2, stats::median)
-    # Extract the last dataset and the last mean and median
-    # (for drawing the arrow)
-    y <- temp[, n_add]
-    old_y <- y
-    rm(temp)
-    last_mean <- mean_y[n_add]
-    last_median <- median_y[n_add]
-    save_last_mean <- last_mean
-    save_last_median <- last_median
-    #
+    if (old_show_dens == show_dens) {
+      temp <- as.matrix(replicate(n_add, stats::rnorm(n, mean = mu, sd = sigma)))
+      mean_y <- apply(temp, 2, mean)
+      median_y <- apply(temp, 2, stats::median)
+      # Extract the last dataset and the last mean and median
+      # (for drawing the arrow)
+      y <- temp[, n_add]
+      old_y <- y
+      rm(temp)
+      last_mean <- mean_y[n_add]
+      last_median <- median_y[n_add]
+      save_last_mean <- last_mean
+      save_last_median <- last_median
+    } else {
+      mean_y <- NULL
+      median_y <- NULL
+      y <- old_y
+      last_mean <- save_last_mean
+      last_median <- save_last_median
+  }
+      #
 #    mean_y <- mean(y)
 #    median_y <- stats::median(y)
     if (n != old_n) {
@@ -209,7 +245,9 @@ mean_vs_median_plot <- function(panel) {
 #                   main = "", ylim = c(0, ytop), xlim = my_xlim)
     graphics::axis(2)
     graphics::axis(1, at = br2, labels = br2, line = 0.5)
-    graphics::rug(y, line = 0.5, ticksize = 0.05)
+    if (show_rug) {
+      graphics::rug(y, line = 0.5, ticksize = 0.05)
+    }
     graphics::legend("topleft", legend = paste("n = ", n), cex = leg_cex,
                      text.font = 2, box.lty = 0)
     xx <- seq(from = h.low, to = h.up, len = 500)
@@ -260,26 +298,33 @@ mean_vs_median_plot <- function(panel) {
                    main = "", ylim = c(0, ytop), xpd = TRUE)
     graphics::axis(2)
     graphics::axis(1, at = br2, labels = br2, line = 0.5)
+    nsim <- length(y)
     if (arrow) {
-      graphics::rug(y, line = 0.5, ticksize = 0.05, col = "red")
+      if (nsim < 1000) {
+        graphics::rug(y, line = 0.5, ticksize = 0.05, col = "red")
+      }
     } else {
-      graphics::rug(y, line = 0.5, ticksize = 0.05, col = "black")
+      if (nsim < 1000) {
+        graphics::rug(y, line = 0.5, ticksize = 0.05, col = "black")
+      }
       graphics::rug(last_mean, line = 0.5, ticksize = 0.05, col = "red",
                     lwd = 2)
     }
-    graphics::curve(stats::dnorm(x, mean = mu, sd = sigma / sqrt(n)),
+    if (show_dens) {
+      graphics::curve(stats::dnorm(x, mean = mu, sd = sigma / sqrt(n)),
                     from = h.low, to = h.up, n = 500, bty="l",
                     ylab = "density", las = 1, xpd = TRUE, lwd = 3,
                     add = TRUE, lty = 2, col = 2)
-    graphics::curve(stats::dnorm(x, mean = mu,
-                                 sd = sqrt(1.57) * sigma / sqrt(n)),
-                    from = h.low, to = h.up, n = 500, bty = "l",
-                    ylab = "density",las = 1, xpd = TRUE, lwd = 1.5,
-                    add = TRUE, lty = 2, col = 4)
-    u <- graphics::par("usr")
-    graphics::legend("topright", legend = c("N(0,1/n)", "N(0,1.57/n)"),
-                     lty = 2, lwd = c(3, 1.5), col = c(2, 4),
-                     box.lty = 0, cex = leg_cex)
+      graphics::curve(stats::dnorm(x, mean = mu,
+                                   sd = sqrt(1.57) * sigma / sqrt(n)),
+                      from = h.low, to = h.up, n = 500, bty = "l",
+                      ylab = "density",las = 1, xpd = TRUE, lwd = 1.5,
+                      add = TRUE, lty = 2, col = 4)
+      graphics::legend("topright", legend = c("N(0,1/n)", "N(0,1.57/n)"),
+                       lty = 2, lwd = c(3, 1.5), col = c(2, 4),
+                       box.lty = 0, cex = leg_cex)
+    }
+#    u <- graphics::par("usr")
 #    graphics::legend(u[2], u[4], legend = c("N(0,1/n)", "N(0,1.57/n)"),
 #                     lty = 2, lwd = c(3, 1.5), xjust = 1, col = c(2, 4),
  #                    box.lty = 0, cex = leg_cex)
@@ -306,25 +351,31 @@ mean_vs_median_plot <- function(panel) {
     graphics::axis(2)
     graphics::axis(1, at = br2, labels = br2, line = 0.5)
     if (arrow) {
-      graphics::rug(y, line = 0.5, ticksize = 0.05, col = "blue")
+      if (nsim < 1000) {
+        graphics::rug(y, line = 0.5, ticksize = 0.05, col = "blue")
+      }
     } else {
-      graphics::rug(y, line = 0.5, ticksize = 0.05, col = "black")
+      if (nsim < 1000) {
+        graphics::rug(y, line = 0.5, ticksize = 0.05, col = "black")
+      }
       graphics::rug(last_median, line = 0.5, ticksize = 0.05, col = "blue",
                     lwd = 2)
     }
-    graphics::curve(stats::dnorm(x, mean = mu,
+    if (show_dens) {
+      graphics::curve(stats::dnorm(x, mean = mu,
                                  sd = sqrt(1.57) * sigma / sqrt(n)),
                     from = h.low, to = h.up, n = 500, bty = "l",
                     ylab = "density", las = 1, xpd = TRUE, lwd = 3,
                     add = TRUE, lty = 2, col = 4)
-    graphics::curve(stats::dnorm(x, mean = mu, sd = sigma/sqrt(n)),
-                    from = h.low, to = h.up, n = 500, bty = "l",
-                    ylab = "density", las = 1, xpd = TRUE, lwd = 1.5,
-                    add = TRUE, lty = 2, col = 2)
-    u <- graphics::par("usr")
-    graphics::legend("topright", legend = c("N(0,1.57/n)", "N(0,1/n)"),
-                     lty = 2, lwd = c(3, 1.5), xjust = 1, col = c(4, 2),
-                     box.lty = 0, cex = leg_cex)
+      graphics::curve(stats::dnorm(x, mean = mu, sd = sigma/sqrt(n)),
+                      from = h.low, to = h.up, n = 500, bty = "l",
+                      ylab = "density", las = 1, xpd = TRUE, lwd = 1.5,
+                      add = TRUE, lty = 2, col = 2)
+      graphics::legend("topright", legend = c("N(0,1.57/n)", "N(0,1/n)"),
+                       lty = 2, lwd = c(3, 1.5), xjust = 1, col = c(4, 2),
+                       box.lty = 0, cex = leg_cex)
+    }
+#    u <- graphics::par("usr")
 #    graphics::legend(u[2], u[4], legend = c("N(0,1.57/n)", "N(0,1/n)"),
 #                     lty = 2, lwd = c(3, 1.5), xjust = 1, col = c(4, 2),
 #                     box.lty = 0, cex = leg_cex)
@@ -335,6 +386,7 @@ mean_vs_median_plot <- function(panel) {
                        lwd = 2, xpd = TRUE)
     }
     old_n <- n
+    old_show_dens <- show_dens
   })
   graphics::par(old_par)
   return(panel)

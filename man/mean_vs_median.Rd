@@ -53,28 +53,39 @@ The movie is based on simulating repeatedly samples of size
   \code{n} from a standard normal N(0,1) distribution.  It contains
   three plots.  The top plot contains a histogram of the most recently
   simulated dataset, with the N(0,1) probability density function (p.d.f.)
-  superimposed.
+  superimposed.  A \code{\link[graphics]{rug}} is added to a histogram
+  provided that it contains no more than 1000 points.
 
   Each time a sample is simulated the sample mean and sample median are
-  calculated.  These values are indicated on the top plot as a filled
-  circle: a red circle for the sample mean and a blue circle for the
-  sample median; and are added to the values plotted in the middle and
-  bottom plots.
+  calculated.  These values are indicated on the top plot using an
+  arrow (if \code{arrow = TRUE}) or a vertical (rug) line on the horizontal
+  axis (\code{arrow = FALSE}), coloured red for the sample mean and blue for
+  the sample median.
+  If \code{arrow = TRUE} then the arrows show the positionings of most
+  recent mean and median in the two plots below.  If \code{arrow = FALSE}
+  then the rug lines are replicated in these plots.
 
   The plot in the middle contains a histogram of
-  the sample means of \emph{all} the simulated samples.  The p.d.f.s of
-  the sampling distributions of the sample mean (thick red line)
-  and the sample medians (thin blue line) are superimposed.
-
+  the sample means of \emph{all} the simulated samples.
   The plot on the bottom contains a histogram of
-  the sample medians of \emph{all} the simulated samples.  The p.d.f.s of
-  the sampling distributions of the sample mean (thin red line)
-  and the sample medians (thick blue line) are superimposed.
+  the sample medians of \emph{all} the simulated samples.
+  There is a checkbox to add to these plots the p.d.f.s of the
+  distribution of the sample mean and the (approximate, large \code{n})
+  distribution of the sample median.
+  A \code{\link[graphics]{rug}} is added to these histograms
+  provided that they contains no more than 1000 points.
 
-  An extra sample is prodcued by clicking the + button next to
-  "number of samples of size n". [Ignore the - button.]
-  The value of the sample size can be changed using the +/-
-  buttons in the panel.
+  Once it starts, three aspects of this movie are controlled by the user.
+  \itemize{
+    \item{}{There are buttons to increase (+) or decrease (-) the sample
+      size, that is, the number of values over which a maximum is
+      calculated.}
+    \item{}{Each time the button labelled "simulate another \code{n_add}
+      samples of size n" is clicked \code{n_add} new samples are simulated
+      and their sample mean are added to the bottom histogram.}
+    \item{}{There is a checkbox to choose whether or not to include the
+      p.d.f.s in the bottom plot.}
+  }
 }
 \examples{
 mean_vs_median()
