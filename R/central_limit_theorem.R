@@ -113,8 +113,10 @@
 #'       and their sample mean are added to the bottom histogram.}
 #'     \item{}{There is a button to switch the bottom plot from displaying
 #'       a histogram of the simulated means and the limiting normal p.d.f. to
-#'       the empirical c.d.f. of the simulated data, the exact c.d.f. and the
-#'       limiting normal c.d.f.}
+#'       the empirical c.d.f. of the simulated data and the limiting normal
+#'       c.d.f.}
+#'     \item{}{There is a checkbox to choose whether or not to include in the
+#'       bottom plot the limiting p.d.f. or c.d.f.}
 #'   }
 #' @return Nothing is returned, only the animation is produced.
 #' @seealso \code{\link{movies}}: a user-friendly menu panel.
