@@ -191,8 +191,6 @@ mean_vs_median_plot <- function(panel) {
                   mar = c(4, 4, 2, 2) + 0.1, cex.axis = 1.5, cex.lab = 1.5)
     mu <- 0
     sigma <- 1
-#    y <- stats::rnorm(n, mean = mu, sd = sigma)
-#    temp <- as.matrix(replicate(n_add, do.call(rfun, sim_list)))
     if (old_show_dens == show_dens) {
       temp <- as.matrix(replicate(n_add, stats::rnorm(n, mean = mu, sd = sigma)))
       mean_y <- apply(temp, 2, mean)
@@ -212,10 +210,8 @@ mean_vs_median_plot <- function(panel) {
       y <- old_y
       last_mean <- save_last_mean
       last_median <- save_last_median
-  }
-      #
-#    mean_y <- mean(y)
-#    median_y <- stats::median(y)
+    }
+    #
     if (n != old_n) {
       sample_means <- mean_y
       sample_medians <- median_y
@@ -231,18 +227,10 @@ mean_vs_median_plot <- function(panel) {
     br2 <- sort(c(seq(from = floor(h.low), to = ceiling(h.up), by = 1), mu))
     #
     ## histogram with rug
-    #
-    #
     my_xlim <- c(h.low, h.up)
-    #
-    #
     graphics::hist(y, col = 8, probability = TRUE,
                    axes = FALSE, xlab = "raw data", ylab = "density",
                    main = "", ylim = c(0, ytop), xlim = my_xlim)
-#    graphics::hist(y, col = 8, probability = TRUE, #las = 1,
-#                   breaks = br, xpd = FALSE,
-#                   axes = FALSE, xlab = "raw data", ylab = "density",
-#                   main = "", ylim = c(0, ytop), xlim = my_xlim)
     graphics::axis(2)
     graphics::axis(1, at = br2, labels = br2, line = 0.5)
     if (show_rug) {
@@ -253,20 +241,9 @@ mean_vs_median_plot <- function(panel) {
     xx <- seq(from = h.low, to = h.up, len = 500)
     ydens <- stats::dnorm(xx, mean = mu, sd = sigma)
     graphics::lines(xx, ydens, xpd = TRUE, lwd = 2, lty = 2)
-#    graphics::curve(stats::dnorm(x, mean = mu, sd = sigma), from = h.low,
-#                    to = h.up, n = 500, bty = "l",
-#                    #ylab = "density",
-#                    #las = 1,
-#                    xpd = TRUE, lwd = 3, add = TRUE, lty = 2)
     u <- graphics::par("usr")
-#    graphics::legend(u[2], u[4], legend = expression(paste("N(0,",1,")")),
-#           lty = 2, lwd = 3, xjust = 1, box.lty = 0, cex = leg_cex)
     graphics::legend("topright", legend = expression(paste("N(0,",1,")")),
                      lty = 2, lwd = 3, box.lty = 0, cex = leg_cex)
-#    graphics::segments(mean_y, 0, mean_y, -10, col = "red", xpd = TRUE, lwd = 2)
-#    graphics::points(mean_y, 0,pch = 16, col = "red", cex = 2)
-#    graphics::segments(median_y, 0, median_y, -10, col = "blue", xpd = TRUE, lwd = 2)
-#    graphics::points(median_y, 0, pch = 16, col = "blue", cex = 2)
     graphics::rug(last_mean, line = 0.5, ticksize = 0.05, col = "red", lwd = 2)
     graphics::rug(last_median, line = 0.5, ticksize = 0.05, col = "blue",
                   lwd = 2)
@@ -276,8 +253,6 @@ mean_vs_median_plot <- function(panel) {
       graphics::segments(last_median, 0, last_median, -10, col = "blue",
                          xpd = TRUE, lwd = 2)
     }
-#    graphics::points(last_mean, 0, pch = 16, col = "red", cex = 2)
-#    graphics::points(last_median, 0, pch = 16, col = "blue", cex = 2)
     ytop <- dnorm(0, sd = sigma / sqrt(n)) * 1.2
     if (n <= 25) {
       my.by <- 0.1
@@ -324,14 +299,6 @@ mean_vs_median_plot <- function(panel) {
                        lty = 2, lwd = c(3, 1.5), col = c(2, 4),
                        box.lty = 0, cex = leg_cex)
     }
-#    u <- graphics::par("usr")
-#    graphics::legend(u[2], u[4], legend = c("N(0,1/n)", "N(0,1.57/n)"),
-#                     lty = 2, lwd = c(3, 1.5), xjust = 1, col = c(2, 4),
- #                    box.lty = 0, cex = leg_cex)
-#    graphics::arrows(mean_y, 2 * ytop, mean_y, 0, col = "red", lwd = 2,
-#                     xpd = TRUE)
-#    graphics::segments(median_y, 2 * ytop, median_y, -10, col = "blue",
-#                       xpd = TRUE, lwd = 2)
     if (arrow) {
       graphics::arrows(last_mean, 2 * ytop, last_mean, 0, col = "red", lwd = 2,
                        xpd = TRUE)
@@ -375,12 +342,6 @@ mean_vs_median_plot <- function(panel) {
                        lty = 2, lwd = c(3, 1.5), xjust = 1, col = c(4, 2),
                        box.lty = 0, cex = leg_cex)
     }
-#    u <- graphics::par("usr")
-#    graphics::legend(u[2], u[4], legend = c("N(0,1.57/n)", "N(0,1/n)"),
-#                     lty = 2, lwd = c(3, 1.5), xjust = 1, col = c(4, 2),
-#                     box.lty = 0, cex = leg_cex)
-#    graphics::arrows(median_y, 2 * ytop, median_y, 0 , col = "blue", lwd = 2,
-#                     xpd = TRUE)
     if (arrow) {
       graphics::arrows(last_median, 2 * ytop, last_median, 0 , col = "blue",
                        lwd = 2, xpd = TRUE)
