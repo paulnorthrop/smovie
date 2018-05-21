@@ -1,6 +1,6 @@
 # smovie 1.0.1.9000
 
-* New movie: mean_vs_median.  Compares the sampling distributions of the mean and median for random samples from a normal distribution.
+* New movie: mean_vs_median.  Compares the sampling distributions of the mean and median for random samples from either a standard normal distribution or a standard Student t distribution.
 
 # smovie 1.0.1
 

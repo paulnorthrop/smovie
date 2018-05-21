@@ -2,14 +2,20 @@
 % Please edit documentation in R/mean_vs_median.R
 \name{mean_vs_median}
 \alias{mean_vs_median}
-\title{Sample mean vs sample median: normally distributed data}
+\title{Sample mean vs sample median}
 \usage{
-mean_vs_median(n = 10, panel_plot = TRUE, hscale = NA, vscale = hscale,
-  n_add = 1, delta_n = 1, arrow = TRUE, leg_cex = 1.75, ...)
+mean_vs_median(n = 10, t_df = NULL, panel_plot = TRUE, hscale = NA,
+  vscale = hscale, n_add = 1, delta_n = 1, arrow = TRUE,
+  leg_cex = 1.75, ...)
 }
 \arguments{
 \item{n}{An integer scalar.  The size of the samples drawn from a
 standard normal distribution.}
+
+\item{t_df}{A positive scalar.  The degrees of freedom \code{df} of
+a Student t distribution, as in \code{\link[stats]{TDist}}.
+If \code{t_df} is not supplied then data are simulated from a standard
+normal distribution.}
 
 \item{panel_plot}{A logical parameter that determines whether the plot
 is placed inside the panel (\code{TRUE}) or in the standard graphics
@@ -46,13 +52,17 @@ Nothing is returned, only the animation is produced.
 \description{
 A movie to compare the sampling distributions of the sample mean
 and sample median based on a random sample of size \eqn{n} from a
-standard normal distribution.
+either a standard normal distribution or a standard Student t
+distribution.  An interesting comparison is between the normal
+and Student t with 2 degrees of freedom cases (see \strong{Examples}).
 }
 \details{
 The movie is based on simulating repeatedly samples of size
-  \code{n} from a standard normal N(0,1) distribution.  It contains
+  \code{n} from either a standard normal N(0,1) distribution or a standard
+  Student t distribution.  The latter is selected by supplying the degrees
+  of freedom of this distribution, using \code{t_df}.  The movie contains
   three plots.  The top plot contains a histogram of the most recently
-  simulated dataset, with the N(0,1) probability density function (p.d.f.)
+  simulated dataset, with the relevant probability density function (p.d.f.)
   superimposed.  A \code{\link[graphics]{rug}} is added to a histogram
   provided that it contains no more than 1000 points.
 
@@ -69,9 +79,6 @@ The movie is based on simulating repeatedly samples of size
   the sample means of \emph{all} the simulated samples.
   The plot on the bottom contains a histogram of
   the sample medians of \emph{all} the simulated samples.
-  There is a checkbox to add to these plots the p.d.f.s of the
-  distribution of the sample mean and the (approximate, large \code{n})
-  distribution of the sample median.
   A \code{\link[graphics]{rug}} is added to these histograms
   provided that they contains no more than 1000 points.
 
@@ -83,12 +90,17 @@ The movie is based on simulating repeatedly samples of size
     \item{}{Each time the button labelled "simulate another \code{n_add}
       samples of size n" is clicked \code{n_add} new samples are simulated
       and their sample mean are added to the bottom histogram.}
-    \item{}{There is a checkbox to choose whether or not to include the
-      p.d.f.s in the bottom plot.}
+    \item{}{For the N(0,1) case only, there is a checkbox to add to the
+      bottom plot the p.d.f.s of the distribution of the sample mean and
+      the (approximate, large \code{n}) distribution of the sample median.}
   }
 }
 \examples{
+# Sampling from a standard normal distribution
 mean_vs_median()
+
+# Sampling from a standard t(2) distribution
+mean_vs_median(t_df = 2)
 }
 \seealso{
 \code{\link{movies}}: a user-friendly menu panel.

@@ -1,13 +1,19 @@
 # =============================== mean_vs_median ==============================
 
-#' Sample mean vs sample median: normally distributed data
+#' Sample mean vs sample median
 #'
 #' A movie to compare the sampling distributions of the sample mean
 #' and sample median based on a random sample of size \eqn{n} from a
-#' standard normal distribution.
+#' either a standard normal distribution or a standard Student t
+#' distribution.  An interesting comparison is between the normal
+#' and Student t with 2 degrees of freedom cases (see \strong{Examples}).
 #'
 #' @param n An integer scalar.  The size of the samples drawn from a
 #'   standard normal distribution.
+#' @param t_df A positive scalar.  The degrees of freedom \code{df} of
+#'   a Student t distribution, as in \code{\link[stats]{TDist}}.
+#'   If \code{t_df} is not supplied then data are simulated from a standard
+#'   normal distribution.
 #' @param panel_plot A logical parameter that determines whether the plot
 #'   is placed inside the panel (\code{TRUE}) or in the standard graphics
 #'   window (\code{FALSE}).  If the plot is to be placed inside the panel
@@ -31,9 +37,11 @@
 #'   \code{variable}, \code{title}, \code{step}, \code{action}, \code{initval},
 #'   \code{range}.
 #' @details The movie is based on simulating repeatedly samples of size
-#'   \code{n} from a standard normal N(0,1) distribution.  It contains
+#'   \code{n} from either a standard normal N(0,1) distribution or a standard
+#'   Student t distribution.  The latter is selected by supplying the degrees
+#'   of freedom of this distribution, using \code{t_df}.  The movie contains
 #'   three plots.  The top plot contains a histogram of the most recently
-#'   simulated dataset, with the N(0,1) probability density function (p.d.f.)
+#'   simulated dataset, with the relevant probability density function (p.d.f.)
 #'   superimposed.  A \code{\link[graphics]{rug}} is added to a histogram
 #'   provided that it contains no more than 1000 points.
 #'
@@ -50,9 +58,6 @@
 #'   the sample means of \emph{all} the simulated samples.
 #'   The plot on the bottom contains a histogram of
 #'   the sample medians of \emph{all} the simulated samples.
-#'   There is a checkbox to add to these plots the p.d.f.s of the
-#'   distribution of the sample mean and the (approximate, large \code{n})
-#'   distribution of the sample median.
 #'   A \code{\link[graphics]{rug}} is added to these histograms
 #'   provided that they contains no more than 1000 points.
 #'
@@ -64,16 +69,21 @@
 #'     \item{}{Each time the button labelled "simulate another \code{n_add}
 #'       samples of size n" is clicked \code{n_add} new samples are simulated
 #'       and their sample mean are added to the bottom histogram.}
-#'     \item{}{There is a checkbox to choose whether or not to include the
-#'       p.d.f.s in the bottom plot.}
+#'     \item{}{For the N(0,1) case only, there is a checkbox to add to the
+#'       bottom plot the p.d.f.s of the distribution of the sample mean and
+#'       the (approximate, large \code{n}) distribution of the sample median.}
 #'   }
 #' @return Nothing is returned, only the animation is produced.
 #' @seealso \code{\link{movies}}: a user-friendly menu panel.
 #' @seealso \code{\link{smovie}}: general information about smovie.
 #' @examples
+#' # Sampling from a standard normal distribution
 #' mean_vs_median()
+#'
+#' # Sampling from a standard t(2) distribution
+#' mean_vs_median(t_df = 2)
 #' @export
-mean_vs_median <- function(n = 10, panel_plot = TRUE, hscale = NA,
+mean_vs_median <- function(n = 10, t_df = NULL, panel_plot = TRUE, hscale = NA,
                            vscale = hscale, n_add = 1, delta_n = 1,
                            arrow = TRUE, leg_cex = 1.75, ...) {
   if (!tcltk::is.tclObj(tcltk::tclRequire("BWidget"))) {
@@ -105,7 +115,6 @@ mean_vs_median <- function(n = 10, panel_plot = TRUE, hscale = NA,
   sample_medians <- NULL
   save_last_mean <- NULL
   save_last_median <- NULL
-#  nsim <- 1
   mean_vs_median_panel <- rpanel::rp.control("mean vs median",
                                  panelname = my_panelname, n = n,
                                  n_add = n_add, old_n = old_n, ntop = 1000,
@@ -114,7 +123,8 @@ mean_vs_median <- function(n = 10, panel_plot = TRUE, hscale = NA,
                                  arrow = arrow, show_dens = show_dens,
                                  old_show_dens = show_dens, leg_cex = leg_cex,
                                  save_last_mean = save_last_mean,
-                                 save_last_median = save_last_median)
+                                 save_last_median = save_last_median,
+                                 t_df = t_df)
   #
   redraw_plot <- NULL
   panel_redraw <- function(panel) {
@@ -166,8 +176,10 @@ mean_vs_median <- function(n = 10, panel_plot = TRUE, hscale = NA,
     rpanel::rp.button(panel = mean_vs_median_panel, action = action,
                       title = my_title, ...)
   }
-  rpanel::rp.checkbox(panel = mean_vs_median_panel, show_dens,
-                      labels = "show sampling pdfs", action = action)
+  if (is.null(t_df)) {
+    rpanel::rp.checkbox(panel = mean_vs_median_panel, show_dens,
+                        labels = "show sampling pdfs", action = action)
+  }
   if (!panel_plot) {
     rpanel::rp.do(panel = mean_vs_median_panel, action = action)
   }
@@ -192,7 +204,12 @@ mean_vs_median_plot <- function(panel) {
     mu <- 0
     sigma <- 1
     if (old_show_dens == show_dens) {
-      temp <- as.matrix(replicate(n_add, stats::rnorm(n, mean = mu, sd = sigma)))
+      if (is.null(t_df)) {
+        temp <- as.matrix(replicate(n_add, stats::rnorm(n, mean = mu,
+                                                        sd = sigma)))
+      } else {
+        temp <- as.matrix(replicate(n_add, stats::rt(n, df = t_df)))
+      }
       mean_y <- apply(temp, 2, mean)
       median_y <- apply(temp, 2, stats::median)
       # Extract the last dataset and the last mean and median
@@ -242,11 +259,21 @@ mean_vs_median_plot <- function(panel) {
     ydens <- stats::dnorm(xx, mean = mu, sd = sigma)
     graphics::lines(xx, ydens, xpd = TRUE, lwd = 2, lty = 2)
     u <- graphics::par("usr")
-    graphics::legend("topright", legend = expression(paste("N(0,",1,")")),
-                     lty = 2, lwd = 3, box.lty = 0, cex = leg_cex)
-    graphics::rug(last_mean, line = 0.5, ticksize = 0.05, col = "red", lwd = 2)
-    graphics::rug(last_median, line = 0.5, ticksize = 0.05, col = "blue",
+    if (is.null(t_df)) {
+      graphics::legend("topright", legend = expression(paste("N(0,",1,")")),
+                       lty = 2, lwd = 3, box.lty = 0, cex = leg_cex)
+    } else {
+      graphics::legend("topright", legend = paste("t with", t_df, "df",
+                                                  sep = " "),
+                       lty = 2, lwd = 3, box.lty = 0, cex = leg_cex)
+    }
+    if (last_mean > h.low & last_mean < h.up) {
+      graphics::rug(last_mean, line = 0.5, ticksize = 0.05, col = "red", lwd = 2)
+    }
+    if (last_median > h.low & last_median < h.up) {
+      graphics::rug(last_median, line = 0.5, ticksize = 0.05, col = "blue",
                   lwd = 2)
+    }
     if (arrow) {
       graphics::segments(last_mean, 0, last_mean, -10, col = "red", xpd = TRUE,
                        lwd = 2)
@@ -282,8 +309,10 @@ mean_vs_median_plot <- function(panel) {
       if (nsim < 1000) {
         graphics::rug(y, line = 0.5, ticksize = 0.05, col = "black")
       }
-      graphics::rug(last_mean, line = 0.5, ticksize = 0.05, col = "red",
+      if (last_mean > h.low & last_mean < h.up) {
+        graphics::rug(last_mean, line = 0.5, ticksize = 0.05, col = "red",
                     lwd = 2)
+      }
     }
     if (show_dens) {
       graphics::curve(stats::dnorm(x, mean = mu, sd = sigma / sqrt(n)),
@@ -325,8 +354,10 @@ mean_vs_median_plot <- function(panel) {
       if (nsim < 1000) {
         graphics::rug(y, line = 0.5, ticksize = 0.05, col = "black")
       }
-      graphics::rug(last_median, line = 0.5, ticksize = 0.05, col = "blue",
+      if (last_mean > h.low & last_mean < h.up) {
+        graphics::rug(last_median, line = 0.5, ticksize = 0.05, col = "blue",
                     lwd = 2)
+      }
     }
     if (show_dens) {
       graphics::curve(stats::dnorm(x, mean = mu,

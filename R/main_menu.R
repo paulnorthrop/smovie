@@ -169,8 +169,11 @@ movies <- function(fixed_range = TRUE, hscale = NA, vscale = hscale) {
     else if (menu.panel$demo == "Maximum") {
       ett(distn = "exponential", hscale = hscale, vscale = vscale)
     }
-    else if (menu.panel$demo == "Mean vs median") {
+    else if (menu.panel$demo == "Mean vs median, normal") {
       mean_vs_median()
+    }
+    else if (menu.panel$demo == "Mean vs median, Student t(2)") {
+      mean_vs_median(t_df = 2)
     }
     else if (menu.panel$demo == "Leverage and influence") {
       lev_inf(hscale = hscale, vscale = vscale)
@@ -304,7 +307,8 @@ movies <- function(fixed_range = TRUE, hscale = NA, vscale = hscale) {
        "Pearson correlation coefficient",
        "Mean",
        "Maximum",
-       "Mean vs median"
+       "Mean vs median, normal",
+       "Mean vs median, Student t(2)"
   ),
   list("CLT",
        " beta",
