@@ -121,9 +121,6 @@ Loosely speaking, a consequence of the
 
   The p.d.f. (for a continuous variable) or p.m.f. (for a discrete variable)
   of the original variables is added to the top plot.
-  There is a checkbox to add to the bottom plot the approximate (large
-  \code{n}) normal p.d.f./c.d.f. (with mean \eqn{\mu} and standard
-  deviation \eqn{\sigma / \sqrt{n}}), implied by the CLT.
 
   Once it starts, four aspects of this movie are controlled by the user.
   \itemize{
@@ -137,8 +134,9 @@ Loosely speaking, a consequence of the
       a histogram of the simulated means and the limiting normal p.d.f. to
       the empirical c.d.f. of the simulated data and the limiting normal
       c.d.f.}
-    \item{}{There is a checkbox to choose whether or not to include in the
-      bottom plot the limiting p.d.f. or c.d.f.}
+    \item{}{There is a checkbox to add to the bottom plot the approximate
+      (large \code{n}) normal p.d.f./c.d.f. (with mean \eqn{\mu} and
+      standard deviation \eqn{\sigma / \sqrt{n}}), implied by the CLT.}
   }
 }
 \examples{
