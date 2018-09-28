@@ -15,8 +15,8 @@ os:
 #  - sh -e /etc/init.d/xvfb start
 
 r:
-#  - release
-  - devel
+  - release
+#  - devel
 #  - oldrel
 
 before_install:
