@@ -17,7 +17,7 @@ than 2.}
   observations are sampled.   Distributions \code{"beta"},
   \code{"cauchy"}, \code{"chisq"}, \code{"chi-squared"},
   \code{"exponential"}, \code{"f"}, \code{"gamma"}, \code{"gp"},
-  \code{lognormal}, \code{log-normal},  \code{"ngev"}, \code{"normal"},
+  \code{"lognormal"}, \code{"log-normal"},  \code{"ngev"}, \code{"normal"},
   \code{"t"}, \code{"uniform"} and \code{"weibull"} are recognised, case
   being ignored.
 

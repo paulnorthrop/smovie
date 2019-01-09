@@ -5,10 +5,10 @@
 \title{Wald, Wilks and Score tests}
 \usage{
 wws(model = c("norm", "binom"), theta_range = NULL, mult = 3,
-  theta0 = if (!is.null(theta_range)) sum(c(0.25, 0.75) * theta_range) else
-  NULL, panel_plot = TRUE, hscale = NA, vscale = hscale,
-  delta_theta0 = if (!is.null(theta_range)) abs(diff(theta_range))/20 else
-  NULL, theta_mle = NULL, loglik = NULL, alg_score = NULL,
+  theta0 = if (!is.null(theta_range)) sum(c(0.25, 0.75) * theta_range)
+  else NULL, panel_plot = TRUE, hscale = NA, vscale = hscale,
+  delta_theta0 = if (!is.null(theta_range)) abs(diff(theta_range))/20
+  else NULL, theta_mle = NULL, loglik = NULL, alg_score = NULL,
   alg_obs_info = NULL, digits = 3, ...)
 }
 \arguments{
