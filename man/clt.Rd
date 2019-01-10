@@ -75,7 +75,7 @@ to each new frame of the movie.}
 window.}
 
 \item{arrow}{A logical scalar.  Should an arrow be included to show the
-simulated sample maximum from the top plot being placed into the
+simulated sample mean from the top plot being placed into the
 bottom plot?}
 
 \item{leg_cex}{The argument \code{cex} to \code{\link[graphics]{legend}}.
@@ -99,7 +99,7 @@ Loosely speaking, a consequence of the
   \href{https://en.wikipedia.org/wiki/Central_limit_theorem}{Central Limit Theorem}
   is that the mean of a \strong{large number} of independent and
   identically distributed random variables, each with mean \eqn{\mu} and
-  finite standard deviation \eqn{\sigma} has \strong{approximately} a
+  finite standard deviation \eqn{\sigma}, has \strong{approximately} a
   normal distribution, even if these original variables are not normally
   distributed.
 
@@ -125,7 +125,7 @@ Loosely speaking, a consequence of the
   Once it starts, four aspects of this movie are controlled by the user.
   \itemize{
     \item{}{There are buttons to increase (+) or decrease (-) the sample
-      size, that is, the number of values over which a maximum is
+      size, that is, the number of values over which a mean is
       calculated.}
     \item{}{Each time the button labelled "simulate another \code{n_add}
       samples of size n" is clicked \code{n_add} new samples are simulated
