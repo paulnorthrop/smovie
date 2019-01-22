@@ -368,7 +368,7 @@ set_leg_pos <- function(distn, fun_args) {
   bottom_leg_pos <-
     switch(distn,
            "exponential" = "topright",
-           "uniform" = "topright",
+           "uniform" = "topleft",
            "gp_neg_1" = "topleft",
            "gp_neg" = "topleft",
            "gp_non_neg" = "topright",
