@@ -386,11 +386,19 @@ ett <- function(n = 20, distn, params = list(), panel_plot = TRUE, hscale = NA,
   } else {
     action <- ett_movie_plot
   }
-  #
+  # Check whether or not n = 1 will work
+  n_check <- 1
+  b1 <- do.call(qfun, c(list(p = 1 - 1 / n_check), fun_args))
+  a1 <- (1 / n_check) / do.call(dfun, c(list(x = b1), fun_args))
+  if (any(is.infinite(c(a1, b1)))) {
+    n_lower <- 2
+  } else {
+    n_lower <- 1
+  }
   rpanel::rp.doublebutton(panel = ett_panel, variable = n, step = delta_n,
                           title = "sample size, n",
                           action = action, initval = n,
-                          range = c(2, NA), showvalue = TRUE, ...)
+                          range = c(n_lower, NA), showvalue = TRUE, ...)
   if (n_add == 1) {
     my_title <- paste("simulate another sample")
   } else {
@@ -583,7 +591,9 @@ ett_movie_plot <- function(panel) {
       ytrue <- n * temp * do.call(dfun, d_list)
       my_ylab <- "pdf"
       # Set the top of the y-axis
-      ytop <- max(ygev, ytrue) * 1.5
+      if (n > 1){
+        ytop <- max(ygev, ytrue) * 1.5
+      }
     } else{
       ytrue <- exp(n * do.call(pfun, p_list))
       my_ylab <- "cdf"
