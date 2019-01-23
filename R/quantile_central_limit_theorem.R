@@ -114,7 +114,7 @@
 #'     \item{}{There is a checkbox to add to the bottom plot the approximate
 #'       (large \code{n}) normal p.d.f./c.d.f. implied by the CLT for sample
 #'       quantiles: the mean is \eqn{\xi(p)} and standard deviation is
-#'       \eqn{\sqrtp\sqrtq / n f(\xi(p))}, where \eqn{q = 1-p}}.
+#'       \eqn{\sqrt p \sqrt q  / n f(\xi(p))}, where \eqn{q = 1-p}}.
 #'   }
 #' @return Nothing is returned, only the animation is produced.
 #' @references Lehman, E. L. (1999) \emph{Elements of Large-Sample Theory},
@@ -400,7 +400,7 @@ cltqmovie_plot <- function(panel) {
     sim_list <- c(list(n = n), fun_args)
     if (old_pdf_or_cdf == pdf_or_cdf & old_show_dens == show_dens) {
       temp <- as.matrix(replicate(n_add, do.call(rfun, sim_list)))
-      q_y <- apply(temp, 2, quantile, probs = p, type = type)
+      q_y <- apply(temp, 2, stats::quantile, probs = p, type = type)
       # Extract the last dataset and the last mean (for drawing the arrow)
       y <- temp[, n_add]
       old_y <- y

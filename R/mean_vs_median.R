@@ -191,7 +191,7 @@ mean_vs_median <- function(n = 10, t_df = NULL, panel_plot = TRUE, hscale = NA,
 mean_vs_median_plot <- function(panel) {
   old_par <- graphics::par(no.readonly = TRUE)
   # To please R CMD check
-  n <- n_add <- arrow <- leg_cex <- show_dens <- NULL
+  n <- n_add <- arrow <- leg_cex <- show_dens <- t_df <- x <- NULL
   panel <- within(panel, {
     # Don't add the rug in the top plot if n is large
     if (n > 1000) {
@@ -280,7 +280,7 @@ mean_vs_median_plot <- function(panel) {
       graphics::segments(last_median, 0, last_median, -10, col = "blue",
                          xpd = TRUE, lwd = 2)
     }
-    ytop <- dnorm(0, sd = sigma / sqrt(n)) * 1.2
+    ytop <- stats::dnorm(0, sd = sigma / sqrt(n)) * 1.2
     if (n <= 25) {
       my.by <- 0.1
     }
