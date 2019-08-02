@@ -290,7 +290,6 @@ discrete <- function(distn, var_support = NULL, params = list(),
 }
 
 plot_discrete <- function(panel) {
-  old_par <- graphics::par(no.readonly = TRUE)
   with(panel, {
     # Put the parameter values in a named list
     new_fun_args <- list()
@@ -380,6 +379,5 @@ plot_discrete <- function(panel) {
     }
     do.call(graphics::plot, for_plot)
   })
-  graphics::par(old_par)
   return(panel)
 }
