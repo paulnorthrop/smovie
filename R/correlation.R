@@ -181,11 +181,12 @@ correlation <- function(n = 30, rho = 0, panel_plot = TRUE, hscale = NA,
 # Function to be called by corr_sim_movie().
 
 corr_sim_movie_plot <- function(panel){
-  old_par <- graphics::par(no.readonly = TRUE)
+  oldpar <- graphics::par(mfrow = c(1, 1), bty = "l", las = 1,
+                          oma = c(0, 0, 0, 0))
+  on.exit(par(oldpar))
   # To please R CMD check
   rho <- nsim <- fisher_z <- pdf_or_cdf <- nseed <- NULL
   panel <- within(panel, {
-    graphics::par(mfrow = c(1, 1), bty = "l", las = 1, oma = c(0, 0, 0, 0))
     if (rho != rho_old | nsim != nsim_old) {
       rvals <- NULL
     }
@@ -440,6 +441,5 @@ corr_sim_movie_plot <- function(panel){
     }
     graphics::title(main = ttxt, cex.main = 1.5)
   })
-  graphics::par(old_par)
   return(invisible(panel))
 }

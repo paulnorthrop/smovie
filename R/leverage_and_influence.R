@@ -152,10 +152,10 @@ expl_plot <- function(x, y, c1, c2, ntitle, p = 0.0185, q = 0.05, nleg = NULL,
 }
 
 lev_inf_1_plot <- function(panel){
-  old_par <- graphics::par(no.readonly = TRUE)
+  oldpar <- graphics::par(oma = c(0, 0, 0, 0), mar = c(3, 4, 1, 2), las = 1,
+                         pch = 16, bty = "l", mfrow = c(1, 1))
+  on.exit(par(oldpar))
   with(panel, {
-    graphics::par(oma = c(0, 0, 0, 0), mar = c(3, 4, 1, 2), las = 1, pch = 16,
-                  bty = "l", mfrow = c(1, 1))
     lm1 <- stats::lm(set1 ~ x)
     c1 <- lm1$coeff
     pcol <- c(rep(1, length(x)), 2)
@@ -168,7 +168,6 @@ lev_inf_1_plot <- function(panel){
               nleg = 1, xlim = c(-0.75, 1.75), ylim = c(-0.75, 1.75),
               col = pcol)
   })
-  graphics::par(old_par)
   return(invisible(panel))
 }
 

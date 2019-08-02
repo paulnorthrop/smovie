@@ -189,7 +189,10 @@ mean_vs_median <- function(n = 10, t_df = NULL, panel_plot = TRUE, hscale = NA,
 # Function to be called by mean_vs_median().
 
 mean_vs_median_plot <- function(panel) {
-  old_par <- graphics::par(no.readonly = TRUE)
+  oldpar <- graphics::par(mfrow = c(3, 1), oma = c(0, 0, 0, 0),
+                          mar = c(4, 4, 2, 2) + 0.1, cex.axis = 1.5,
+                          cex.lab = 1.5)
+  on.exit(par(oldpar))
   # To please R CMD check
   n <- n_add <- arrow <- leg_cex <- show_dens <- t_df <- x <- NULL
   panel <- within(panel, {
@@ -199,8 +202,6 @@ mean_vs_median_plot <- function(panel) {
     } else {
       show_rug <- TRUE
     }
-    graphics::par(mfrow = c(3, 1), oma = c(0, 0, 0, 0),
-                  mar = c(4, 4, 2, 2) + 0.1, cex.axis = 1.5, cex.lab = 1.5)
     mu <- 0
     sigma <- 1
     if (old_show_dens == show_dens) {
@@ -380,6 +381,5 @@ mean_vs_median_plot <- function(panel) {
     old_n <- n
     old_show_dens <- show_dens
   })
-  graphics::par(old_par)
   return(panel)
 }
