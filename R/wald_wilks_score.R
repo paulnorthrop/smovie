@@ -333,9 +333,9 @@ wws <- function(model = c("norm", "binom"), theta_range = NULL, mult = 3,
 # Function to be called by clt_normal_movie().
 
 wws_plot <- function(panel) {
-  old_par <- graphics::par(no.readonly = TRUE)
+  oldpar <- graphics::par(oma = c(0, 0, 0, 0), mar = c(5, 5, 2, 4) + 0.1)
+  on.exit(oldpar)
   with(panel, {
-    par(oma = c(0, 0, 0, 0), mar = c(5, 5, 2, 4) + 0.1)
     # Produce plot of log-likelihood
     theta_vals <- seq(theta_range[1], theta_range[2], len = 200)
     loglik_vals <- do.call(loglik, c(list(theta_vals), user_args))
@@ -494,6 +494,5 @@ wws_plot <- function(panel) {
       }
     }
   })
-  graphics::par(old_par)
   return(invisible(panel))
 }
