@@ -334,7 +334,7 @@ wws <- function(model = c("norm", "binom"), theta_range = NULL, mult = 3,
 
 wws_plot <- function(panel) {
   oldpar <- graphics::par(oma = c(0, 0, 0, 0), mar = c(5, 5, 2, 4) + 0.1)
-  on.exit(oldpar)
+  on.exit(par(oldpar))
   with(panel, {
     # Produce plot of log-likelihood
     theta_vals <- seq(theta_range[1], theta_range[2], len = 200)

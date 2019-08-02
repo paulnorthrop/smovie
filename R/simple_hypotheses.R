@@ -161,7 +161,9 @@ shypo <- function(mu0 = 0, sd = 6, eff = sd, n = 10, a = mu0 + eff / 2,
 # Function to be called by shypo().
 
 sh_plot <- function(panel) {
-  old_par <- graphics::par(no.readonly = TRUE)
+  oldpar <- graphics::par(mfrow = c(2, 1), oma = c(0, 0, 0, 0),
+                          mar = c(3, 3, 2, 2) + 0.1)
+  on.exit(par(oldpar))
   with(panel, {
     mu1 <- mu0 + eff
     # Set a and/or n automatically if requested
@@ -180,7 +182,6 @@ sh_plot <- function(panel) {
     }
     # Set the standard error for later use, based on the current value of n
     se <- sd / sqrt(n)
-    par(mfrow = c(2, 1), oma = c(0, 0, 0, 0), mar = c(3, 3, 2, 2) + 0.1)
     ## Top plot -----
     mult <- 3.5
     xlim <- c(mu0 - mult * se, mu1 + mult * se)
@@ -249,6 +250,5 @@ sh_plot <- function(panel) {
     graphics::legend("left", legend = expression(paste("type II, ", beta)),
                      lty = 1, lwd = 2, col = "red", bty = "n", cex = 1.25)
   })
-  graphics::par(old_par)
   return(invisible(panel))
 }
