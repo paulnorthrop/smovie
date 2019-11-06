@@ -434,7 +434,7 @@ ett <- function(n = 20, distn, params = list(), panel_plot = TRUE, hscale = NA,
 ett_movie_plot <- function(panel) {
   oldpar <- graphics::par(mfrow = c(2, 1), oma = c(0, 0, 0, 0),
                           mar = c(4, 4, 2, 2) + 0.1)
-  on.exit(par(oldpar))
+  on.exit(graphics::par(oldpar))
   # To please R CMD check
   n <- distn <- fun_args <- pdf_or_cdf <- show_dens <- n_add <- rfun <-
     qfun <- pfun <- top_range <- dfun <- xlab <- top_leg_pos <- arrow <-

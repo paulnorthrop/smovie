@@ -192,7 +192,7 @@ mean_vs_median_plot <- function(panel) {
   oldpar <- graphics::par(mfrow = c(3, 1), oma = c(0, 0, 0, 0),
                           mar = c(4, 4, 2, 2) + 0.1, cex.axis = 1.5,
                           cex.lab = 1.5)
-  on.exit(par(oldpar))
+  on.exit(graphics::par(oldpar))
   # To please R CMD check
   n <- n_add <- arrow <- leg_cex <- show_dens <- t_df <- x <- NULL
   panel <- within(panel, {

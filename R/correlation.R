@@ -183,7 +183,7 @@ correlation <- function(n = 30, rho = 0, panel_plot = TRUE, hscale = NA,
 corr_sim_movie_plot <- function(panel){
   oldpar <- graphics::par(mfrow = c(1, 1), bty = "l", las = 1,
                           oma = c(0, 0, 0, 0))
-  on.exit(par(oldpar))
+  on.exit(graphics::par(oldpar))
   # To please R CMD check
   rho <- nsim <- fisher_z <- pdf_or_cdf <- nseed <- NULL
   panel <- within(panel, {

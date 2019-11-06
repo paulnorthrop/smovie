@@ -154,7 +154,7 @@ expl_plot <- function(x, y, c1, c2, ntitle, p = 0.0185, q = 0.05, nleg = NULL,
 lev_inf_1_plot <- function(panel){
   oldpar <- graphics::par(oma = c(0, 0, 0, 0), mar = c(3, 4, 1, 2), las = 1,
                          pch = 16, bty = "l", mfrow = c(1, 1))
-  on.exit(par(oldpar))
+  on.exit(graphics::par(oldpar))
   with(panel, {
     lm1 <- stats::lm(set1 ~ x)
     c1 <- lm1$coeff

@@ -383,7 +383,7 @@ cltq <- function(n = 20, p = 0.5, distn, params = list(), type = 7,
 cltqmovie_plot <- function(panel) {
   oldpar <- graphics::par(mfrow = c(2, 1), oma = c(0, 0, 0, 0),
                           mar = c(4, 4, 2, 2) + 0.1)
-  on.exit(par(oldpar))
+  on.exit(graphics::par(oldpar))
   # To please R CMD check
   n <- distn <- fun_args <- pdf_or_cdf <- show_dens <- n_add <- rfun <-
     discrete_distn <- top_range <- dfun <- xlab <- top_leg_pos <- arrow <-

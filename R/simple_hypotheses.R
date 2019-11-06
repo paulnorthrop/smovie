@@ -163,7 +163,7 @@ shypo <- function(mu0 = 0, sd = 6, eff = sd, n = 10, a = mu0 + eff / 2,
 sh_plot <- function(panel) {
   oldpar <- graphics::par(mfrow = c(2, 1), oma = c(0, 0, 0, 0),
                           mar = c(3, 3, 2, 2) + 0.1)
-  on.exit(par(oldpar))
+  on.exit(graphics::par(oldpar))
   with(panel, {
     mu1 <- mu0 + eff
     # Set a and/or n automatically if requested
