@@ -179,7 +179,7 @@ movies <- function(fixed_range = TRUE, hscale = NA, vscale = hscale) {
       lev_inf(hscale = hscale, vscale = vscale)
     }
     else if (menu.panel$demo == "Wald, Wilks and Score tests") {
-      wws(theta0 = 0.8, hscale = hscale, vscale = vscale)
+      wws(model = "binom", theta0 = 0.5, hscale = hscale, vscale = vscale)
     }
     else if (menu.panel$demo == "Testing simple hypotheses") {
       shypo(mu0 = 0, eff = 5, n = 1, hscale = hscale, vscale = vscale)
