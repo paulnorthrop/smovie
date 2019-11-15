@@ -376,6 +376,21 @@ wws_plot <- function(panel) {
       for_alg_score <- c(list(theta0), user_args)
       grad_at_theta0 <- do.call(alg_score, for_alg_score)
     }
+    getCurrentAspect <- function() {
+      uy <- diff(graphics::grconvertY(1:2, "user", "inches"))
+      ux <- diff(graphics::grconvertX(1:2, "user", "inches"))
+      return(uy / ux)
+    }
+    asp <- getCurrentAspect()
+    # Phantom labels in white to keep the plot still
+    graphics::axis(2, at = loglik_at_theta0, tick = FALSE, las = 1,
+                   labels = expression(ln*L(theta[0])),
+                   mgp = c(3, 0.5, 0), col.axis = "white")
+    graphics::axis(4, at = loglik_at_theta0, tick = FALSE, las = 1,
+                   labels = expression(ln*L(theta[0])),
+                   mgp = c(3, 0.5, 0), col.axis = "white")
+    graphics::text(theta_mle, loglik_at_mle, "score", pos = 3, offset = 1,
+                   srt = 90, xpd = TRUE, col = "white")
     # Add line for theta0
     if (test_stat == "none") {
       if (theta0 > theta_mle) {
@@ -388,6 +403,9 @@ wws_plot <- function(panel) {
         graphics::axis(2, at = loglik_at_theta0, tick = FALSE, las = 1,
                        labels = expression(ln*L(theta[0])), mgp = c(3, 0.5, 0))
       } else {
+        graphics::text(theta_mle, loglik_at_mle, "score", pos = 3, offset = 1,
+                       srt = 180 / pi * atan(grad_at_theta0 * asp), xpd = TRUE,
+                       col = "red")
         graphics::segments(theta0, u[3], theta0, loglik_at_theta0, lty = 2,
                            lwd = 2)
         graphics::axis(1, at = theta0, tick = FALSE, las = 1,
@@ -453,16 +471,11 @@ wws_plot <- function(panel) {
     if (test_stat == "score" || test_stat == "all") {
       my_a <- loglik_at_theta0 - grad_at_theta0 * theta0
       my_b <- grad_at_theta0
-      graphics::abline(a = my_a, b = my_b, lwd = 2)
+      graphics::abline(a = my_a, b = my_b, lwd = 2, xpd = FALSE)
       graphics::segments(theta0, u[3], theta0, loglik_at_theta0, lty = 2,
                          lwd = 2)
       graphics::axis(1, at = theta0, tick = FALSE,
                      labels = expression(theta[0]), mgp = c(3, 0.5, 0))
-      getCurrentAspect <- function() {
-        uy <- diff(graphics::grconvertY(1:2, "user", "inches"))
-        ux <- diff(graphics::grconvertX(1:2, "user", "inches"))
-        return(uy/ux)
-      }
       asp <- getCurrentAspect()
       graphics::text(theta0, loglik_at_theta0, "score", pos = 3, offset = 1,
                      srt = 180 / pi * atan(grad_at_theta0 * asp), xpd = TRUE)

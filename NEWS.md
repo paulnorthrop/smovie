@@ -8,7 +8,9 @@
 
 * In `ett()` the sample size `n` is now allowed to drop to 1 for those cases in which the normalising constants underlying the calculations are finite, such as the exponential, uniform and generalised Pareto distributions.  Otherwise, 2 is the smallest allowable value for `n`.
 
-* When the Wald, Wilks and Score tests movie is called from the main menu, via `movies()` a binomial example is used, so that the differences between the test statistics can be seen.
+* When the Wald, Wilks and Score tests movie `wws()` is called from the main menu, via `movies()` a binomial example is used, so that the differences between the test statistics can be seen.
+
+* Adjustments have been made to the `wws()` movie to ensure that the plot stays completely still during the animations.
 
 # smovie 1.0.1
 
