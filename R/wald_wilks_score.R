@@ -315,7 +315,7 @@ wws <- function(model = c("norm", "binom"), theta_range = NULL, mult = 3,
   #
   rpanel::rp.doublebutton(wws_panel, theta0, delta_theta0,
                           range = c(theta_range[1], theta_range[2]),
-                          initval = theta0, title = "null value theta0 or theta",
+                          initval = theta0, title = "null value theta0 of theta",
                           action = action, showvalue = TRUE)
   rpanel::rp.radiogroup(wws_panel, test_stat,
                         c("none", "Wald", "Wilks", "score", "all"),
