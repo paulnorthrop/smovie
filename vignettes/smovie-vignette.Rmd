@@ -83,6 +83,20 @@ clt(distn = "poisson")
 knitr::include_graphics("clt_poisson.PNG")
 ```
 
+### Central Limit Theorem for sample quantiles
+
+A similar limit theorem holds for sample quantiles.  Suppose that we are interested in the limiting distribution of the $100p\%$ sample quantile of independent and identically distributed random variables, each with probability density function $f$ and $100p\%$ quantile $\xi(p)$.  The limiting distribution is normal with mean $\xi(p)$ and standard deviation $\sqrt{p(1-p)} / n f(\xi(p))$, provided that $f(\xi(p))$ is positive.  See @Lehman1999 for details.
+
+The function `cltq` illustrates this theorem, based here on samples from a gamma(2, 1) distribution.
+
+```{r, eval = FALSE}
+cltq(distn = "gamma")
+```
+
+```{r, echo = FALSE, fig.align = 'center', out.width = "600px"}
+knitr::include_graphics("cltq_gamma.PNG")
+```
+
 ### Extremal Types Theorem 
 
 The [Extremal Types Theorem](https://en.wikipedia.org/wiki/Extreme_value_theory#Univariate_theory) is rather like the CLT but applied to the sample maximum instead of the sample mean.  Loosely speaking, it states that, in many situations, the maximum of a large number $n$ of independent random variables has approximately a Generalized Extreme Value (GEV) distribution with shape parameter $\xi$.  See @Coles2001 for an introductory account of extreme value theory.
