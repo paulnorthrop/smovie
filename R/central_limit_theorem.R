@@ -119,6 +119,7 @@
 #' @return Nothing is returned, only the animation is produced.
 #' @seealso \code{\link{movies}}: a user-friendly menu panel.
 #' @seealso \code{\link{smovie}}: general information about smovie.
+#' @seealso \code{\link{cltq}}: Central Limit Theorem for sample quantiles.
 #' @examples
 #' # Exponential data
 #' clt()

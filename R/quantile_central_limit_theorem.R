@@ -121,6 +121,7 @@
 #'   Springer-Verlag, London. \url{http://dx.doi.org/10.1007/b98855}
 #' @seealso \code{\link{movies}}: a user-friendly menu panel.
 #' @seealso \code{\link{smovie}}: general information about smovie.
+#' @seealso \code{\link{clt}}: Central Limit Theorem.
 #' @examples
 #' # Exponential data
 #' cltq()

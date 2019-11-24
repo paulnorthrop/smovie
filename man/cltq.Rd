@@ -156,4 +156,6 @@ Lehman, E. L. (1999) \emph{Elements of Large-Sample Theory},
 \code{\link{movies}}: a user-friendly menu panel.
 
 \code{\link{smovie}}: general information about smovie.
+
+\code{\link{clt}}: Central Limit Theorem.
 }

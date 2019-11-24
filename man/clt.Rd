@@ -153,4 +153,6 @@ clt(distn = "poisson")
 \code{\link{movies}}: a user-friendly menu panel.
 
 \code{\link{smovie}}: general information about smovie.
+
+\code{\link{cltq}}: Central Limit Theorem for sample quantiles.
 }

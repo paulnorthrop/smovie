@@ -19,9 +19,9 @@
 #' @examples
 #' movies()
 #' @seealso \code{\link{discrete}}, \code{\link{continuous}},
-#'   \code{\link{clt}}, \code{\link{ett}}, \code{\link{mean_vs_median}},
-#'   \code{\link{correlation}}, \code{\link{lev_inf}}, \code{\link{wws}},
-#'   \code{\link{shypo}}.
+#'   \code{\link{clt}}, \code{\link{cltq}}, \code{\link{ett}},
+#'   \code{\link{mean_vs_median}}, \code{\link{correlation}},
+#'   \code{\link{lev_inf}}, \code{\link{wws}}, \code{\link{shypo}}.
 #' @seealso \code{\link{smovie}}: general information about smovie.
 #' @export
 movies <- function(fixed_range = TRUE, hscale = NA, vscale = hscale) {
