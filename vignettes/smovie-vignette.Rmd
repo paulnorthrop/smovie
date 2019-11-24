@@ -111,6 +111,31 @@ ett(distn = "exponential")
 knitr::include_graphics("ett.PNG")
 ```
 
+### Mean vs median
+
+The function `mean_vs_median` produces a movie to compare the sampling distributions of the sample mean and sample median based on a random sample of size $n$ from either a standard normal distribution or a standard Student's $t$
+distribution.  
+
+If we sample from a standard normal distribution then the sample mean has the smaller sample variance, as illustrated in the following movie.
+
+```{r, eval = FALSE}
+mean_vs_median()
+```
+
+```{r, echo = FALSE, fig.align = 'center', out.width = "600px"}
+knitr::include_graphics("mean_vs_median_normal.PNG")
+```
+
+If we sample from a Student's $t$ distribution with 2 degrees of freedom then the next movie reveals that the sample median has the smaller sampling variance.  
+
+```{r, eval = FALSE}
+mean_vs_median(t_df = 2)
+```
+
+```{r, echo = FALSE, fig.align = 'center', out.width = "600px"}
+knitr::include_graphics("mean_vs_median_t2.PNG")
+```
+
 ### Pearson Correlation Coefficient
 
 The function `correlation` illustrates the sampling distribution of the Pearson product moment correlation coefficient, under sampling from a bivariate normal distribution. There are buttons to change the values of $n$ and the true correlation $\rho$ and to simulate another sample of size $n$.  A histogram of the sample correlation coefficients is compared to the exact pdf of the sampling distribution.  There is also an option to switch to a display of [Fisher's $z$-transformation](https://en.wikipedia.org/wiki/Fisher_transformation) $[\ln(1+\rho) - \ln(1-\rho)] / 2$.  Then the histogram can be compared both to the exact distribution and to a normal approximation to this distribution.
