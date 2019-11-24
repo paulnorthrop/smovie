@@ -12,9 +12,6 @@ reference:
     desc: ~
     contents:
       - "smovie"
-  - title: Menu panel
-    desc: ~
-    contents:
       - "movies"
   - title: Probability distributions
     desc: ~
@@ -38,3 +35,7 @@ reference:
     contents:
       - "wws"
       - "shypo"
+  - title: Fisher's transformation
+    desc: ~
+    contents:
+      - "FPearson"
