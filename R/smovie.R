@@ -1,8 +1,8 @@
 #' smovie: some movies to illustrate concepts in statistics
 #'
 #' These movies are animations used to illustrate key statistical ideas.
-#' They are produced using the \code{\link[rpanel]{rpanel-package}},
-#' which has
+#' They are produced using the \code{\link[rpanel:rpanel.package]{rpanel}}
+#' package, which has
 #' \href{https://sourceforge.net/projects/tcllib/files/BWidget/}{\code{BWidget}}
 #' as a system requirement.
 #' \code{BWidget} is included in the R installers for Windows and macOS.
