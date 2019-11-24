@@ -2,7 +2,7 @@
 
 ## New features
 
-* New movie: `cltq()`.  Central Limit Theorem for sample quantiles.  Illustrates the sampling distribution of the sample 100p% quantile and the central limit theorem for sample quantiles.
+* New movie: `cltq()`.  Central Limit Theorem for sample quantiles.  Illustrates the sampling distribution of the sample quantiles and the central limit theorem for sample quantiles.
 
 * New movie: `mean_vs_median()`.  Compares the sampling distributions of the mean and median for random samples from either a standard normal distribution or a standard Student t distribution.
 
