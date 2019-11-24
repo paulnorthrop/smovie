@@ -51,7 +51,7 @@ Nothing is returned, only the animation is produced.
 }
 \description{
 A movie to compare the sampling distributions of the sample mean
-and sample median based on a random sample of size \eqn{n} from a
+and sample median based on a random sample of size \eqn{n} from
 either a standard normal distribution or a standard Student t
 distribution.  An interesting comparison is between the normal
 and Student t with 2 degrees of freedom cases (see \strong{Examples}).
