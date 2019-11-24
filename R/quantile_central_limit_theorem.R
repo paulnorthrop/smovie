@@ -142,7 +142,7 @@ cltq <- function(n = 20, p = 0.5, distn, params = list(), type = 7,
   vscale <- temp$vscale
   # To add another distribution
   # 1. misc.R: add code to set_fun_args(), set_top_range(), set_leg_pos()
-  # 2. add lines to rfun, dfun, qfun, pfun, distn_mean and distn_sd
+  # 2. add lines to rfun, dfun, qfun, pfun, distn_den and distn_sd
   # 3. cltqmovie_plot(): add to the_distn
   if (p <= 0 || p >= 1) {
     stop("p must be in (0, 1)")
@@ -291,9 +291,10 @@ cltq <- function(n = 20, p = 0.5, distn, params = list(), type = 7,
     nu <- fun_args$df
     ncp <- fun_args$ncp
   }
-  distn_mean <- do.call(qfun, c(list(p = p), fun_args))
+  # distn_den is the value of the density at the 100p% quantile
+  distn_den <- do.call(qfun, c(list(p = p), fun_args))
   distn_sd <- sqrt(p * (1 - p)) /
-    do.call(dfun, c(list(x = distn_mean), fun_args))
+    do.call(dfun, c(list(x = distn_den), fun_args))
   # Create buttons for movie
   show_dens <- FALSE
   pdf_or_cdf <- "pdf"
@@ -313,7 +314,7 @@ cltq <- function(n = 20, p = 0.5, distn, params = list(), type = 7,
                                   top_leg_pos = top_leg_pos,
                                   bottom_leg_pos = bottom_leg_pos,
                                   xlab = xlab, arrow = arrow,
-                                  distn_mean = distn_mean, distn_sd = distn_sd,
+                                  distn_den = distn_den, distn_sd = distn_sd,
                                   p = p,  type = type,
                                   discrete_distn = discrete_distn,
                                   old_n = old_n, old_pdf_or_cdf = pdf_or_cdf,
@@ -388,7 +389,7 @@ cltqmovie_plot <- function(panel) {
   # To please R CMD check
   n <- distn <- fun_args <- pdf_or_cdf <- show_dens <- n_add <- rfun <-
     discrete_distn <- top_range <- dfun <- xlab <- top_leg_pos <- arrow <-
-    distn_mean <- distn_sd <- p <- type <- bottom_p_vec <- bottom_leg_pos <-
+    distn_den <- distn_sd <- p <- type <- bottom_p_vec <- bottom_leg_pos <-
     leg_cex <- NULL
   panel <- within(panel, {
     # Don't add the rug in the top plot if n is large
@@ -505,7 +506,7 @@ cltqmovie_plot <- function(panel) {
     #
     my_xlab <- paste0("sample ", 100 * p, "% quantile of ", n, " values")
     # Set the mean and variance of the sample quantile parameters
-    normal_pars <- list(mean = distn_mean, sd = distn_sd / sqrt(n))
+    normal_pars <- list(mean = distn_den, sd = distn_sd / sqrt(n))
     for_qnorm <- c(list(p = bottom_p_vec), normal_pars)
     normal_bottom_range <- do.call(stats::qnorm, for_qnorm)
     bottom_range <- range(normal_bottom_range, sample_qs)
@@ -562,7 +563,7 @@ cltqmovie_plot <- function(panel) {
     }
     graphics::rug(last_y, line = 0.5, ticksize = 0.05, col = "red", lwd = 2)
     u_b <- my_xlim
-    my_leg_2 <- paste("N (", signif(distn_mean, 2), ",",
+    my_leg_2 <- paste("N (", signif(distn_den, 2), ",",
                       signif(distn_sd ^ 2, 2), "/ n )" )
     if (pdf_or_cdf == "pdf") {
       if (show_dens) {
