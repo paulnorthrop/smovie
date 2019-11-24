@@ -169,11 +169,20 @@ movies <- function(fixed_range = TRUE, hscale = NA, vscale = hscale) {
     else if (menu.panel$demo == "Maximum") {
       ett(distn = "exponential", hscale = hscale, vscale = vscale)
     }
+    else if (menu.panel$demo == "Median") {
+      cltq(distn = "exponential", p = 0.5, hscale = hscale, vscale = vscale)
+    }
     else if (menu.panel$demo == "Mean vs median, normal") {
       mean_vs_median()
     }
     else if (menu.panel$demo == "Mean vs median, Student t(2)") {
       mean_vs_median(t_df = 2)
+    }
+    else if (menu.panel$demo == "Lower quartile") {
+      cltq(distn = "exponential", p = 0.25, hscale = hscale, vscale = vscale)
+    }
+    else if (menu.panel$demo == "Upper quartile") {
+      cltq(distn = "exponential", p = 0.75, hscale = hscale, vscale = vscale)
     }
     else if (menu.panel$demo == "Leverage and influence") {
       lev_inf(hscale = hscale, vscale = vscale)
@@ -307,8 +316,11 @@ movies <- function(fixed_range = TRUE, hscale = NA, vscale = hscale) {
        "Pearson correlation coefficient",
        "Mean",
        "Maximum",
+       "Median",
        "Mean vs median, normal",
-       "Mean vs median, Student t(2)"
+       "Mean vs median, Student t(2)",
+       "Lower quartile",
+       "Upper quartile"
   ),
   list("CLT",
        " beta",
