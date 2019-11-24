@@ -1,0 +1,40 @@
+destination: docs
+
+development:
+  mode: unreleased
+
+template:
+  params:
+    bootswatch: paper
+
+reference:
+  - title: Package
+    desc: ~
+    contents:
+      - "smovie"
+  - title: Menu panel
+    desc: ~
+    contents:
+      - "movies"
+  - title: Probability distributions
+    desc: ~
+    contents:
+      - "discrete"
+      - "continuous"
+  - title: Sampling distributions
+    desc: ~
+    contents:
+      - "clt"
+      - "cltq"
+      - "mean_vs_median"
+      - "ett"
+      - "correlation"
+  - title: Regression
+    desc: ~
+    contents:
+      - "lev_inf"
+  - title: Hypothesis testing
+    desc: ~
+    contents:
+      - "wws"
+      - "shypo"
