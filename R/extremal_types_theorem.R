@@ -142,8 +142,9 @@
 #'   For further detail about the examples specified by \code{distn}
 #'   see Chapter 1 of Leadbetter et al. (1983) and Chapter 3 of
 #'   Coles (2001).  In many of these examples
-#'   (\code{"exponential", "normal", "gamma", "lognormal", "chi-squared",
-#'   "weibull", "ngev"}) the limiting GEV distribution has a shape
+#'   (\code{"exponential"}, \code{"normal"}, \code{"gamma"},
+#'   \code{"lognormal"}, \code{"chi-squared"}, \code{"weibull"}, \code{"ngev"})
+#'   the limiting GEV distribution has a shape
 #'   parameter that is equal to 0.  In the \code{"uniform"} case the limiting
 #'   shape parameter is -1 and in the \code{"beta"} case it is
 #'   -1 / \code{shape2}, where \code{shape2} is the
