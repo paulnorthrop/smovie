@@ -34,5 +34,6 @@ Suggests: knitr,
     testthat,
     rmarkdown
 VignetteBuilder: knitr
-URL: http://github.com/paulnorthrop/smovie, https://paulnorthrop.github.io/smovie/
+URL: https://paulnorthrop.github.io/smovie/,
+     http://github.com/paulnorthrop/smovie/
 BugReports: http://github.com/paulnorthrop/smovie/issues
