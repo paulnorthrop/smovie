@@ -6,6 +6,8 @@
 
 * New movie: `mean_vs_median()`.  Compares the sampling distributions of the mean and median for random samples from either a standard normal distribution or a standard Student t distribution.
 
+* pkgdown documentation at https://paulnorthrop.github.io/smovie/
+
 ## Bug fixes and minor improvements
 
 * In `ett()` the sample size `n` is now allowed to drop to 1 for those cases in which the normalising constants underlying the calculations are finite, such as the exponential, uniform and generalised Pareto distributions.  Otherwise, 2 is the smallest allowable value for `n`.
