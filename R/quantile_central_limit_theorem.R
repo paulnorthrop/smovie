@@ -112,9 +112,9 @@
 #'       p.d.f. to the empirical c.d.f. of the simulated data and the limiting
 #'       normal c.d.f.}
 #'     \item{}{There is a checkbox to add to the bottom plot the approximate
-#'       (large \code{n}) normal p.d.f./c.d.f. implied by the CLT for sample
-#'       quantiles: the mean is \eqn{\xi(p)} and standard deviation is
-#'       \eqn{\sqrt p \sqrt q  / n f(\xi(p))}, where \eqn{q = 1-p}}.
+#'       (large \eqn{n}) normal p.d.f./c.d.f. implied by the CLT for sample
+#'       quantiles: the mean is equal to \eqn{\xi(p)} and standard deviation is
+#'       equal to \eqn{\sqrt p \sqrt q  / n f(\xi(p))}, where \eqn{q = 1-p}}.
 #'   }
 #' @return Nothing is returned, only the animation is produced.
 #' @references Lehman, E. L. (1999) \emph{Elements of Large-Sample Theory},
