@@ -108,7 +108,7 @@
 #'       samples of size n" is clicked \code{n_add} new samples are simulated
 #'       and their sample quantile are added to the bottom histogram.}
 #'     \item{}{There is a button to switch the bottom plot from displaying
-#'       a histogram of the simulated sampe quantiles and the limiting normal
+#'       a histogram of the simulated sample quantiles and the limiting normal
 #'       p.d.f. to the empirical c.d.f. of the simulated data and the limiting
 #'       normal c.d.f.}
 #'     \item{}{There is a checkbox to add to the bottom plot the approximate

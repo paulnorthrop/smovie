@@ -172,11 +172,11 @@ knitr::include_graphics("lev_inf_2.PNG")
 
 ## Hypothesis Testing
 
-Two movies illustrate key concepts in hypothesis testing.  `wws` compares three test statistics (Wald, Wilks and Score) based on the log-likelihood.  See @Azzalini1996 for details.  `shypo` illustrates the concepts of type I and type II errors, using as an example a test of simple hypothesis about the mean, against the general alternative, based on a random sample from a normal distribtution with known variance. 
+Two movies illustrate key concepts in hypothesis testing.  `wws` compares three test statistics (Wald, Wilks and Score) based on the log-likelihood.  See @Azzalini1996 for details.  `shypo` illustrates the concepts of type I and type II errors, using as an example a test of simple hypothesis about the mean, against the general alternative, based on a random sample from a normal distribution with known variance. 
 
 ### Wald, Wilks and Score test statistics
 
-The function `wws` shows the differing ways in which these three test statistics measure the distance between the maximum likelihood estimate of a scalar parameter $\theta$ and the value $\theta_0$ under a null hypothesis.  There are buttons to change the value of $\theta_0$, select which test statistic to display and to add the values of the test statistics and the associated $p$-values of the test of the null hypothesis that $\theta = \theta_0$.  The example below is based on a sample from a binomial($20, \theta$) distribution in 7 successes and 13 failures are observed.  An example based on a normal distribution is also avaiable.  You may also specify your own log-likelihood.
+The function `wws` shows the differing ways in which these three test statistics measure the distance between the maximum likelihood estimate of a scalar parameter $\theta$ and the value $\theta_0$ under a null hypothesis.  There are buttons to change the value of $\theta_0$, select which test statistic to display and to add the values of the test statistics and the associated $p$-values of the test of the null hypothesis that $\theta = \theta_0$.  The example below is based on a sample from a binomial($20, \theta$) distribution in 7 successes and 13 failures are observed.  An example based on a normal distribution is also available.  You may also specify your own log-likelihood.
 
 ```{r, eval = FALSE}
 wws(theta0 = 0.5, model = "binom", data = c(7, 13))
