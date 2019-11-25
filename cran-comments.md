@@ -2,12 +2,13 @@
 
 0 errors | 0 warnings | 0 notes
 
+smovie has CRAN package check results errors on osx, but these are inherited from package rpanel 
+
 ## Test environments
 
 - ubuntu 12.04 (on travis-ci), R-release, R-devel    
-- osx (on travis-ci), R-oldrel, R-release            
 - win-builder (R-devel and R-release)
 
 ## Downstream dependencies
 
-smovie has no downstream dependencies
+None
