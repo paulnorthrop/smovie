@@ -25,7 +25,6 @@ LazyData: TRUE
 Encoding: UTF-8
 RoxygenNote: 6.1.1
 Imports: graphics,
-    methods,
     revdbayes (>= 1.1.0),
     stats,
     SuppDists

@@ -58,6 +58,5 @@
 #' }
 #' @docType package
 #' @name smovie
-#' @import methods
 #' @import rpanel
 NULL
