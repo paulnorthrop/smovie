@@ -17,6 +17,9 @@
 #'   log(p).
 #' @param lower.tail A logical scalar.  If TRUE (default), probabilities
 #'   are P[X <= x], otherwise, P[X > x].
+#' @details These functions rely on the \code{\link[SuppDists]{Pearson}}
+#'   functions in the SuppDists package.  SuppDists must be installed in order
+#'   for these functions to work.
 #' @seealso \code{\link[SuppDists]{Pearson}} in the SuppDists package for
 #'   dpqr functions for the untransformed Pearson produce moment correlation
 #'   coefficient.

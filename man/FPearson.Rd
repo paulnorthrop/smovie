@@ -42,6 +42,11 @@ for the distribution of Fisher's transformation of Pearson's product
 moment correlation, based on a random sample from a bivariate normal
 distribution
 }
+\details{
+These functions rely on the \code{\link[SuppDists]{Pearson}}
+  functions in the SuppDists package.  SuppDists must be installed in order
+  for these functions to work.
+}
 \examples{
 dFPearson(-1:1, N = 10)
 dFPearson(0, N = 11:20)

@@ -1,5 +1,7 @@
 # smovie 1.1.1.9000
 
+* The packages `revdbayes` and `SuppDists` have been demoted from Imports to Suggests.  An error is thrown if actions that require either of these packages occurs.
+
 # smovie 1.1.1
 
 ## New features

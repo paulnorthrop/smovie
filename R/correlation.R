@@ -75,6 +75,11 @@ correlation <- function(n = 30, rho = 0, panel_plot = TRUE, hscale = NA,
     message("Please see the smovie README file for information.")
     return()
   }
+  # Check that SuppDists is installed
+  if (!requireNamespace("SuppDists", quietly = TRUE)) {
+    stop("the SuppDists package is needed. Please install it.",
+         call. = FALSE)
+  }
   temp <- set_scales(hscale, vscale)
   hscale <- temp$hscale
   vscale <- temp$vscale

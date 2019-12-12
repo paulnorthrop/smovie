@@ -25,14 +25,14 @@ LazyData: TRUE
 Encoding: UTF-8
 RoxygenNote: 7.0.1
 Imports: graphics,
-    revdbayes (>= 1.1.0),
-    stats,
-    SuppDists
+    stats
 Suggests: knitr,
     numDeriv,
+    revdbayes (>= 1.1.0),
     tkrplot,
     testthat,
-    rmarkdown
+    rmarkdown,
+    SuppDists
 VignetteBuilder: knitr
 URL: https://paulnorthrop.github.io/smovie/,
      http://github.com/paulnorthrop/smovie/

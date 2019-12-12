@@ -169,6 +169,13 @@ clt <- function(n = 20, distn, params = list(), panel_plot = TRUE, hscale = NA,
   if (distn == "chisq") {
     distn <- "chi-squared"
   }
+  # Check that revdbayes is installed, if it is needed
+  if (distn %in% c("gp", "gev")) {
+    if (!requireNamespace("revdbayes", quietly = TRUE)) {
+      stop("the revdbayes package is needed. Please install it.",
+           call. = FALSE)
+    }
+  }
   # Set the density, distribution, quantile and simulation functions.
   rfun <-
     switch(distn,

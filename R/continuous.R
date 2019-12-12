@@ -177,6 +177,14 @@ continuous <- function(distn, var_range = NULL, params = list(),
     # Allow stats:: abbreviations
     distn <- recognise_stats_abbreviations(distn)
     root_name <- distn
+    # Check that revdbayes is installed, if it is needed
+    if (distn %in% c("gp", "gev")) {
+      if (!requireNamespace("revdbayes", quietly = TRUE)) {
+        stop("the revdbayes package is needed. Please install it.",
+             call. = FALSE)
+      }
+    }
+
     # Set the density, distribution and quantile functions
     #
     dfun <-

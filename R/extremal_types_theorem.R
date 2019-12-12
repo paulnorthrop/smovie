@@ -183,6 +183,11 @@ ett <- function(n = 20, distn, params = list(), panel_plot = TRUE, hscale = NA,
     message("Please see the smovie README file for information.")
     return()
   }
+  # Check that revdbayes is installed
+  if (!requireNamespace("revdbayes", quietly = TRUE)) {
+    stop("the revdbayes package is needed. Please install it.",
+         call. = FALSE)
+  }
   temp <- set_scales(hscale, vscale)
   hscale <- temp$hscale
   vscale <- temp$vscale
