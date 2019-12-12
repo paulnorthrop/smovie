@@ -3,7 +3,6 @@
 \docType{package}
 \name{smovie}
 \alias{smovie}
-\alias{smovie-package}
 \title{smovie: some movies to illustrate concepts in statistics}
 \description{
 These movies are animations used to illustrate key statistical ideas.

@@ -4,10 +4,21 @@
 \alias{discrete}
 \title{Univariate Discrete Distributions: p.m.f and c.d.f.}
 \usage{
-discrete(distn, var_support = NULL, params = list(),
-  param_step = list(), param_range = list(), p_vec = NULL,
-  smallest = 0.01, plot_par = list(), panel_plot = TRUE,
-  hscale = NA, vscale = hscale, observed_value = NA, ...)
+discrete(
+  distn,
+  var_support = NULL,
+  params = list(),
+  param_step = list(),
+  param_range = list(),
+  p_vec = NULL,
+  smallest = 0.01,
+  plot_par = list(),
+  panel_plot = TRUE,
+  hscale = NA,
+  vscale = hscale,
+  observed_value = NA,
+  ...
+)
 }
 \arguments{
 \item{distn}{Either a character string or a function to choose the discrete

@@ -4,9 +4,18 @@
 \alias{mean_vs_median}
 \title{Sample mean vs sample median}
 \usage{
-mean_vs_median(n = 10, t_df = NULL, panel_plot = TRUE, hscale = NA,
-  vscale = hscale, n_add = 1, delta_n = 1, arrow = TRUE,
-  leg_cex = 1.75, ...)
+mean_vs_median(
+  n = 10,
+  t_df = NULL,
+  panel_plot = TRUE,
+  hscale = NA,
+  vscale = hscale,
+  n_add = 1,
+  delta_n = 1,
+  arrow = TRUE,
+  leg_cex = 1.75,
+  ...
+)
 }
 \arguments{
 \item{n}{An integer scalar.  The size of the samples drawn from a

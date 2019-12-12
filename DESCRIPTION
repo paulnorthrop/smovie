@@ -23,7 +23,7 @@ Depends:
 License: GPL (>= 2)
 LazyData: TRUE
 Encoding: UTF-8
-RoxygenNote: 6.1.1
+RoxygenNote: 7.0.1
 Imports: graphics,
     revdbayes (>= 1.1.0),
     stats,

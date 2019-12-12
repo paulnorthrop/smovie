@@ -4,9 +4,21 @@
 \alias{cltq}
 \title{Central Limit Theorem (CLT) for sample quantiles}
 \usage{
-cltq(n = 20, p = 0.5, distn, params = list(), type = 7,
-  panel_plot = TRUE, hscale = NA, vscale = hscale, n_add = 1,
-  delta_n = 1, arrow = TRUE, leg_cex = 1.25, ...)
+cltq(
+  n = 20,
+  p = 0.5,
+  distn,
+  params = list(),
+  type = 7,
+  panel_plot = TRUE,
+  hscale = NA,
+  vscale = hscale,
+  n_add = 1,
+  delta_n = 1,
+  arrow = TRUE,
+  leg_cex = 1.25,
+  ...
+)
 }
 \arguments{
 \item{n}{An integer scalar.  The size of the samples drawn from the
@@ -132,7 +144,7 @@ Loosely speaking, a consequence of the CLT for sample quantiles
       samples of size n" is clicked \code{n_add} new samples are simulated
       and their sample quantile are added to the bottom histogram.}
     \item{}{There is a button to switch the bottom plot from displaying
-      a histogram of the simulated sampe quantiles and the limiting normal
+      a histogram of the simulated sample quantiles and the limiting normal
       p.d.f. to the empirical c.d.f. of the simulated data and the limiting
       normal c.d.f.}
     \item{}{There is a checkbox to add to the bottom plot the approximate
