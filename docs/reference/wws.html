@@ -8,10 +8,12 @@
 
 <title>Wald, Wilks and Score tests — wws • smovie</title>
 
+
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/paper/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
+
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
@@ -32,8 +34,8 @@
 
 
 
-<meta property="og:title" content="Wald, Wilks and Score tests — wws" />
 
+<meta property="og:title" content="Wald, Wilks and Score tests — wws" />
 <meta property="og:description" content="A movie to illustrate the nature of the Wald, Wilks and score
 likelihood-based test statistics, for a model with a scalar unknown
 parameter \(\theta\).  The user can change the value of the parameter
@@ -42,6 +44,7 @@ statistics and (approximate) p-values associated with the tests of
 this hypothesis against the general alternative.  The user can
 specify their own log-likelihood or use one of two in-built examples." />
 <meta name="twitter:card" content="summary" />
+
 
 
 
@@ -72,7 +75,7 @@ specify their own log-likelihood or use one of two in-built examples." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">smovie</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">1.0.1.9000</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">1.1.1.9000</span>
       </span>
     </div>
 
@@ -103,7 +106,6 @@ specify their own log-likelihood or use one of two in-built examples." />
   <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/paulnorthrop/smovie">
@@ -130,7 +132,6 @@ specify their own log-likelihood or use one of two in-built examples." />
     </div>
 
     <div class="ref-description">
-    
     <p>A movie to illustrate the nature of the Wald, Wilks and score
 likelihood-based test statistics, for a model with a scalar unknown
 parameter \(\theta\).  The user can change the value of the parameter
@@ -138,16 +139,25 @@ under a simple null hypothesis and observe the effect on the test
 statistics and (approximate) p-values associated with the tests of
 this hypothesis against the general alternative.  The user can
 specify their own log-likelihood or use one of two in-built examples.</p>
-    
     </div>
 
-    <pre class="usage"><span class='fu'>wws</span>(<span class='kw'>model</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"norm"</span>, <span class='st'>"binom"</span>), <span class='kw'>theta_range</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>mult</span> <span class='kw'>=</span> <span class='fl'>3</span>,
-  <span class='kw'>theta0</span> <span class='kw'>=</span> <span class='kw'>if</span> (!<span class='fu'><a href='https://rdrr.io/r/base/NULL.html'>is.null</a></span>(<span class='no'>theta_range</span>)) <span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0.25</span>, <span class='fl'>0.75</span>) * <span class='no'>theta_range</span>)
-  <span class='kw'>else</span> <span class='kw'>NULL</span>, <span class='kw'>panel_plot</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>hscale</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>vscale</span> <span class='kw'>=</span> <span class='no'>hscale</span>,
-  <span class='kw'>delta_theta0</span> <span class='kw'>=</span> <span class='kw'>if</span> (!<span class='fu'><a href='https://rdrr.io/r/base/NULL.html'>is.null</a></span>(<span class='no'>theta_range</span>)) <span class='fu'><a href='https://rdrr.io/r/base/MathFun.html'>abs</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/diff.html'>diff</a></span>(<span class='no'>theta_range</span>))/<span class='fl'>20</span>
-  <span class='kw'>else</span> <span class='kw'>NULL</span>, <span class='kw'>theta_mle</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>loglik</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>alg_score</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>alg_obs_info</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>digits</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='no'>...</span>)</pre>
-    
+    <pre class="usage"><span class='fu'>wws</span>(
+  <span class='kw'>model</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"norm"</span>, <span class='st'>"binom"</span>),
+  <span class='kw'>theta_range</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>mult</span> <span class='kw'>=</span> <span class='fl'>3</span>,
+  <span class='kw'>theta0</span> <span class='kw'>=</span> <span class='kw'>if</span> (!<span class='fu'><a href='https://rdrr.io/r/base/NULL.html'>is.null</a></span>(<span class='no'>theta_range</span>)) <span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0.25</span>, <span class='fl'>0.75</span>) * <span class='no'>theta_range</span>) <span class='kw'>else</span> <span class='kw'>NULL</span>,
+  <span class='kw'>panel_plot</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>hscale</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
+  <span class='kw'>vscale</span> <span class='kw'>=</span> <span class='no'>hscale</span>,
+  <span class='kw'>delta_theta0</span> <span class='kw'>=</span> <span class='kw'>if</span> (!<span class='fu'><a href='https://rdrr.io/r/base/NULL.html'>is.null</a></span>(<span class='no'>theta_range</span>)) <span class='fu'><a href='https://rdrr.io/r/base/MathFun.html'>abs</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/diff.html'>diff</a></span>(<span class='no'>theta_range</span>))/<span class='fl'>20</span> <span class='kw'>else</span> <span class='kw'>NULL</span>,
+  <span class='kw'>theta_mle</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>loglik</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>alg_score</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>alg_obs_info</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>digits</span> <span class='kw'>=</span> <span class='fl'>3</span>,
+  <span class='no'>...</span>
+)</pre>
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -255,11 +265,10 @@ or to functions functions relating to the in-built examples otherwise.
 See the description of <code>model</code> above for details.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>Nothing is returned, only the animation is produced.</p>
-    
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>The <a href='https://en.wikipedia.org/wiki/Wald_test'>Wald</a>,
@@ -284,17 +293,14 @@ See the description of <code>model</code> above for details.</p></td>
   This is not true in general, as shown by the other in-built example
   (<code>distn</code> = "binom").</p>
 <p>A user-supplied log-likelihood can be provided via <code>loglik</code>.</p>
-    
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Azzalini, A. (1996) Statistical Inference Based on the
  Likelihood, Chapman &amp; Hall / CRC, London.</p>
-    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='movies.html'>movies</a></code>: a user-friendly menu panel.</p>
 <p><code><a href='smovie.html'>smovie</a></code>: general information about smovie.</p></div>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># N(theta, 1) example, test statistics equivalent</span>
@@ -336,15 +342,10 @@ See the description of <code>model</code> above for details.</p></td>
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#value">Value</a></li>
-
       <li><a href="#details">Details</a></li>
-
       <li><a href="#references">References</a></li>
-
       <li><a href="#see-also">See also</a></li>
-      
       <li><a href="#examples">Examples</a></li>
     </ul>
 

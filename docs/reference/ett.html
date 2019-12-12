@@ -8,10 +8,12 @@
 
 <title>Extremal Types Theorem (ETT) — ett • smovie</title>
 
+
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/paper/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
+
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
@@ -32,8 +34,8 @@
 
 
 
-<meta property="og:title" content="Extremal Types Theorem (ETT) — ett" />
 
+<meta property="og:title" content="Extremal Types Theorem (ETT) — ett" />
 <meta property="og:description" content="A movie to illustrate the extremal types theorem, that is, convergence
 of the distribution of the maximum of a random sample of size \(n\)
 from certain distributions to a member of the Generalized Extreme Value
@@ -42,6 +44,7 @@ Samples of size \(n\) are simulated repeatedly from the chosen
 distribution.  The distributions (simulated empirical and true) of the
 sample maxima are compared to the relevant GEV limit." />
 <meta name="twitter:card" content="summary" />
+
 
 
 
@@ -72,7 +75,7 @@ sample maxima are compared to the relevant GEV limit." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">smovie</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">1.0.1.9000</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">1.1.1.9000</span>
       </span>
     </div>
 
@@ -103,7 +106,6 @@ sample maxima are compared to the relevant GEV limit." />
   <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/paulnorthrop/smovie">
@@ -130,7 +132,6 @@ sample maxima are compared to the relevant GEV limit." />
     </div>
 
     <div class="ref-description">
-    
     <p>A movie to illustrate the extremal types theorem, that is, convergence
 of the distribution of the maximum of a random sample of size \(n\)
 from certain distributions to a member of the Generalized Extreme Value
@@ -138,13 +139,22 @@ from certain distributions to a member of the Generalized Extreme Value
 Samples of size \(n\) are simulated repeatedly from the chosen
 distribution.  The distributions (simulated empirical and true) of the
 sample maxima are compared to the relevant GEV limit.</p>
-    
     </div>
 
-    <pre class="usage"><span class='fu'>ett</span>(<span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>20</span>, <span class='no'>distn</span>, <span class='kw'>params</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(), <span class='kw'>panel_plot</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>hscale</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
-  <span class='kw'>vscale</span> <span class='kw'>=</span> <span class='no'>hscale</span>, <span class='kw'>n_add</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>delta_n</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>arrow</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>leg_cex</span> <span class='kw'>=</span> <span class='fl'>1.25</span>, <span class='no'>...</span>)</pre>
-    
+    <pre class="usage"><span class='fu'>ett</span>(
+  <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>20</span>,
+  <span class='no'>distn</span>,
+  <span class='kw'>params</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(),
+  <span class='kw'>panel_plot</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>hscale</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
+  <span class='kw'>vscale</span> <span class='kw'>=</span> <span class='no'>hscale</span>,
+  <span class='kw'>n_add</span> <span class='kw'>=</span> <span class='fl'>1</span>,
+  <span class='kw'>delta_n</span> <span class='kw'>=</span> <span class='fl'>1</span>,
+  <span class='kw'>arrow</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>leg_cex</span> <span class='kw'>=</span> <span class='fl'>1.25</span>,
+  <span class='no'>...</span>
+)</pre>
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -244,11 +254,10 @@ Allows the size of the legend to be controlled manually.</p></td>
 <code>range</code>.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>Nothing is returned, only the animation is produced.</p>
-    
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>Loosely speaking, a consequence of the
@@ -308,8 +317,9 @@ Allows the size of the legend to be controlled manually.</p></td>
 </ul><p>For further detail about the examples specified by <code>distn</code>
   see Chapter 1 of Leadbetter et al. (1983) and Chapter 3 of
   Coles (2001).  In many of these examples
-  (<code>"exponential", "normal", "gamma", "lognormal", "chi-squared",
-  "weibull", "ngev"</code>) the limiting GEV distribution has a shape
+  (<code>"exponential"</code>, <code>"normal"</code>, <code>"gamma"</code>,
+  <code>"lognormal"</code>, <code>"chi-squared"</code>, <code>"weibull"</code>, <code>"ngev"</code>)
+  the limiting GEV distribution has a shape
   parameter that is equal to 0.  In the <code>"uniform"</code> case the limiting
   shape parameter is -1 and in the <code>"beta"</code> case it is
   -1 / <code>shape2</code>, where <code>shape2</code> is the
@@ -320,7 +330,6 @@ Allows the size of the legend to be controlled manually.</p></td>
   1 / <code>df</code> (<code>"t"</code>, see <code><a href='https://rdrr.io/r/stats/TDist.html'>TDist</a></code>),
   1 (<code>"cauchy"</code>, see <code><a href='https://rdrr.io/r/stats/Cauchy.html'>Cauchy</a></code>),
   2 / <code>df2</code> (<code>"f"</code>, see <code><a href='https://rdrr.io/r/stats/Fdist.html'>FDist</a></code>).</p>
-    
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Coles, S. G. (2001) <em>An Introduction to Statistical
@@ -330,12 +339,10 @@ Allows the size of the legend to be controlled manually.</p></td>
   <em>Extremes and Related Properties of Random Sequences and Processes.</em>
   Springer-Verlag, New York.
   <a href='http://dx.doi.org/10.1007/978-1-4612-5449-2'>http://dx.doi.org/10.1007/978-1-4612-5449-2</a></p>
-    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='movies.html'>movies</a></code>: a user-friendly menu panel.</p>
 <p><code><a href='smovie.html'>smovie</a></code>: general information about smovie.</p></div>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Exponential data: xi = 0</span>
@@ -351,15 +358,10 @@ Allows the size of the legend to be controlled manually.</p></td>
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#value">Value</a></li>
-
       <li><a href="#details">Details</a></li>
-
       <li><a href="#references">References</a></li>
-
       <li><a href="#see-also">See also</a></li>
-      
       <li><a href="#examples">Examples</a></li>
     </ul>
 

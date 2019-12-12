@@ -8,10 +8,12 @@
 
 <title>Univariate Discrete Distributions: p.m.f and c.d.f. — discrete • smovie</title>
 
+
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/paper/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
+
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
@@ -32,12 +34,13 @@
 
 
 
-<meta property="og:title" content="Univariate Discrete Distributions: p.m.f and c.d.f. — discrete" />
 
+<meta property="og:title" content="Univariate Discrete Distributions: p.m.f and c.d.f. — discrete" />
 <meta property="og:description" content="A movie to illustrate how the probability mass function (p.m.f.) and
 cumulative distribution function (c.d.f.) of a discrete random variable
 depend on the values of its parameters." />
 <meta name="twitter:card" content="summary" />
+
 
 
 
@@ -68,7 +71,7 @@ depend on the values of its parameters." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">smovie</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">1.0.1.9000</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">1.1.1.9000</span>
       </span>
     </div>
 
@@ -99,7 +102,6 @@ depend on the values of its parameters." />
   <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/paulnorthrop/smovie">
@@ -126,18 +128,27 @@ depend on the values of its parameters." />
     </div>
 
     <div class="ref-description">
-    
     <p>A movie to illustrate how the probability mass function (p.m.f.) and
 cumulative distribution function (c.d.f.) of a discrete random variable
 depend on the values of its parameters.</p>
-    
     </div>
 
-    <pre class="usage"><span class='fu'>discrete</span>(<span class='no'>distn</span>, <span class='kw'>var_support</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>params</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(),
-  <span class='kw'>param_step</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(), <span class='kw'>param_range</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(), <span class='kw'>p_vec</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>smallest</span> <span class='kw'>=</span> <span class='fl'>0.01</span>, <span class='kw'>plot_par</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(), <span class='kw'>panel_plot</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>hscale</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>vscale</span> <span class='kw'>=</span> <span class='no'>hscale</span>, <span class='kw'>observed_value</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='no'>...</span>)</pre>
-    
+    <pre class="usage"><span class='fu'>discrete</span>(
+  <span class='no'>distn</span>,
+  <span class='kw'>var_support</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>params</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(),
+  <span class='kw'>param_step</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(),
+  <span class='kw'>param_range</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(),
+  <span class='kw'>p_vec</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>smallest</span> <span class='kw'>=</span> <span class='fl'>0.01</span>,
+  <span class='kw'>plot_par</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(),
+  <span class='kw'>panel_plot</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>hscale</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
+  <span class='kw'>vscale</span> <span class='kw'>=</span> <span class='no'>hscale</span>,
+  <span class='kw'>observed_value</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
+  <span class='no'>...</span>
+)</pre>
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -251,11 +262,10 @@ in red.</p></td>
 <code>range</code>.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>Nothing is returned, only the animation is produced.</p>
-    
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>The movie starts with a plot of the p.m.f. of the distribution
@@ -266,12 +276,10 @@ in red.</p></td>
   <code><a href='https://rdrr.io/pkg/rpanel/man/rp.control.html'>rp.control</a></code> the parameter <code>size</code> of,
   for example, the binomial and negative binomial distributions, is
   labelled as <code>n</code>.</p>
-    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='movies.html'>movies</a></code>: a user-friendly menu panel.</p>
 <p><code><a href='smovie.html'>smovie</a></code>: general information about smovie.</p></div>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Binomial example</span>
@@ -290,13 +298,9 @@ in red.</p></td>
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#value">Value</a></li>
-
       <li><a href="#details">Details</a></li>
-
       <li><a href="#see-also">See also</a></li>
-      
       <li><a href="#examples">Examples</a></li>
     </ul>
 

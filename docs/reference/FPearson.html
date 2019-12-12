@@ -9,10 +9,12 @@
 <title>Fisher's transformation of the Pearson product moment correlation
 coefficient — FPearson • smovie</title>
 
+
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/paper/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
+
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
@@ -33,14 +35,15 @@ coefficient — FPearson • smovie</title>
 
 
 
+
 <meta property="og:title" content="Fisher's transformation of the Pearson product moment correlation
 coefficient — FPearson" />
-
 <meta property="og:description" content="Density, distribution function, quantile function and random generator
 for the distribution of Fisher's transformation of Pearson's product
 moment correlation, based on a random sample from a bivariate normal
 distribution" />
 <meta name="twitter:card" content="summary" />
+
 
 
 
@@ -71,7 +74,7 @@ distribution" />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">smovie</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">1.0.1.9000</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">1.1.1.9000</span>
       </span>
     </div>
 
@@ -102,7 +105,6 @@ distribution" />
   <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/paulnorthrop/smovie">
@@ -130,12 +132,10 @@ coefficient</h1>
     </div>
 
     <div class="ref-description">
-    
     <p>Density, distribution function, quantile function and random generator
 for the distribution of Fisher's transformation of Pearson's product
 moment correlation, based on a random sample from a bivariate normal
 distribution</p>
-    
     </div>
 
     <pre class="usage"><span class='fu'>dFPearson</span>(<span class='no'>x</span>, <span class='no'>N</span>, <span class='kw'>rho</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>log</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
@@ -145,7 +145,7 @@ distribution</p>
 <span class='fu'>qFPearson</span>(<span class='no'>p</span>, <span class='no'>N</span>, <span class='kw'>rho</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>lower.tail</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>log.p</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 
 <span class='fu'>rFPearson</span>(<span class='no'>n</span>, <span class='no'>N</span>, <span class='kw'>rho</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>lower.tail</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>log.p</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -182,7 +182,12 @@ If <code>length(n) &gt; 1</code> then <code><a href='https://rdrr.io/r/base/leng
 required.</p></td>
     </tr>
     </table>
-    
+
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>These functions rely on the <code><a href='https://rdrr.io/pkg/SuppDists/man/Pearson.html'>Pearson</a></code>
+  functions in the SuppDists package.  SuppDists must be installed in order
+  for these functions to work.</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Fisher, R. A. (1915). Frequency distribution of the values of
@@ -193,14 +198,12 @@ required.</p></td>
   of correlation deduced from a small sample. <em>Metron</em>, <strong>1</strong>,
   3-32.
   <a href='https://digital.library.adelaide.edu.au/dspace/bitstream/2440/15169/1/14.pdf'>https://digital.library.adelaide.edu.au/dspace/bitstream/2440/15169/1/14.pdf</a></p>
-    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='https://rdrr.io/pkg/SuppDists/man/Pearson.html'>Pearson</a></code> in the SuppDists package for
   dpqr functions for the untransformed Pearson produce moment correlation
   coefficient.</p>
 <p><code><a href='correlation.html'>correlation</a></code>: correlation sampling distribution movie.</p></div>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'>dFPearson</span>(-<span class='fl'>1</span>:<span class='fl'>1</span>, <span class='kw'>N</span> <span class='kw'>=</span> <span class='fl'>10</span>)</div><div class='output co'>#&gt; [1] 0.03402773 1.09381028 0.03402773</div><div class='input'><span class='fu'>dFPearson</span>(<span class='fl'>0</span>, <span class='kw'>N</span> <span class='kw'>=</span> <span class='fl'>11</span>:<span class='fl'>20</span>)</div><div class='output co'>#&gt;  [1] 1.164169 1.230537 1.293521 1.353590 1.411114 1.466389 1.519661 1.571132
@@ -214,11 +217,9 @@ required.</p></td>
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
+      <li><a href="#details">Details</a></li>
       <li><a href="#references">References</a></li>
-
       <li><a href="#see-also">See also</a></li>
-      
       <li><a href="#examples">Examples</a></li>
     </ul>
 

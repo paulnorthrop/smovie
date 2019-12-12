@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">smovie</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">1.0.1.9000</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">1.1.1.9000</span>
       </span>
     </div>
 
@@ -85,7 +85,7 @@
       <h1>An overview of smovie</h1>
                         <h4 class="author">Paul Northrop</h4>
             
-            <h4 class="date">2019-11-24</h4>
+            <h4 class="date">2019-12-12</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/paulnorthrop/smovie/blob/master/vignettes/smovie-vignette.Rmd"><code>vignettes/smovie-vignette.Rmd</code></a></small>
       <div class="hidden name"><code>smovie-vignette.Rmd</code></div>
@@ -184,11 +184,11 @@
 <div id="hypothesis-testing" class="section level2">
 <h2 class="hasAnchor">
 <a href="#hypothesis-testing" class="anchor"></a>Hypothesis Testing</h2>
-<p>Two movies illustrate key concepts in hypothesis testing. <code>wws</code> compares three test statistics (Wald, Wilks and Score) based on the log-likelihood. See <span class="citation">Azzalini (1996)</span> for details. <code>shypo</code> illustrates the concepts of type I and type II errors, using as an example a test of simple hypothesis about the mean, against the general alternative, based on a random sample from a normal distribtution with known variance.</p>
+<p>Two movies illustrate key concepts in hypothesis testing. <code>wws</code> compares three test statistics (Wald, Wilks and Score) based on the log-likelihood. See <span class="citation">Azzalini (1996)</span> for details. <code>shypo</code> illustrates the concepts of type I and type II errors, using as an example a test of simple hypothesis about the mean, against the general alternative, based on a random sample from a normal distribution with known variance.</p>
 <div id="wald-wilks-and-score-test-statistics" class="section level3">
 <h3 class="hasAnchor">
 <a href="#wald-wilks-and-score-test-statistics" class="anchor"></a>Wald, Wilks and Score test statistics</h3>
-<p>The function <code>wws</code> shows the differing ways in which these three test statistics measure the distance between the maximum likelihood estimate of a scalar parameter <span class="math inline">\(\theta\)</span> and the value <span class="math inline">\(\theta_0\)</span> under a null hypothesis. There are buttons to change the value of <span class="math inline">\(\theta_0\)</span>, select which test statistic to display and to add the values of the test statistics and the associated <span class="math inline">\(p\)</span>-values of the test of the null hypothesis that <span class="math inline">\(\theta = \theta_0\)</span>. The example below is based on a sample from a binomial(<span class="math inline">\(20, \theta\)</span>) distribution in 7 successes and 13 failures are observed. An example based on a normal distribution is also avaiable. You may also specify your own log-likelihood.</p>
+<p>The function <code>wws</code> shows the differing ways in which these three test statistics measure the distance between the maximum likelihood estimate of a scalar parameter <span class="math inline">\(\theta\)</span> and the value <span class="math inline">\(\theta_0\)</span> under a null hypothesis. There are buttons to change the value of <span class="math inline">\(\theta_0\)</span>, select which test statistic to display and to add the values of the test statistics and the associated <span class="math inline">\(p\)</span>-values of the test of the null hypothesis that <span class="math inline">\(\theta = \theta_0\)</span>. The example below is based on a sample from a binomial(<span class="math inline">\(20, \theta\)</span>) distribution in 7 successes and 13 failures are observed. An example based on a normal distribution is also available. You may also specify your own log-likelihood.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/wws.html">wws</a></span>(<span class="dt">theta0 =</span> <span class="fl">0.5</span>, <span class="dt">model =</span> <span class="st">"binom"</span>, <span class="dt">data =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">7</span>, <span class="dv">13</span>))</code></pre></div>
 <p><img src="wws.PNG" width="600px" style="display: block; margin: auto;"></p>
 </div>
@@ -226,6 +226,7 @@
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
+
         <div id="tocnav">
       <h2 class="hasAnchor">
 <a href="#tocnav" class="anchor"></a>Contents</h2>
