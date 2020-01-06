@@ -6,7 +6,6 @@ smovie has CRAN package check results errors on osx, but these are inherited fro
 
 ## Test environments
 
-- osx (on travis-ci), R-oldrel, R-release            
 - ubuntu 12.04 (on travis-ci), R-release, R-devel    
 - win-builder (R-devel and R-release)
 
