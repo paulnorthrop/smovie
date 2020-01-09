@@ -2,7 +2,7 @@
 
 ## Dependencies
 
-* The packages `revdbayes` and `SuppDists` have been demoted from Imports to Suggests.  An error is thrown if actions that require either of these packages occurs.
+* The packages `revdbayes` and `SuppDists` have been demoted from Imports to Suggests.  An error is thrown if actions that require either of these packages occurs and that packae is not available.
 
 # smovie 1.1.1
 
