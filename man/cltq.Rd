@@ -4,21 +4,9 @@
 \alias{cltq}
 \title{Central Limit Theorem (CLT) for sample quantiles}
 \usage{
-cltq(
-  n = 20,
-  p = 0.5,
-  distn,
-  params = list(),
-  type = 7,
-  panel_plot = TRUE,
-  hscale = NA,
-  vscale = hscale,
-  n_add = 1,
-  delta_n = 1,
-  arrow = TRUE,
-  leg_cex = 1.25,
-  ...
-)
+cltq(n = 20, p = 0.5, distn, params = list(), type = 7,
+  panel_plot = TRUE, hscale = NA, vscale = hscale, n_add = 1,
+  delta_n = 1, arrow = TRUE, leg_cex = 1.25, ...)
 }
 \arguments{
 \item{n}{An integer scalar.  The size of the samples drawn from the

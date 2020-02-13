@@ -4,13 +4,8 @@
 \alias{lev_inf}
 \title{Leverage and influence in simple linear regression movie}
 \usage{
-lev_inf(
-  association = c("positive", "negative", "none"),
-  n = 25,
-  panel_plot = TRUE,
-  hscale = NA,
-  vscale = hscale
-)
+lev_inf(association = c("positive", "negative", "none"), n = 25,
+  panel_plot = TRUE, hscale = NA, vscale = hscale)
 }
 \arguments{
 \item{association}{A character scalar.  Determines the type of association

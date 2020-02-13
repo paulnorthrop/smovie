@@ -4,23 +4,10 @@
 \alias{shypo}
 \title{Testing simple hypotheses}
 \usage{
-shypo(
-  mu0 = 0,
-  sd = 6,
-  eff = sd,
-  n = 10,
-  a = mu0 + eff/2,
-  target_alpha = 0.05,
-  target_beta = 0.1,
-  panel_plot = TRUE,
-  hscale = NA,
-  vscale = hscale,
-  delta_n = 1,
-  delta_a = sd/(10 * sqrt(n)),
-  delta_eff = sd,
-  delta_mu0 = 1,
-  delta_sd = 1
-)
+shypo(mu0 = 0, sd = 6, eff = sd, n = 10, a = mu0 + eff/2,
+  target_alpha = 0.05, target_beta = 0.1, panel_plot = TRUE,
+  hscale = NA, vscale = hscale, delta_n = 1, delta_a = sd/(10 *
+  sqrt(n)), delta_eff = sd, delta_mu0 = 1, delta_sd = 1)
 }
 \arguments{
 \item{mu0}{A numeric scalar.  The value of \eqn{\mu} under the null

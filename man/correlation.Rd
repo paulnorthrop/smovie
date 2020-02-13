@@ -4,16 +4,8 @@
 \alias{correlation}
 \title{Sampling distribution of the Pearson correlation coefficient movie}
 \usage{
-correlation(
-  n = 30,
-  rho = 0,
-  panel_plot = TRUE,
-  hscale = NA,
-  vscale = hscale,
-  delta_n = 1,
-  delta_rho = 0.1,
-  ...
-)
+correlation(n = 30, rho = 0, panel_plot = TRUE, hscale = NA,
+  vscale = hscale, delta_n = 1, delta_rho = 0.1, ...)
 }
 \arguments{
 \item{n}{An integer scalar.  The initial value of the sample size.
