@@ -4,8 +4,13 @@
 \alias{lev_inf}
 \title{Leverage and influence in simple linear regression movie}
 \usage{
-lev_inf(association = c("positive", "negative", "none"), n = 25,
-  panel_plot = TRUE, hscale = NA, vscale = hscale)
+lev_inf(
+  association = c("positive", "negative", "none"),
+  n = 25,
+  panel_plot = TRUE,
+  hscale = NA,
+  vscale = hscale
+)
 }
 \arguments{
 \item{association}{A character scalar.  Determines the type of association
@@ -41,8 +46,8 @@ least squares regression line.
   middle of the plot.
 
   Superimposed on the plot are two least squares regression lines:
-  one based on all the data (`with observation') and one in which the
-  `red' observation has been removed (`without observation'.
+  one based on all the data ('with observation') and one in which the
+  'red' observation has been removed ('without observation').
   Initially these lines coincide.
 
   The location of the `red' observation can be changed using the

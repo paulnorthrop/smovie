@@ -4,10 +4,20 @@
 \alias{continuous}
 \title{Univariate Continuous Distributions: p.d.f and c.d.f.}
 \usage{
-continuous(distn, var_range = NULL, params = list(),
-  param_step = list(), param_range = list(), p_vec = NULL,
-  smallest = 0.01, plot_par = list(), panel_plot = TRUE,
-  hscale = NA, vscale = hscale, ...)
+continuous(
+  distn,
+  var_range = NULL,
+  params = list(),
+  param_step = list(),
+  param_range = list(),
+  p_vec = NULL,
+  smallest = 0.01,
+  plot_par = list(),
+  panel_plot = TRUE,
+  hscale = NA,
+  vscale = hscale,
+  ...
+)
 }
 \arguments{
 \item{distn}{Either a character string or a function to choose the

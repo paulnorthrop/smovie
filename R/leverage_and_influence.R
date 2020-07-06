@@ -25,8 +25,8 @@
 #'   middle of the plot.
 #'
 #'   Superimposed on the plot are two least squares regression lines:
-#'   one based on all the data (`with observation') and one in which the
-#'   `red' observation has been removed (`without observation'.
+#'   one based on all the data ('with observation') and one in which the
+#'   'red' observation has been removed ('without observation').
 #'   Initially these lines coincide.
 #'
 #'   The location of the `red' observation can be changed using the
