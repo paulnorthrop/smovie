@@ -403,9 +403,6 @@ wws_plot <- function(panel) {
         graphics::axis(2, at = loglik_at_theta0, tick = FALSE, las = 1,
                        labels = expression(ln*L(theta[0])), mgp = c(3, 0.5, 0))
       } else {
-        graphics::text(theta_mle, loglik_at_mle, "score", pos = 3, offset = 1,
-                       srt = 180 / pi * atan(grad_at_theta0 * asp), xpd = TRUE,
-                       col = "red")
         graphics::segments(theta0, u[3], theta0, loglik_at_theta0, lty = 2,
                            lwd = 2)
         graphics::axis(1, at = theta0, tick = FALSE, las = 1,

@@ -1,10 +1,14 @@
 # smovie 1.1.2.9000
 
+## Bug fixes and minor improvements
+
+* In `wws()` the gradient of the log-likelihood was unnecessarily labelled with a red "score" when the null value of theta0 is less than the MLE of theta.  This has been removed.
+
 # smovie 1.1.2
 
 ## Dependencies
 
-* The packages `revdbayes` and `SuppDists` have been demoted from Imports to Suggests.  An error is thrown if actions that require either of these packages occurs and that packae is not available.
+* The packages `revdbayes` and `SuppDists` have been demoted from Imports to Suggests.  An error is thrown if actions that require either of these packages occurs and that package is not available.
 
 # smovie 1.1.1
 
