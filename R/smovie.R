@@ -41,8 +41,7 @@
 #'     and median}}
 #'   \item {\link[=ett]{Extremal Types Theorem: sampling distribution
 #'     of a sample maximum}}
-#'   \item {\link[=correlation]{Pearson product moment correlation
-#'     coefficient}}
+#'   \item {\link[=correlation]{Correlation coefficient}}
 #' }
 #'
 #' @section {Regression}:

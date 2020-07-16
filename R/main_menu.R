@@ -160,7 +160,7 @@ movies <- function(fixed_range = TRUE, hscale = NA, vscale = hscale) {
         continuous(distn = "weibull", hscale = hscale, vscale = vscale)
       }
     }
-    else if (menu.panel$demo == "Pearson correlation coefficient") {
+    else if (menu.panel$demo == "correlation coefficient") {
       correlation(n = 10, hscale = hscale, vscale = vscale)
     }
     else if (menu.panel$demo == "Mean") {
@@ -313,7 +313,7 @@ movies <- function(fixed_range = TRUE, hscale = NA, vscale = hscale) {
        "Weibull"
   ),
   list("Sampling distributions",
-       "Pearson correlation coefficient",
+       "Correlation coefficient",
        "Mean",
        "Maximum",
        "Median",

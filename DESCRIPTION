@@ -11,7 +11,7 @@ Description: Provides movies to help students to understand statistical
   ideas and methods.  There are movies to: visualise probability distributions
   (including user-supplied ones); illustrate sampling distributions of the
   sample mean (central limit theorem), the median, the sample maximum 
-  (extremal types theorem) and (the Fisher transformation of the) Pearson 
+  (extremal types theorem) and (the Fisher transformation of the) 
   product moment correlation coefficient; examine the influence of an 
   individual observation in simple linear regression; illustrate key concepts 
   in statistical hypothesis testing. Also provided are dpqr functions for the 

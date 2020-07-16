@@ -1,10 +1,8 @@
-#' Fisher's transformation of the Pearson product moment correlation
-#' coefficient
+#' Fisher's transformation of the product moment correlation coefficient
 #'
 #' Density, distribution function, quantile function and random generator
-#' for the distribution of Fisher's transformation of Pearson's product
-#' moment correlation, based on a random sample from a bivariate normal
-#' distribution
+#' for the distribution of Fisher's transformation of product moment
+#' correlation, based on a random sample from a bivariate normal distribution
 #'
 #' @param x,q Numeric vectors of quantiles.
 #' @param p A numeric vector of probabilities in [0,1].
@@ -17,23 +15,24 @@
 #'   log(p).
 #' @param lower.tail A logical scalar.  If TRUE (default), probabilities
 #'   are P[X <= x], otherwise, P[X > x].
-#' @details These functions rely on the \code{\link[SuppDists]{Pearson}}
+#' @details These functions rely on the
+#'   \code{\link[SuppDists:Pearson]{correlation coefficient}}
 #'   functions in the SuppDists package.  SuppDists must be installed in order
 #'   for these functions to work.
-#' @seealso \code{\link[SuppDists]{Pearson}} in the SuppDists package for
-#'   dpqr functions for the untransformed Pearson produce moment correlation
-#'   coefficient.
+#' @seealso \code{\link[SuppDists:Pearson]{correlation coefficient}} in the
+#'   SuppDists package for dpqr functions for the untransformed product moment
+#'   correlation coefficient.
 #' @examples
-#' dFPearson(-1:1, N = 10)
-#' dFPearson(0, N = 11:20)
+#' dFcorr(-1:1, N = 10)
+#' dFcorr(0, N = 11:20)
 #'
-#' pFPearson(0.5, N = 10)
-#' pFPearson(0.5, N = 10, rho = c(0, 0.3))
+#' pFcorr(0.5, N = 10)
+#' pFcorr(0.5, N = 10, rho = c(0, 0.3))
 #'
-#' qFPearson((1:9)/10, N = 10, rho = 0.2)
-#' qFPearson(0.5, N = c(10, 20), rho = c(0, 0.3))
+#' qFcorr((1:9)/10, N = 10, rho = 0.2)
+#' qFcorr(0.5, N = c(10, 20), rho = c(0, 0.3))
 #'
-#' rFPearson(6, N = 10, rho = 0.6)
+#' rFcorr(6, N = 10, rho = 0.6)
 #' @seealso \code{\link{correlation}}: correlation sampling distribution movie.
 #' @references Fisher, R. A. (1915). Frequency distribution of the values of
 #'   the correlation coefficient in samples of an indefinitely large
@@ -43,15 +42,15 @@
 #'   of correlation deduced from a small sample. \emph{Metron}, \strong{1},
 #'   3-32.
 #'   \url{https://digital.library.adelaide.edu.au/dspace/bitstream/2440/15169/1/14.pdf}
-#' @name FPearson
+#' @name Fcorr
 NULL
 ## NULL
 
-# ------------------------------- dFPearson -----------------------------------
+# ------------------------------- dFcorr -----------------------------------
 
-#' @rdname FPearson
+#' @rdname Fcorr
 #' @export
-dFPearson <- function (x, N, rho = 0.0, log = FALSE) {
+dFcorr <- function (x, N, rho = 0.0, log = FALSE) {
   if (any(rho <= -1) | any(rho >= 1)) {
     stop("invalid rho: rho must be in (-1, 1)")
   }
@@ -70,11 +69,11 @@ dFPearson <- function (x, N, rho = 0.0, log = FALSE) {
   return(d)
 }
 
-# ------------------------------- pFPearson -----------------------------------
+# ------------------------------- pFcorr -----------------------------------
 
-#' @rdname FPearson
+#' @rdname Fcorr
 #' @export
-pFPearson <- function(q, N, rho = 0.0, lower.tail = TRUE, log.p = FALSE) {
+pFcorr <- function(q, N, rho = 0.0, lower.tail = TRUE, log.p = FALSE) {
   if (any(rho <= -1) | any(rho >= 1)) {
     stop("invalid rho: rho must be in (-1, 1)")
   }
@@ -91,11 +90,11 @@ pFPearson <- function(q, N, rho = 0.0, lower.tail = TRUE, log.p = FALSE) {
   return(p)
 }
 
-# ------------------------------- qFPearson -----------------------------------
+# ------------------------------- qFcorr -----------------------------------
 
-#' @rdname FPearson
+#' @rdname Fcorr
 #' @export
-qFPearson <- function(p, N, rho = 0.0, lower.tail = TRUE, log.p = FALSE) {
+qFcorr <- function(p, N, rho = 0.0, lower.tail = TRUE, log.p = FALSE) {
   if (any(rho <= -1) | any(rho >= 1)) {
     stop("invalid rho: rho must be in (-1, 1)")
   }
@@ -112,11 +111,11 @@ qFPearson <- function(p, N, rho = 0.0, lower.tail = TRUE, log.p = FALSE) {
   return(x)
 }
 
-# ------------------------------- rFPearson -----------------------------------
+# ------------------------------- rFcorr -----------------------------------
 
-#' @rdname FPearson
+#' @rdname Fcorr
 #' @export
-rFPearson <- function(n, N, rho = 0.0, lower.tail = TRUE, log.p = FALSE) {
+rFcorr <- function(n, N, rho = 0.0, lower.tail = TRUE, log.p = FALSE) {
   if (any(rho <= -1) | any(rho >= 1)) {
     stop("invalid rho: rho must be in (-1, 1)")
   }

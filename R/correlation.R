@@ -1,10 +1,10 @@
 # ================================== corr_sim =================================
 
-#' Sampling distribution of the Pearson correlation coefficient movie
+#' Sampling distribution of the correlation coefficient movie
 #'
-#' A movie to illustrate how the sampling distribution of the Pearson
-#' product moment sample correlation coefficient \eqn{r} depends on the
-#' sample size \eqn{n} and on the true correlation \eqn{\rho}.
+#' A movie to illustrate how the sampling distribution of the product moment
+#' sample correlation coefficient \eqn{r} depends on the sample size \eqn{n}
+#' and on the true correlation \eqn{\rho}.
 #'
 #' @param n An integer scalar.  The initial value of the sample size.
 #'   Must not be less than 2.
@@ -36,9 +36,9 @@
 #'   simulated sample, illustrating the strength of the association between
 #'   the simulated values of the variables.
 #'   A new sample is produced by clicking "simulate another sample.
-#'   For each simulated sample the sample (Pearson product moment)
-#'   correlation coefficient \eqn{r} is calculated and displayed in the
-#'   title of the top plot.
+#'   For each simulated sample the sample (product moment) correlation
+#'   coefficient \eqn{r} is calculated and displayed in the title of the top
+#'   plot.
 #'
 #'   The values of the sample correlation coefficients are stored and are
 #'   plotted in a histogram in the bottom plot.  A rug displays the individual
@@ -322,12 +322,12 @@ corr_sim_movie_plot <- function(panel){
         z_range <- range(z_range, z_range_2)
         z_vec <- seq(from = z_range[1], to = z_range[2], len = 101)
         if (pdf_or_cdf == "pdf") {
-          true_pdf_vec <- dFPearson(x = z_vec, N = nsim, rho = rho)
+          true_pdf_vec <- dFcorr(x = z_vec, N = nsim, rho = rho)
           approx_pdf_vec <- stats::dnorm(x = z_vec, mean = atanh_rho,
                                          sd = 1 / sqrt(nsim - 3))
           my_ylim <- c(0, max(true_pdf_vec) * 1.25)
         } else {
-          true_cdf_vec <- pFPearson(q = z_vec, N = nsim, rho = rho)
+          true_cdf_vec <- pFcorr(q = z_vec, N = nsim, rho = rho)
           approx_cdf_vec <- stats::pnorm(q = z_vec, mean = atanh_rho,
                                          sd = 1 / sqrt(nsim - 3))
           my_ylim <- c(0, 1)
@@ -404,8 +404,8 @@ corr_sim_movie_plot <- function(panel){
                                                expression(arctanh(rho))),
                            col = c("black", "red", "blue"), lty = c(1, 2, 1),
                            lwd = 2, box.lty = 0, cex = 1.5)
-          graphics::segments(atanh_rho, 0, atanh_rho, dFPearson(atanh_rho,
-                                                                nsim, rho),
+          graphics::segments(atanh_rho, 0, atanh_rho, dFcorr(atanh_rho, nsim,
+                                                             rho),
                              lty = 1, lwd = 2, col = "blue")
         } else {
           graphics::lines(z_vec, true_cdf_vec, lwd = 2, col = "black")
