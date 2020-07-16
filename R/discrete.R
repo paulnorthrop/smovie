@@ -67,9 +67,9 @@
 #' @param smallest A positive numeric scalar.  The smallest value to be
 #'   used for any strictly positive parameters when \code{distn} is a string.
 #' @param plot_par A named list of graphical parameters
-#'   (see \code{link[graphics]{par}}) to be passed to
-#'   \code{\link[graphics]{plot}}.  This may be used to alter the appearance
-#'   of the plots of the p.m.f. and c.d.f.
+#'   (see \code{\link[graphics]{par}}) to be passed to
+#'   \code{\link[graphics:plot.default]{plot}}.  This may be used to alter the
+#'   appearance of the plots of the p.m.f. and c.d.f.
 #' @param panel_plot A logical parameter that determines whether the plot
 #'   is placed inside the panel (\code{TRUE}) or in the standard graphics
 #'   window (\code{FALSE}).  If the plot is to be placed inside the panel

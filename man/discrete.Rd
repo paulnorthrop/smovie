@@ -89,9 +89,9 @@ a function then the default is \code{p_vec = c(0.001, 0.999)}.}
 used for any strictly positive parameters when \code{distn} is a string.}
 
 \item{plot_par}{A named list of graphical parameters
-(see \code{link[graphics]{par}}) to be passed to
-\code{\link[graphics]{plot}}.  This may be used to alter the appearance
-of the plots of the p.m.f. and c.d.f.}
+(see \code{\link[graphics]{par}}) to be passed to
+\code{\link[graphics:plot.default]{plot}}.  This may be used to alter the
+appearance of the plots of the p.m.f. and c.d.f.}
 
 \item{panel_plot}{A logical parameter that determines whether the plot
 is placed inside the panel (\code{TRUE}) or in the standard graphics
