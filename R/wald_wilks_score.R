@@ -143,7 +143,7 @@
 #'     theta_mle = 7 / 20, n_success = 7, n_failure = 13,
 #'     alg_score = bin_alg_score, alg_obs_info = bin_alg_obs_info)
 #' @export
-wws <- function(model = c("norm", "binom"), theta_range = NULL, mult = 3,
+wws <- function(model = c("norm", "binom"), theta_range = NULL, ..., mult = 3,
                 theta0 = if (!is.null(theta_range))
                   sum(c(0.25, 0.75) * theta_range) else NULL,
                 panel_plot = TRUE, hscale = NA, vscale = hscale,
@@ -151,7 +151,7 @@ wws <- function(model = c("norm", "binom"), theta_range = NULL, mult = 3,
                   abs(diff(theta_range)) / 20 else NULL,
                 theta_mle = NULL,
                 loglik = NULL, alg_score = NULL, alg_obs_info = NULL,
-                digits = 3, ...) {
+                digits = 3) {
   if (!tcltk::is.tclObj(tcltk::tclRequire("BWidget"))) {
     message("Package BWidget was not found.")
     message("Please see the smovie README file for information.")
@@ -330,7 +330,7 @@ wws <- function(model = c("norm", "binom"), theta_range = NULL, mult = 3,
   return(invisible())
 }
 
-# Function to be called by clt_normal_movie().
+# Function to be called by wws().
 
 wws_plot <- function(panel) {
   oldpar <- graphics::par(oma = c(0, 0, 0, 0), mar = c(5, 5, 2, 4) + 0.1)

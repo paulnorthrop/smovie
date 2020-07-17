@@ -8,6 +8,8 @@ Explicit references to (Karl) Pearson have removed from the package following th
 
 * In `wws()` the gradient of the log-likelihood was unnecessarily labelled with a red "score" when the null value of theta0 is less than the MLE of theta.  This has been removed.
 
+* In `wws()`, when `model = "norm"` the value of `mu` could not be passed as described.  This has been corrected.
+
 # smovie 1.1.2
 
 ## Dependencies

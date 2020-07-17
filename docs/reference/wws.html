@@ -147,6 +147,7 @@ specify their own log-likelihood or use one of two in-built examples.</p>
     <pre class="usage"><span class='fu'>wws</span>(
   <span class='kw'>model</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"norm"</span>, <span class='st'>"binom"</span>),
   <span class='kw'>theta_range</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='no'>...</span>,
   <span class='kw'>mult</span> <span class='kw'>=</span> <span class='fl'>3</span>,
   <span class='kw'>theta0</span> <span class='kw'>=</span> <span class='kw'>if</span> (!<span class='fu'><a href='https://rdrr.io/r/base/NULL.html'>is.null</a></span>(<span class='no'>theta_range</span>)) <span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0.25</span>, <span class='fl'>0.75</span>) * <span class='no'>theta_range</span>) <span class='kw'>else</span> <span class='kw'>NULL</span>,
   <span class='kw'>panel_plot</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
@@ -157,8 +158,7 @@ specify their own log-likelihood or use one of two in-built examples.</p>
   <span class='kw'>loglik</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>alg_score</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>alg_obs_info</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>digits</span> <span class='kw'>=</span> <span class='fl'>3</span>,
-  <span class='no'>...</span>
+  <span class='kw'>digits</span> <span class='kw'>=</span> <span class='fl'>3</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -196,6 +196,13 @@ specify their own log-likelihood or use one of two in-built examples.</p>
 \(\theta\) over which to plot the log-likelihood.
 If <code>theta_range</code> is not supplied then the argument <code>mult</code>
 is used to set the range automatically.</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>Additional arguments to be passed to <code>loglik</code>,
+<code>alg_score</code> and <code>alg_obs_info</code> if <code>loglik</code> is supplied,
+or to functions functions relating to the in-built examples otherwise.
+See the description of <code>model</code> above for details.</p></td>
     </tr>
     <tr>
       <th>mult</th>
@@ -259,13 +266,6 @@ to \(\theta\).</p></td>
       <td><p>An integer indicating the number of significant digits to
 be used in the displayed values of the test statistics and
 p-values.  See <code><a href='https://rdrr.io/r/base/Round.html'>signif</a></code>.</p></td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td><p>Additional arguments to be passed to <code>loglik</code>,
-<code>alg_score</code> and <code>alg_obs_info</code> if <code>loglik</code> is supplied,
-or to functions functions relating to the in-built examples otherwise.
-See the description of <code>model</code> above for details.</p></td>
     </tr>
     </table>
 

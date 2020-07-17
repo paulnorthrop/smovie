@@ -7,6 +7,7 @@
 wws(
   model = c("norm", "binom"),
   theta_range = NULL,
+  ...,
   mult = 3,
   theta0 = if (!is.null(theta_range)) sum(c(0.25, 0.75) * theta_range) else NULL,
   panel_plot = TRUE,
@@ -17,8 +18,7 @@ wws(
   loglik = NULL,
   alg_score = NULL,
   alg_obs_info = NULL,
-  digits = 3,
-  ...
+  digits = 3
 )
 }
 \arguments{
@@ -54,6 +54,11 @@ wws(
 \eqn{\theta} over which to plot the log-likelihood.
 If \code{theta_range} is not supplied then the argument \code{mult}
 is used to set the range automatically.}
+
+\item{...}{Additional arguments to be passed to \code{loglik},
+\code{alg_score} and \code{alg_obs_info} if \code{loglik} is supplied,
+or to functions functions relating to the in-built examples otherwise.
+See the description of \code{model} above for details.}
 
 \item{mult}{A positive numeric scalar.  If \code{theta_range} is not
 supplied then an interval of width 2 x \code{mult} standard errors centred
@@ -97,11 +102,6 @@ to \eqn{\theta}.}
 \item{digits}{An integer indicating the number of significant digits to
 be used in the displayed values of the test statistics and
 p-values.  See \code{\link{signif}}.}
-
-\item{...}{Additional arguments to be passed to \code{loglik},
-\code{alg_score} and \code{alg_obs_info} if \code{loglik} is supplied,
-or to functions functions relating to the in-built examples otherwise.
-See the description of \code{model} above for details.}
 }
 \value{
 Nothing is returned, only the animation is produced.
