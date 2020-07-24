@@ -100,8 +100,7 @@ The movie is based on two plots.
       \code{target_alpha}, based on the current value of \code{n};}
     \item{}{set \code{a} and (integer) \code{n} to achieve (or better) the
       respective target type I and type II error probabilities of
-      \code{target_alpha} and \code{target_beta}, based on the current
-      value of \code{n}.}
+      \code{target_alpha} and \code{target_beta}.}
   }
 }
 \examples{

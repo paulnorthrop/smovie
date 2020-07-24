@@ -10,6 +10,10 @@ Explicit references to (Karl) Pearson have removed from the package following th
 
 * In `wws()`, when `model = "norm"` the value of `mu` could not be passed as described.  This has been corrected.
 
+* In `shypo()` there was a bug that meant that the plots did not behave as intended when `mu0` is not equal to (the default value of) 0.  This has been corrected.
+
+* In the documentation for `shypo()` a minor typo at the end of the Details section has been corrected: "based on the current value of n" has been deleted.
+
 # smovie 1.1.2
 
 ## Dependencies

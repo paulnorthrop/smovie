@@ -64,8 +64,7 @@
 #'       \code{target_alpha}, based on the current value of \code{n};}
 #'     \item{}{set \code{a} and (integer) \code{n} to achieve (or better) the
 #'       respective target type I and type II error probabilities of
-#'       \code{target_alpha} and \code{target_beta}, based on the current
-#'       value of \code{n}.}
+#'       \code{target_alpha} and \code{target_beta}.}
 #'   }
 #'
 #' @return Nothing is returned, only the animation is produced.
@@ -170,14 +169,14 @@ sh_plot <- function(panel) {
     if (set_values == "set a to achieve target alpha") {
       z_alpha <- stats::qnorm(target_alpha, mean = 0, sd = 1,
                               lower.tail = FALSE)
-      a <- sd * z_alpha / sqrt(n)
+      a <- sd * z_alpha / sqrt(n) + mu0
     } else if (set_values == "set a and n to achieve target alpha and beta") {
       z_alpha <- stats::qnorm(target_alpha, mean = 0, sd = 1,
                               lower.tail = FALSE)
       z_beta <- stats::qnorm(target_beta, mean = 0, sd = 1,
                              lower.tail = FALSE)
       n <- sd ^ 2 * (z_alpha + z_beta) ^ 2 / eff ^ 2
-      a <- sd * z_alpha / sqrt(n)
+      a <- sd * z_alpha / sqrt(n) + mu0
       n <- ceiling(n)
     }
     # Set the standard error for later use, based on the current value of n
