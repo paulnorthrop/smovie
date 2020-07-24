@@ -66,6 +66,10 @@
 #'       respective target type I and type II error probabilities of
 #'       \code{target_alpha} and \code{target_beta}.}
 #'   }
+#'   If \code{eff = 0} then a plot will be produced even though this case is
+#'   not practically meaningful.  In the "set a and n to achieve target alpha
+#'   and beta" case, the plot will be the same as the case "set a and n by
+#'   hand" case.
 #'
 #' @return Nothing is returned, only the animation is produced.
 #' @seealso \code{\link{movies}}: a user-friendly menu panel.
@@ -164,6 +168,10 @@ sh_plot <- function(panel) {
                           mar = c(3, 3, 2, 2) + 0.1)
   on.exit(graphics::par(oldpar))
   with(panel, {
+    if (set_values == "set a and n to achieve target alpha and beta" &
+        eff == 0) {
+      set_values <- "set a and n by hand"
+    }
     mu1 <- mu0 + eff
     # Set a and/or n automatically if requested
     if (set_values == "set a to achieve target alpha") {

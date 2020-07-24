@@ -102,6 +102,10 @@ The movie is based on two plots.
       respective target type I and type II error probabilities of
       \code{target_alpha} and \code{target_beta}.}
   }
+  If \code{eff = 0} then a plot will be produced even though this case is
+  not practically meaningful.  In the "set a and n to achieve target alpha
+  and beta" case, the plot will be the same as the case "set a and n by
+  hand" case.
 }
 \examples{
 # 1. Change a (for fixed n) to achieve alpha = 0.05
