@@ -14,6 +14,8 @@ Explicit references to (Karl) Pearson have removed from the package following th
 
 * In the documentation for `shypo()` a minor typo at the end of the Details section has been corrected: "based on the current value of n" has been deleted.
 
+* In `discrete()` a typo has been corrected in the 4th line of the documentation of the argument `distn`: "hypergeometric" should have read "negative binomial".
+
 # smovie 1.1.2
 
 ## Dependencies

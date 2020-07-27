@@ -14,7 +14,7 @@
 #'   are recognised, case being ignored.  The relevant distributional functions
 #'   \code{dxxx} and \code{pxxx} in the \code{\link[stats]{stats-package}}
 #'   are used.  The abbreviations \code{xxx} are also recognised.
-#'   If \code{distn = "hypergeometric"} then the \code{(size, prob)}
+#'   If \code{distn = "negative binomial"} then the \code{(size, prob)}
 #'   parameterisation is used, unless a value for \code{mu} is provided
 #'   via the argument \code{params} when the \code{(size, mu)}
 #'   parameterisation is used.
