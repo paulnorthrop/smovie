@@ -224,7 +224,7 @@ discrete <- function(distn, var_support = NULL, params = list(),
     }
   }
   pmf_or_cdf <- "pmf"
-  geom_param <- "trials"
+  geom_param <- "failures"
   # Temporarily change the name of the binomial or negative binomial size
   # (or an argument size to a user-supplied function) to n, because size
   # is a main argument of rp.control
@@ -289,7 +289,7 @@ discrete <- function(distn, var_support = NULL, params = list(),
   }
   if (distn == "geometric") {
     rpanel::rp.radiogroup(panel = discrete_panel, geom_param,
-                          c("trials", "failures"),
+                          c("failures", "trials"),
                           title = "Number of:",
                           action = action)
   }
