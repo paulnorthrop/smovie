@@ -89,6 +89,11 @@
 #'   increase (+) or decrease (-) each parameter.  There are radio buttons
 #'   to switch the plot from the p.m.f. to the c.d.f. and back.
 #'
+#'   If \code{distn == "geometric} then there are radio buttons to switch
+#'   between the version of the the geometric distribution based on the
+#'   number of trials up to including the first success and the number of
+#'   failures until the first success.
+#'
 #'   Owing to a conflict with the argument \code{size} of the function
 #'   \code{\link[rpanel]{rp.control}} the parameter \code{size} of,
 #'   for example, the binomial and negative binomial distributions, is
@@ -219,6 +224,7 @@ discrete <- function(distn, var_support = NULL, params = list(),
     }
   }
   pmf_or_cdf <- "pmf"
+  geom_param <- "trials"
   # Temporarily change the name of the binomial or negative binomial size
   # (or an argument size to a user-supplied function) to n, because size
   # is a main argument of rp.control
@@ -243,7 +249,8 @@ discrete <- function(distn, var_support = NULL, params = list(),
                            par_names = par_names, pmf_or_cdf = pmf_or_cdf,
                            observed_value = observed_value,
                            plot_par = plot_par, root_name = root_name,
-                           var_support = var_support, p_vec = p_vec),
+                           var_support = var_support, p_vec = p_vec,
+                           geom_param = geom_param),
                       pass_args)
   discrete_panel <- do.call(rpanel::rp.control, for_rp_control)
   redraw_plot <- NULL
@@ -280,7 +287,13 @@ discrete <- function(distn, var_support = NULL, params = list(),
   for (i in 1:n_pars) {
     call_doublebutton(i)
   }
-  rpanel::rp.radiogroup(panel= discrete_panel, pmf_or_cdf, c("pmf", "cdf"),
+  if (distn == "geometric") {
+    rpanel::rp.radiogroup(panel = discrete_panel, geom_param,
+                          c("trials", "failures"),
+                          title = "Number of:",
+                          action = action)
+  }
+  rpanel::rp.radiogroup(panel = discrete_panel, pmf_or_cdf, c("pmf", "cdf"),
                         title = "pmf or cdf",
                         action = action)
   if (!panel_plot) {
@@ -361,10 +374,20 @@ plot_discrete <- function(panel) {
         plot_par$col <- my_col
       }
       for_plot <- c(list(x = var_support, y = probs, type = "h"), plot_par)
+      # Switch between the 2 versions of the geometric distribution
+      if (distn == "geometric" & geom_param == "trials") {
+        for_plot$x <- for_plot$x + 1
+      }
     } else {
       probs <- do.call(pfun, c(list(q = var_support), fun_args))
-      rval <- stats::approxfun(var_support, probs, method = "constant",
-                               yleft = 0, yright = 1, f = 0, ties = "ordered")
+      # Deal with the "trials" version of the geometric distribution
+      if (distn == "geometric" & geom_param == "trials") {
+        rval <- stats::approxfun(var_support + 1, probs, method = "constant",
+                                 yleft = 0, yright = 1, f = 0, ties = "ordered")
+      } else {
+        rval <- stats::approxfun(var_support, probs, method = "constant",
+                                 yleft = 0, yright = 1, f = 0, ties = "ordered")
+      }
       class(rval) <- c("ecdf", "stepfun", class(rval))
       my_ylim <- c(0, 1)
       if (is.null(plot_par$ylim)) {
