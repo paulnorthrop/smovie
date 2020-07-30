@@ -13,7 +13,7 @@ os:
   - linux
 
 r:
-  - release
+#  - release
   - devel
 #  - oldrel
 

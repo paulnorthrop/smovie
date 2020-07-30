@@ -125,7 +125,7 @@ The movie starts with a plot of the p.m.f. of the distribution
   increase (+) or decrease (-) each parameter.  There are radio buttons
   to switch the plot from the p.m.f. to the c.d.f. and back.
 
-  If \code{distn == "geometric} then there are radio buttons to switch
+  If \code{distn == "geometric"} then there are radio buttons to switch
   between the version of the the geometric distribution based on the
   number of trials up to including the first success and the number of
   failures until the first success.
