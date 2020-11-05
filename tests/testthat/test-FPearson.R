@@ -28,7 +28,8 @@ rho_check <- c(-0.99, -0.5, -0.1, -ep, 0, ep, 0.1, 0.5, 0.99)
 par_vals <- cbind(N_check, rho_check)
 p_vals <- c(0.01, 0.1, 0.5, 0.9, 0.99)
 for (i in 1:nrow(par_vals)) {
-  test_string <- paste("p and q, Fcorr (rho, N) = ", par_vals[i, ])
+  test_string <- paste0("p and q, Fcorr (rho, N) = (",
+                       par_vals[i, 1], ",", par_vals[i, 2], ")")
   x <- pqFcorr_test_fn(x = par_vals[i, ], p = p_vals)
   test_function(x, test_string)
 }
@@ -59,7 +60,8 @@ rho_check <- c(-0.99, -0.5, -0.1, -ep, 0, ep, 0.1, 0.5, 0.99)
 par_vals <- cbind(N_check, rho_check)
 p_vals <- c(0.01, 0.1, 0.5, 0.9, 0.99)
 for (i in 1:nrow(par_vals)) {
-  test_string <- paste("p, q and r, Fcorr (rho, N) = ", par_vals[i, ])
+  test_string <- paste0("p, q and r, Fcorr (rho, N) = (",
+                        par_vals[i, 1], ",", par_vals[i, 2], ")")
   x <- pqFcorr_test_fn(x = par_vals[i, ], p = p_vals)
   test_function(x, test_string)
 }
