@@ -201,12 +201,12 @@ ett(distn = "t", params = list(df = 5))
 \references{
 Coles, S. G. (2001) \emph{An Introduction to Statistical
   Modeling of Extreme Values}, Springer-Verlag, London.
-  \url{http://dx.doi.org/10.1007/978-1-4471-3675-0_3}
+  \url{https://doi.org/10.1007/978-1-4471-3675-0_3}
 
 Leadbetter, M., Lindgren, G. and Rootzen, H. (1983)
   \emph{Extremes and Related Properties of Random Sequences and Processes.}
   Springer-Verlag, New York.
-  \url{http://dx.doi.org/10.1007/978-1-4612-5449-2}
+  \url{https://doi.org/10.1007/978-1-4612-5449-2}
 }
 \seealso{
 \code{\link{movies}}: a user-friendly menu panel.

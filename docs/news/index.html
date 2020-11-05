@@ -71,7 +71,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">smovie</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">1.1.2.9000</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">1.1.3</span>
       </span>
     </div>
 
@@ -104,7 +104,7 @@
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="http://github.com/paulnorthrop/smovie/">
+  <a href="https://github.com/paulnorthrop/smovie/">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -123,12 +123,12 @@
   <div class="col-md-9 contents">
     <div class="page-header">
       <h1 data-toc-skip>Changelog <small></small></h1>
-      <small>Source: <a href='http://github.com/paulnorthrop/smovie/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
+      <small>Source: <a href='https://github.com/paulnorthrop/smovie/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="smovie-1129000" class="section level1">
-<h1 class="page-header" data-toc-text="1.1.2.9000">
-<a href="#smovie-1129000" class="anchor"></a>smovie 1.1.2.9000<small> Unreleased </small>
+    <div id="smovie-113" class="section level1">
+<h1 class="page-header" data-toc-text="1.1.3">
+<a href="#smovie-113" class="anchor"></a>smovie 1.1.3<small> Unreleased </small>
 </h1>
 <div id="ucl-eugenics-inquiry" class="section level2">
 <h2 class="hasAnchor">
@@ -139,8 +139,13 @@
 <h2 class="hasAnchor">
 <a href="#bug-fixes-and-minor-improvements" class="anchor"></a>Bug fixes and minor improvements</h2>
 <ul>
+<li><p>Errors in test name strings supplied to <code><a href="https://testthat.r-lib.org/reference/test_that.html">testthat::test_that()</a></code> have been corrected, to avoid CRAN package check ERRORs.</p></li>
 <li><p>In <code><a href="../reference/wws.html">wws()</a></code> the gradient of the log-likelihood was unnecessarily labelled with a red “score” when the null value of theta0 is less than the MLE of theta. This has been removed.</p></li>
 <li><p>In <code><a href="../reference/wws.html">wws()</a></code>, when <code>model = "norm"</code> the value of <code>mu</code> could not be passed as described. This has been corrected.</p></li>
+<li><p>In <code><a href="../reference/shypo.html">shypo()</a></code> there was a bug that meant that the plots did not behave as intended when <code>mu0</code> is not equal to (the default value of) 0. This has been corrected.</p></li>
+<li><p>In the documentation for <code><a href="../reference/shypo.html">shypo()</a></code> a minor typo at the end of the Details section has been corrected: “based on the current value of n” has been deleted.</p></li>
+<li><p>In <code><a href="../reference/discrete.html">discrete()</a></code> radio buttons have been added to switch between the version of the the geometric distribution based on the number of trials up to including the first success and the number of failures until the first success.</p></li>
+<li><p>In <code><a href="../reference/discrete.html">discrete()</a></code> a typo has been corrected in the 4th line of the documentation of the argument <code>distn</code>: “hypergeometric” should have read “negative binomial”.</p></li>
 </ul>
 </div>
 </div>

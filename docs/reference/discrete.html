@@ -74,7 +74,7 @@ depend on the values of its parameters." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">smovie</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">1.1.2.9000</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">1.1.3</span>
       </span>
     </div>
 
@@ -107,7 +107,7 @@ depend on the values of its parameters." />
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="http://github.com/paulnorthrop/smovie/">
+  <a href="https://github.com/paulnorthrop/smovie/">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -126,7 +126,7 @@ depend on the values of its parameters." />
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Univariate Discrete Distributions: p.m.f and c.d.f.</h1>
-    <small class="dont-index">Source: <a href='http://github.com/paulnorthrop/smovie/blob/master/R/discrete.R'><code>R/discrete.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/paulnorthrop/smovie/blob/master/R/discrete.R'><code>R/discrete.R</code></a></small>
     <div class="hidden name"><code>discrete.Rd</code></div>
     </div>
 
@@ -164,7 +164,7 @@ depend on the values of its parameters.</p>
   are recognised, case being ignored.  The relevant distributional functions
   <code>dxxx</code> and <code>pxxx</code> in the <code><a href='https://rdrr.io/r/stats/stats-package.html'>stats-package</a></code>
   are used.  The abbreviations <code>xxx</code> are also recognised.
-  If <code>distn = "hypergeometric"</code> then the <code>(size, prob)</code>
+  If <code>distn = "negative binomial"</code> then the <code>(size, prob)</code>
   parameterisation is used, unless a value for <code>mu</code> is provided
   via the argument <code>params</code> when the <code>(size, mu)</code>
   parameterisation is used.</p>
@@ -275,6 +275,10 @@ in red.</p></td>
   for the initial values of the parameters.  Buttons
   increase (+) or decrease (-) each parameter.  There are radio buttons
   to switch the plot from the p.m.f. to the c.d.f. and back.</p>
+<p>If <code>distn == "geometric"</code> then there are radio buttons to switch
+  between the version of the the geometric distribution based on the
+  number of trials up to including the first success and the number of
+  failures until the first success.</p>
 <p>Owing to a conflict with the argument <code>size</code> of the function
   <code><a href='https://rdrr.io/pkg/rpanel/man/rp.control.html'>rp.control</a></code> the parameter <code>size</code> of,
   for example, the binomial and negative binomial distributions, is

@@ -35,5 +35,5 @@ Suggests: knitr,
     SuppDists
 VignetteBuilder: knitr
 URL: https://paulnorthrop.github.io/smovie/,
-     http://github.com/paulnorthrop/smovie/
-BugReports: http://github.com/paulnorthrop/smovie/issues
+     https://github.com/paulnorthrop/smovie/
+BugReports: https://github.com/paulnorthrop/smovie/issues
