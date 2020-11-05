@@ -62,7 +62,6 @@ rFcorr(6, N = 10, rho = 0.6)
 Fisher, R. A. (1915). Frequency distribution of the values of
   the correlation coefficient in samples of an indefinitely large
   population. \emph{Biometrika}, \strong{10}(4), 507-521.
-  \url{https://doi.org/10.2307/2331838}
 
 Fisher, R. A. (1921). On the "probable error" of a coefficient
   of correlation deduced from a small sample. \emph{Metron}, \strong{1},
