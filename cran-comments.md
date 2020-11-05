@@ -1,3 +1,5 @@
+This is a patch to correct the ERRORs at https://cran.r-project.org/web/checks/check_results_smovie.html
+
 ## R CMD check results
 
 0 errors | 0 warnings | 0 notes

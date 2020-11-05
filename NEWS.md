@@ -1,10 +1,12 @@
-# smovie 1.1.2.9000
+# smovie 1.1.3
 
 ## UCL Eugenics Inquiry
 
 Explicit references to (Karl) Pearson have removed from the package following the [Inquiry into the History of Eugenics at UCL](https://www.ucl.ac.uk/provost/inquiry-history-eugenics-ucl).
 
 ## Bug fixes and minor improvements
+
+* Errors in test name strings supplied to `testthat::test_that()` have been corrected, to avoid CRAN package check ERRORs.
 
 * In `wws()` the gradient of the log-likelihood was unnecessarily labelled with a red "score" when the null value of theta0 is less than the MLE of theta.  This has been removed.
 
