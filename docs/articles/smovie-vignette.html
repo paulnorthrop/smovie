@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">smovie</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">1.1.3</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">1.1.3.9000</span>
       </span>
     </div>
 
@@ -85,7 +85,7 @@
       <h1 data-toc-skip>An overview of smovie</h1>
                         <h4 class="author">Paul Northrop</h4>
             
-            <h4 class="date">2020-11-05</h4>
+            <h4 class="date">2021-03-11</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/paulnorthrop/smovie/blob/master/vignettes/smovie-vignette.Rmd"><code>vignettes/smovie-vignette.Rmd</code></a></small>
       <div class="hidden name"><code>smovie-vignette.Rmd</code></div>
@@ -192,9 +192,9 @@
 <div class="sourceCode" id="cb13"><html><body><pre class="r"><span class="fu"><a href="../reference/wws.html">wws</a></span>(<span class="kw">theta0</span> <span class="kw">=</span> <span class="fl">0.5</span>, <span class="kw">model</span> <span class="kw">=</span> <span class="st">"binom"</span>, <span class="kw">data</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">7</span>, <span class="fl">13</span>))</pre></body></html></div>
 <p><img src="wws.PNG" width="600px" style="display: block; margin: auto;"></p>
 </div>
-<div id="testing-simply-hypothesis-normally-distributed-variables" class="section level3">
+<div id="testing-a-simple-hypothesis-normally-distributed-variables" class="section level3">
 <h3 class="hasAnchor">
-<a href="#testing-simply-hypothesis-normally-distributed-variables" class="anchor"></a>Testing simply hypothesis: normally distributed variables</h3>
+<a href="#testing-a-simple-hypothesis-normally-distributed-variables" class="anchor"></a>Testing a simple hypothesis: normally distributed variables</h3>
 <p>Consider a random sample <span class="math inline">\(X_1, \ldots, X_n\)</span> from a normal distribution with unknown mean <span class="math inline">\(\mu\)</span> and known variance <span class="math inline">\(\sigma^2\)</span>. We test the null hypothesis <span class="math inline">\(H_0: \mu = \mu_0\)</span> against the alternative <span class="math inline">\(H_1: \mu = \mu_1\)</span>, where <span class="math inline">\(\mu_1 &gt; \mu_0\)</span>. Let <span class="math inline">\(\bar{X} = (1/n) \sum_{i=1}^n X_i\)</span>. We reject the null hypothesis if <span class="math inline">\(\bar{X} &gt; a\)</span>. The type I error <span class="math inline">\(\alpha\)</span> = <span class="math inline">\(P\)</span>(reject <span class="math inline">\(H_0\)</span> | <span class="math inline">\(H_0\)</span> true). The type II error <span class="math inline">\(\beta\)</span> = <span class="math inline">\(P\)</span>(don’t reject <span class="math inline">\(H_0\)</span> | <span class="math inline">\(H_1\)</span> true).</p>
 <p>The function <code>shypo</code> creates plots of the normal pdfs under <span class="math inline">\(H_0\)</span> and <span class="math inline">\(H_1\)</span> and of the type I and II errors as a function of the critical value <span class="math inline">\(a\)</span>. Buttons are used to change the values of <span class="math inline">\(n\)</span>, <span class="math inline">\(a\)</span>, <span class="math inline">\(\mu_0\)</span>, <span class="math inline">\(\mu_1 - \mu_0\)</span> (the effect size <code>eff</code>) and the population standard deviation <span class="math inline">\(\sigma\)</span>, in order to observe the effects on <span class="math inline">\(\alpha\)</span> and <span class="math inline">\(\beta\)</span>. Also included are two radio buttons. One sets automatically the value of <span class="math inline">\(a\)</span> for which a target type I error equal to  is achieved. The other sets automatically the combination of <span class="math inline">\(a\)</span> and (integer) <span class="math inline">\(n\)</span> for which the target type I error <code>target_alpha</code> and type II error <code>target_beta</code> are achieved or bettered.</p>
 <div class="sourceCode" id="cb14"><html><body><pre class="r"><span class="co"># 1. Change a (for fixed n) to achieve alpha &lt;= 0.05</span>

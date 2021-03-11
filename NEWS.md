@@ -1,10 +1,14 @@
 # smovie 1.1.3.9000
 
+## Bug fixes and minor improvements
+
+* A typo in a section heading in the vignette has been corrected: "simply" becomes "a simple".
+
 # smovie 1.1.3
 
 ## UCL Eugenics Inquiry
 
-Explicit references to (Karl) Pearson have removed from the package following the [Inquiry into the History of Eugenics at UCL](https://www.ucl.ac.uk/provost/inquiry-history-eugenics-ucl).
+* Explicit references to (Karl) Pearson have removed from the package following the [Inquiry into the History of Eugenics at UCL](https://www.ucl.ac.uk/provost/inquiry-history-eugenics-ucl).
 
 ## Bug fixes and minor improvements
 

@@ -71,7 +71,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">smovie</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">1.1.3</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">1.1.3.9000</span>
       </span>
     </div>
 
@@ -126,18 +126,31 @@
       <small>Source: <a href='https://github.com/paulnorthrop/smovie/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
+    <div id="smovie-1139000" class="section level1">
+<h1 class="page-header" data-toc-text="1.1.3.9000">
+<a href="#smovie-1139000" class="anchor"></a>smovie 1.1.3.9000<small> Unreleased </small>
+</h1>
+<div id="bug-fixes-and-minor-improvements" class="section level2">
+<h2 class="hasAnchor">
+<a href="#bug-fixes-and-minor-improvements" class="anchor"></a>Bug fixes and minor improvements</h2>
+<ul><li>
+</li></ul>
+</div>
+</div>
     <div id="smovie-113" class="section level1">
 <h1 class="page-header" data-toc-text="1.1.3">
-<a href="#smovie-113" class="anchor"></a>smovie 1.1.3<small> Unreleased </small>
+<a href="#smovie-113" class="anchor"></a>smovie 1.1.3<small> 2020-11-05 </small>
 </h1>
 <div id="ucl-eugenics-inquiry" class="section level2">
 <h2 class="hasAnchor">
 <a href="#ucl-eugenics-inquiry" class="anchor"></a>UCL Eugenics Inquiry</h2>
-<p>Explicit references to (Karl) Pearson have removed from the package following the <a href="https://www.ucl.ac.uk/provost/inquiry-history-eugenics-ucl">Inquiry into the History of Eugenics at UCL</a>.</p>
+<ul>
+<li>Explicit references to (Karl) Pearson have removed from the package following the <a href="https://www.ucl.ac.uk/provost/inquiry-history-eugenics-ucl">Inquiry into the History of Eugenics at UCL</a>.</li>
+</ul>
 </div>
-<div id="bug-fixes-and-minor-improvements" class="section level2">
+<div id="bug-fixes-and-minor-improvements-1" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes-and-minor-improvements" class="anchor"></a>Bug fixes and minor improvements</h2>
+<a href="#bug-fixes-and-minor-improvements-1" class="anchor"></a>Bug fixes and minor improvements</h2>
 <ul>
 <li><p>Errors in test name strings supplied to <code><a href="https://testthat.r-lib.org/reference/test_that.html">testthat::test_that()</a></code> have been corrected, to avoid CRAN package check ERRORs.</p></li>
 <li><p>In <code><a href="../reference/wws.html">wws()</a></code> the gradient of the log-likelihood was unnecessarily labelled with a red “score” when the null value of theta0 is less than the MLE of theta. This has been removed.</p></li>
@@ -174,9 +187,9 @@
 <li><p>pkgdown documentation at <a href="https://paulnorthrop.github.io/smovie/">https://paulnorthrop.github.io/smovie/</a>.</p></li>
 </ul>
 </div>
-<div id="bug-fixes-and-minor-improvements-1" class="section level2">
+<div id="bug-fixes-and-minor-improvements-2" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes-and-minor-improvements-1" class="anchor"></a>Bug fixes and minor improvements</h2>
+<a href="#bug-fixes-and-minor-improvements-2" class="anchor"></a>Bug fixes and minor improvements</h2>
 <ul>
 <li><p>In <code><a href="../reference/ett.html">ett()</a></code> the sample size <code>n</code> is now allowed to drop to 1 for those cases in which the normalising constants underlying the calculations are finite, such as the exponential, uniform and generalised Pareto distributions. Otherwise, 2 is the smallest allowable value for <code>n</code>.</p></li>
 <li><p>When the Wald, Wilks and Score tests movie <code><a href="../reference/wws.html">wws()</a></code> is called from the main menu, via <code><a href="../reference/movies.html">movies()</a></code> a binomial example is used, so that the differences between the test statistics can be seen.</p></li>
@@ -188,9 +201,9 @@
 <h1 class="page-header" data-toc-text="1.0.1">
 <a href="#smovie-101" class="anchor"></a>smovie 1.0.1<small> 2018-04-21 </small>
 </h1>
-<div id="bug-fixes-and-minor-improvements-2" class="section level2">
+<div id="bug-fixes-and-minor-improvements-3" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes-and-minor-improvements-2" class="anchor"></a>Bug fixes and minor improvements</h2>
+<a href="#bug-fixes-and-minor-improvements-3" class="anchor"></a>Bug fixes and minor improvements</h2>
 <ul>
 <li><p>The way that objects modified inside the plotting function are saved has been changed to enable two or more panels produced by the same smovie function to operate simultaneously and independently, even if the call is exactly the same.</p></li>
 <li><p>The argument <code>plot_par</code> in the functions <code>discrete</code> and <code>continuous</code> didn’t work properly. It does now.</p></li>

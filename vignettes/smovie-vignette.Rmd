@@ -186,7 +186,7 @@ wws(theta0 = 0.5, model = "binom", data = c(7, 13))
 knitr::include_graphics("wws.PNG")
 ```
 
-### Testing simply hypothesis: normally distributed variables
+### Testing a simple hypothesis: normally distributed variables
 
 Consider a random sample $X_1, \ldots, X_n$ from a normal 
 distribution with unknown mean $\mu$ and known variance $\sigma^2$. 
