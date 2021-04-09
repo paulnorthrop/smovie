@@ -4,7 +4,7 @@
 
 * A typo in a section heading in the vignette has been corrected: "simply" becomes "a simple".
 
-* `LazyData: TRUE` has been removed from DESCRIPTION, because there is no data/ directory in donut.
+* `LazyData: TRUE` has been removed from DESCRIPTION, because there is no data/ directory in smovie.
 
 # smovie 1.1.3
 
