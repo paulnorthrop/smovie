@@ -26,8 +26,7 @@
 #'   \code{\link[rpanel]{rp.doublebutton}}, not including \code{panel},
 #'   \code{variable}, \code{title}, \code{step}, \code{action}, \code{initval},
 #'   \code{range}.
-#' @details Random samples of size \eqn{n} are simulated from a bivariate
-#'   normal distribution
+#' @details Random samples of size \eqn{n} are simulated from a
 #'   \href{https://en.wikipedia.org/wiki/Multivariate_normal_distribution}{bivariate normal distribution}
 #'   in which each of the variables has a mean of 0 and a variance of 1 and
 #'   the correlation \eqn{\rho} between the variables is chosen by the user.

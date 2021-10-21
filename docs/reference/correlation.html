@@ -82,7 +82,7 @@ and on the true correlation \(\rho\)." />
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -108,7 +108,7 @@ and on the true correlation \(\rho\)." />
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/paulnorthrop/smovie/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -136,16 +136,16 @@ sample correlation coefficient \(r\) depends on the sample size \(n\)
 and on the true correlation \(\rho\).</p>
     </div>
 
-    <pre class="usage"><span class='fu'>correlation</span>(
-  <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>30</span>,
-  <span class='kw'>rho</span> <span class='kw'>=</span> <span class='fl'>0</span>,
-  <span class='kw'>panel_plot</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>hscale</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
-  <span class='kw'>vscale</span> <span class='kw'>=</span> <span class='no'>hscale</span>,
-  <span class='kw'>delta_n</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='kw'>delta_rho</span> <span class='kw'>=</span> <span class='fl'>0.1</span>,
-  <span class='no'>...</span>
-)</pre>
+    <pre class="usage"><span class='fu'>correlation</span><span class='op'>(</span>
+  n <span class='op'>=</span> <span class='fl'>30</span>,
+  rho <span class='op'>=</span> <span class='fl'>0</span>,
+  panel_plot <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  hscale <span class='op'>=</span> <span class='cn'>NA</span>,
+  vscale <span class='op'>=</span> <span class='va'>hscale</span>,
+  delta_n <span class='op'>=</span> <span class='fl'>1</span>,
+  delta_rho <span class='op'>=</span> <span class='fl'>0.1</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -198,8 +198,7 @@ rho is increased/decreased after one click of the +/- button.</p></td>
     <p>Nothing is returned, only the animation is produced.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Random samples of size \(n\) are simulated from a bivariate
-  normal distribution
+    <p>Random samples of size \(n\) are simulated from a
   <a href='https://en.wikipedia.org/wiki/Multivariate_normal_distribution'>bivariate normal distribution</a>
   in which each of the variables has a mean of 0 and a variance of 1 and
   the correlation \(\rho\) between the variables is chosen by the user.</p>
@@ -235,8 +234,9 @@ rho is increased/decreased after one click of the +/- button.</p></td>
 <p><code><a href='smovie.html'>smovie</a></code>: general information about smovie.</p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>correlation</span>(<span class='kw'>rho</span> <span class='kw'>=</span> <span class='fl'>0.8</span>)
-<span class='fu'>correlation</span>(<span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>10</span>)</div></pre>
+    <pre class="examples"><div class='input'><span class='fu'>correlation</span><span class='op'>(</span>rho <span class='op'>=</span> <span class='fl'>0.8</span><span class='op'>)</span>
+<span class='fu'>correlation</span><span class='op'>(</span>n <span class='op'>=</span> <span class='fl'>10</span><span class='op'>)</span>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -252,7 +252,7 @@ rho is increased/decreased after one click of the +/- button.</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

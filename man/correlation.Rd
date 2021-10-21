@@ -52,8 +52,7 @@ sample correlation coefficient \eqn{r} depends on the sample size \eqn{n}
 and on the true correlation \eqn{\rho}.
 }
 \details{
-Random samples of size \eqn{n} are simulated from a bivariate
-  normal distribution
+Random samples of size \eqn{n} are simulated from a
   \href{https://en.wikipedia.org/wiki/Multivariate_normal_distribution}{bivariate normal distribution}
   in which each of the variables has a mean of 0 and a variance of 1 and
   the correlation \eqn{\rho} between the variables is chosen by the user.

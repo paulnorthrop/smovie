@@ -82,7 +82,7 @@ correlation, based on a random sample from a bivariate normal distribution" />
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -108,7 +108,7 @@ correlation, based on a random sample from a bivariate normal distribution" />
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/paulnorthrop/smovie/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -136,13 +136,13 @@ for the distribution of Fisher's transformation of product moment
 correlation, based on a random sample from a bivariate normal distribution</p>
     </div>
 
-    <pre class="usage"><span class='fu'>dFcorr</span>(<span class='no'>x</span>, <span class='no'>N</span>, <span class='kw'>rho</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>log</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+    <pre class="usage"><span class='fu'>dFcorr</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>N</span>, rho <span class='op'>=</span> <span class='fl'>0</span>, log <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
 
-<span class='fu'>pFcorr</span>(<span class='no'>q</span>, <span class='no'>N</span>, <span class='kw'>rho</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>lower.tail</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>log.p</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+<span class='fu'>pFcorr</span><span class='op'>(</span><span class='va'>q</span>, <span class='va'>N</span>, rho <span class='op'>=</span> <span class='fl'>0</span>, lower.tail <span class='op'>=</span> <span class='cn'>TRUE</span>, log.p <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
 
-<span class='fu'>qFcorr</span>(<span class='no'>p</span>, <span class='no'>N</span>, <span class='kw'>rho</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>lower.tail</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>log.p</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+<span class='fu'>qFcorr</span><span class='op'>(</span><span class='va'>p</span>, <span class='va'>N</span>, rho <span class='op'>=</span> <span class='fl'>0</span>, lower.tail <span class='op'>=</span> <span class='cn'>TRUE</span>, log.p <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
 
-<span class='fu'>rFcorr</span>(<span class='no'>n</span>, <span class='no'>N</span>, <span class='kw'>rho</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>lower.tail</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>log.p</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+<span class='fu'>rFcorr</span><span class='op'>(</span><span class='va'>n</span>, <span class='va'>N</span>, rho <span class='op'>=</span> <span class='fl'>0</span>, lower.tail <span class='op'>=</span> <span class='cn'>TRUE</span>, log.p <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -204,12 +204,19 @@ required.</p></td>
 <p><code><a href='correlation.html'>correlation</a></code>: correlation sampling distribution movie.</p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>dFcorr</span>(-<span class='fl'>1</span>:<span class='fl'>1</span>, <span class='kw'>N</span> <span class='kw'>=</span> <span class='fl'>10</span>)</div><div class='output co'>#&gt; [1] 0.03402773 1.09381028 0.03402773</div><div class='input'><span class='fu'>dFcorr</span>(<span class='fl'>0</span>, <span class='kw'>N</span> <span class='kw'>=</span> <span class='fl'>11</span>:<span class='fl'>20</span>)</div><div class='output co'>#&gt;  [1] 1.164169 1.230537 1.293521 1.353590 1.411114 1.466389 1.519661 1.571132
+    <pre class="examples"><div class='input'><span class='fu'>dFcorr</span><span class='op'>(</span><span class='op'>-</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>1</span>, N <span class='op'>=</span> <span class='fl'>10</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] 0.03402773 1.09381028 0.03402773</div><div class='input'><span class='fu'>dFcorr</span><span class='op'>(</span><span class='fl'>0</span>, N <span class='op'>=</span> <span class='fl'>11</span><span class='op'>:</span><span class='fl'>20</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;  [1] 1.164169 1.230537 1.293521 1.353590 1.411114 1.466389 1.519661 1.571132
 #&gt;  [9] 1.620972 1.669327</div><div class='input'>
-<span class='fu'>pFcorr</span>(<span class='fl'>0.5</span>, <span class='kw'>N</span> <span class='kw'>=</span> <span class='fl'>10</span>)</div><div class='output co'>#&gt; [1] 0.9106799</div><div class='input'><span class='fu'>pFcorr</span>(<span class='fl'>0.5</span>, <span class='kw'>N</span> <span class='kw'>=</span> <span class='fl'>10</span>, <span class='kw'>rho</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0</span>, <span class='fl'>0.3</span>))</div><div class='output co'>#&gt; [1] 0.9106799 0.6806866</div><div class='input'>
-<span class='fu'>qFcorr</span>((<span class='fl'>1</span>:<span class='fl'>9</span>)/<span class='fl'>10</span>, <span class='kw'>N</span> <span class='kw'>=</span> <span class='fl'>10</span>, <span class='kw'>rho</span> <span class='kw'>=</span> <span class='fl'>0.2</span>)</div><div class='output co'>#&gt; [1] -0.25953649 -0.09334756  0.02397876  0.12321621  0.21556701  0.30791897
-#&gt; [7]  0.40715964  0.52448940  0.69066782</div><div class='input'><span class='fu'>qFcorr</span>(<span class='fl'>0.5</span>, <span class='kw'>N</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>10</span>, <span class='fl'>20</span>), <span class='kw'>rho</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0</span>, <span class='fl'>0.3</span>))</div><div class='output co'>#&gt; [1] -2.519357e-05  3.179454e-01</div><div class='input'>
-<span class='fu'>rFcorr</span>(<span class='fl'>6</span>, <span class='kw'>N</span> <span class='kw'>=</span> <span class='fl'>10</span>, <span class='kw'>rho</span> <span class='kw'>=</span> <span class='fl'>0.6</span>)</div><div class='output co'>#&gt; [1] 1.1705041 0.4422082 1.0120775 0.3468487 0.7944977 1.1788516</div></pre>
+<span class='fu'>pFcorr</span><span class='op'>(</span><span class='fl'>0.5</span>, N <span class='op'>=</span> <span class='fl'>10</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] 0.9106799</div><div class='input'><span class='fu'>pFcorr</span><span class='op'>(</span><span class='fl'>0.5</span>, N <span class='op'>=</span> <span class='fl'>10</span>, rho <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>0.3</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] 0.9106799 0.6806866</div><div class='input'>
+<span class='fu'>qFcorr</span><span class='op'>(</span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>9</span><span class='op'>)</span><span class='op'>/</span><span class='fl'>10</span>, N <span class='op'>=</span> <span class='fl'>10</span>, rho <span class='op'>=</span> <span class='fl'>0.2</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] -0.25953649 -0.09334756  0.02397876  0.12321621  0.21556701  0.30791897
+#&gt; [7]  0.40715964  0.52448940  0.69066782</div><div class='input'><span class='fu'>qFcorr</span><span class='op'>(</span><span class='fl'>0.5</span>, N <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>10</span>, <span class='fl'>20</span><span class='op'>)</span>, rho <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>0.3</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] -2.519357e-05  3.179454e-01</div><div class='input'>
+<span class='fu'>rFcorr</span><span class='op'>(</span><span class='fl'>6</span>, N <span class='op'>=</span> <span class='fl'>10</span>, rho <span class='op'>=</span> <span class='fl'>0.6</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] 1.1705041 0.4422082 1.0120775 0.3468487 0.7944977 1.1788516</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -225,7 +232,7 @@ required.</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

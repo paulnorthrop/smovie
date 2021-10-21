@@ -84,7 +84,7 @@ and Student t with 2 degrees of freedom cases (see Examples)." />
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -110,7 +110,7 @@ and Student t with 2 degrees of freedom cases (see Examples)." />
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/paulnorthrop/smovie/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -140,18 +140,18 @@ distribution.  An interesting comparison is between the normal
 and Student t with 2 degrees of freedom cases (see <strong>Examples</strong>).</p>
     </div>
 
-    <pre class="usage"><span class='fu'>mean_vs_median</span>(
-  <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>10</span>,
-  <span class='kw'>t_df</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>panel_plot</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>hscale</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
-  <span class='kw'>vscale</span> <span class='kw'>=</span> <span class='no'>hscale</span>,
-  <span class='kw'>n_add</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='kw'>delta_n</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='kw'>arrow</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>leg_cex</span> <span class='kw'>=</span> <span class='fl'>1.75</span>,
-  <span class='no'>...</span>
-)</pre>
+    <pre class="usage"><span class='fu'>mean_vs_median</span><span class='op'>(</span>
+  n <span class='op'>=</span> <span class='fl'>10</span>,
+  t_df <span class='op'>=</span> <span class='cn'>NULL</span>,
+  panel_plot <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  hscale <span class='op'>=</span> <span class='cn'>NA</span>,
+  vscale <span class='op'>=</span> <span class='va'>hscale</span>,
+  n_add <span class='op'>=</span> <span class='fl'>1</span>,
+  delta_n <span class='op'>=</span> <span class='fl'>1</span>,
+  arrow <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  leg_cex <span class='op'>=</span> <span class='fl'>1.75</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -259,10 +259,11 @@ Allows the size of the legend to be controlled manually.</p></td>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Sampling from a standard normal distribution</span>
-<span class='fu'>mean_vs_median</span>()
+<span class='fu'>mean_vs_median</span><span class='op'>(</span><span class='op'>)</span>
 
 <span class='co'># Sampling from a standard t(2) distribution</span>
-<span class='fu'>mean_vs_median</span>(<span class='kw'>t_df</span> <span class='kw'>=</span> <span class='fl'>2</span>)</div></pre>
+<span class='fu'>mean_vs_median</span><span class='op'>(</span>t_df <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -278,7 +279,7 @@ Allows the size of the legend to be controlled manually.</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

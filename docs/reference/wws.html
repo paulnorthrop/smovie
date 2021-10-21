@@ -86,7 +86,7 @@ specify their own log-likelihood or use one of two in-built examples." />
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -112,7 +112,7 @@ specify their own log-likelihood or use one of two in-built examples." />
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/paulnorthrop/smovie/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -144,22 +144,22 @@ this hypothesis against the general alternative.  The user can
 specify their own log-likelihood or use one of two in-built examples.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>wws</span>(
-  <span class='kw'>model</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"norm"</span>, <span class='st'>"binom"</span>),
-  <span class='kw'>theta_range</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='no'>...</span>,
-  <span class='kw'>mult</span> <span class='kw'>=</span> <span class='fl'>3</span>,
-  <span class='kw'>theta0</span> <span class='kw'>=</span> <span class='kw'>if</span> (!<span class='fu'><a href='https://rdrr.io/r/base/NULL.html'>is.null</a></span>(<span class='no'>theta_range</span>)) <span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0.25</span>, <span class='fl'>0.75</span>) * <span class='no'>theta_range</span>) <span class='kw'>else</span> <span class='kw'>NULL</span>,
-  <span class='kw'>panel_plot</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>hscale</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
-  <span class='kw'>vscale</span> <span class='kw'>=</span> <span class='no'>hscale</span>,
-  <span class='kw'>delta_theta0</span> <span class='kw'>=</span> <span class='kw'>if</span> (!<span class='fu'><a href='https://rdrr.io/r/base/NULL.html'>is.null</a></span>(<span class='no'>theta_range</span>)) <span class='fu'><a href='https://rdrr.io/r/base/MathFun.html'>abs</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/diff.html'>diff</a></span>(<span class='no'>theta_range</span>))/<span class='fl'>20</span> <span class='kw'>else</span> <span class='kw'>NULL</span>,
-  <span class='kw'>theta_mle</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>loglik</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>alg_score</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>alg_obs_info</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>digits</span> <span class='kw'>=</span> <span class='fl'>3</span>
-)</pre>
+    <pre class="usage"><span class='fu'>wws</span><span class='op'>(</span>
+  model <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"norm"</span>, <span class='st'>"binom"</span><span class='op'>)</span>,
+  theta_range <span class='op'>=</span> <span class='cn'>NULL</span>,
+  <span class='va'>...</span>,
+  mult <span class='op'>=</span> <span class='fl'>3</span>,
+  theta0 <span class='op'>=</span> <span class='kw'>if</span> <span class='op'>(</span><span class='op'>!</span><span class='fu'><a href='https://rdrr.io/r/base/NULL.html'>is.null</a></span><span class='op'>(</span><span class='va'>theta_range</span><span class='op'>)</span><span class='op'>)</span> <span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0.25</span>, <span class='fl'>0.75</span><span class='op'>)</span> <span class='op'>*</span> <span class='va'>theta_range</span><span class='op'>)</span> <span class='kw'>else</span> <span class='cn'>NULL</span>,
+  panel_plot <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  hscale <span class='op'>=</span> <span class='cn'>NA</span>,
+  vscale <span class='op'>=</span> <span class='va'>hscale</span>,
+  delta_theta0 <span class='op'>=</span> <span class='kw'>if</span> <span class='op'>(</span><span class='op'>!</span><span class='fu'><a href='https://rdrr.io/r/base/NULL.html'>is.null</a></span><span class='op'>(</span><span class='va'>theta_range</span><span class='op'>)</span><span class='op'>)</span> <span class='fu'><a href='https://rdrr.io/r/base/MathFun.html'>abs</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/diff.html'>diff</a></span><span class='op'>(</span><span class='va'>theta_range</span><span class='op'>)</span><span class='op'>)</span><span class='op'>/</span><span class='fl'>20</span> <span class='kw'>else</span> <span class='cn'>NULL</span>,
+  theta_mle <span class='op'>=</span> <span class='cn'>NULL</span>,
+  loglik <span class='op'>=</span> <span class='cn'>NULL</span>,
+  alg_score <span class='op'>=</span> <span class='cn'>NULL</span>,
+  alg_obs_info <span class='op'>=</span> <span class='cn'>NULL</span>,
+  digits <span class='op'>=</span> <span class='fl'>3</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -307,39 +307,40 @@ p-values.  See <code><a href='https://rdrr.io/r/base/Round.html'>signif</a></cod
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># N(theta, 1) example, test statistics equivalent</span>
-<span class='fu'>wws</span>(<span class='kw'>theta0</span> <span class='kw'>=</span> <span class='fl'>0.8</span>)
+<span class='fu'>wws</span><span class='op'>(</span>theta0 <span class='op'>=</span> <span class='fl'>0.8</span><span class='op'>)</span>
 
 <span class='co'># binomial(20, theta) example, test statistics similar</span>
-<span class='fu'>wws</span>(<span class='kw'>theta0</span> <span class='kw'>=</span> <span class='fl'>0.5</span>, <span class='kw'>model</span> <span class='kw'>=</span> <span class='st'>"binom"</span>)
+<span class='fu'>wws</span><span class='op'>(</span>theta0 <span class='op'>=</span> <span class='fl'>0.5</span>, model <span class='op'>=</span> <span class='st'>"binom"</span><span class='op'>)</span>
 
 <span class='co'># binomial(20, theta) example, test statistic rather different</span>
 <span class='co'># for theta0 distant from theta_mle</span>
-<span class='fu'>wws</span>(<span class='kw'>theta0</span> <span class='kw'>=</span> <span class='fl'>0.9</span>, <span class='kw'>model</span> <span class='kw'>=</span> <span class='st'>"binom"</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>19</span>, <span class='fl'>1</span>), <span class='kw'>theta_range</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0.1</span>, <span class='fl'>0.99</span>))
+<span class='fu'>wws</span><span class='op'>(</span>theta0 <span class='op'>=</span> <span class='fl'>0.9</span>, model <span class='op'>=</span> <span class='st'>"binom"</span>, data <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>19</span>, <span class='fl'>1</span><span class='op'>)</span>, theta_range <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0.1</span>, <span class='fl'>0.99</span><span class='op'>)</span><span class='op'>)</span>
 
 <span class='co'># binomial(2000, theta) example, test statistics very similar</span>
-<span class='fu'>wws</span>(<span class='kw'>theta0</span> <span class='kw'>=</span> <span class='fl'>0.5</span>, <span class='kw'>model</span> <span class='kw'>=</span> <span class='st'>"binom"</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1000</span>, <span class='fl'>1000</span>))
+<span class='fu'>wws</span><span class='op'>(</span>theta0 <span class='op'>=</span> <span class='fl'>0.5</span>, model <span class='op'>=</span> <span class='st'>"binom"</span>, data <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1000</span>, <span class='fl'>1000</span><span class='op'>)</span><span class='op'>)</span>
 
-<span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span>(<span class='fl'>47</span>)
-<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>10</span>)
-<span class='fu'>wws</span>(<span class='kw'>theta0</span> <span class='kw'>=</span> <span class='fl'>0.2</span>, <span class='kw'>model</span> <span class='kw'>=</span> <span class='st'>"norm"</span>, <span class='kw'>theta_range</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(-<span class='fl'>1</span>, <span class='fl'>1</span>))
+<span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span><span class='op'>(</span><span class='fl'>47</span><span class='op'>)</span>
+<span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>10</span><span class='op'>)</span>
+<span class='fu'>wws</span><span class='op'>(</span>theta0 <span class='op'>=</span> <span class='fl'>0.2</span>, model <span class='op'>=</span> <span class='st'>"norm"</span>, theta_range <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='op'>-</span><span class='fl'>1</span>, <span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span>
 
 <span class='co'># Log-likelihood for a binomial experiment (up to an additive constant)</span>
-<span class='no'>bin_loglik</span> <span class='kw'>&lt;-</span> <span class='kw'>function</span>(<span class='no'>p</span>, <span class='no'>n_success</span>, <span class='no'>n_failure</span>) {
-  <span class='fu'><a href='https://rdrr.io/r/base/function.html'>return</a></span>(<span class='no'>n_success</span> * <span class='fu'><a href='https://rdrr.io/r/base/Log.html'>log</a></span>(<span class='no'>p</span>) + <span class='no'>n_failure</span> * <span class='fu'><a href='https://rdrr.io/r/base/Log.html'>log</a></span>(<span class='fl'>1</span> - <span class='no'>p</span>))
-}
+<span class='va'>bin_loglik</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>p</span>, <span class='va'>n_success</span>, <span class='va'>n_failure</span><span class='op'>)</span> <span class='op'>{</span>
+  <span class='kw'><a href='https://rdrr.io/r/base/function.html'>return</a></span><span class='op'>(</span><span class='va'>n_success</span> <span class='op'>*</span> <span class='fu'><a href='https://rdrr.io/r/base/Log.html'>log</a></span><span class='op'>(</span><span class='va'>p</span><span class='op'>)</span> <span class='op'>+</span> <span class='va'>n_failure</span> <span class='op'>*</span> <span class='fu'><a href='https://rdrr.io/r/base/Log.html'>log</a></span><span class='op'>(</span><span class='fl'>1</span> <span class='op'>-</span> <span class='va'>p</span><span class='op'>)</span><span class='op'>)</span>
+<span class='op'>}</span>
 
-<span class='fu'>wws</span>(<span class='kw'>loglik</span> <span class='kw'>=</span> <span class='no'>bin_loglik</span>, <span class='kw'>theta0</span> <span class='kw'>=</span> <span class='fl'>0.5</span>, <span class='kw'>theta_range</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0.1</span>, <span class='fl'>0.7</span>),
-    <span class='kw'>theta_mle</span> <span class='kw'>=</span> <span class='fl'>7</span> / <span class='fl'>20</span>, <span class='kw'>n_success</span> <span class='kw'>=</span> <span class='fl'>7</span>, <span class='kw'>n_failure</span> <span class='kw'>=</span> <span class='fl'>13</span>)
+<span class='fu'>wws</span><span class='op'>(</span>loglik <span class='op'>=</span> <span class='va'>bin_loglik</span>, theta0 <span class='op'>=</span> <span class='fl'>0.5</span>, theta_range <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0.1</span>, <span class='fl'>0.7</span><span class='op'>)</span>,
+    theta_mle <span class='op'>=</span> <span class='fl'>7</span> <span class='op'>/</span> <span class='fl'>20</span>, n_success <span class='op'>=</span> <span class='fl'>7</span>, n_failure <span class='op'>=</span> <span class='fl'>13</span><span class='op'>)</span>
 
-<span class='no'>bin_alg_score</span> <span class='kw'>&lt;-</span> <span class='kw'>function</span>(<span class='no'>p</span>, <span class='no'>n_success</span>, <span class='no'>n_failure</span>) {
-  <span class='fu'><a href='https://rdrr.io/r/base/function.html'>return</a></span>(<span class='no'>n_success</span> / <span class='no'>p</span> - <span class='no'>n_failure</span> / (<span class='fl'>1</span> - <span class='no'>p</span>))
-}
-<span class='no'>bin_alg_obs_info</span> <span class='kw'>&lt;-</span> <span class='kw'>function</span>(<span class='no'>p</span>, <span class='no'>n_success</span>, <span class='no'>n_failure</span>) {
-  <span class='fu'><a href='https://rdrr.io/r/base/function.html'>return</a></span>(<span class='no'>n_success</span> / <span class='no'>p</span> ^ <span class='fl'>2</span> + <span class='no'>n_failure</span> / (<span class='fl'>1</span> - <span class='no'>p</span>) ^ <span class='fl'>2</span>)
-}
-<span class='fu'>wws</span>(<span class='kw'>loglik</span> <span class='kw'>=</span> <span class='no'>bin_loglik</span>, <span class='kw'>theta0</span> <span class='kw'>=</span> <span class='fl'>0.5</span>, <span class='kw'>theta_range</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0.1</span>, <span class='fl'>0.7</span>),
-    <span class='kw'>theta_mle</span> <span class='kw'>=</span> <span class='fl'>7</span> / <span class='fl'>20</span>, <span class='kw'>n_success</span> <span class='kw'>=</span> <span class='fl'>7</span>, <span class='kw'>n_failure</span> <span class='kw'>=</span> <span class='fl'>13</span>,
-    <span class='kw'>alg_score</span> <span class='kw'>=</span> <span class='no'>bin_alg_score</span>, <span class='kw'>alg_obs_info</span> <span class='kw'>=</span> <span class='no'>bin_alg_obs_info</span>)</div></pre>
+<span class='va'>bin_alg_score</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>p</span>, <span class='va'>n_success</span>, <span class='va'>n_failure</span><span class='op'>)</span> <span class='op'>{</span>
+  <span class='kw'><a href='https://rdrr.io/r/base/function.html'>return</a></span><span class='op'>(</span><span class='va'>n_success</span> <span class='op'>/</span> <span class='va'>p</span> <span class='op'>-</span> <span class='va'>n_failure</span> <span class='op'>/</span> <span class='op'>(</span><span class='fl'>1</span> <span class='op'>-</span> <span class='va'>p</span><span class='op'>)</span><span class='op'>)</span>
+<span class='op'>}</span>
+<span class='va'>bin_alg_obs_info</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>p</span>, <span class='va'>n_success</span>, <span class='va'>n_failure</span><span class='op'>)</span> <span class='op'>{</span>
+  <span class='kw'><a href='https://rdrr.io/r/base/function.html'>return</a></span><span class='op'>(</span><span class='va'>n_success</span> <span class='op'>/</span> <span class='va'>p</span> <span class='op'>^</span> <span class='fl'>2</span> <span class='op'>+</span> <span class='va'>n_failure</span> <span class='op'>/</span> <span class='op'>(</span><span class='fl'>1</span> <span class='op'>-</span> <span class='va'>p</span><span class='op'>)</span> <span class='op'>^</span> <span class='fl'>2</span><span class='op'>)</span>
+<span class='op'>}</span>
+<span class='fu'>wws</span><span class='op'>(</span>loglik <span class='op'>=</span> <span class='va'>bin_loglik</span>, theta0 <span class='op'>=</span> <span class='fl'>0.5</span>, theta_range <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0.1</span>, <span class='fl'>0.7</span><span class='op'>)</span>,
+    theta_mle <span class='op'>=</span> <span class='fl'>7</span> <span class='op'>/</span> <span class='fl'>20</span>, n_success <span class='op'>=</span> <span class='fl'>7</span>, n_failure <span class='op'>=</span> <span class='fl'>13</span>,
+    alg_score <span class='op'>=</span> <span class='va'>bin_alg_score</span>, alg_obs_info <span class='op'>=</span> <span class='va'>bin_alg_obs_info</span><span class='op'>)</span>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -355,7 +356,7 @@ p-values.  See <code><a href='https://rdrr.io/r/base/Round.html'>signif</a></cod
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>
