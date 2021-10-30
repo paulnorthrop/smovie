@@ -115,8 +115,7 @@ Loosely speaking, a consequence of the CLT for sample quantiles
   identically distributed random variables, each with probability density
   function \eqn{f} and 100\eqn{p}\% quantile \eqn{\xi(p)}, has
   \strong{approximately} a normal distribution.  See, for example,
-  \href{https://doi.org/10.1007/b98855}{Lehmann (1999)} for a precise
-  statement and conditions.
+  Lehmann (1999) for a precise statement and conditions.
 
   This movie considers examples where this limiting result holds and
   illustrates graphically the closeness of the limiting approximation
