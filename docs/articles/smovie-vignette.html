@@ -85,7 +85,7 @@
       <h1 data-toc-skip>An overview of smovie</h1>
                         <h4 class="author">Paul Northrop</h4>
             
-            <h4 class="date">2021-10-30</h4>
+            <h4 class="date">2021-10-31</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/paulnorthrop/smovie/blob/master/vignettes/smovie-vignette.Rmd"><code>vignettes/smovie-vignette.Rmd</code></a></small>
       <div class="hidden name"><code>smovie-vignette.Rmd</code></div>
@@ -152,7 +152,7 @@
 <h3 class="hasAnchor">
 <a href="#extremal-types-theorem" class="anchor"></a>Extremal Types Theorem</h3>
 <p>The <a href="https://en.wikipedia.org/wiki/Extreme_value_theory#Univariate_theory">Extremal Types Theorem</a> is rather like the CLT but applied to the sample maximum instead of the sample mean. Loosely speaking, it states that, in many situations, the maximum of a large number <span class="math inline">\(n\)</span> of independent random variables has approximately a Generalized Extreme Value (GEV) distribution with shape parameter <span class="math inline">\(\xi\)</span>. See <span class="citation">Coles (2001)</span> for an introductory account of extreme value theory.</p>
-<p>The function <code>ett</code> can be used to illustrate the convergence of the distribution of the sample maximum to a GEV limit. Several continuous distributions for the underlying variables are available corresponding to different values of the limiting shape parameter <span class="math inline">\(\xi\)</span>. <code>ett</code> works in essentially the same way as <code>clt</code> except that the exact sampling distribution of the sample maximm is also displayed.</p>
+<p>The function <code>ett</code> can be used to illustrate the convergence of the distribution of the sample maximum to a GEV limit. Several continuous distributions for the underlying variables are available corresponding to different values of the limiting shape parameter <span class="math inline">\(\xi\)</span>. <code>ett</code> works in essentially the same way as <code>clt</code> except that the exact sampling distribution of the sample maximum is also displayed.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/ett.html">ett</a></span><span class="op">(</span>distn <span class="op">=</span> <span class="st">"exponential"</span><span class="op">)</span></code></pre></div>
 <p><img src="ett.PNG" width="600px" style="display: block; margin: auto;"></p>
