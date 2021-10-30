@@ -3,8 +3,6 @@
 
 # smovie
 
-[![Travis-CI Build
-Status](https://travis-ci.org/paulnorthrop/smovie.svg?branch=master)](https://travis-ci.org/paulnorthrop/smovie)
 [![AppVeyor Build
 Status](https://ci.appveyor.com/api/projects/status/github/paulnorthrop/smovie?branch=master&svg=true)](https://ci.appveyor.com/project/paulnorthrop/smovie)
 [![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/smovie)](https://cran.r-project.org/package=smovie)
