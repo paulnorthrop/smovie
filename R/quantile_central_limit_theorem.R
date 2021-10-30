@@ -118,7 +118,7 @@
 #'   }
 #' @return Nothing is returned, only the animation is produced.
 #' @references Lehman, E. L. (1999) \emph{Elements of Large-Sample Theory},
-#'   Springer-Verlag, London. \url{https://doi.org/10.1007/b98855}
+#'   Springer-Verlag, London. \doi{10.1007/b98855}
 #' @seealso \code{\link{movies}}: a user-friendly menu panel.
 #' @seealso \code{\link{smovie}}: general information about smovie.
 #' @seealso \code{\link{clt}}: Central Limit Theorem.

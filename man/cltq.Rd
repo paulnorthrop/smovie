@@ -162,7 +162,7 @@ cltq(distn = "t", params = list(df = 2))
 }
 \references{
 Lehman, E. L. (1999) \emph{Elements of Large-Sample Theory},
-  Springer-Verlag, London. \url{https://doi.org/10.1007/b98855}
+  Springer-Verlag, London. \doi{10.1007/b98855}
 }
 \seealso{
 \code{\link{movies}}: a user-friendly menu panel.
