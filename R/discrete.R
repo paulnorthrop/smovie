@@ -118,11 +118,6 @@ discrete <- function(distn, var_support = NULL, params = list(),
                      param_step = list(), param_range = list(), p_vec = NULL,
                      smallest = 0.01, plot_par = list(), panel_plot = TRUE,
                      hscale = NA, vscale = hscale, observed_value = NA, ...) {
-  if (!tcltk::is.tclObj(tcltk::tclRequire("BWidget"))) {
-    message("Package BWidget was not found.")
-    message("Please see the smovie README file for information.")
-    return()
-  }
   # To add another distribution
   # 1. misc.R: add code to set_fun_args(), parameter_range(), parameter_step(),
   #            variable_support()

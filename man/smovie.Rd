@@ -7,13 +7,7 @@
 \description{
 These movies are animations used to illustrate key statistical ideas.
 They are produced using the \code{\link[rpanel:rpanel.package]{rpanel}}
-package, which has
-\href{https://sourceforge.net/projects/tcllib/files/BWidget/}{\code{BWidget}}
-as a system requirement.
-\code{BWidget} is included in the R installers for Windows and macOS.
-For other platforms please see
-\href{https://cran.r-project.org/doc/manuals/r-devel/R-exts.html#Non_002dR-scripts-in-packages}{Section 1.1.7 of Writing R Extensions}
-for installation advice.
+package.
 }
 \details{
 When one of these functions is called R opens up a small

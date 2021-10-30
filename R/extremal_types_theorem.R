@@ -178,11 +178,6 @@
 ett <- function(n = 20, distn, params = list(), panel_plot = TRUE, hscale = NA,
                 vscale = hscale, n_add = 1, delta_n = 1, arrow = TRUE,
                 leg_cex = 1.25, ...) {
-  if (!tcltk::is.tclObj(tcltk::tclRequire("BWidget"))) {
-    message("Package BWidget was not found.")
-    message("Please see the smovie README file for information.")
-    return()
-  }
   # Check that revdbayes is installed
   if (!requireNamespace("revdbayes", quietly = TRUE)) {
     stop("the revdbayes package is needed. Please install it.",

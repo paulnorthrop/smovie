@@ -25,11 +25,6 @@
 #' @seealso \code{\link{smovie}}: general information about smovie.
 #' @export
 movies <- function(fixed_range = TRUE, hscale = NA, vscale = hscale) {
-  if (!tcltk::is.tclObj(tcltk::tclRequire("BWidget"))) {
-    message("Package BWidget was not found.")
-    message("Please see the smovie README file for information.")
-    return()
-  }
   panel.launch <- function(menu.panel) {
     if (menu.panel$demo == "binomial") {
       discrete(distn = "binomial", hscale = hscale, vscale = vscale)

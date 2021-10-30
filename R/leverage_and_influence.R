@@ -55,11 +55,6 @@
 #' @export
 lev_inf <- function(association = c("positive", "negative", "none"), n = 25,
                     panel_plot = TRUE, hscale = NA, vscale = hscale) {
-  if (!tcltk::is.tclObj(tcltk::tclRequire("BWidget"))) {
-    message("Package BWidget was not found.")
-    message("Please see the smovie README file for information.")
-    return()
-  }
   temp <- set_scales(hscale, vscale)
   hscale <- temp$hscale
   vscale <- temp$vscale

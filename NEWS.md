@@ -1,6 +1,10 @@
-# smovie 1.1.3.9000
+# smovie 1.1.4
 
 ## Bug fixes and minor improvements
+
+* The BWidget Tcl/Tk module is no longer a system requirement for the rpanel package on which smovie depends.  rpanel checks whether BWidget is available wen it is required and provides instruction if it is not.  This task has been removed from smovie.
+
+* In help files and vignettes DOIs are used rather than URLs.
 
 * A typo in a section heading in the vignette has been corrected: "simply" becomes "a simple".
 
