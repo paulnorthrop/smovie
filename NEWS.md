@@ -1,3 +1,9 @@
+# smovie 1.1.4.9000
+
+## Bug fixes and minor improvements
+
+* Corrected the link to `cltq()` in the main `smovie` help page.
+
 # smovie 1.1.4
 
 ## Bug fixes and minor improvements

@@ -33,7 +33,7 @@ There are movies on the following topics.
 \itemize{
   \item {\link[=clt]{Central Limit Theorem: sampling distribution
     of a sample mean}}
-  \item {\link[=clt]{Central Limit Theorem for sample quantiles: sampling
+  \item {\link[=cltq]{Central Limit Theorem for sample quantiles: sampling
     distribution of the 100p\% sample quantile}}
   \item {\link[=mean_vs_median]{Sampling distributions of the mean
     and median}}
