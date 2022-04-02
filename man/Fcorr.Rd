@@ -47,16 +47,20 @@ These functions rely on the
   for these functions to work.
 }
 \examples{
-dFcorr(-1:1, N = 10)
-dFcorr(0, N = 11:20)
+got_SuppDists <- requireNamespace("SuppDists", quietly = TRUE)
 
-pFcorr(0.5, N = 10)
-pFcorr(0.5, N = 10, rho = c(0, 0.3))
+if (got_SuppDists) {
+  dFcorr(-1:1, N = 10)
+  dFcorr(0, N = 11:20)
 
-qFcorr((1:9)/10, N = 10, rho = 0.2)
-qFcorr(0.5, N = c(10, 20), rho = c(0, 0.3))
+  pFcorr(0.5, N = 10)
+  pFcorr(0.5, N = 10, rho = c(0, 0.3))
 
-rFcorr(6, N = 10, rho = 0.6)
+  qFcorr((1:9)/10, N = 10, rho = 0.2)
+  qFcorr(0.5, N = c(10, 20), rho = c(0, 0.3))
+
+  rFcorr(6, N = 10, rho = 0.6)
+}
 }
 \references{
 Fisher, R. A. (1915). Frequency distribution of the values of

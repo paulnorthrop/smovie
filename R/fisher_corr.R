@@ -23,7 +23,7 @@
 #'   SuppDists package for dpqr functions for the untransformed product moment
 #'   correlation coefficient.
 #' @examples
-#' got_SuppDists <- requireNamespace("POT", quietly = TRUE)
+#' got_SuppDists <- requireNamespace("SuppDists", quietly = TRUE)
 #'
 #' if (got_SuppDists) {
 #'   dFcorr(-1:1, N = 10)

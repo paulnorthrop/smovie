@@ -1,6 +1,6 @@
 #context("Fcorr functions")
 
-got_SuppDists <- requireNamespace("POT", quietly = TRUE)
+got_SuppDists <- requireNamespace("SuppDists", quietly = TRUE)
 
 if (got_SuppDists) {
 
