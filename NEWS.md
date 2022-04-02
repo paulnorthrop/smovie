@@ -4,6 +4,8 @@
 
 * Corrected the link to `cltq()` in the main `smovie` help page.
 
+* Activated 3rd edition of the `testthat` package
+
 # smovie 1.1.4
 
 ## Bug fixes and minor improvements

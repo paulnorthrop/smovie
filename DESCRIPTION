@@ -2,7 +2,7 @@ Package: smovie
 Type: Package
 Title: Some Movies to Illustrate Concepts in Statistics
 Version: 1.1.4
-Date: 2021-11-27
+Date: 2022-04-02
 Authors@R: person(c("Paul", "J."), "Northrop", email = "p.northrop@ucl.ac.uk",
   role = c("aut", "cre", "cph"))
 Description: Provides movies to help students to understand statistical 
@@ -36,3 +36,4 @@ VignetteBuilder: knitr
 URL: https://paulnorthrop.github.io/smovie/,
      https://github.com/paulnorthrop/smovie/
 BugReports: https://github.com/paulnorthrop/smovie/issues
+Config/testthat/edition: 3
