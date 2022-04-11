@@ -30,6 +30,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-home">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -48,12 +50,6 @@
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-<li>
-  <a href="index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
 <li>
   <a href="reference/index.html">Reference</a>
 </li>
@@ -75,7 +71,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/paulnorthrop/smovie/">
+  <a href="https://github.com/paulnorthrop/smovie/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -92,36 +88,36 @@
 
       </header><div class="row">
   <div class="contents col-md-9">
-<div id="smovie" class="section level1">
-<div class="page-header"><h1 class="hasAnchor">
-<a href="#smovie" class="anchor"></a>smovie</h1></div>
+<div class="section level1">
+<div class="page-header"><h1 id="smovie">smovie<a class="anchor" aria-label="anchor" href="#smovie"></a>
+</h1></div>
 
-<div id="some-movies-to-illustrate-concepts-in-statistics" class="section level3">
-<h3 class="hasAnchor">
-<a href="#some-movies-to-illustrate-concepts-in-statistics" class="anchor"></a>Some Movies to Illustrate Concepts in Statistics</h3>
+<div class="section level3">
+<h3 id="some-movies-to-illustrate-concepts-in-statistics">Some Movies to Illustrate Concepts in Statistics<a class="anchor" aria-label="anchor" href="#some-movies-to-illustrate-concepts-in-statistics"></a>
+</h3>
 </div>
-<div id="what-does-smovie-do" class="section level3">
-<h3 class="hasAnchor">
-<a href="#what-does-smovie-do" class="anchor"></a>What does smovie do?</h3>
-<p>The <code>smovie</code> package provides movies to help students to understand statistical concepts. The <a href="https://cran.r-project.org/package=rpanel"><code>rpanel</code> package</a> is used to create interactive plots that move to illustrate key statistical ideas and methods. The movies cover the topics of probability distributions; sampling distributions of the mean (central limit theorem), the median, the maximum (extremal types theorem) and the (Fisher transformation of the) correlation coefficient; simple linear regression; hypothesis testing.</p>
+<div class="section level3">
+<h3 id="what-does-smovie-do">What does smovie do?<a class="anchor" aria-label="anchor" href="#what-does-smovie-do"></a>
+</h3>
+<p>The <code>smovie</code> package provides movies to help students to understand statistical concepts. The <a href="https://cran.r-project.org/package=rpanel" class="external-link"><code>rpanel</code> package</a> is used to create interactive plots that move to illustrate key statistical ideas and methods. The movies cover the topics of probability distributions; sampling distributions of the mean (central limit theorem), the median, the maximum (extremal types theorem) and the (Fisher transformation of the) correlation coefficient; simple linear regression; hypothesis testing.</p>
 </div>
-<div id="an-example" class="section level3">
-<h3 class="hasAnchor">
-<a href="#an-example" class="anchor"></a>An example</h3>
+<div class="section level3">
+<h3 id="an-example">An example<a class="anchor" aria-label="anchor" href="#an-example"></a>
+</h3>
 <p>The function <code>wws</code> produces a movie to visualise the Wald, Wilks and score likelihood-based test statistics, for a model with a scalar unknown parameter. The user can change the value of the parameter under a simple null hypothesis and observe the effect on the test statistics. The following code uses the log-likelihood from a binomial experiment and considers the null hypothesis that the success probability <em>θ</em> is equal to <em>θ</em><sub>0</sub>. The user may specify their own log-likelihood.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="reference/wws.html">wws</a></span><span class="op">(</span>theta0 <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span></code></pre></div>
 </div>
-<div id="installation" class="section level3">
-<h3 class="hasAnchor">
-<a href="#installation" class="anchor"></a>Installation</h3>
+<div class="section level3">
+<h3 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
+</h3>
 <p>To get the current released version from CRAN:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"smovie"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"smovie"</span><span class="op">)</span></code></pre></div>
 </div>
-<div id="vignettes" class="section level3">
-<h3 class="hasAnchor">
-<a href="#vignettes" class="anchor"></a>Vignettes</h3>
+<div class="section level3">
+<h3 id="vignettes">Vignettes<a class="anchor" aria-label="anchor" href="#vignettes"></a>
+</h3>
 <p>See <code><a href="articles/smovie-vignette.html">vignette("smovie-vignette", package = "smovie")</a></code> for an overview of the package.</p>
 </div>
 </div>
@@ -129,46 +125,58 @@
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <div class="links">
-<h2>Links</h2>
+<h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
-<li>Download from CRAN at <br><a href="https://cloud.r-project.org/package=smovie">https://​cloud.r-project.org/​package=smovie</a>
-</li>
-<li>Browse source code at <br><a href="https://github.com/paulnorthrop/smovie/">https://​github.com/​paulnorthrop/​smovie/​</a>
-</li>
-<li>Report a bug at <br><a href="https://github.com/paulnorthrop/smovie/issues">https://​github.com/​paulnorthrop/​smovie/​issues</a>
-</li>
+<li><a href="https://cloud.r-project.org/package=smovie" class="external-link">View on CRAN</a></li>
+<li><a href="https://github.com/paulnorthrop/smovie/" class="external-link">Browse source code</a></li>
+<li><a href="https://github.com/paulnorthrop/smovie/issues" class="external-link">Report a bug</a></li>
 </ul>
 </div>
+
 <div class="license">
-<h2>License</h2>
+<h2 data-toc-skip>License</h2>
 <ul class="list-unstyled">
 <li>GPL (&gt;= 2)</li>
 </ul>
 </div>
+
+
+<div class="citation">
+<h2 data-toc-skip>Citation</h2>
+<ul class="list-unstyled">
+<li><a href="authors.html#citation">Citing smovie</a></li>
+</ul>
+</div>
+
 <div class="developers">
-<h2>Developers</h2>
+<h2 data-toc-skip>Developers</h2>
 <ul class="list-unstyled">
 <li>Paul J. Northrop <br><small class="roles"> Author, maintainer, copyright holder </small>  </li>
 </ul>
 </div>
 
-  <div class="dev-status">
-<h2>Dev status</h2>
+<div class="dev-status">
+<h2 data-toc-skip>Dev status</h2>
 <ul class="list-unstyled">
-<li><a href="https://ci.appveyor.com/project/paulnorthrop/smovie"><img src="https://ci.appveyor.com/api/projects/status/github/paulnorthrop/smovie?branch=master&amp;svg=true" alt="AppVeyor Build Status"></a></li>
-<li><a href="https://cran.r-project.org/package=smovie"><img src="https://www.r-pkg.org/badges/version/smovie" alt="CRAN_Status_Badge"></a></li>
+<li><a href="https://ci.appveyor.com/project/paulnorthrop/smovie" class="external-link"><img src="https://ci.appveyor.com/api/projects/status/github/paulnorthrop/smovie?branch=master&amp;svg=true" alt="AppVeyor Build Status"></a></li>
+<li><a href="https://cran.r-project.org/package=smovie" class="external-link"><img src="https://www.r-pkg.org/badges/version/smovie" alt="CRAN_Status_Badge"></a></li>
+<li><a href="https://cran.r-project.org/package=smovie" class="external-link"><img src="https://cranlogs.r-pkg.org/badges/smovie?color=brightgreen" alt="Downloads (monthly)"></a></li>
+<li><a href="https://cran.r-project.org/package=smovie" class="external-link"><img src="https://cranlogs.r-pkg.org/badges/grand-total/smovie?color=brightgreen" alt="Downloads (total)"></a></li>
 </ul>
 </div>
-</div>
+
+  </div>
 </div>
 
 
       <footer><div class="copyright">
-  <p>Developed by Paul J. Northrop.</p>
+  <p></p>
+<p>Developed by Paul J. Northrop.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
 </div>
 
       </footer>
@@ -176,6 +184,8 @@
 
   
 
+
+  
 
   </body>
 </html>
