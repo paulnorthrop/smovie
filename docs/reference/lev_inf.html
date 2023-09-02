@@ -18,7 +18,7 @@ least squares regression line."><!-- mathjax --><script src="https://cdnjs.cloud
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">smovie</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">1.1.4</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">1.1.5</span>
       </span>
     </div>
 
@@ -27,7 +27,7 @@ least squares regression line."><!-- mathjax --><script src="https://cdnjs.cloud
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -65,13 +65,13 @@ least squares regression line.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">lev_inf</span><span class="op">(</span>
-  association <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"positive"</span>, <span class="st">"negative"</span>, <span class="st">"none"</span><span class="op">)</span>,
-  n <span class="op">=</span> <span class="fl">25</span>,
-  panel_plot <span class="op">=</span> <span class="cn">TRUE</span>,
-  hscale <span class="op">=</span> <span class="cn">NA</span>,
-  vscale <span class="op">=</span> <span class="va">hscale</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">lev_inf</span><span class="op">(</span></span>
+<span>  association <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"positive"</span>, <span class="st">"negative"</span>, <span class="st">"none"</span><span class="op">)</span>,</span>
+<span>  n <span class="op">=</span> <span class="fl">25</span>,</span>
+<span>  panel_plot <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  hscale <span class="op">=</span> <span class="cn">NA</span>,</span>
+<span>  vscale <span class="op">=</span> <span class="va">hscale</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -81,22 +81,31 @@ least squares regression line.</p>
 between (not-outlying) observations: "positive" for positive linear
 association; "negative" negative linear association; "none" for no
 association.</p></dd>
+
+
 <dt>n</dt>
 <dd><p>An integer scalar.  The size of the sample of (non-outlying)
 observations.</p></dd>
+
+
 <dt>panel_plot</dt>
 <dd><p>A logical parameter that determines whether the plot
 is placed inside the panel (<code>TRUE</code>) or in the standard graphics
 window (<code>FALSE</code>).  If the plot is to be placed inside the panel
 then the tkrplot library is required.</p></dd>
+
+
 <dt>hscale, vscale</dt>
 <dd><p>Numeric scalars.  Scaling parameters for the size
 of the plot when <code>panel_plot = TRUE</code>. The default values are 1.4 on
 Unix platforms and 2 on Windows platforms.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>Nothing is returned, only the animation is produced.</p>
+    
+
+<p>Nothing is returned, only the animation is produced.</p>
     </div>
     <div id="details">
     <h2>Details</h2>
@@ -132,11 +141,15 @@ Unix platforms and 2 on Windows platforms.</p></dd>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># Positive association</span></span>
-<span class="r-in"><span class="fu">lev_inf</span><span class="op">(</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># No association</span></span>
-<span class="r-in"><span class="fu">lev_inf</span><span class="op">(</span>association <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Positive association</span></span></span>
+<span class="r-in"><span><span class="fu">lev_inf</span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>tkrplot is not available so panel_plot has been set to FALSE.</span>
+<span class="r-plt img"><img src="lev_inf-1.png" alt="" width="700" height="433"></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># No association</span></span></span>
+<span class="r-in"><span><span class="fu">lev_inf</span><span class="op">(</span>association <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span></span></span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>tkrplot is not available so panel_plot has been set to FALSE.</span>
+<span class="r-plt img"><img src="lev_inf-2.png" alt="" width="700" height="433"></span>
 </code></pre></div>
     </div>
   </div>
@@ -151,7 +164,7 @@ Unix platforms and 2 on Windows platforms.</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

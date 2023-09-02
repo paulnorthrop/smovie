@@ -21,7 +21,7 @@ and Student t with 2 degrees of freedom cases (see Examples)."><!-- mathjax --><
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">smovie</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">1.1.4</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">1.1.5</span>
       </span>
     </div>
 
@@ -30,7 +30,7 @@ and Student t with 2 degrees of freedom cases (see Examples)."><!-- mathjax --><
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -71,18 +71,18 @@ and Student t with 2 degrees of freedom cases (see <strong>Examples</strong>).</
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">mean_vs_median</span><span class="op">(</span>
-  n <span class="op">=</span> <span class="fl">10</span>,
-  t_df <span class="op">=</span> <span class="cn">NULL</span>,
-  panel_plot <span class="op">=</span> <span class="cn">TRUE</span>,
-  hscale <span class="op">=</span> <span class="cn">NA</span>,
-  vscale <span class="op">=</span> <span class="va">hscale</span>,
-  n_add <span class="op">=</span> <span class="fl">1</span>,
-  delta_n <span class="op">=</span> <span class="fl">1</span>,
-  arrow <span class="op">=</span> <span class="cn">TRUE</span>,
-  leg_cex <span class="op">=</span> <span class="fl">1.75</span>,
-  <span class="va">...</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">mean_vs_median</span><span class="op">(</span></span>
+<span>  n <span class="op">=</span> <span class="fl">10</span>,</span>
+<span>  t_df <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  panel_plot <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  hscale <span class="op">=</span> <span class="cn">NA</span>,</span>
+<span>  vscale <span class="op">=</span> <span class="va">hscale</span>,</span>
+<span>  n_add <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  delta_n <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  arrow <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  leg_cex <span class="op">=</span> <span class="fl">1.75</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -90,44 +90,63 @@ and Student t with 2 degrees of freedom cases (see <strong>Examples</strong>).</
     <dl><dt>n</dt>
 <dd><p>An integer scalar.  The size of the samples drawn from a
 standard normal distribution.</p></dd>
+
+
 <dt>t_df</dt>
 <dd><p>A positive scalar.  The degrees of freedom <code>df</code> of
 a Student t distribution, as in <code><a href="https://rdrr.io/r/stats/TDist.html" class="external-link">TDist</a></code>.
 If <code>t_df</code> is not supplied then data are simulated from a standard
 normal distribution.</p></dd>
+
+
 <dt>panel_plot</dt>
 <dd><p>A logical parameter that determines whether the plot
 is placed inside the panel (<code>TRUE</code>) or in the standard graphics
 window (<code>FALSE</code>).  If the plot is to be placed inside the panel
 then the tkrplot library is required.</p></dd>
+
+
 <dt>hscale, vscale</dt>
 <dd><p>Numeric scalars.  Scaling parameters for the size
 of the plot when <code>panel_plot = TRUE</code>. The default values are 1.4 on
 Unix platforms and 2 on Windows platforms.</p></dd>
+
+
 <dt>n_add</dt>
 <dd><p>An integer scalar.  The number of simulated datasets to add
 to each new frame of the movie.</p></dd>
+
+
 <dt>delta_n</dt>
 <dd><p>A numeric scalar.  The amount by which n is increased
 (or decreased) after one click of the + (or -) button in the parameter
 window.</p></dd>
+
+
 <dt>arrow</dt>
 <dd><p>A logical scalar.  Should an arrow be included to show the
 simulated sample maximum from the top plot being placed into the
 bottom plot?</p></dd>
+
+
 <dt>leg_cex</dt>
 <dd><p>The argument <code>cex</code> to <code><a href="https://rdrr.io/r/graphics/legend.html" class="external-link">legend</a></code>.
 Allows the size of the legend to be controlled manually.</p></dd>
+
+
 <dt>...</dt>
 <dd><p>Additional arguments to the rpanel functions
 <code><a href="https://rdrr.io/pkg/rpanel/man/rp.button.html" class="external-link">rp.button</a></code> and
 <code><a href="https://rdrr.io/pkg/rpanel/man/rp.doublebutton.html" class="external-link">rp.doublebutton</a></code>, not including <code>panel</code>,
 <code>variable</code>, <code>title</code>, <code>step</code>, <code>action</code>, <code>initval</code>,
 <code>range</code>.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>Nothing is returned, only the animation is produced.</p>
+    
+
+<p>Nothing is returned, only the animation is produced.</p>
     </div>
     <div id="details">
     <h2>Details</h2>
@@ -171,11 +190,15 @@ Allows the size of the legend to be controlled manually.</p></dd>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># Sampling from a standard normal distribution</span></span>
-<span class="r-in"><span class="fu">mean_vs_median</span><span class="op">(</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Sampling from a standard t(2) distribution</span></span>
-<span class="r-in"><span class="fu">mean_vs_median</span><span class="op">(</span>t_df <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Sampling from a standard normal distribution</span></span></span>
+<span class="r-in"><span><span class="fu">mean_vs_median</span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>tkrplot is not available so panel_plot has been set to FALSE.</span>
+<span class="r-plt img"><img src="mean_vs_median-1.png" alt="" width="700" height="433"></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Sampling from a standard t(2) distribution</span></span></span>
+<span class="r-in"><span><span class="fu">mean_vs_median</span><span class="op">(</span>t_df <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>tkrplot is not available so panel_plot has been set to FALSE.</span>
+<span class="r-plt img"><img src="mean_vs_median-2.png" alt="" width="700" height="433"></span>
 </code></pre></div>
     </div>
   </div>
@@ -190,7 +213,7 @@ Allows the size of the legend to be controlled manually.</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

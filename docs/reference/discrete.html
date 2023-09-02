@@ -19,7 +19,7 @@ depend on the values of its parameters."><!-- mathjax --><script src="https://cd
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">smovie</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">1.1.4</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">1.1.5</span>
       </span>
     </div>
 
@@ -28,7 +28,7 @@ depend on the values of its parameters."><!-- mathjax --><script src="https://cd
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -67,21 +67,21 @@ depend on the values of its parameters.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">discrete</span><span class="op">(</span>
-  <span class="va">distn</span>,
-  var_support <span class="op">=</span> <span class="cn">NULL</span>,
-  params <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>,
-  param_step <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>,
-  param_range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>,
-  p_vec <span class="op">=</span> <span class="cn">NULL</span>,
-  smallest <span class="op">=</span> <span class="fl">0.01</span>,
-  plot_par <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>,
-  panel_plot <span class="op">=</span> <span class="cn">TRUE</span>,
-  hscale <span class="op">=</span> <span class="cn">NA</span>,
-  vscale <span class="op">=</span> <span class="va">hscale</span>,
-  observed_value <span class="op">=</span> <span class="cn">NA</span>,
-  <span class="va">...</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">discrete</span><span class="op">(</span></span>
+<span>  <span class="va">distn</span>,</span>
+<span>  var_support <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  params <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  param_step <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  param_range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  p_vec <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  smallest <span class="op">=</span> <span class="fl">0.01</span>,</span>
+<span>  plot_par <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  panel_plot <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  hscale <span class="op">=</span> <span class="cn">NA</span>,</span>
+<span>  vscale <span class="op">=</span> <span class="va">hscale</span>,</span>
+<span>  observed_value <span class="op">=</span> <span class="cn">NA</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -107,12 +107,16 @@ depend on the values of its parameters.</p>
   subset of the integers, unless <code>var_support</code> is set to the contrary.</p>
 <p>If <code>distn</code> is not supplied then <code>distn = "binomial"</code>
   is used.</p></dd>
+
+
 <dt>var_support</dt>
 <dd><p>A numeric vector.  Can be used to set a fixed set of
 values for which to plot the p.m.f. and c.d.f., in order better
 to see the effects of changing the parameter values or to set a support
 that isn't a subset of the integers.
 If <code>var_support</code> is set then it overrides <code>p_vec</code> (see below).</p></dd>
+
+
 <dt>params</dt>
 <dd><p>A named list of initial parameter values with which to start
   the movie.  If <code>distn</code> is a string and a particular parameter value
@@ -126,12 +130,16 @@ If <code>var_support</code> is set then it overrides <code>p_vec</code> (see bel
   parameters.</p>
 <p>If parameter value is outside the corresponding range specified by
   <code>param_range</code> then it is set to the closest limit of the range.</p></dd>
+
+
 <dt>param_step</dt>
 <dd><p>A named list of the amounts by which the respective
 parameters in <code>params</code> are increased/decreased after one click of
 the +/- button. If <code>distn</code> is a function then the default is 0.1
 for all parameters.  If <code>distn</code> is a string then a sensible
 distribution-specific default is set internally.</p></dd>
+
+
 <dt>param_range</dt>
 <dd><p>A named list of the ranges over which the respective
 parameters in <code>params</code> are allowed to vary.  Each element of the list
@@ -139,42 +147,59 @@ should be a vector of length 2: the first element gives the lower limit
 of the range, the second element the upper limit.
 Use <code>NA</code> to impose no limit.
 If <code>distn</code> is a function then all parameters are unconstrained.</p></dd>
+
+
 <dt>p_vec</dt>
 <dd><p>A numeric vector of length 2.  The p.d.f. and c.d.f. are
 plotted between the 100<code>p_vec[1]</code>% and 100<code>p_vec[2]</code>%
 quantiles of the distribution.  If <code>p_vec</code> is not supplied then
 a sensible distribution-specific default is used.  If <code>distn</code> is
 a function then the default is <code>p_vec = c(0.001, 0.999)</code>.</p></dd>
+
+
 <dt>smallest</dt>
 <dd><p>A positive numeric scalar.  The smallest value to be
 used for any strictly positive parameters when <code>distn</code> is a string.</p></dd>
+
+
 <dt>plot_par</dt>
 <dd><p>A named list of graphical parameters
 (see <code><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></code>) to be passed to
 <code><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></code>.  This may be used to alter the
 appearance of the plots of the p.m.f. and c.d.f.</p></dd>
+
+
 <dt>panel_plot</dt>
 <dd><p>A logical parameter that determines whether the plot
 is placed inside the panel (<code>TRUE</code>) or in the standard graphics
 window (<code>FALSE</code>).  If the plot is to be placed inside the panel
 then the tkrplot library is required.</p></dd>
+
+
 <dt>hscale, vscale</dt>
 <dd><p>Numeric scalars.  Scaling parameters for the size
 of the plot when <code>panel_plot = TRUE</code>. The default values are 1.4 on
 Unix platforms and 2 on Windows platforms.</p></dd>
+
+
 <dt>observed_value</dt>
 <dd><p>A non-negative integer.  If <code>observed_value</code> is
 supplied then the corresponding line in the plot of the p.m.f. is coloured
 in red.</p></dd>
+
+
 <dt>...</dt>
 <dd><p>Additional arguments to be passed to
 <code><a href="https://rdrr.io/pkg/rpanel/man/rp.doublebutton.html" class="external-link">rp.doublebutton</a></code>, not including <code>panel</code>,
 <code>variable</code>, <code>title</code>, <code>step</code>, <code>action</code>, <code>initval</code>,
 <code>range</code>.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>Nothing is returned, only the animation is produced.</p>
+    
+
+<p>Nothing is returned, only the animation is produced.</p>
     </div>
     <div id="details">
     <h2>Details</h2>
@@ -199,17 +224,23 @@ in red.</p></dd>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># Binomial example</span></span>
-<span class="r-in"><span class="fu">discrete</span><span class="op">(</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># The same example, but using a user-supplied function and setting manually</span></span>
-<span class="r-in"><span class="co"># the initial parameters, parameter step size and range</span></span>
-<span class="r-in"><span class="fu">discrete</span><span class="op">(</span>distn <span class="op">=</span> <span class="va">dbinom</span>, params <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">10</span>, prob <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span>,</span>
-<span class="r-in">         param_step <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>,</span>
-<span class="r-in">         param_range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="cn">NA</span><span class="op">)</span>, prob <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Poisson distribution. Show the use of var_support</span></span>
-<span class="r-in"><span class="fu">discrete</span><span class="op">(</span>distn <span class="op">=</span> <span class="st">"poisson"</span>, var_support <span class="op">=</span> <span class="fl">0</span><span class="op">:</span><span class="fl">20</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Binomial example</span></span></span>
+<span class="r-in"><span><span class="fu">discrete</span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>tkrplot is not available so panel_plot has been set to FALSE.</span>
+<span class="r-plt img"><img src="discrete-1.png" alt="" width="700" height="433"></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># The same example, but using a user-supplied function and setting manually</span></span></span>
+<span class="r-in"><span><span class="co"># the initial parameters, parameter step size and range</span></span></span>
+<span class="r-in"><span><span class="fu">discrete</span><span class="op">(</span>distn <span class="op">=</span> <span class="va">dbinom</span>, params <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">10</span>, prob <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>         param_step <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>         param_range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="cn">NA</span><span class="op">)</span>, prob <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>tkrplot is not available so panel_plot has been set to FALSE.</span>
+<span class="r-plt img"><img src="discrete-2.png" alt="" width="700" height="433"></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Poisson distribution. Show the use of var_support</span></span></span>
+<span class="r-in"><span><span class="fu">discrete</span><span class="op">(</span>distn <span class="op">=</span> <span class="st">"poisson"</span>, var_support <span class="op">=</span> <span class="fl">0</span><span class="op">:</span><span class="fl">20</span><span class="op">)</span></span></span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>tkrplot is not available so panel_plot has been set to FALSE.</span>
+<span class="r-plt img"><img src="discrete-3.png" alt="" width="700" height="433"></span>
 </code></pre></div>
     </div>
   </div>
@@ -224,7 +255,7 @@ in red.</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

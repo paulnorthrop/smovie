@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">smovie</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">1.1.4</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">1.1.5</span>
       </span>
     </div>
 
@@ -43,7 +43,7 @@
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -79,9 +79,10 @@
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>An overview of smovie</h1>
-                        <h4 data-toc-skip class="author">Paul Northrop</h4>
+                        <h4 data-toc-skip class="author">Paul
+Northrop</h4>
             
-            <h4 data-toc-skip class="date">2022-04-11</h4>
+            <h4 data-toc-skip class="date">2023-09-02</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/paulnorthrop/smovie/blob/HEAD/vignettes/smovie-vignette.Rmd" class="external-link"><code>vignettes/smovie-vignette.Rmd</code></a></small>
       <div class="hidden name"><code>smovie-vignette.Rmd</code></div>
@@ -90,88 +91,170 @@
 
     
     
-<p>The <em>smovie</em> package provides movies to help students to understand statistical concepts. The <a href="https://cran.r-project.org/package=rpanel" class="external-link">rpanel</a> package <span class="citation">(Bowman et al. 2007)</span> is used to create interactive plots that move in response to changes in parameter values. Buttons that can be held down in order to animate the plots. This vignette provides an overview of the movies that are available currently, using screenshots from the movies. Any comments, or suggestions for further movies, are gratefully received.</p>
-<p>The function <code>movies</code> creates a panel from which examples of the movies can be launched. It is based on the function <code>rp.cartoons</code> in the <em>rpanel</em> package, and the image that appears in this panel has been taken from there. These examples have been set up with sensible default arguments.</p>
+<p>The <em>smovie</em> package provides movies to help students to
+understand statistical concepts. The <a href="https://cran.r-project.org/package=rpanel" class="external-link">rpanel</a> package
+<span class="citation">(Bowman et al. 2007)</span> is used to create
+interactive plots that move in response to changes in parameter values.
+Buttons that can be held down in order to animate the plots. This
+vignette provides an overview of the movies that are available
+currently, using screenshots from the movies. Any comments, or
+suggestions for further movies, are gratefully received.</p>
+<p>The function <code>movies</code> creates a panel from which examples
+of the movies can be launched. It is based on the function
+<code>rp.cartoons</code> in the <em>rpanel</em> package, and the image
+that appears in this panel has been taken from there. These examples
+have been set up with sensible default arguments.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://paulnorthrop.github.io/smovie/" class="external-link">smovie</a></span><span class="op">)</span>
-<span class="co">#&gt; Loading required package: rpanel</span>
-<span class="co">#&gt; Loading required package: tcltk</span>
-<span class="co">#&gt; Package `rpanel', version 1.1-5: type help(rpanel) for summary information</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://paulnorthrop.github.io/smovie/" class="external-link">smovie</a></span><span class="op">)</span></span>
+<span><span class="co">#&gt; Loading required package: rpanel</span></span>
+<span><span class="co">#&gt; Warning: package 'rpanel' was built under R version 4.2.3</span></span>
+<span><span class="co">#&gt; Loading required package: tcltk</span></span>
+<span><span class="co">#&gt; Package `rpanel', version 1.1-5: type help(rpanel) for summary information</span></span></code></pre></div>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/movies.html">movies</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<p>For greater control of an individual example call the relevant function directly. These functions have an argument <code>panel_plot</code> that controls whether the movie appears in inside the panel (<code>TRUE</code>) or in the standard graphics window (<code>FALSE</code>). The default is <code>TRUE</code>, partly because my experience is that holding down buttons to animate the plots works better in this case.</p>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/movies.html">movies</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p>For greater control of an individual example call the relevant
+function directly. These functions have an argument
+<code>panel_plot</code> that controls whether the movie appears in
+inside the panel (<code>TRUE</code>) or in the standard graphics window
+(<code>FALSE</code>). The default is <code>TRUE</code>, partly because
+my experience is that holding down buttons to animate the plots works
+better in this case.</p>
 <div class="section level2">
 <h2 id="probability-distributions">Probability distributions<a class="anchor" aria-label="anchor" href="#probability-distributions"></a>
 </h2>
-<p>The functions <code>discrete</code> and <code>continuous</code> create interactive plots to illustrate how the behaviour of some common probability distributions depends on their parameter values. There are buttons to change the parameter values and to switch between displaying the p.m.f./p.d.f. and the c.d.f. These functions also allow you to provide their own distribution. If you are calling <code>discrete</code> or <code>continuous</code> directly it may be useful to use the argument <code>var_support</code> (for <code>discrete</code>) or <code>var_range</code> (for <code>continuous</code>) to fix the scale on the horizontal axis in order better to see the effects of changing the parameter values. Otherwise, for some of the distributions, the scale on the horizontal axis will react to changes in the parameters and mask the effects of any changes in location and scale parameters.</p>
+<p>The functions <code>discrete</code> and <code>continuous</code>
+create interactive plots to illustrate how the behaviour of some common
+probability distributions depends on their parameter values. There are
+buttons to change the parameter values and to switch between displaying
+the p.m.f./p.d.f. and the c.d.f. These functions also allow you to
+provide their own distribution. If you are calling <code>discrete</code>
+or <code>continuous</code> directly it may be useful to use the argument
+<code>var_support</code> (for <code>discrete</code>) or
+<code>var_range</code> (for <code>continuous</code>) to fix the scale on
+the horizontal axis in order better to see the effects of changing the
+parameter values. Otherwise, for some of the distributions, the scale on
+the horizontal axis will react to changes in the parameters and mask the
+effects of any changes in location and scale parameters.</p>
 <div class="section level3">
 <h3 id="discrete-distributions">Discrete distributions<a class="anchor" aria-label="anchor" href="#discrete-distributions"></a>
 </h3>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/discrete.html">discrete</a></span><span class="op">(</span>distn <span class="op">=</span> <span class="st">"binomial"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/discrete.html">discrete</a></span><span class="op">(</span>distn <span class="op">=</span> <span class="st">"binomial"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="binom.PNG" width="600px" style="display: block; margin: auto;"></p>
 </div>
 <div class="section level3">
 <h3 id="continuous-distributions">Continuous distributions<a class="anchor" aria-label="anchor" href="#continuous-distributions"></a>
 </h3>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/continuous.html">continuous</a></span><span class="op">(</span>distn <span class="op">=</span> <span class="st">"gamma"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/continuous.html">continuous</a></span><span class="op">(</span>distn <span class="op">=</span> <span class="st">"gamma"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="gamma.PNG" width="600px" style="display: block; margin: auto;"></p>
 </div>
 </div>
 <div class="section level2">
 <h2 id="sampling-distributions">Sampling distributions<a class="anchor" aria-label="anchor" href="#sampling-distributions"></a>
 </h2>
-<p>Three movies illustrate the general idea of the sampling distribution of a statistic.</p>
+<p>Three movies illustrate the general idea of the sampling distribution
+of a statistic.</p>
 <div class="section level3">
 <h3 id="central-limit-theorem">Central Limit Theorem<a class="anchor" aria-label="anchor" href="#central-limit-theorem"></a>
 </h3>
-<p>Consider <span class="math inline">\(n\)</span> independent and identically distributed random variables <span class="math inline">\(X_1, \ldots, X_n\)</span>, each with mean <span class="math inline">\(\mu\)</span> and finite variance <span class="math inline">\(\sigma^2\)</span>. Let <span class="math inline">\(\bar{X} = (1/ n) \sum_{i=1}^n X_i\)</span>. The (classical) <a href="https://en.wikipedia.org/wiki/Central_limit_theorem" class="external-link">Central limit theorem</a> (CLT) states that as <span class="math inline">\(n \rightarrow \infty\)</span> <span class="math inline">\(\sqrt{n}(\bar{X} - \mu) / \sigma\)</span> converges in distribution to a standard normal N(0, 1) distribution. Therefore, the mean of a sufficiently large number of such variables has approximately a N(<span class="math inline">\(\mu, \sigma^2/n\)</span>) distribution.</p>
-<p>The function <code>clt</code> can be used to illustrate the convergence of the distribution of the sample mean to a normal limit. Several continuous and discrete distributions for the underlying variables are available. There are buttons to change the value of <span class="math inline">\(n\)</span> and to simulate another sample of size <span class="math inline">\(n\)</span>. As the simulations progress a histogram of the sample means can be compared to the normal approximation to the sampling distribution.</p>
+<p>Consider <span class="math inline">\(n\)</span> independent and
+identically distributed random variables <span class="math inline">\(X_1, \ldots, X_n\)</span>, each with mean <span class="math inline">\(\mu\)</span> and finite variance <span class="math inline">\(\sigma^2\)</span>. Let <span class="math inline">\(\bar{X} = (1/ n) \sum_{i=1}^n X_i\)</span>. The
+(classical) <a href="https://en.wikipedia.org/wiki/Central_limit_theorem" class="external-link">Central limit
+theorem</a> (CLT) states that as <span class="math inline">\(n
+\rightarrow \infty\)</span> <span class="math inline">\(\sqrt{n}(\bar{X}
+- \mu) / \sigma\)</span> converges in distribution to a standard normal
+N(0, 1) distribution. Therefore, the mean of a sufficiently large number
+of such variables has approximately a N(<span class="math inline">\(\mu,
+\sigma^2/n\)</span>) distribution.</p>
+<p>The function <code>clt</code> can be used to illustrate the
+convergence of the distribution of the sample mean to a normal limit.
+Several continuous and discrete distributions for the underlying
+variables are available. There are buttons to change the value of <span class="math inline">\(n\)</span> and to simulate another sample of size
+<span class="math inline">\(n\)</span>. As the simulations progress a
+histogram of the sample means can be compared to the normal
+approximation to the sampling distribution.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/clt.html">clt</a></span><span class="op">(</span>distn <span class="op">=</span> <span class="st">"exponential"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/clt.html">clt</a></span><span class="op">(</span>distn <span class="op">=</span> <span class="st">"exponential"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="clt_exp.PNG" width="600px" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/clt.html">clt</a></span><span class="op">(</span>distn <span class="op">=</span> <span class="st">"poisson"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/clt.html">clt</a></span><span class="op">(</span>distn <span class="op">=</span> <span class="st">"poisson"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="clt_poisson.PNG" width="600px" style="display: block; margin: auto;"></p>
 </div>
 <div class="section level3">
 <h3 id="central-limit-theorem-for-sample-quantiles">Central Limit Theorem for sample quantiles<a class="anchor" aria-label="anchor" href="#central-limit-theorem-for-sample-quantiles"></a>
 </h3>
-<p>A similar limit theorem holds for sample quantiles. Suppose that we are interested in the limiting distribution of the <span class="math inline">\(100p\%\)</span> sample quantile of independent and identically distributed random variables, each with probability density function <span class="math inline">\(f\)</span> and <span class="math inline">\(100p\%\)</span> quantile <span class="math inline">\(\xi(p)\)</span>. The limiting distribution is normal with mean <span class="math inline">\(\xi(p)\)</span> and standard deviation <span class="math inline">\(\sqrt{p(1-p)} / n f(\xi(p))\)</span>, provided that <span class="math inline">\(f(\xi(p))\)</span> is positive. See <span class="citation">Lehman (1999)</span> for details.</p>
-<p>The function <code>cltq</code> illustrates this theorem, based here on samples from a gamma(2, 1) distribution.</p>
+<p>A similar limit theorem holds for sample quantiles. Suppose that we
+are interested in the limiting distribution of the <span class="math inline">\(100p\%\)</span> sample quantile of independent and
+identically distributed random variables, each with probability density
+function <span class="math inline">\(f\)</span> and <span class="math inline">\(100p\%\)</span> quantile <span class="math inline">\(\xi(p)\)</span>. The limiting distribution is
+normal with mean <span class="math inline">\(\xi(p)\)</span> and
+standard deviation <span class="math inline">\(\sqrt{p(1-p)} / n
+f(\xi(p))\)</span>, provided that <span class="math inline">\(f(\xi(p))\)</span> is positive. See <span class="citation">Lehman (1999)</span> for details.</p>
+<p>The function <code>cltq</code> illustrates this theorem, based here
+on samples from a gamma(2, 1) distribution.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/cltq.html">cltq</a></span><span class="op">(</span>distn <span class="op">=</span> <span class="st">"gamma"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/cltq.html">cltq</a></span><span class="op">(</span>distn <span class="op">=</span> <span class="st">"gamma"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="cltq_gamma.PNG" width="600px" style="display: block; margin: auto;"></p>
 </div>
 <div class="section level3">
 <h3 id="extremal-types-theorem">Extremal Types Theorem<a class="anchor" aria-label="anchor" href="#extremal-types-theorem"></a>
 </h3>
-<p>The <a href="https://en.wikipedia.org/wiki/Extreme_value_theory#Univariate_theory" class="external-link">Extremal Types Theorem</a> is rather like the CLT but applied to the sample maximum instead of the sample mean. Loosely speaking, it states that, in many situations, the maximum of a large number <span class="math inline">\(n\)</span> of independent random variables has approximately a Generalized Extreme Value (GEV) distribution with shape parameter <span class="math inline">\(\xi\)</span>. See <span class="citation">Coles (2001)</span> for an introductory account of extreme value theory.</p>
-<p>The function <code>ett</code> can be used to illustrate the convergence of the distribution of the sample maximum to a GEV limit. Several continuous distributions for the underlying variables are available corresponding to different values of the limiting shape parameter <span class="math inline">\(\xi\)</span>. <code>ett</code> works in essentially the same way as <code>clt</code> except that the exact sampling distribution of the sample maximum is also displayed.</p>
+<p>The <a href="https://en.wikipedia.org/wiki/Extreme_value_theory#Univariate_theory" class="external-link">Extremal
+Types Theorem</a> is rather like the CLT but applied to the sample
+maximum instead of the sample mean. Loosely speaking, it states that, in
+many situations, the maximum of a large number <span class="math inline">\(n\)</span> of independent random variables has
+approximately a Generalized Extreme Value (GEV) distribution with shape
+parameter <span class="math inline">\(\xi\)</span>. See <span class="citation">Coles (2001)</span> for an introductory account of
+extreme value theory.</p>
+<p>The function <code>ett</code> can be used to illustrate the
+convergence of the distribution of the sample maximum to a GEV limit.
+Several continuous distributions for the underlying variables are
+available corresponding to different values of the limiting shape
+parameter <span class="math inline">\(\xi\)</span>. <code>ett</code>
+works in essentially the same way as <code>clt</code> except that the
+exact sampling distribution of the sample maximum is also displayed.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/ett.html">ett</a></span><span class="op">(</span>distn <span class="op">=</span> <span class="st">"exponential"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/ett.html">ett</a></span><span class="op">(</span>distn <span class="op">=</span> <span class="st">"exponential"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="ett.PNG" width="600px" style="display: block; margin: auto;"></p>
 </div>
 <div class="section level3">
 <h3 id="mean-vs-median">Mean vs median<a class="anchor" aria-label="anchor" href="#mean-vs-median"></a>
 </h3>
-<p>The function <code>mean_vs_median</code> produces a movie to compare the sampling distributions of the sample mean and sample median based on a random sample of size <span class="math inline">\(n\)</span> from either a standard normal distribution or a standard Student’s <span class="math inline">\(t\)</span> distribution.</p>
-<p>If we sample from a standard normal distribution then the sample mean has the smaller sample variance, as illustrated in the following movie.</p>
+<p>The function <code>mean_vs_median</code> produces a movie to compare
+the sampling distributions of the sample mean and sample median based on
+a random sample of size <span class="math inline">\(n\)</span> from
+either a standard normal distribution or a standard Student’s <span class="math inline">\(t\)</span> distribution.</p>
+<p>If we sample from a standard normal distribution then the sample mean
+has the smaller sample variance, as illustrated in the following
+movie.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/mean_vs_median.html">mean_vs_median</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/mean_vs_median.html">mean_vs_median</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="mean_vs_median_normal.PNG" width="600px" style="display: block; margin: auto;"></p>
-<p>If we sample from a Student’s <span class="math inline">\(t\)</span> distribution with 2 degrees of freedom then the next movie reveals that the sample median has the smaller sampling variance.</p>
+<p>If we sample from a Student’s <span class="math inline">\(t\)</span>
+distribution with 2 degrees of freedom then the next movie reveals that
+the sample median has the smaller sampling variance.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/mean_vs_median.html">mean_vs_median</a></span><span class="op">(</span>t_df <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/mean_vs_median.html">mean_vs_median</a></span><span class="op">(</span>t_df <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></code></pre></div>
 <p><img src="mean_vs_median_t2.PNG" width="600px" style="display: block; margin: auto;"></p>
 </div>
 <div class="section level3">
 <h3 id="product-moment-correlation-coefficient">Product Moment Correlation Coefficient<a class="anchor" aria-label="anchor" href="#product-moment-correlation-coefficient"></a>
 </h3>
-<p>The function <code>correlation</code> illustrates the sampling distribution of the product moment correlation coefficient, under sampling from a bivariate normal distribution. There are buttons to change the values of <span class="math inline">\(n\)</span> and the true correlation <span class="math inline">\(\rho\)</span> and to simulate another sample of size <span class="math inline">\(n\)</span>. A histogram of the sample correlation coefficients is compared to the exact pdf of the sampling distribution. There is also an option to switch to a display of <a href="https://en.wikipedia.org/wiki/Fisher_transformation" class="external-link">Fisher’s <span class="math inline">\(z\)</span>-transformation</a> <span class="math inline">\([\ln(1+\rho) - \ln(1-\rho)] / 2\)</span>. Then the histogram can be compared both to the exact distribution and to a normal approximation to this distribution.</p>
+<p>The function <code>correlation</code> illustrates the sampling
+distribution of the product moment correlation coefficient, under
+sampling from a bivariate normal distribution. There are buttons to
+change the values of <span class="math inline">\(n\)</span> and the true
+correlation <span class="math inline">\(\rho\)</span> and to simulate
+another sample of size <span class="math inline">\(n\)</span>. A
+histogram of the sample correlation coefficients is compared to the
+exact pdf of the sampling distribution. There is also an option to
+switch to a display of <a href="https://en.wikipedia.org/wiki/Fisher_transformation" class="external-link">Fisher’s
+<span class="math inline">\(z\)</span>-transformation</a> <span class="math inline">\([\ln(1+\rho) - \ln(1-\rho)] / 2\)</span>. Then the
+histogram can be compared both to the exact distribution and to a normal
+approximation to this distribution.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/correlation.html">correlation</a></span><span class="op">(</span>rho <span class="op">=</span> <span class="fl">0.8</span>, n <span class="op">=</span> <span class="fl">30</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/correlation.html">correlation</a></span><span class="op">(</span>rho <span class="op">=</span> <span class="fl">0.8</span>, n <span class="op">=</span> <span class="fl">30</span><span class="op">)</span></span></code></pre></div>
 <p><img src="correlation1.PNG" width="600px" style="display: block; margin: auto;"></p>
 <p><img src="correlation2.PNG" width="600px" style="display: block; margin: auto;"></p>
 </div>
@@ -182,9 +265,15 @@
 <div class="section level3">
 <h3 id="leverage-and-influence">Leverage and influence<a class="anchor" aria-label="anchor" href="#leverage-and-influence"></a>
 </h3>
-<p>The function <code>lev_inf</code> creates a plot to visualise the effect on a least squares regression line of moving a single observation, in order to illustrate the concepts of leverage and influence. In the first plot below the effect of increasing the <span class="math inline">\(y\)</span>-coefficient of the red observation is far greater when the <span class="math inline">\(x\)</span>-coefficient is far from the mean <span class="math inline">\(x\)</span>-coefficient of the other observations.</p>
+<p>The function <code>lev_inf</code> creates a plot to visualise the
+effect on a least squares regression line of moving a single
+observation, in order to illustrate the concepts of leverage and
+influence. In the first plot below the effect of increasing the <span class="math inline">\(y\)</span>-coefficient of the red observation is
+far greater when the <span class="math inline">\(x\)</span>-coefficient
+is far from the mean <span class="math inline">\(x\)</span>-coefficient
+of the other observations.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/lev_inf.html">lev_inf</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/lev_inf.html">lev_inf</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="lev_inf_1.PNG" width="600px" style="display: block; margin: auto;"></p>
 <p><img src="lev_inf_2.PNG" width="600px" style="display: block; margin: auto;"></p>
 </div>
@@ -192,24 +281,57 @@
 <div class="section level2">
 <h2 id="hypothesis-testing">Hypothesis Testing<a class="anchor" aria-label="anchor" href="#hypothesis-testing"></a>
 </h2>
-<p>Two movies illustrate key concepts in hypothesis testing. <code>wws</code> compares three test statistics (Wald, Wilks and Score) based on the log-likelihood. See <span class="citation">Azzalini (1996)</span> for details. <code>shypo</code> illustrates the concepts of type I and type II errors, using as an example a test of simple hypothesis about the mean, against the general alternative, based on a random sample from a normal distribution with known variance.</p>
+<p>Two movies illustrate key concepts in hypothesis testing.
+<code>wws</code> compares three test statistics (Wald, Wilks and Score)
+based on the log-likelihood. See <span class="citation">Azzalini
+(1996)</span> for details. <code>shypo</code> illustrates the concepts
+of type I and type II errors, using as an example a test of simple
+hypothesis about the mean, against the general alternative, based on a
+random sample from a normal distribution with known variance.</p>
 <div class="section level3">
 <h3 id="wald-wilks-and-score-test-statistics">Wald, Wilks and Score test statistics<a class="anchor" aria-label="anchor" href="#wald-wilks-and-score-test-statistics"></a>
 </h3>
-<p>The function <code>wws</code> shows the differing ways in which these three test statistics measure the distance between the maximum likelihood estimate of a scalar parameter <span class="math inline">\(\theta\)</span> and the value <span class="math inline">\(\theta_0\)</span> under a null hypothesis. There are buttons to change the value of <span class="math inline">\(\theta_0\)</span>, select which test statistic to display and to add the values of the test statistics and the associated <span class="math inline">\(p\)</span>-values of the test of the null hypothesis that <span class="math inline">\(\theta = \theta_0\)</span>. The example below is based on a sample from a binomial(<span class="math inline">\(20, \theta\)</span>) distribution in 7 successes and 13 failures are observed. An example based on a normal distribution is also available. You may also specify your own log-likelihood.</p>
+<p>The function <code>wws</code> shows the differing ways in which these
+three test statistics measure the distance between the maximum
+likelihood estimate of a scalar parameter <span class="math inline">\(\theta\)</span> and the value <span class="math inline">\(\theta_0\)</span> under a null hypothesis. There
+are buttons to change the value of <span class="math inline">\(\theta_0\)</span>, select which test statistic to
+display and to add the values of the test statistics and the associated
+<span class="math inline">\(p\)</span>-values of the test of the null
+hypothesis that <span class="math inline">\(\theta = \theta_0\)</span>.
+The example below is based on a sample from a binomial(<span class="math inline">\(20, \theta\)</span>) distribution in 7 successes
+and 13 failures are observed. An example based on a normal distribution
+is also available. You may also specify your own log-likelihood.</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/wws.html">wws</a></span><span class="op">(</span>theta0 <span class="op">=</span> <span class="fl">0.5</span>, model <span class="op">=</span> <span class="st">"binom"</span>, data <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">7</span>, <span class="fl">13</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/wws.html">wws</a></span><span class="op">(</span>theta0 <span class="op">=</span> <span class="fl">0.5</span>, model <span class="op">=</span> <span class="st">"binom"</span>, data <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">7</span>, <span class="fl">13</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p><img src="wws.PNG" width="600px" style="display: block; margin: auto;"></p>
 </div>
 <div class="section level3">
 <h3 id="testing-a-simple-hypothesis-normally-distributed-variables">Testing a simple hypothesis: normally distributed variables<a class="anchor" aria-label="anchor" href="#testing-a-simple-hypothesis-normally-distributed-variables"></a>
 </h3>
-<p>Consider a random sample <span class="math inline">\(X_1, \ldots, X_n\)</span> from a normal distribution with unknown mean <span class="math inline">\(\mu\)</span> and known variance <span class="math inline">\(\sigma^2\)</span>. We test the null hypothesis <span class="math inline">\(H_0: \mu = \mu_0\)</span> against the alternative <span class="math inline">\(H_1: \mu = \mu_1\)</span>, where <span class="math inline">\(\mu_1 &gt; \mu_0\)</span>. Let <span class="math inline">\(\bar{X} = (1/n) \sum_{i=1}^n X_i\)</span>. We reject the null hypothesis if <span class="math inline">\(\bar{X} &gt; a\)</span>. The type I error <span class="math inline">\(\alpha\)</span> = <span class="math inline">\(P\)</span>(reject <span class="math inline">\(H_0\)</span> | <span class="math inline">\(H_0\)</span> true). The type II error <span class="math inline">\(\beta\)</span> = <span class="math inline">\(P\)</span>(don’t reject <span class="math inline">\(H_0\)</span> | <span class="math inline">\(H_1\)</span> true).</p>
-<p>The function <code>shypo</code> creates plots of the normal pdfs under <span class="math inline">\(H_0\)</span> and <span class="math inline">\(H_1\)</span> and of the type I and II errors as a function of the critical value <span class="math inline">\(a\)</span>. Buttons are used to change the values of <span class="math inline">\(n\)</span>, <span class="math inline">\(a\)</span>, <span class="math inline">\(\mu_0\)</span>, <span class="math inline">\(\mu_1 - \mu_0\)</span> (the effect size <code>eff</code>) and the population standard deviation <span class="math inline">\(\sigma\)</span>, in order to observe the effects on <span class="math inline">\(\alpha\)</span> and <span class="math inline">\(\beta\)</span>. Also included are two radio buttons. One sets automatically the value of <span class="math inline">\(a\)</span> for which a target type I error equal to  is achieved. The other sets automatically the combination of <span class="math inline">\(a\)</span> and (integer) <span class="math inline">\(n\)</span> for which the target type I error <code>target_alpha</code> and type II error <code>target_beta</code> are achieved or bettered.</p>
+<p>Consider a random sample <span class="math inline">\(X_1, \ldots,
+X_n\)</span> from a normal distribution with unknown mean <span class="math inline">\(\mu\)</span> and known variance <span class="math inline">\(\sigma^2\)</span>. We test the null hypothesis
+<span class="math inline">\(H_0: \mu = \mu_0\)</span> against the
+alternative <span class="math inline">\(H_1: \mu = \mu_1\)</span>, where
+<span class="math inline">\(\mu_1 &gt; \mu_0\)</span>. Let <span class="math inline">\(\bar{X} = (1/n) \sum_{i=1}^n X_i\)</span>. We
+reject the null hypothesis if <span class="math inline">\(\bar{X} &gt;
+a\)</span>. The type I error <span class="math inline">\(\alpha\)</span>
+= <span class="math inline">\(P\)</span>(reject <span class="math inline">\(H_0\)</span> | <span class="math inline">\(H_0\)</span> true). The type II error <span class="math inline">\(\beta\)</span> = <span class="math inline">\(P\)</span>(don’t reject <span class="math inline">\(H_0\)</span> | <span class="math inline">\(H_1\)</span> true).</p>
+<p>The function <code>shypo</code> creates plots of the normal pdfs
+under <span class="math inline">\(H_0\)</span> and <span class="math inline">\(H_1\)</span> and of the type I and II errors as a
+function of the critical value <span class="math inline">\(a\)</span>.
+Buttons are used to change the values of <span class="math inline">\(n\)</span>, <span class="math inline">\(a\)</span>, <span class="math inline">\(\mu_0\)</span>, <span class="math inline">\(\mu_1
+- \mu_0\)</span> (the effect size <code>eff</code>) and the population
+standard deviation <span class="math inline">\(\sigma\)</span>, in order
+to observe the effects on <span class="math inline">\(\alpha\)</span>
+and <span class="math inline">\(\beta\)</span>. Also included are two
+radio buttons. One sets automatically the value of <span class="math inline">\(a\)</span> for which a target type I error equal
+to is achieved. The other sets automatically the combination of <span class="math inline">\(a\)</span> and (integer) <span class="math inline">\(n\)</span> for which the target type I error
+<code>target_alpha</code> and type II error <code>target_beta</code> are
+achieved or bettered.</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># 1. Change a (for fixed n) to achieve alpha &lt;= 0.05</span>
-<span class="co"># 2. Change a and n to achieve alpha &lt;= 0.05 and beta &lt;= 0.1</span>
-<span class="fu"><a href="../reference/shypo.html">shypo</a></span><span class="op">(</span>mu0 <span class="op">=</span> <span class="fl">0</span>, eff <span class="op">=</span> <span class="fl">5</span>, n <span class="op">=</span> <span class="fl">16</span>, a <span class="op">=</span> <span class="fl">2.3</span>, delta_a <span class="op">=</span> <span class="fl">0.01</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># 1. Change a (for fixed n) to achieve alpha &lt;= 0.05</span></span>
+<span><span class="co"># 2. Change a and n to achieve alpha &lt;= 0.05 and beta &lt;= 0.1</span></span>
+<span><span class="fu"><a href="../reference/shypo.html">shypo</a></span><span class="op">(</span>mu0 <span class="op">=</span> <span class="fl">0</span>, eff <span class="op">=</span> <span class="fl">5</span>, n <span class="op">=</span> <span class="fl">16</span>, a <span class="op">=</span> <span class="fl">2.3</span>, delta_a <span class="op">=</span> <span class="fl">0.01</span><span class="op">)</span></span></code></pre></div>
 <p><img src="shypo1.PNG" width="600px" style="display: block; margin: auto;"><img src="shypo2.PNG" width="600px" style="display: block; margin: auto;"><img src="shypo3.PNG" width="600px" style="display: block; margin: auto;"></p>
 </div>
 </div>
@@ -220,16 +342,23 @@
    MathJax.Hub.Config({  "HTML-CSS": { minScaleAdjust: 125, availableFonts: [] }  });
 </script><div id="refs" class="references csl-bib-body hanging-indent">
 <div id="ref-Azzalini1996" class="csl-entry">
-Azzalini, A. 1996. <em>Statistical Inference Based on the Likelihood</em>. London: Chapman &amp; Hall / CRC.
+Azzalini, A. 1996. <em>Statistical Inference Based on the
+Likelihood</em>. London: Chapman &amp; Hall / CRC.
 </div>
 <div id="ref-rpanel" class="csl-entry">
-Bowman, A., E. Crawford, G. Alexander, and R. W. Bowman. 2007. <span>“<span class="nocase">rpanel</span>: Simple Interactive Controls for <span>R</span> Functions Using the <span class="nocase">tcltk</span> Package.”</span> <em>Journal of Statistical Software</em> 17 (9): 1–18. doi:<a href="https://doi.org/10.18637/jss.v017.i09" class="external-link">10.18637/jss.v017.i09</a>.
+Bowman, A., E. Crawford, G. Alexander, and R. W. Bowman. 2007.
+<span>“<span class="nocase">rpanel</span>: Simple Interactive Controls
+for <span>R</span> Functions Using the <span class="nocase">tcltk</span>
+Package.”</span> <em>Journal of Statistical Software</em> 17 (9): 1–18.
+doi:<a href="https://doi.org/10.18637/jss.v017.i09" class="external-link">10.18637/jss.v017.i09</a>.
 </div>
 <div id="ref-Coles2001" class="csl-entry">
-Coles, S. G. 2001. <em>An Introduction to Statistical Modelling of Extreme Values</em>. London: Springer.
+Coles, S. G. 2001. <em>An Introduction to Statistical Modelling of
+Extreme Values</em>. London: Springer.
 </div>
 <div id="ref-Lehman1999" class="csl-entry">
-Lehman, E. L. 1999. <em>Elements of Large-Sample Theory</em>. London: Springer-Verlag. doi:<a href="https://doi.org/10.1007/b98855" class="external-link">10.1007/b98855</a>.
+Lehman, E. L. 1999. <em>Elements of Large-Sample Theory</em>. London:
+Springer-Verlag. doi:<a href="https://doi.org/10.1007/b98855" class="external-link">10.1007/b98855</a>.
 </div>
 </div>
 </div>
@@ -252,7 +381,7 @@ Lehman, E. L. 1999. <em>Elements of Large-Sample Theory</em>. London: Springer-V
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer>

@@ -19,7 +19,7 @@ and on the true correlation \(\rho\)."><!-- mathjax --><script src="https://cdnj
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">smovie</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">1.1.4</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">1.1.5</span>
       </span>
     </div>
 
@@ -28,7 +28,7 @@ and on the true correlation \(\rho\)."><!-- mathjax --><script src="https://cdnj
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -67,16 +67,16 @@ and on the true correlation \(\rho\).</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">correlation</span><span class="op">(</span>
-  n <span class="op">=</span> <span class="fl">30</span>,
-  rho <span class="op">=</span> <span class="fl">0</span>,
-  panel_plot <span class="op">=</span> <span class="cn">TRUE</span>,
-  hscale <span class="op">=</span> <span class="cn">NA</span>,
-  vscale <span class="op">=</span> <span class="va">hscale</span>,
-  delta_n <span class="op">=</span> <span class="fl">1</span>,
-  delta_rho <span class="op">=</span> <span class="fl">0.1</span>,
-  <span class="va">...</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">correlation</span><span class="op">(</span></span>
+<span>  n <span class="op">=</span> <span class="fl">30</span>,</span>
+<span>  rho <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>  panel_plot <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  hscale <span class="op">=</span> <span class="cn">NA</span>,</span>
+<span>  vscale <span class="op">=</span> <span class="va">hscale</span>,</span>
+<span>  delta_n <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  delta_rho <span class="op">=</span> <span class="fl">0.1</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -84,34 +84,49 @@ and on the true correlation \(\rho\).</p>
     <dl><dt>n</dt>
 <dd><p>An integer scalar.  The initial value of the sample size.
 Must not be less than 2.</p></dd>
+
+
 <dt>rho</dt>
 <dd><p>A numeric scalar.  The initial value of the true correlation
 \(\rho\).  Must be in [-1, 1].</p></dd>
+
+
 <dt>panel_plot</dt>
 <dd><p>A logical parameter that determines whether the plot
 is placed inside the panel (<code>TRUE</code>) or in the standard graphics
 window (<code>FALSE</code>).  If the plot is to be placed inside the panel
 then the tkrplot library is required.</p></dd>
+
+
 <dt>hscale, vscale</dt>
 <dd><p>Numeric scalars.  Scaling parameters for the size
 of the plot when <code>panel_plot = TRUE</code>. The default values are 1.4 on
 Unix platforms and 2 on Windows platforms.</p></dd>
+
+
 <dt>delta_n</dt>
 <dd><p>An integer scalar.  The amount by which the value of the
 sample size is increased/decreased after one click of the +/- button.</p></dd>
+
+
 <dt>delta_rho</dt>
 <dd><p>A numeric scalar.  The amount by which the value of
 rho is increased/decreased after one click of the +/- button.</p></dd>
+
+
 <dt>...</dt>
 <dd><p>Additional arguments to the rpanel functions
 <code><a href="https://rdrr.io/pkg/rpanel/man/rp.button.html" class="external-link">rp.button</a></code> and
 <code><a href="https://rdrr.io/pkg/rpanel/man/rp.doublebutton.html" class="external-link">rp.doublebutton</a></code>, not including <code>panel</code>,
 <code>variable</code>, <code>title</code>, <code>step</code>, <code>action</code>, <code>initval</code>,
 <code>range</code>.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>Nothing is returned, only the animation is produced.</p>
+    
+
+<p>Nothing is returned, only the animation is produced.</p>
     </div>
     <div id="details">
     <h2>Details</h2>
@@ -154,8 +169,10 @@ rho is increased/decreased after one click of the +/- button.</p></dd>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="fu">correlation</span><span class="op">(</span>rho <span class="op">=</span> <span class="fl">0.8</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu">correlation</span><span class="op">(</span>n <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">correlation</span><span class="op">(</span>rho <span class="op">=</span> <span class="fl">0.8</span><span class="op">)</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> the SuppDists package is needed. Please install it.</span>
+<span class="r-in"><span><span class="fu">correlation</span><span class="op">(</span>n <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> the SuppDists package is needed. Please install it.</span>
 </code></pre></div>
     </div>
   </div>
@@ -170,7 +187,7 @@ rho is increased/decreased after one click of the +/- button.</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>
