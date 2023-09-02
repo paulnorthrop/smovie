@@ -5,7 +5,6 @@
 
 [![AppVeyor Build
 Status](https://ci.appveyor.com/api/projects/status/github/paulnorthrop/smovie?branch=master&svg=true)](https://ci.appveyor.com/project/paulnorthrop/smovie)
-[![R-CMD-check](https://github.com/paulnorthrop/smovie/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/paulnorthrop/smovie/actions/workflows/R-CMD-check.yaml)
 [![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/smovie)](https://cran.r-project.org/package=smovie)
 [![Downloads
 (monthly)](https://cranlogs.r-pkg.org/badges/smovie?color=brightgreen)](https://cran.r-project.org/package=smovie)
