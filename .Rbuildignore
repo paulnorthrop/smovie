@@ -15,3 +15,4 @@
 ^CRAN-RELEASE$
 ^checks$
 ^\.github$
+^CRAN-SUBMISSION$
