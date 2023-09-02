@@ -50,6 +50,5 @@
 #'   \item {\link[=shypo]{Testing simple hypotheses}}
 #' }
 #' @docType package
-#' @name smovie
 #' @import rpanel
 "_PACKAGE"
