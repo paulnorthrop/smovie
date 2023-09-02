@@ -1,8 +1,10 @@
-# smovie 1.1.4.9000
+# smovie 1.1.5
 
 ## Bug fixes and minor improvements
 
 * Corrected the link to `cltq()` in the main `smovie` help page.
+
+* Create the help file for the package correctly, with alias smovie-package.
 
 * Activated 3rd edition of the `testthat` package
 
