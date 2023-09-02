@@ -52,4 +52,4 @@
 #' @docType package
 #' @name smovie
 #' @import rpanel
-NULL
+"_PACKAGE"
