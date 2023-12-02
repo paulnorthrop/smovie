@@ -96,11 +96,11 @@ The movie is based on two plots.
 
   Radio buttons can be used either to:
   \itemize{
-    \item{}{set \code{a} to achieve the target type I error probability
-      \code{target_alpha}, based on the current value of \code{n};}
-    \item{}{set \code{a} and (integer) \code{n} to achieve (or better) the
+    \item set \code{a} to achieve the target type I error probability
+      \code{target_alpha}, based on the current value of \code{n};
+    \item set \code{a} and (integer) \code{n} to achieve (or better) the
       respective target type I and type II error probabilities of
-      \code{target_alpha} and \code{target_beta}.}
+      \code{target_alpha} and \code{target_beta}.
   }
   If \code{eff = 0} then a plot will be produced even though this case is
   not practically meaningful.  In the "set a and n to achieve target alpha

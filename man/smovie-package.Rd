@@ -21,42 +21,42 @@ of the package and the \link[=movies]{user-friendly menu panel}.
 
 There are movies on the following topics.
 }
-\section{{Probability distributions}}{
+\section{Probability distributions}{
 
 \itemize{
-  \item {\link[=discrete]{Discrete distributions}}
-  \item {\link[=continuous]{Continuous distributions}}
+  \item \link[=discrete]{Discrete distributions}
+  \item \link[=continuous]{Continuous distributions}
 }
 }
 
-\section{{Sampling distributions}}{
-
-\itemize{
-  \item {\link[=clt]{Central Limit Theorem: sampling distribution
-    of a sample mean}}
-  \item {\link[=cltq]{Central Limit Theorem for sample quantiles: sampling
-    distribution of the 100p\% sample quantile}}
-  \item {\link[=mean_vs_median]{Sampling distributions of the mean
-    and median}}
-  \item {\link[=ett]{Extremal Types Theorem: sampling distribution
-    of a sample maximum}}
-  \item {\link[=correlation]{Correlation coefficient}}
-}
-}
-
-\section{{Regression}}{
+\section{Sampling distributions}{
 
 \itemize{
-  \item {\link[=lev_inf]{Leverage and influence in simple linear
-    regression}}
+  \item \link[=clt]{Central Limit Theorem: sampling distribution
+    of a sample mean}
+  \item \link[=cltq]{Central Limit Theorem for sample quantiles: sampling
+    distribution of the 100p\% sample quantile}
+  \item \link[=mean_vs_median]{Sampling distributions of the mean
+    and median}
+  \item \link[=ett]{Extremal Types Theorem: sampling distribution
+    of a sample maximum}
+  \item \link[=correlation]{Correlation coefficient}
 }
 }
 
-\section{{Hypothesis testing}}{
+\section{Regression}{
 
 \itemize{
-  \item {\link[=wws]{Wald, Wilks and Score tests}}
-  \item {\link[=shypo]{Testing simple hypotheses}}
+  \item \link[=lev_inf]{Leverage and influence in simple linear
+    regression}
+}
+}
+
+\section{Hypothesis testing}{
+
+\itemize{
+  \item \link[=wws]{Wald, Wilks and Score tests}
+  \item \link[=shypo]{Testing simple hypotheses}
 }
 }
 

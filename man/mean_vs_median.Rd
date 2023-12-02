@@ -93,15 +93,15 @@ The movie is based on simulating repeatedly samples of size
 
   Once it starts, three aspects of this movie are controlled by the user.
   \itemize{
-    \item{}{There are buttons to increase (+) or decrease (-) the sample
+    \item There are buttons to increase (+) or decrease (-) the sample
       size, that is, the number of values over which a maximum is
-      calculated.}
-    \item{}{Each time the button labelled "simulate another \code{n_add}
+      calculated.
+    \item Each time the button labelled "simulate another \code{n_add}
       samples of size n" is clicked \code{n_add} new samples are simulated
-      and their sample mean are added to the bottom histogram.}
-    \item{}{For the N(0,1) case only, there is a checkbox to add to the
+      and their sample mean are added to the bottom histogram.
+    \item For the N(0,1) case only, there is a checkbox to add to the
       bottom plot the p.d.f.s of the distribution of the sample mean and
-      the (approximate, large \code{n}) distribution of the sample median.}
+      the (approximate, large \code{n}) distribution of the sample median.
   }
 }
 \examples{
