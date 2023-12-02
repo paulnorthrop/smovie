@@ -1,3 +1,9 @@
+# smovie 1.1.6
+
+## Bug fixes
+
+* Fixed issues with the incorrect use of \itemize in some Rd files.
+
 # smovie 1.1.5
 
 ## Bug fixes and minor improvements

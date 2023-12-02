@@ -122,22 +122,22 @@
 #'
 #'   Once it starts, four aspects of this movie are controlled by the user.
 #'   \itemize{
-#'     \item{}{There are buttons to increase (+) or decrease (-) the sample
+#'     \item There are buttons to increase (+) or decrease (-) the sample
 #'       size, that is, the number of values over which a maximum is
-#'       calculated.}
-#'     \item{}{Each time the button labelled "simulate another \code{n_add}
+#'       calculated.
+#'     \item Each time the button labelled "simulate another \code{n_add}
 #'       samples of size n" is clicked \code{n_add} new samples are simulated
-#'       and their sample maxima are added to the bottom histogram.}
-#'     \item{}{There is a button to switch the bottom plot from displaying
+#'       and their sample maxima are added to the bottom histogram.
+#'     \item There is a button to switch the bottom plot from displaying
 #'       a histogram of the simulated maxima, the exact p.d.f. and the
 #'       limiting GEV p.d.f. to the empirical c.d.f. of the simulated data,
-#'       the exact c.d.f. and the limiting GEV c.d.f.}
-#'     \item{}{There is a box that can be used to display only the bottom
+#'       the exact c.d.f. and the limiting GEV c.d.f.
+#'     \item There is a box that can be used to display only the bottom
 #'       plot.  This option is selected automatically if the sample size
-#'       \eqn{n} exceeds 100000.}
-#'     \item{}{There is a box that can be used to display only the bottom
+#'       \eqn{n} exceeds 100000.
+#'     \item There is a box that can be used to display only the bottom
 #'       plot.  This option is selected automatically if the sample size
-#'       \eqn{n} exceeds 100000.}
+#'       \eqn{n} exceeds 100000.
 #'   }
 #'   For further detail about the examples specified by \code{distn}
 #'   see Chapter 1 of Leadbetter et al. (1983) and Chapter 3 of

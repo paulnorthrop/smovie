@@ -19,35 +19,35 @@
 #'  tcltk Package.  \emph{Journal of Statistical Software}, \strong{17(9)},
 #'  1-18. \doi{10.18637/jss.v017.i09}.
 #'
-#' @section {Probability distributions}:
+#' @section Probability distributions:
 #' \itemize{
-#'   \item {\link[=discrete]{Discrete distributions}}
-#'   \item {\link[=continuous]{Continuous distributions}}
+#'   \item \link[=discrete]{Discrete distributions}
+#'   \item \link[=continuous]{Continuous distributions}
 #' }
 #'
-#' @section {Sampling distributions}:
+#' @section Sampling distributions:
 #' \itemize{
-#'   \item {\link[=clt]{Central Limit Theorem: sampling distribution
-#'     of a sample mean}}
-#'   \item {\link[=cltq]{Central Limit Theorem for sample quantiles: sampling
-#'     distribution of the 100p\% sample quantile}}
-#'   \item {\link[=mean_vs_median]{Sampling distributions of the mean
-#'     and median}}
-#'   \item {\link[=ett]{Extremal Types Theorem: sampling distribution
-#'     of a sample maximum}}
-#'   \item {\link[=correlation]{Correlation coefficient}}
+#'   \item \link[=clt]{Central Limit Theorem: sampling distribution
+#'     of a sample mean}
+#'   \item \link[=cltq]{Central Limit Theorem for sample quantiles: sampling
+#'     distribution of the 100p\% sample quantile}
+#'   \item \link[=mean_vs_median]{Sampling distributions of the mean
+#'     and median}
+#'   \item \link[=ett]{Extremal Types Theorem: sampling distribution
+#'     of a sample maximum}
+#'   \item \link[=correlation]{Correlation coefficient}
 #' }
 #'
-#' @section {Regression}:
+#' @section Regression:
 #' \itemize{
-#'   \item {\link[=lev_inf]{Leverage and influence in simple linear
-#'     regression}}
+#'   \item \link[=lev_inf]{Leverage and influence in simple linear
+#'     regression}
 #' }
 #'
-#' @section {Hypothesis testing}:
+#' @section Hypothesis testing:
 #' \itemize{
-#'   \item {\link[=wws]{Wald, Wilks and Score tests}}
-#'   \item {\link[=shypo]{Testing simple hypotheses}}
+#'   \item \link[=wws]{Wald, Wilks and Score tests}
+#'   \item \link[=shypo]{Testing simple hypotheses}
 #' }
 #' @docType package
 #' @import rpanel

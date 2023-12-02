@@ -102,19 +102,19 @@
 #'
 #'   Once it starts, four aspects of this movie are controlled by the user.
 #'   \itemize{
-#'     \item{}{There are buttons to increase (+) or decrease (-) the sample
+#'     \item There are buttons to increase (+) or decrease (-) the sample
 #'       size, that is, the number of values over which a mean is
-#'       calculated.}
-#'     \item{}{Each time the button labelled "simulate another \code{n_add}
+#'       calculated.
+#'     \item Each time the button labelled "simulate another \code{n_add}
 #'       samples of size n" is clicked \code{n_add} new samples are simulated
-#'       and their sample mean are added to the bottom histogram.}
-#'     \item{}{There is a button to switch the bottom plot from displaying
+#'       and their sample mean are added to the bottom histogram.
+#'     \item There is a button to switch the bottom plot from displaying
 #'       a histogram of the simulated means and the limiting normal p.d.f. to
 #'       the empirical c.d.f. of the simulated data and the limiting normal
-#'       c.d.f.}
-#'     \item{}{There is a checkbox to add to the bottom plot the approximate
+#'       c.d.f.
+#'     \item There is a checkbox to add to the bottom plot the approximate
 #'       (large \code{n}) normal p.d.f./c.d.f. (with mean \eqn{\mu} and
-#'       standard deviation \eqn{\sigma / \sqrt{n}}), implied by the CLT.}
+#'       standard deviation \eqn{\sigma / \sqrt{n}}), implied by the CLT.
 #'   }
 #' @return Nothing is returned, only the animation is produced.
 #' @seealso \code{\link{movies}}: a user-friendly menu panel.

@@ -100,20 +100,20 @@
 #'
 #'   Once it starts, four aspects of this movie are controlled by the user.
 #'   \itemize{
-#'     \item{}{There are buttons to increase (+) or decrease (-) the sample
+#'     \item There are buttons to increase (+) or decrease (-) the sample
 #'       size, that is, the number of values for which a sample quantile is
-#'       calculated.}
-#'     \item{}{Each time the button labelled "simulate another \code{n_add}
+#'       calculated.
+#'     \item Each time the button labelled "simulate another \code{n_add}
 #'       samples of size n" is clicked \code{n_add} new samples are simulated
-#'       and their sample quantile are added to the bottom histogram.}
-#'     \item{}{There is a button to switch the bottom plot from displaying
+#'       and their sample quantile are added to the bottom histogram.
+#'     \item There is a button to switch the bottom plot from displaying
 #'       a histogram of the simulated sample quantiles and the limiting normal
 #'       p.d.f. to the empirical c.d.f. of the simulated data and the limiting
-#'       normal c.d.f.}
-#'     \item{}{There is a checkbox to add to the bottom plot the approximate
+#'       normal c.d.f.
+#'     \item There is a checkbox to add to the bottom plot the approximate
 #'       (large \eqn{n}) normal p.d.f./c.d.f. implied by the CLT for sample
 #'       quantiles: the mean is equal to \eqn{\xi(p)} and standard deviation is
-#'       equal to \eqn{\sqrt p \sqrt q  / n f(\xi(p))}, where \eqn{q = 1-p}}.
+#'       equal to \eqn{\sqrt p \sqrt q  / n f(\xi(p))}, where \eqn{q = 1-p}.
 #'   }
 #' @return Nothing is returned, only the animation is produced.
 #' @references Lehman, E. L. (1999) \emph{Elements of Large-Sample Theory},
