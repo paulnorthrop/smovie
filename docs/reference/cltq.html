@@ -19,7 +19,7 @@ quantiles."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">smovie</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">1.1.5</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">1.1.6</span>
       </span>
     </div>
 
@@ -109,7 +109,7 @@ distribution chosen using <code>distn</code>.</p></dd>
 <p>The <code>"gev"</code> and <code>"gp"</code> cases use the
   <code><a href="https://paulnorthrop.github.io/revdbayes/reference/gev.html" class="external-link">gev</a></code> and <code><a href="https://paulnorthrop.github.io/revdbayes/reference/gp.html" class="external-link">gp</a></code>
   distributional functions in the
-  <code><a href="https://paulnorthrop.github.io/revdbayes/reference/revdbayes.html" class="external-link">revdbayes</a></code> package.</p>
+  <code><a href="https://paulnorthrop.github.io/revdbayes/reference/revdbayes-package.html" class="external-link">revdbayes</a></code> package.</p>
 <p>The other cases use the distributional functions in the
   <code><a href="https://rdrr.io/r/stats/stats-package.html" class="external-link">stats-package</a></code>.
   If <code>distn = "gamma"</code> then the <code>(shape, rate)</code>
@@ -245,13 +245,9 @@ Allows the size of the legend to be controlled manually.</p></dd>
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Exponential data</span></span></span>
 <span class="r-in"><span><span class="fu">cltq</span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>tkrplot is not available so panel_plot has been set to FALSE.</span>
-<span class="r-plt img"><img src="cltq-1.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Uniform data</span></span></span>
 <span class="r-in"><span><span class="fu">cltq</span><span class="op">(</span>distn <span class="op">=</span> <span class="st">"t"</span>, params <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>df <span class="op">=</span> <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>tkrplot is not available so panel_plot has been set to FALSE.</span>
-<span class="r-plt img"><img src="cltq-2.png" alt="" width="700" height="433"></span>
 </code></pre></div>
     </div>
   </div>

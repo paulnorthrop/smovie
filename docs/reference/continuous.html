@@ -19,7 +19,7 @@ depend on the values of its parameters."><!-- mathjax --><script src="https://cd
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">smovie</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">1.1.5</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">1.1.6</span>
       </span>
     </div>
 
@@ -97,7 +97,7 @@ depend on the values of its parameters.</p>
   are used.  The abbreviations <code>xxx</code> are also recognised.
   The <code>"gev"</code> and <code>"gp"</code> cases use the
   <code><a href="https://paulnorthrop.github.io/revdbayes/reference/gev.html" class="external-link">gev</a></code> and <code><a href="https://paulnorthrop.github.io/revdbayes/reference/gp.html" class="external-link">gp</a></code>
-  distributional functions in the <code><a href="https://paulnorthrop.github.io/revdbayes/reference/revdbayes.html" class="external-link">revdbayes</a></code>
+  distributional functions in the <code><a href="https://paulnorthrop.github.io/revdbayes/reference/revdbayes-package.html" class="external-link">revdbayes</a></code>
   package.
   If <code>distn = "gamma"</code> then the <code>(shape, rate)</code>
   parameterisation is used, unless a value for <code>scale</code> is provided
@@ -222,25 +222,17 @@ Unix platforms and 2 on Windows platforms.</p></dd>
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Normal example</span></span></span>
 <span class="r-in"><span><span class="fu">continuous</span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>tkrplot is not available so panel_plot has been set to FALSE.</span>
-<span class="r-plt img"><img src="continuous-1.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span><span class="co"># Fix the range of values over which to plot</span></span></span>
 <span class="r-in"><span><span class="fu">continuous</span><span class="op">(</span>var_range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">10</span>, <span class="fl">10</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>tkrplot is not available so panel_plot has been set to FALSE.</span>
-<span class="r-plt img"><img src="continuous-2.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># The same example, but using a user-supplied function and setting manually</span></span></span>
 <span class="r-in"><span><span class="co"># the initial parameters, parameter step size and range</span></span></span>
 <span class="r-in"><span><span class="fu">continuous</span><span class="op">(</span>distn <span class="op">=</span> <span class="va">dnorm</span>, params <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>mean <span class="op">=</span> <span class="fl">0</span>, sd <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>           param_step <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>mean <span class="op">=</span> <span class="fl">1</span>, sd <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>           param_range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>sd <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="cn">NA</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>tkrplot is not available so panel_plot has been set to FALSE.</span>
-<span class="r-plt img"><img src="continuous-3.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Gamma distribution. Show the use of var_range</span></span></span>
 <span class="r-in"><span><span class="fu">continuous</span><span class="op">(</span>distn <span class="op">=</span> <span class="st">"gamma"</span>, var_range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">15</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>tkrplot is not available so panel_plot has been set to FALSE.</span>
-<span class="r-plt img"><img src="continuous-4.png" alt="" width="700" height="433"></span>
 </code></pre></div>
     </div>
   </div>
