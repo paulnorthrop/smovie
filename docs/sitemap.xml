@@ -1,66 +1,23 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>/404.html</loc>
-  </url>
-  <url>
-    <loc>/articles/index.html</loc>
-  </url>
-  <url>
-    <loc>/articles/smovie-vignette.html</loc>
-  </url>
-  <url>
-    <loc>/authors.html</loc>
-  </url>
-  <url>
-    <loc>/index.html</loc>
-  </url>
-  <url>
-    <loc>/news/index.html</loc>
-  </url>
-  <url>
-    <loc>/reference/clt.html</loc>
-  </url>
-  <url>
-    <loc>/reference/cltq.html</loc>
-  </url>
-  <url>
-    <loc>/reference/continuous.html</loc>
-  </url>
-  <url>
-    <loc>/reference/correlation.html</loc>
-  </url>
-  <url>
-    <loc>/reference/discrete.html</loc>
-  </url>
-  <url>
-    <loc>/reference/ett.html</loc>
-  </url>
-  <url>
-    <loc>/reference/Fcorr.html</loc>
-  </url>
-  <url>
-    <loc>/reference/index.html</loc>
-  </url>
-  <url>
-    <loc>/reference/lev_inf.html</loc>
-  </url>
-  <url>
-    <loc>/reference/mean_vs_median.html</loc>
-  </url>
-  <url>
-    <loc>/reference/movies.html</loc>
-  </url>
-  <url>
-    <loc>/reference/shypo.html</loc>
-  </url>
-  <url>
-    <loc>/reference/smovie-package.html</loc>
-  </url>
-  <url>
-    <loc>/reference/smovie.html</loc>
-  </url>
-  <url>
-    <loc>/reference/wws.html</loc>
-  </url>
+<urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url><loc>https://github.com/paulnorthrop/smovie/404.html</loc></url>
+<url><loc>https://github.com/paulnorthrop/smovie/articles/index.html</loc></url>
+<url><loc>https://github.com/paulnorthrop/smovie/articles/smovie-vignette.html</loc></url>
+<url><loc>https://github.com/paulnorthrop/smovie/authors.html</loc></url>
+<url><loc>https://github.com/paulnorthrop/smovie/index.html</loc></url>
+<url><loc>https://github.com/paulnorthrop/smovie/news/index.html</loc></url>
+<url><loc>https://github.com/paulnorthrop/smovie/reference/clt.html</loc></url>
+<url><loc>https://github.com/paulnorthrop/smovie/reference/cltq.html</loc></url>
+<url><loc>https://github.com/paulnorthrop/smovie/reference/continuous.html</loc></url>
+<url><loc>https://github.com/paulnorthrop/smovie/reference/correlation.html</loc></url>
+<url><loc>https://github.com/paulnorthrop/smovie/reference/discrete.html</loc></url>
+<url><loc>https://github.com/paulnorthrop/smovie/reference/ett.html</loc></url>
+<url><loc>https://github.com/paulnorthrop/smovie/reference/Fcorr.html</loc></url>
+<url><loc>https://github.com/paulnorthrop/smovie/reference/index.html</loc></url>
+<url><loc>https://github.com/paulnorthrop/smovie/reference/lev_inf.html</loc></url>
+<url><loc>https://github.com/paulnorthrop/smovie/reference/mean_vs_median.html</loc></url>
+<url><loc>https://github.com/paulnorthrop/smovie/reference/movies.html</loc></url>
+<url><loc>https://github.com/paulnorthrop/smovie/reference/shypo.html</loc></url>
+<url><loc>https://github.com/paulnorthrop/smovie/reference/smovie-package.html</loc></url>
+<url><loc>https://github.com/paulnorthrop/smovie/reference/wws.html</loc></url>
 </urlset>
+
