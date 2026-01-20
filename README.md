@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# smovie
+# smovie <a href="https://paulnorthrop.github.io/smovie/"><img src="man/figures/smovie_logo.png" align="right" style="float:right; height:150px;" alt = "smovie logo"/></a>
 
 [![R-CMD-check](https://github.com/paulnorthrop/smovie/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/paulnorthrop/smovie/actions/workflows/R-CMD-check.yaml)
 [![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/smovie)](https://cran.r-project.org/package=smovie)
